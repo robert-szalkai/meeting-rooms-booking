@@ -9,6 +9,7 @@ import {
     Button,
     Box,
 } from "@mui/material";
+import shadows from "@mui/material/styles/shadows";
 
 // const bull = (
 //     <Box
@@ -21,13 +22,19 @@ import {
 
 function MeetingRoom() {
     return (
-        <Card sx={{ minWidth: 275 }}>
+        <Card
+            sx={{
+                minWidth: 275,
+                borderRadius: 3,
+                boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
+            }}
+        >
             <CardContent>
                 <Typography
                     variant="h4"
                     fontFamily="IBM Plex Sans"
                     sx={{ fontSize: 25 }}
-                    color="black"
+                    color="#1E3C52"
                     gutterBottom
                 >
                     Meeting Room Name #Meeting Room ID
