@@ -1,0 +1,52 @@
+{
+  "rooms": [
+    {
+      "id": "4",
+      "title": "Conference Room B",
+      "description": "This conference room is located on the 3rd floor and has a large table with 10 chairs.",
+      "lastBooked": "2023-03-28T09:00"
+    },
+    {
+      "id": "2",
+      "title": "Training Room C",
+      "description": "This training room is equipped with a projector and has a capacity of 20 people.",
+      "lastBooked": "2023-04-01T13:30"
+    },
+    {
+      "id": "5",
+      "title": "Meeting Room A",
+      "description": "This meeting room is located on the 2nd floor and has a small table with 6 chairs.",
+      "lastBooked": "2023-04-05T10:00"
+    },
+    {
+      "id": "1",
+      "title": "Board Room",
+      "description": "This is the largest meeting room in the office, with a table that can seat up to 16 people.",
+      "lastBooked": "2023-04-02T14:00"
+    },
+    {
+      "id": "3",
+      "title": "Breakout Room",
+      "description": "This small room is perfect for quick meetings or phone calls.",
+      "lastBooked": "2023-04-06T11:30"
+    },
+    {
+      "id": "12",
+      "title": "Meeting Room B",
+      "description": "adafsfbdfb floor and has a small table with 6 chairs.",
+      "lastBooked": "2023-04-01T10:00"
+    },
+    {
+      "id": "11112",
+      "title": "asdasd",
+      "description": "adfdsgafasf",
+      "lastBooked": "2023-04-01T10:00"
+    },
+    {
+      "id": "iX-Lkrn",
+      "title": "asd",
+      "description": "asd",
+      "lastBooked": ""
+    }
+  ]
+}
