@@ -1,0 +1,74 @@
+{
+    "env": {
+        "browser": true,
+        "es2021": true
+    },
+    "extends": [
+        "plugin:react/recommended",
+        "airbnb",
+        "plugin:prettier/recommended",
+        "prettier"
+    ],
+    "overrides": [
+        {
+            "files": ["**/*.stories.*"],
+            "rules": {
+                "import/no-anonymous-default-export": "off",
+                "import/extensions": "off"
+            }
+        }
+    ],
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "ecmaVersion": 12,
+        "sourceType": "module"
+    },
+    "plugins": ["react", "react-hooks"],
+    "rules": {
+        "react/no-array-index-key": "off",
+        "react/require-default-props": "off",
+        "no-use-before-define": "off",
+        "react/jsx-filename-extension": ["warn", { "extensions": [".jsx"] }],
+        "import/extensions": [
+            "error",
+            "ignorePackages",
+            {
+                "ts": "never",
+                "tsx": "never"
+            }
+        ],
+        "react/function-component-definition": [
+            "error",
+            {
+                "namedComponents": [
+                    "function-expression",
+                    "arrow-function",
+                    "function-declaration"
+                ],
+                "unnamedComponents": ["function-expression", "arrow-function"]
+            }
+        ],
+        "no-shadow": "off",
+        "max-len": ["off", { "code": 80 }],
+        "react-hooks/rules-of-hooks": "error",
+        "react-hooks/exhaustive-deps": "warn",
+        "import/prefer-default-export": "off",
+        "react/prop-types": "off",
+        "radix": "off",
+        "camelcase": "off",
+        "no-nested-ternary": "off",
+        "no-unused-vars": "off",
+        "react/jsx-props-no-spreading": "off",
+        "no-plusplus": "off",
+        "import/no-extraneous-dependencies": [
+            "error",
+            {
+                "devDependencies": true,
+                "optionalDependencies": false,
+                "peerDependencies": false
+            }
+        ]
+    }
+}
