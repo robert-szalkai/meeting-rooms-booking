@@ -30,13 +30,13 @@
         "react/no-array-index-key": "off",
         "react/require-default-props": "off",
         "no-use-before-define": "off",
-        "react/jsx-filename-extension": ["warn", { "extensions": [".jsx"] }],
+        "react/jsx-filename-extension": [1, { "extensions": [".tsx", ".ts"] }],
         "import/extensions": [
             "error",
             "ignorePackages",
             {
-                "js": "never",
-                "jsx": "never"
+                "ts": "never",
+                "tsx": "never"
             }
         ],
         "react/function-component-definition": [
