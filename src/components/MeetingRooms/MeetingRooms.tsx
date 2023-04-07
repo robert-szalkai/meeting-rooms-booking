@@ -1,10 +1,8 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import MeetingRoomCard from "../MeetingRoomCard/MeetingRoomCard";
 import Box from "@mui/material/Box";
 import axios from "axios";
 import { responsiveFontSizes } from "@mui/material";
-
-
 
 const style = {
     width: "95%",
@@ -13,9 +11,15 @@ const style = {
     alignItems: "center",
 };
 
-const MeetingRooms = ({rooms}: {rooms: any}) => {
-
-
+const MeetingRooms = ({
+    rooms,
+    deleteCardHandler,
+    updateCardHandler,
+}: {
+    rooms: any;
+    deleteCardHandler: Function;
+    updateCardHandler: Function;
+}) => {
     return (
         <Box
             sx={{
@@ -24,23 +28,21 @@ const MeetingRooms = ({rooms}: {rooms: any}) => {
                 gridRowGap: "20px",
             }}
         >
-
-            {
-            rooms.map((roomEntry:any) =>{
+            {rooms.map((roomEntry: any) => {
                 return (
-                <Box sx={style}>
-                    <MeetingRoomCard
-                        RoomName={roomEntry.title}
-                        key={roomEntry.id}
-                        RoomID={roomEntry.id}
-                        Description={roomEntry.description}
-                        LatestBook={roomEntry.lastBooked}
-                    />
-                </Box>
-            );
-                })
-                }
-
+                    <Box sx={style}>
+                        <MeetingRoomCard
+                            RoomName={roomEntry.title}
+                            key={roomEntry.id}
+                            RoomID={roomEntry.id}
+                            Description={roomEntry.description}
+                            LatestBook={roomEntry.lastBooked}
+                            deleteRoom={deleteCardHandler}
+                            updateRoom={updateCardHandler}
+                        />
+                    </Box>
+                );
+            })}
         </Box>
     );
 };

@@ -10,11 +10,15 @@ const MeetingRoomCard = ({
     RoomID,
     Description,
     LatestBook,
+    deleteRoom,
+    updateRoom,
 }: {
     RoomName: string;
     RoomID: string;
     Description: string;
     LatestBook: string;
+    deleteRoom: Function;
+    updateRoom: Function;
 }) => {
     return (
         <Box
@@ -84,11 +88,12 @@ const MeetingRoomCard = ({
                         Latest book at {LatestBook}
                     </Typography>
                     <Box>
-                        <EditOutlinedIcon />
+                        <EditOutlinedIcon onClick={() =>{updateRoom(RoomName, Description, RoomID)}}/>
                         <DeleteForeverOutlinedIcon
                             sx={{
                                 color: "red",
                             }}
+                            onClick={()=>{deleteRoom(RoomID)}}
                         />
                     </Box>
                 </Box>

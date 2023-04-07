@@ -14,24 +14,23 @@ const style = {
     boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.1)",
 };
 
-const ModalAddRoom = ({
+const EditRoomModal = ({
     display,
     handleClose,
     handleNameChange,
     handleDescriptionChange,
-    addEntry,
-    newName,
-    newDescription
+    updateEntry,
+    oldName,
+    oldDescription
 }: {
     display: boolean;
     handleClose: any;
     handleNameChange: any;
     handleDescriptionChange: any;
-    addEntry: any;
-    newName: string;
-    newDescription: string;
+    updateEntry: any;
+    oldName: string;
+    oldDescription: string;
 }) => {
-    
     
 
     return (
@@ -68,6 +67,7 @@ const ModalAddRoom = ({
                         id="outlined-basic"
                         label="Please type meeting room name."
                         onChange={handleNameChange}
+                        value={oldName}
                         variant="filled"
                         sx={{
                             width: 500,
@@ -90,6 +90,7 @@ const ModalAddRoom = ({
                         id="outlined-basic"
                         label="Please type meeting room description."
                         variant="filled"
+                        value={oldDescription}
                         onChange={handleDescriptionChange}
                         sx={{
                             width: 500,
@@ -100,27 +101,6 @@ const ModalAddRoom = ({
                         }}
                     />
                 </Box>{" "}
-                <Box>
-                    <Typography
-                        id="modal-modal-title"
-                        variant="h6"
-                        component="h2"
-                    >
-                        Capacity
-                    </Typography>
-                    <TextField
-                        id="outlined-basic"
-                        label="Please provide capacity"
-                        variant="filled"
-                        sx={{
-                            width: 300,
-                            paddingBottom: 5,
-                        }}
-                        InputProps={{
-                            disableUnderline: true,
-                        }}
-                    />
-                </Box>
                 <Box
                     sx={{
                         display: "flex",
@@ -137,7 +117,8 @@ const ModalAddRoom = ({
                         Cancel
                     </Button>
                     <Button variant="outlined" color="error" onClick={() =>{
-                            addEntry(newName, newDescription)
+                        updateEntry();
+                        handleClose();
                     }}>
                         Submit
                     </Button>
@@ -147,4 +128,4 @@ const ModalAddRoom = ({
     );
 };
 
-export default ModalAddRoom;
+export default EditRoomModal;
