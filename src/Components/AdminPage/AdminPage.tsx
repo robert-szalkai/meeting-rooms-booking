@@ -8,18 +8,7 @@ const AdminPage = () => {
         <Container maxWidth="xl" sx={{ paddingTop: "50px" }}>
             <Header />
             <Grid container spacing={2}>
-                <Grid item xs={12} sm={6} md={6} xl={6}>
-                    <MeetingRoom />
-                </Grid>
-                <Grid item xs={12} sm={6} md={6} xl={6}>
-                    <MeetingRoom />
-                </Grid>
-                <Grid item xs={12} sm={6} md={6} xl={6}>
-                    <MeetingRoom />
-                </Grid>
-                <Grid item xs={12} sm={6} md={6} xl={6}>
-                    <MeetingRoom />
-                </Grid>
+                <MeetingRoom />
             </Grid>
         </Container>
     );
