@@ -12,7 +12,7 @@ const AdminPage = () => {
         <Container maxWidth="xl" sx={{ paddingTop: "50px" }}>
             <Header />
             <Grid container spacing={2}>
-                <MeetingRoom />
+                {/* <MeetingRoom /> */}
             </Grid>
             <MockData />
         </Container>
