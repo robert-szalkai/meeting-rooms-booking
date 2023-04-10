@@ -83,7 +83,7 @@ const EditModal = () => {
                                     description: event.target.value,
                                 })
                             }
-                        />
+                        ></TextField>
                         <TextField
                             label="Last Booked"
                             value={selectedData?.lastBooked}
@@ -98,7 +98,7 @@ const EditModal = () => {
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={toggleModal}>Cancel</Button>
-                    {/* <Button onClick={handleSubmit}>Submit</Button> */}
+                    {/* <Button onClick={handleSubmit}>Submit</Button>  */}
                 </DialogActions>
             </Dialog>
         </>
