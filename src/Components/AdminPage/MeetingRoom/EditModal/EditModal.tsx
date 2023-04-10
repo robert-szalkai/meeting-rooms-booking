@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import EditIcon from "@mui/icons-material/Edit";
 import {
     Button,
     Dialog,
@@ -56,8 +57,8 @@ const EditModal = () => {
 
     return (
         <>
-            <Button variant="contained" onClick={toggleModal}>
-                Open Modal
+            <Button size="small" onClick={toggleModal}>
+                <EditIcon sx={{ color: "black" }}></EditIcon>
             </Button>
             <Dialog open={isOpen} onClose={toggleModal}>
                 <DialogTitle>Edit Data</DialogTitle>
