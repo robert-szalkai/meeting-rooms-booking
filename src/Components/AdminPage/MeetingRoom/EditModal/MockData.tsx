@@ -246,37 +246,53 @@ export const MockData = () => {
                 >
                     {selectedData && editedData && (
                         <>
-                            <h2>{selectedData.title} Configuration</h2>
-                            <TextField
-                                name="Name"
-                                label="Name"
-                                fullWidth
-                                value={editedData.title}
-                                onChange={handleTextFieldChange}
-                            />
-                            {/* <h2>{selectedData.title}</h2> */}
-                            {/* <p>{selectedData.description}</p>
+                            <Box
+                                sx={{
+                                    display: "flex",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                    height: "100vh",
+                                }}
+                            >
+                                <h2>{selectedData.title} Configuration</h2>
+                                <TextField
+                                    name="Name"
+                                    label="Name"
+                                    sx={{ width: 800 }}
+                                    value={editedData.title}
+                                    onChange={handleTextFieldChange}
+                                />
+                                {/* <h2>{selectedData.title}</h2> */}
+                                {/* <p>{selectedData.description}</p>
                             <p>Last Booked at {selectedData.lastBooked}</p> */}
-                            <br />
-                            <br />
-                            <br />
-                            <TextField
-                                name="Description"
-                                label="Description"
-                                fullWidth
-                                value={editedData.description}
-                                onChange={handleTextFieldChange}
-                            />
-                            <br />
-                            <br />
-                            <br />
-                            {/* <TextField
+                                <br />
+                                <br />
+                                <br />
+                                <TextField
+                                    name="Description"
+                                    label="Description"
+                                    sx={{
+                                        width: 800,
+
+                                        display: "flex",
+                                        justifyContent: "center",
+                                    }}
+                                    multiline
+                                    fullWidth
+                                    value={editedData.description}
+                                    onChange={handleTextFieldChange}
+                                />
+                                <br />
+                                <br />
+                                <br />
+                                {/* <TextField
                                 name="LastBooked"
                                 label="LastBooked"
                                 fullWidth
                                 value={editedData.lastBooked}
                                 onChange={handleTextFieldChange}
                             /> */}
+                            </Box>
                         </>
                     )}
                 </Box>
