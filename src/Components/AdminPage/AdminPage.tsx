@@ -5,6 +5,7 @@ import MeetingRoom from "./MeetingRoom/MeetingRoom";
 import EditModal from "./MeetingRoom/EditModal/EditModal";
 import EditModalProps from "./MeetingRoom/EditModal/EditModal";
 import ModalButton from "./MeetingRoom/EditModal/EditModal";
+import MockData from "./MeetingRoom/EditModal/MockData";
 
 const AdminPage = () => {
     return (
@@ -13,6 +14,7 @@ const AdminPage = () => {
             <Grid container spacing={2}>
                 <MeetingRoom />
             </Grid>
+            <MockData />
         </Container>
     );
 };

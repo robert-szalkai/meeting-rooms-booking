@@ -16,6 +16,7 @@ import {
     Box,
 } from "@mui/material";
 import axios from "axios";
+import MockData from "./EditModal/MockData";
 
 function MeetingRoom() {
     const [data, setData] = useState([]);
@@ -105,7 +106,7 @@ function MeetingRoom() {
                         </CardContent>
 
                         <CardActions sx={{ justifyContent: "flex-end" }}>
-                            <EditModal />
+                            <MockData />
                             <Button
                                 size="small"
                                 onClick={() => handleDelete(item.id)}
