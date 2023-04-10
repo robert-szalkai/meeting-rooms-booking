@@ -1,5 +1,4 @@
 import axios from "axios";
-import { async } from "q";
 function RoomApi() {
     return {
         async GetRooms() {
