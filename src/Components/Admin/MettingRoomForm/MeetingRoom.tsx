@@ -6,19 +6,18 @@ interface iCard {
     id: number;
     description: string;
     lastBooked: string;
-    capacity:number;
+    capacity: number;
 }
 interface iMeetigroomForm {
     handleSubmit: (
         Name: string | undefined,
         Description: string | undefined,
         Capacity: string | undefined,
-        id?:number
-    ) =>Promise<void>;
-    text:String;
-    edit:boolean;
-    editData?:iCard;
-    
+        id?: number
+    ) => Promise<void>;
+    text: String;
+    edit: boolean;
+    editData?: iCard;
 }
 const handleChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -26,19 +25,23 @@ const handleChange = (
 ) => {
     setFunction(event.target.value);
 };
-export const MeetingRoomForm = ({ handleSubmit,text,edit,editData }: iMeetigroomForm) => {
-    const [meetinRoomName, setName] = useState<string| undefined>('');
-    const [meetingRomDes, setDescription] = useState<string| undefined>('');
-    const [meetinfRoomCap, setCapacity] = useState<string| undefined>('');
-    useEffect(()=>{
-        if(edit==true){
+export const MeetingRoomForm = ({
+    handleSubmit,
+    text,
+    edit,
+    editData,
+}: iMeetigroomForm) => {
+    const [meetinRoomName, setName] = useState<string | undefined>("");
+    const [meetingRomDes, setDescription] = useState<string | undefined>("");
+    const [meetinfRoomCap, setCapacity] = useState<string | undefined>("");
+    useEffect(() => {
+        if (edit == true) {
             setName(editData?.title);
             setDescription(editData?.description);
             setCapacity(editData?.capacity.toString());
         }
+    }, []);
 
-    },[])
-    
     return (
         <Box sx={{ width: "702px", height: "493px" }}>
             <Box
@@ -67,7 +70,7 @@ export const MeetingRoomForm = ({ handleSubmit,text,edit,editData }: iMeetigroom
                     </IconButton>
                 </Box>
                 <Box
-                   id="AddForm"
+                    id="AddForm"
                     sx={{
                         width: "100%",
                         height: "400px",
@@ -77,9 +80,14 @@ export const MeetingRoomForm = ({ handleSubmit,text,edit,editData }: iMeetigroom
                         alignItems: "flex-start",
                     }}
                     component="form"
-                    onSubmit={(e)=>{
+                    onSubmit={(e) => {
                         e.preventDefault();
-                        handleSubmit(meetinRoomName,meetingRomDes,meetinfRoomCap,editData?.id);
+                        handleSubmit(
+                            meetinRoomName,
+                            meetingRomDes,
+                            meetinfRoomCap,
+                            editData?.id
+                        );
                     }}
                 >
                     <TextField

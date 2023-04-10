@@ -1,18 +1,18 @@
 {
   "rooms": [
     {
-      "title": "Training Room jjssafgsadssd",
+      "title": "Training Room jjssafgsannbndssd",
       "description": "This training room is equipped with a projector and has a capacity of 20 people.Sda",
       "lastBooked": "",
       "capacity": "3",
       "id": "2"
     },
     {
-      "id": "1",
-      "title": "Board Room",
+      "title": "Board Room2134",
       "description": "This is the largest meeting room in the office, with a table that can seat up to 16 people.",
-      "lastBooked": "2023-04-02T14:00",
-      "capacity": "3"
+      "lastBooked": "",
+      "capacity": "3",
+      "id": "1"
     },
     {
       "id": "3",
