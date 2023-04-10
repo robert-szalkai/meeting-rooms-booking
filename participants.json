@@ -1,0 +1,44 @@
+[
+  {
+    "name": "Alexandru Mariustiuc",
+    "id": 1,
+    "available": true,
+    "image": "https://w7.pngwing.com/pngs/205/731/png-transparent-default-avatar.png"
+  },
+  {
+    "name": "Maria Popovici",
+    "id": 2,
+    "available": true,
+    "image": "https://w7.pngwing.com/pngs/205/731/png-transparent-default-avatar.png"
+  },
+  {
+    "name": "Alexei Serghei",
+    "id": 3,
+    "available": true,
+    "image": "https://w7.pngwing.com/pngs/205/731/png-transparent-default-avatar.png"
+  },
+  {
+    "name": "Sulei Marianovici",
+    "id": 4,
+    "available": true,
+    "image": "https://w7.pngwing.com/pngs/205/731/png-transparent-default-avatar.png"
+  },
+  {
+    "name": "Alexa Amazon",
+    "id": 5,
+    "available": true,
+    "image": "https://w7.pngwing.com/pngs/205/731/png-transparent-default-avatar.png"
+  },
+  {
+    "name": "Dora Barbat",
+    "id": 6,
+    "available": true,
+    "image": "https://w7.pngwing.com/pngs/205/731/png-transparent-default-avatar.png"
+  },
+  {
+    "name": "Flavia Mioc",
+    "id": 7,
+    "available": true,
+    "image": "https://w7.pngwing.com/pngs/205/731/png-transparent-default-avatar.png"
+  }
+]
