@@ -3,6 +3,8 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import { GetData } from "./APIfunctions";
 //import { handleDelete } from "./APIfunctions";
+import EditModal from "./EditModal/EditModal";
+
 import {
     Card,
     Typography,
@@ -10,12 +12,43 @@ import {
     CardActions,
     Button,
     Grid,
+    Modal,
+    Box,
 } from "@mui/material";
 import axios from "axios";
 
 function MeetingRoom() {
     const [data, setData] = useState([]);
     //const [loaded, setLoaded] = useState(false);
+
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const handleOpenModal = () => {
+        setIsModalOpen(true);
+    };
+    const handleCloseModal = () => {
+        setIsModalOpen(false);
+    };
+    const modalContent = (
+        <Box
+            sx={{
+                position: "absolute",
+                top: "50%",
+                left: "50%",
+                transform: "translate(-50%, -50%)",
+                width: 400,
+                bgcolor: "background.paper",
+                boxShadow: 24,
+                p: 4,
+            }}
+        >
+            <Typography variant="h6" component="h2">
+                Modal Title
+            </Typography>
+            <Typography variant="body2" component="p">
+                Modal content goes here...
+            </Typography>
+        </Box>
+    );
 
     const handleDelete = async (id: any) => {
         try {
@@ -72,9 +105,15 @@ function MeetingRoom() {
                         </CardContent>
 
                         <CardActions sx={{ justifyContent: "flex-end" }}>
-                            <Button size="small">
+                            <Button size="small" onClick={handleOpenModal}>
                                 <EditIcon sx={{ color: "black" }}></EditIcon>
                             </Button>
+                            <Modal
+                                open={isModalOpen}
+                                onClose={handleCloseModal}
+                            >
+                                {modalContent}
+                            </Modal>
                             <Button
                                 size="small"
                                 onClick={() => handleDelete(item.id)}
