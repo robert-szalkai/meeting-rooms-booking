@@ -2,9 +2,14 @@ import React, { useState } from "react";
 import { Box } from "@mui/system";
 import { Typography } from "@mui/material";
 
-const LeftSide = ({ roomName }: { roomName: string }) => {
+interface iLeftSide {
+    roomName: string;
+}
+
+const LeftSide = ({ roomName }: iLeftSide) => {
     let currDate = new Date();
     let hoursMin;
+
     if (currDate.getMinutes() < 10) {
         hoursMin = currDate.getHours() + ":0" + currDate.getMinutes();
     } else {
@@ -16,6 +21,7 @@ const LeftSide = ({ roomName }: { roomName: string }) => {
         month: "short",
         year: "numeric",
     };
+
     const formattedDate: string = currDate.toLocaleDateString("en-US", options);
     const [time, setTime] = useState(hoursMin);
 

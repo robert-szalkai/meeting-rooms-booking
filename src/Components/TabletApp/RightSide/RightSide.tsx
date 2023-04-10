@@ -8,13 +8,12 @@ const availabilityMessages = [
     "being used",
 ];
 
-const RightSide = ({
-    roomName,
-    availability,
-}: {
+interface iRightSide {
     roomName: string;
     availability: number;
-}) => {
+}
+
+const RightSide = ({ roomName, availability }: iRightSide) => {
     return (
         <Box
             sx={{
