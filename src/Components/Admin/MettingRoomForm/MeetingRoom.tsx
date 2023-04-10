@@ -18,6 +18,7 @@ interface iMeetigroomForm {
     text: String;
     edit: boolean;
     editData?: iCard;
+    onClose: () => void;
 }
 const handleChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -25,15 +26,19 @@ const handleChange = (
 ) => {
     setFunction(event.target.value);
 };
+
 export const MeetingRoomForm = ({
     handleSubmit,
     text,
     edit,
     editData,
+    onClose,
 }: iMeetigroomForm) => {
     const [meetinRoomName, setName] = useState<string | undefined>("");
     const [meetingRomDes, setDescription] = useState<string | undefined>("");
     const [meetinfRoomCap, setCapacity] = useState<string | undefined>("");
+    const [areAllFieldsCompleted, setAreAllFieldsCompleted] =
+        useState<boolean>(false);
     useEffect(() => {
         if (edit == true) {
             setName(editData?.title);
@@ -41,6 +46,12 @@ export const MeetingRoomForm = ({
             setCapacity(editData?.capacity.toString());
         }
     }, []);
+
+    useEffect(() => {
+        setAreAllFieldsCompleted(
+            meetinRoomName != "" && meetingRomDes != "" && meetinfRoomCap != ""
+        );
+    }, [meetinRoomName, meetingRomDes, meetinfRoomCap]);
 
     return (
         <Box sx={{ width: "702px", height: "493px" }}>
@@ -65,7 +76,7 @@ export const MeetingRoomForm = ({
                     }}
                 >
                     <Typography variant="h5">{text}</Typography>
-                    <IconButton sx={{ marginLeft: "auto" }}>
+                    <IconButton sx={{ marginLeft: "auto" }} onClick={onClose}>
                         <HighlightOffIcon />
                     </IconButton>
                 </Box>
@@ -134,8 +145,15 @@ export const MeetingRoomForm = ({
                         justifyContent: "flex-end",
                     }}
                 >
-                    <Button variant="outlined">Cancel</Button>
-                    <Button form="AddForm" type="submit" variant="contained">
+                    <Button variant="outlined" onClick={onClose}>
+                        Cancel
+                    </Button>
+                    <Button
+                        form="AddForm"
+                        type="submit"
+                        variant="contained"
+                        disabled={!areAllFieldsCompleted}
+                    >
                         Submit
                     </Button>
                 </Box>

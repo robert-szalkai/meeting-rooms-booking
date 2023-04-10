@@ -121,6 +121,9 @@ const Admin = () => {
                     edit={false}
                     text={"Create Meeting Room"}
                     handleSubmit={handleSubmitForm}
+                    onClose={() => {
+                        handleClose(setShowModal);
+                    }}
                 />
             </Modal>
             <Modal
@@ -141,6 +144,9 @@ const Admin = () => {
                     editData={editDataEvent}
                     text={"Configuration"}
                     handleSubmit={handleSubmitEdit}
+                    onClose={() => {
+                        handleClose(setEditModal);
+                    }}
                 />
             </Modal>
             <Grid
