@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Header from "./Header/Header";
 import { Container, Modal, Grid, Box } from "@mui/material";
 import Cards from "./MettingRoom/Cards";
+import Toast from "../toast/Toast"
 import MeetingRoomForm from "./MettingRoomForm/MeetingRoom";
 import {
     getRooms,
@@ -123,6 +124,8 @@ const Admin = () => {
                     handleSubmit={handleSubmitForm}
                 />
             </Modal>
+            <Toast />
+
             <Modal
                 sx={{
                     width: "100%",
