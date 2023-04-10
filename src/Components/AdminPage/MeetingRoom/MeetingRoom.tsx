@@ -105,15 +105,7 @@ function MeetingRoom() {
                         </CardContent>
 
                         <CardActions sx={{ justifyContent: "flex-end" }}>
-                            <Button size="small" onClick={handleOpenModal}>
-                                <EditIcon sx={{ color: "black" }}></EditIcon>
-                            </Button>
-                            <Modal
-                                open={isModalOpen}
-                                onClose={handleCloseModal}
-                            >
-                                {modalContent}
-                            </Modal>
+                            <EditModal />
                             <Button
                                 size="small"
                                 onClick={() => handleDelete(item.id)}
