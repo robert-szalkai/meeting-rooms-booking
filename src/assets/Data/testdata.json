@@ -1,0 +1,28 @@
+{
+  "rooms": [
+    {
+      "id": "1",
+      "title": "Conference Room A",
+      "description": "This conference room is located on the 2nd floor and can accommodate up to 12 people. It has a large table, comfortable chairs, a projector, and a whiteboard.",
+      "lastBooked": "2023-04-05T15:30:00Z"
+    },
+    {
+      "id": "2",
+      "title": "Meeting Room B",
+      "description": "This meeting room is located on the 1st floor and can accommodate up to 6 people. It has a small table, comfortable chairs, and a whiteboard.",
+      "lastBooked": "2023-04-06T09:00:00Z"
+    },
+    {
+      "id": "3",
+      "title": "Training Room C",
+      "description": "This training room is located on the 3rd floor and can accommodate up to 20 people. It has a large table, comfortable chairs, a projector, and a whiteboard.",
+      "lastBooked": "2023-04-04T14:00:00Z"
+    },
+    {
+      "id": "4",
+      "title": "Board Room D",
+      "description": "This board room is located on the 4th floor and can accommodate up to 8 people. It has a large table, comfortable chairs, a video conferencing system, and a whiteboard.",
+      "lastBooked": "2023-04-05T16:00:00Z"
+    }
+  ]
+}

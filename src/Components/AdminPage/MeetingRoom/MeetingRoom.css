@@ -1,0 +1,45 @@
+.meeting-room-card{
+    min-width: 275
+}
+
+.meeting-room-name {
+    font-family: "IBM Plex Sans";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 31px;
+    color: #1e3c52;
+    padding-bottom: 20px;
+  }
+  
+.meeting-room-description {
+    font-family: "IBM Plex Sans";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 21px;
+    color: #000000;
+  }
+
+.meeting-room-last-booked {
+    padding-top: 20px;
+    font-family: "IBM Plex Sans";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 21px;
+    color: #000000;
+  }
+
+.meeting-room-actions{
+    justify-content: "flex-end" 
+  }
+  
+.meeting-room-edit-button {
+    color: black;
+  }
+  
+.meeting-room-delete-button {
+    color: red;
+  }
+  
