@@ -1,50 +1,105 @@
-import React, { useState } from "react";
-import Button from "@mui/material/Button";
-import Modal from "@mui/material/Modal";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
+import { useState, useEffect } from "react";
+import {
+    Button,
+    Dialog,
+    DialogTitle,
+    DialogContent,
+    DialogActions,
+    TextField,
+} from "@mui/material";
+import React from "react";
 
-const EditModal: React.FC<{}> = () => {
-    const [open, setOpen] = useState(false);
+interface Data {
+    id: number;
+    title: string;
+    description: string;
+    lastBooked: string;
+}
 
-    const handleOpen = () => {
-        setOpen(true);
+const EditModal = () => {
+    const [data, setData] = useState<Data[]>([]);
+    const [isOpen, setIsOpen] = useState(false);
+    const [selectedData, setSelectedData] = useState<Data | null>(null);
+
+    useEffect(() => {
+        fetch("http://localhost:3001/rooms/")
+            .then((response) => response.json())
+            .then((json) => setData(json));
+    }, []);
+
+    const toggleModal = () => {
+        setIsOpen(!isOpen);
     };
 
-    const handleClose = () => {
-        setOpen(false);
-    };
+    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
 
-    const modalContent = (
-        <Box
-            sx={{
-                position: "absolute",
-                top: "50%",
-                left: "50%",
-                transform: "translate(-50%, -50%)",
-                width: 400,
-                bgcolor: "background.paper",
-                boxShadow: 24,
-                p: 4,
-            }}
-        >
-            <Typography variant="h6" component="h2">
-                Modal Title
-            </Typography>
-            <Typography variant="body2" component="p">
-                Modal content goes here...
-            </Typography>
-        </Box>
-    );
+        // Send PUT request to update data on server
+        fetch(`http://localhost:3001/rooms/${selectedData?.id}`, {
+            method: "PUT",
+            body: JSON.stringify(selectedData),
+            headers: {
+                "Content-type": "application/json; charset=UTF-8",
+            },
+        })
+            .then((response) => response.json())
+            .then((json) => {
+                // Update data in state variable
+                const newData = data.map((item) =>
+                    item.id === json.id ? json : item
+                );
+                setData(newData);
+                setSelectedData(null);
+                setIsOpen(false);
+            });
+    };
 
     return (
         <>
-            <Button variant="contained" onClick={handleOpen}>
-                wjdnke
+            <Button variant="contained" onClick={toggleModal}>
+                Open Modal
             </Button>
-            <Modal open={open} onClose={handleClose}>
-                {modalContent}
-            </Modal>
+            <Dialog open={isOpen} onClose={toggleModal}>
+                <DialogTitle>Edit Data</DialogTitle>
+                <DialogContent>
+                    <form onSubmit={handleSubmit}>
+                        <TextField
+                            label="Title"
+                            value={selectedData?.title}
+                            onChange={(event) =>
+                                setSelectedData({
+                                    ...selectedData!,
+                                    title: event.target.value,
+                                })
+                            }
+                        />
+                        <TextField
+                            label="Description"
+                            value={selectedData?.description}
+                            onChange={(event) =>
+                                setSelectedData({
+                                    ...selectedData!,
+                                    description: event.target.value,
+                                })
+                            }
+                        />
+                        <TextField
+                            label="Last Booked"
+                            value={selectedData?.lastBooked}
+                            onChange={(event) =>
+                                setSelectedData({
+                                    ...selectedData!,
+                                    lastBooked: event.target.value,
+                                })
+                            }
+                        />
+                    </form>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={toggleModal}>Cancel</Button>
+                    {/* <Button onClick={handleSubmit}>Submit</Button> */}
+                </DialogActions>
+            </Dialog>
         </>
     );
 };
