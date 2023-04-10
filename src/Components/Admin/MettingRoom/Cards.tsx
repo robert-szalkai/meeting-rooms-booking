@@ -3,18 +3,25 @@ import { Card, Typography, Box } from "@mui/material";
 import BorderColorIcon from "@mui/icons-material/BorderColor";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import { IconButton } from "@mui/material";
-interface iCard{
-    handleEdit:(id: number) => Promise<void>,
-    title:String,
-    id:number,
-    description:String,
-    lastBooked:String;
-    handleDelete: (id:number)=> void;
+interface iCard {
+    handleEdit: (id: number) => Promise<void>;
+    title: String;
+    id: number;
+    description: String;
+    lastBooked: String;
+    handleDelete: (id: number) => void;
 }
-export const Cards = ({title,id,description,lastBooked,handleDelete,handleEdit}:iCard) => {
+export const Cards = ({
+    title,
+    id,
+    description,
+    lastBooked,
+    handleDelete,
+    handleEdit,
+}: iCard) => {
     return (
         <Card
-        key={id}
+            key={id}
             sx={{
                 width: "702px",
                 height: "206px",
@@ -23,15 +30,11 @@ export const Cards = ({title,id,description,lastBooked,handleDelete,handleEdit}:
                 flexDirection: "column",
                 justifyContent: "space-evenly",
                 alignItems: "flex-start",
-                padding:2,
+                padding: 2,
             }}
         >
-            <Typography variant="h6">
-               {title}
-            </Typography>
-            <Typography variant="subtitle1">
-               {description}
-            </Typography>
+            <Typography variant="h6">{title}</Typography>
+            <Typography variant="subtitle1">{description}</Typography>
             <Box
                 sx={{
                     display: "flex",
@@ -44,12 +47,19 @@ export const Cards = ({title,id,description,lastBooked,handleDelete,handleEdit}:
                     Latest book at {lastBooked}
                 </Typography>
                 <Box sx={{ marginLeft: "auto" }}>
-                    <IconButton onClick={()=>{handleEdit(id)}}>
+                    <IconButton
+                        onClick={() => {
+                            handleEdit(id);
+                        }}
+                    >
                         <BorderColorIcon fontSize="small" />
                     </IconButton>
-                    <IconButton onClick={()=>{handleDelete(id)}}>
+                    <IconButton
+                        onClick={() => {
+                            handleDelete(id);
+                        }}
+                    >
                         <DeleteOutlineIcon
-                            
                             sx={{ color: "red" }}
                             fontSize="small"
                         />

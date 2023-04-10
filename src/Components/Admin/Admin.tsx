@@ -3,7 +3,13 @@ import Header from "./Header/Header";
 import { Container, Modal, Grid, Box } from "@mui/material";
 import Cards from "./MettingRoom/Cards";
 import MeetingRoomForm from "./MettingRoomForm/MeetingRoom";
-import RoomApi from "../../HandleRequests/RoomApi";
+import {
+    getRooms,
+    deleteRooms,
+    addRoom,
+    getRoomById,
+    updateRoomData,
+} from "../../HandleRequests/RoomApi";
 interface iCard {
     title: string;
     id: number;
@@ -12,19 +18,18 @@ interface iCard {
     capacity: number;
 }
 const Admin = () => {
-    const [showmodal, setShowModal] = useState<boolean>(false);
+    const [showModal, setShowModal] = useState<boolean>(false);
     const [datacontent, setDataContent] = useState<iCard[]>();
     const [loaded, setLoaded] = useState(false);
     const [showEditModal, setEditModal] = useState<boolean>(false);
     const [editDataEvent, setEditData] = useState<iCard>();
 
-    const roomapi = RoomApi();
     const handleSubmitForm = async (
         Name: string | undefined,
         Description: string | undefined,
         Capacity: string | undefined
     ) => {
-        const result = await roomapi.AddRoom(Name, Description, Capacity);
+        const result = await addRoom(Name, Description, Capacity);
         if (result.status == 201) {
             setLoaded(true);
             handleClose(setShowModal);
@@ -36,12 +41,7 @@ const Admin = () => {
         Capacity: string | undefined,
         id?: number
     ) => {
-        const result = await roomapi.UpdateRoomData(
-            Name,
-            Description,
-            Capacity,
-            id
-        );
+        const result = await updateRoomData(Name, Description, Capacity, id);
         if (result.status == 200) {
             setLoaded(true);
             handleClose(setEditModal);
@@ -58,17 +58,17 @@ const Admin = () => {
         setFunction(false);
     };
     const getDataContent = async () => {
-        const result = await roomapi.GetRooms();
+        const result = await getRooms();
         setDataContent(result.data);
     };
     const handleDelete = async (id: number) => {
-        const result = await roomapi.DeleteRooms(id);
+        const result = await deleteRooms(id);
         if (result.status == 200) {
             setLoaded(true);
         }
     };
     const handleEditOnClick = async (id: number) => {
-        const result = await roomapi.GetRoomById(id);
+        const result = await getRoomById(id);
         if (result.status == 200) {
             setEditData(result.data);
             handleClickForm(setEditModal);
@@ -115,7 +115,7 @@ const Admin = () => {
                 onClose={() => {
                     handleClose(setShowModal);
                 }}
-                open={showmodal}
+                open={showModal}
             >
                 <MeetingRoomForm
                     edit={false}
