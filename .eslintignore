@@ -2,6 +2,7 @@ i18next.js
 react-app-env.d.ts
 serviceWorker.ts
 setupTests.ts
+reportWebVitals.ts
 *.css
 *.svg
 build/
