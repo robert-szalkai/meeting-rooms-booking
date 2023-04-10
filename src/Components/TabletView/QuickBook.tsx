@@ -1,5 +1,17 @@
 import React from "react";
-import { Box, Button, Typography, Container, Grid, Paper } from "@mui/material";
+import {
+    Box,
+    Button,
+    Typography,
+    Grid,
+    Paper,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogContentText,
+    DialogTitle,
+    TextField,
+} from "@mui/material";
 import EditCalendarIcon from "@mui/icons-material/EditCalendar";
 import { useState } from "react";
 import { styled } from "@mui/material/styles";
@@ -11,8 +23,9 @@ const Item = styled(Paper)(({ theme }) => ({
     textAlign: "center",
     color: theme.palette.text.secondary,
 }));
+const buttonStyle = { color: "#008435", border: "1px solid #008435" };
 
-const QuickBook = () => {
+const QuickBook = (props: any) => {
     const [bookingIsOpen, setBookingIsOpen] = useState(false);
     const [flag, setFlag] = useState(false);
 
@@ -21,10 +34,20 @@ const QuickBook = () => {
         else setBookingIsOpen(false);
         setFlag(!flag);
     };
-    const buttonStyle = { color: "#008435", border: "1px solid #008435" };
+
+    const [open, setOpen] = React.useState(false);
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
     return (
-        <Container>
-            <Box>
+        <Box>
+            <Box display="flex" justifyContent="center">
                 <Button
                     variant="contained"
                     sx={{
@@ -41,25 +64,63 @@ const QuickBook = () => {
                 </Button>
             </Box>
             {bookingIsOpen ? (
-                <Box sx={{ flexGrow: 1 }}>
-                    Select Meeting Duration
-                    <Grid container spacing={1}>
-                        <Grid item xs={2}>
-                            <Item sx={buttonStyle}>15 Min</Item>
-                        </Grid>
-                        <Grid item xs={2}>
-                            <Item sx={buttonStyle}>20 Min</Item>
-                        </Grid>
-                        <Grid item xs={2}>
-                            <Item sx={buttonStyle}>30 Min</Item>
-                        </Grid>
-                        <Grid item xs={2}>
-                            <Item sx={buttonStyle}>40 Min</Item>
-                        </Grid>
+                <Grid
+                    container
+                    spacing={5}
+                    direction="row"
+                    justifyContent="center"
+                    alignItems="center"
+                    minHeight="25vh"
+                >
+                    {/* <Typography>Select meeting duration</Typography> */}
+
+                    <Grid item xs={2}>
+                        <Item sx={buttonStyle} onClick={handleClickOpen}>
+                            15 Min
+                        </Item>
+                        {/* <Button sx={buttonStyle} onClick={handleClickOpen}>
+                            15 min
+                        </Button> */}
                     </Grid>
-                </Box>
+                    <Grid item xs={2}>
+                        <Item sx={buttonStyle} onClick={handleClickOpen}>
+                            20 Min
+                        </Item>
+                    </Grid>
+                    <Grid item xs={2}>
+                        <Item sx={buttonStyle} onClick={handleClickOpen}>
+                            30 Min
+                        </Item>
+                    </Grid>
+                    <Grid item xs={2}>
+                        <Item sx={buttonStyle} onClick={handleClickOpen}>
+                            40 Min
+                        </Item>
+                    </Grid>
+                </Grid>
             ) : null}
-        </Container>
+            <Dialog open={open} onClose={handleClose}>
+                <DialogTitle>Quick Book</DialogTitle>
+                <DialogContent>
+                    <DialogContentText>
+                        Who will be the owner?
+                    </DialogContentText>
+                    <TextField
+                        autoFocus
+                        margin="dense"
+                        id="name"
+                        label="Owner name"
+                        type="email"
+                        fullWidth
+                        variant="standard"
+                    />
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleClose}>Cancel</Button>
+                    <Button onClick={handleClose}>Book</Button>
+                </DialogActions>
+            </Dialog>
+        </Box>
     );
 };
 
