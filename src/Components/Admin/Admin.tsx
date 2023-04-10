@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Header from "./Header/Header";
-import { Container, Modal, Grid, Box } from "@mui/material";
+import { Container, Modal, Grid } from "@mui/material";
 import Cards from "./MettingRoom/Cards";
 import MeetingRoomForm from "./MettingRoomForm/MeetingRoom";
 import {
@@ -30,7 +30,7 @@ const Admin = () => {
         Capacity: string | undefined
     ) => {
         const result = await addRoom(Name, Description, Capacity);
-        if (result.status == 201) {
+        if (result.status === 201) {
             setLoaded(true);
             handleClose(setShowModal);
         }
@@ -42,7 +42,7 @@ const Admin = () => {
         id?: number
     ) => {
         const result = await updateRoomData(Name, Description, Capacity, id);
-        if (result.status == 200) {
+        if (result.status === 200) {
             setLoaded(true);
             handleClose(setEditModal);
         }
@@ -63,20 +63,20 @@ const Admin = () => {
     };
     const handleDelete = async (id: number) => {
         const result = await deleteRooms(id);
-        if (result.status == 200) {
+        if (result.status === 200) {
             setLoaded(true);
         }
     };
     const handleEditOnClick = async (id: number) => {
         const result = await getRoomById(id);
-        if (result.status == 200) {
+        if (result.status === 200) {
             setEditData(result.data);
             handleClickForm(setEditModal);
         }
     };
     const displayCards = () => {
         return datacontent?.map((e) => (
-            <Grid key={e.id} item xs={6}>
+            <Grid key={e.id} item xs={12} md={6} lg={6}>
                 <Cards
                     handleEdit={handleEditOnClick}
                     handleDelete={handleDelete}
@@ -92,7 +92,7 @@ const Admin = () => {
         getDataContent();
     }, []);
     useEffect(() => {
-        if (loaded != false) {
+        if (loaded !== false) {
             getDataContent();
             setLoaded(false);
         }

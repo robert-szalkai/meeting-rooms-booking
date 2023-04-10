@@ -23,8 +23,9 @@ export const Cards = ({
         <Card
             key={id}
             sx={{
-                width: "702px",
-                height: "206px",
+                maxWidth: "821px",
+                minWidth: "400px",
+                minHeight: "206px",
                 boxShadow: "4",
                 display: "flex",
                 flexDirection: "column",

@@ -35,7 +35,7 @@ export const MeetingRoomForm = ({
     const [meetingRomDes, setDescription] = useState<string | undefined>("");
     const [meetinfRoomCap, setCapacity] = useState<string | undefined>("");
     useEffect(() => {
-        if (edit == true) {
+        if (edit === true) {
             setName(editData?.title);
             setDescription(editData?.description);
             setCapacity(editData?.capacity.toString());
