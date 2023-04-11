@@ -49,7 +49,7 @@ export const MeetingRoomForm = ({
     const [areAllFieldsCompleted, setAreAllFieldsCompleted] =
         useState<boolean>(false);
     useEffect(() => {
-        if (edit == true) {
+        if (edit === true) {
             setName(editData?.title);
             setDescription(editData?.description);
             setCapacity(editData?.capacity.toString());
