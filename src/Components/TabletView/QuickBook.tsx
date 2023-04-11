@@ -5,15 +5,12 @@ import {
     Typography,
     Grid,
     Paper,
-    Dialog,
-    DialogActions,
-    DialogContent,
-    DialogContentText,
-    DialogTitle,
     TextField,
+    Autocomplete,
 } from "@mui/material";
 import EditCalendarIcon from "@mui/icons-material/EditCalendar";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 import { styled } from "@mui/material/styles";
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -28,22 +25,47 @@ const buttonStyle = { color: "#008435", border: "1px solid #008435" };
 const QuickBook = (props: any) => {
     const [bookingIsOpen, setBookingIsOpen] = useState(false);
     const [flag, setFlag] = useState(false);
+    const [open, setOpen] = React.useState(false);
+    const [flag2, setFlag2] = useState(false);
+    const [ownerName, setOwnerName] = useState("");
+    const [post, setPost] = useState([]);
+    const [owners, setOwners] = useState([""]);
+    const [autoComplete, setAutoComplete] = useState(false);
 
     const handleQuickBook = () => {
         if (!flag) setBookingIsOpen(true);
-        else setBookingIsOpen(false);
+        else {
+            setBookingIsOpen(false);
+            setOpen(false);
+            setFlag2(false);
+        }
         setFlag(!flag);
     };
 
-    const [open, setOpen] = React.useState(false);
-
-    const handleClickOpen = () => {
-        setOpen(true);
+    const handleClickTime = () => {
+        if (!flag2) setOpen(true);
+        else setOpen(false);
+        setOwnerName("");
     };
 
-    const handleClose = () => {
-        setOpen(false);
+    const handleChange = (e: any) => {
+        setOwnerName(e.target.value);
     };
+
+    const handleSearchOwner = () => {
+        console.log(ownerName);
+    };
+
+    useEffect(() => {
+        let tempOwners: string[] = [];
+        axios.get("http://localhost:3001/participants").then((request) => {
+            setPost(request?.data);
+            request.data.forEach((participant: { name: string }) => {
+                tempOwners.push(participant.name);
+            });
+        });
+        setOwners(tempOwners);
+    }, []);
 
     return (
         <Box>
@@ -64,62 +86,78 @@ const QuickBook = (props: any) => {
                 </Button>
             </Box>
             {bookingIsOpen ? (
-                <Grid
-                    container
-                    spacing={5}
-                    direction="row"
-                    justifyContent="center"
-                    alignItems="center"
-                    minHeight="25vh"
-                >
-                    {/* <Typography>Select meeting duration</Typography> */}
+                <Box sx={{ flexGrow: 1 }}>
+                    <Grid
+                        container
+                        spacing={5}
+                        direction="row"
+                        justifyContent="center"
+                        alignItems="center"
+                        minHeight="25vh"
+                    >
+                        <Grid item xs={2}>
+                            <Item sx={buttonStyle} onClick={handleClickTime}>
+                                15 Min
+                            </Item>
+                        </Grid>
+                        <Grid item xs={2}>
+                            <Item sx={buttonStyle} onClick={handleClickTime}>
+                                20 Min
+                            </Item>
+                        </Grid>
+                        <Grid item xs={2}>
+                            <Item sx={buttonStyle} onClick={handleClickTime}>
+                                30 Min
+                            </Item>
+                        </Grid>
+                        <Grid item xs={2}>
+                            <Item sx={buttonStyle} onClick={handleClickTime}>
+                                40 Min
+                            </Item>
+                        </Grid>
+                    </Grid>
 
-                    <Grid item xs={2}>
-                        <Item sx={buttonStyle} onClick={handleClickOpen}>
-                            15 Min
-                        </Item>
-                        {/* <Button sx={buttonStyle} onClick={handleClickOpen}>
-                            15 min
-                        </Button> */}
-                    </Grid>
-                    <Grid item xs={2}>
-                        <Item sx={buttonStyle} onClick={handleClickOpen}>
-                            20 Min
-                        </Item>
-                    </Grid>
-                    <Grid item xs={2}>
-                        <Item sx={buttonStyle} onClick={handleClickOpen}>
-                            30 Min
-                        </Item>
-                    </Grid>
-                    <Grid item xs={2}>
-                        <Item sx={buttonStyle} onClick={handleClickOpen}>
-                            40 Min
-                        </Item>
-                    </Grid>
-                </Grid>
+                    {open ? (
+                        <Box>
+                            <Box display="flex" justifyContent="center">
+                                <Autocomplete
+                                    open={autoComplete}
+                                    onInputChange={(_, value) => {
+                                        if (value.length === 0) {
+                                            if (autoComplete)
+                                                setAutoComplete(false);
+                                        } else {
+                                            if (!autoComplete)
+                                                setAutoComplete(true);
+                                        }
+                                    }}
+                                    onClose={() => setAutoComplete(false)}
+                                    disablePortal
+                                    id="combo-box-demo"
+                                    options={owners}
+                                    sx={{ width: 300 }}
+                                    value={ownerName}
+                                    renderInput={(params) => (
+                                        <TextField
+                                            {...params}
+                                            label="Participants"
+                                            value={ownerName}
+                                            onChange={handleChange}
+                                        />
+                                    )}
+                                />
+                            </Box>
+                            <Box
+                                display="flex"
+                                justifyContent="center"
+                                onClick={handleSearchOwner}
+                            >
+                                <Button>Save</Button>
+                            </Box>
+                        </Box>
+                    ) : null}
+                </Box>
             ) : null}
-            <Dialog open={open} onClose={handleClose}>
-                <DialogTitle>Quick Book</DialogTitle>
-                <DialogContent>
-                    <DialogContentText>
-                        Who will be the owner?
-                    </DialogContentText>
-                    <TextField
-                        autoFocus
-                        margin="dense"
-                        id="name"
-                        label="Owner name"
-                        type="email"
-                        fullWidth
-                        variant="standard"
-                    />
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={handleClose}>Cancel</Button>
-                    <Button onClick={handleClose}>Book</Button>
-                </DialogActions>
-            </Dialog>
         </Box>
     );
 };
