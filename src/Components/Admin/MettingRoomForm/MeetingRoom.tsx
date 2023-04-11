@@ -1,6 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { Box, IconButton, Typography, Button, TextField } from "@mui/material";
+import {
+    Box,
+    IconButton,
+    Typography,
+    Button,
+    TextField,
+    FormHelperText,
+    InputLabel,
+} from "@mui/material";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
+import InputAdornment from "@mui/material/InputAdornment";
 interface iCard {
     title: string;
     id: number;
@@ -18,6 +27,7 @@ interface iMeetigroomForm {
     text: String;
     edit: boolean;
     editData?: iCard;
+    onClose: () => void;
 }
 const handleChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -25,15 +35,19 @@ const handleChange = (
 ) => {
     setFunction(event.target.value);
 };
+
 export const MeetingRoomForm = ({
     handleSubmit,
     text,
     edit,
     editData,
+    onClose,
 }: iMeetigroomForm) => {
     const [meetinRoomName, setName] = useState<string | undefined>("");
     const [meetingRomDes, setDescription] = useState<string | undefined>("");
     const [meetinfRoomCap, setCapacity] = useState<string | undefined>("");
+    const [areAllFieldsCompleted, setAreAllFieldsCompleted] =
+        useState<boolean>(false);
     useEffect(() => {
         if (edit == true) {
             setName(editData?.title);
@@ -41,6 +55,12 @@ export const MeetingRoomForm = ({
             setCapacity(editData?.capacity.toString());
         }
     }, []);
+
+    useEffect(() => {
+        setAreAllFieldsCompleted(
+            meetinRoomName != "" && meetingRomDes != "" && meetinfRoomCap != ""
+        );
+    }, [meetinRoomName, meetingRomDes, meetinfRoomCap]);
 
     return (
         <Box sx={{ width: "702px", height: "493px" }}>
@@ -65,7 +85,7 @@ export const MeetingRoomForm = ({
                     }}
                 >
                     <Typography variant="h5">{text}</Typography>
-                    <IconButton sx={{ marginLeft: "auto" }}>
+                    <IconButton sx={{ marginLeft: "auto" }} onClick={onClose}>
                         <HighlightOffIcon />
                     </IconButton>
                 </Box>
@@ -114,17 +134,26 @@ export const MeetingRoomForm = ({
                         required
                         multiline={true}
                     ></TextField>
+
                     <TextField
+                        type="number"
+                        InputProps={{
+                            inputProps: { min: 1 },
+                        }}
                         value={meetinfRoomCap}
                         onChange={(e) => {
                             handleChange(e, setCapacity);
                         }}
                         sx={{ width: "50%", height: "50px" }}
                         variant="filled"
-                        label="Please provide capacity"
+                        label="Please provide capacity(only numbers admitted)"
                         color="secondary"
                         required
-                    ></TextField>
+                    >
+                        <FormHelperText>
+                            Enter a positive integer value
+                        </FormHelperText>
+                    </TextField>
                 </Box>
                 <Box
                     sx={{
@@ -134,8 +163,15 @@ export const MeetingRoomForm = ({
                         justifyContent: "flex-end",
                     }}
                 >
-                    <Button variant="outlined">Cancel</Button>
-                    <Button form="AddForm" type="submit" variant="contained">
+                    <Button variant="outlined" onClick={onClose}>
+                        Cancel
+                    </Button>
+                    <Button
+                        form="AddForm"
+                        type="submit"
+                        variant="contained"
+                        disabled={!areAllFieldsCompleted}
+                    >
                         Submit
                     </Button>
                 </Box>

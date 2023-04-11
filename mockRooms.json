@@ -1,13 +1,6 @@
 {
   "rooms": [
     {
-      "title": "Training Room jjssafgsannbndssd",
-      "description": "This training room is equipped with a projector and has a capacity of 20 people.Sda",
-      "lastBooked": "",
-      "capacity": "3",
-      "id": "2"
-    },
-    {
       "id": "3",
       "title": "Breakout Room",
       "description": "This small room is perfect for quick meetings or phone calls.",
@@ -21,12 +14,20 @@
       "capacity": "22",
       "id": "IRnDNK-"
     },
+    
     {
-      "title": "cwedce",
-      "description": "eccearfse",
+      "title": "Testare",
+      "description": "Aici testam tot",
       "lastBooked": "",
-      "capacity": "11",
-      "id": "XB4GT72"
+      "capacity": "12",
+      "id": "cIRUZjZ"
+    },
+    {
+      "title": "cscs",
+      "description": "xsxs",
+      "lastBooked": "",
+      "capacity": "1",
+      "id": "pSd1vsU"
     }
   ]
 }

@@ -52,16 +52,17 @@ export const Cards = ({
                             handleEdit(id);
                         }}
                     >
-                        <BorderColorIcon fontSize="small" />
+                        <BorderColorIcon fontSize="large" />
                     </IconButton>
+
                     <IconButton
                         onClick={() => {
                             handleDelete(id);
                         }}
                     >
                         <DeleteOutlineIcon
-                            sx={{ color: "red" }}
-                            fontSize="small"
+                            sx={{ color: "red", marginLeft: "20px" }}
+                            fontSize="large"
                         />
                     </IconButton>
                 </Box>

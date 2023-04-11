@@ -35,7 +35,7 @@ const Admin = () => {
         Capacity: string | undefined
     ) => {
         const result = await addRoom(Name, Description, Capacity);
-        if (result.status == 201) {
+        if (result.status === 201) {
             setLoaded(true);
             handleClose(setShowModal);
         }
@@ -47,7 +47,7 @@ const Admin = () => {
         id?: number
     ) => {
         const result = await updateRoomData(Name, Description, Capacity, id);
-        if (result.status == 200) {
+        if (result.status === 200) {
             setLoaded(true);
             handleClose(setEditModal);
         }
@@ -107,7 +107,7 @@ const Admin = () => {
         getDataContent();
     }, []);
     useEffect(() => {
-        if (loaded != false) {
+        if (loaded !== false) {
             getDataContent();
             setLoaded(false);
         }
@@ -128,7 +128,7 @@ const Admin = () => {
                     alignItems: "center",
                 }}
                 onClose={() => {
-                    handleClose(setShowModal);
+                    setShowModal(false);
                 }}
                 open={showModal}
             >
@@ -136,6 +136,9 @@ const Admin = () => {
                     edit={false}
                     text={"Create Meeting Room"}
                     handleSubmit={handleSubmitForm}
+                    onClose={() => {
+                        setShowModal(false);
+                    }}
                 />
             </Modal>
             <Modal
@@ -147,7 +150,7 @@ const Admin = () => {
                     alignItems: "center",
                 }}
                 onClose={() => {
-                    handleClose(setEditModal);
+                    setEditModal(false);
                 }}
                 open={showEditModal}
             >
@@ -156,6 +159,9 @@ const Admin = () => {
                     editData={editDataEvent}
                     text={"Configuration"}
                     handleSubmit={handleSubmitEdit}
+                    onClose={() => {
+                        setEditModal(false);
+                    }}
                 />
             </Modal>
             <DeleteConfirmationModal
