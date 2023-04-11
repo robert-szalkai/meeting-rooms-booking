@@ -113,7 +113,7 @@ const Admin = () => {
                     alignItems: "center",
                 }}
                 onClose={() => {
-                    handleClose(setShowModal);
+                    setShowModal(false);
                 }}
                 open={showModal}
             >
@@ -122,7 +122,7 @@ const Admin = () => {
                     text={"Create Meeting Room"}
                     handleSubmit={handleSubmitForm}
                     onClose={() => {
-                        handleClose(setShowModal);
+                        setShowModal(false);
                     }}
                 />
             </Modal>
@@ -135,7 +135,7 @@ const Admin = () => {
                     alignItems: "center",
                 }}
                 onClose={() => {
-                    handleClose(setEditModal);
+                    setEditModal(false);
                 }}
                 open={showEditModal}
             >
@@ -145,7 +145,7 @@ const Admin = () => {
                     text={"Configuration"}
                     handleSubmit={handleSubmitEdit}
                     onClose={() => {
-                        handleClose(setEditModal);
+                        setEditModal(false);
                     }}
                 />
             </Modal>
