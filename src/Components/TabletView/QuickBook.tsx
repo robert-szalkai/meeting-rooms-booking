@@ -12,7 +12,9 @@ import EditCalendarIcon from "@mui/icons-material/EditCalendar";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { styled } from "@mui/material/styles";
+import { getParticipants } from "../../HandleRequests/RoomApi";
 
+//To be removed when globla theme is done
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
     ...theme.typography.body2,
@@ -20,31 +22,24 @@ const Item = styled(Paper)(({ theme }) => ({
     textAlign: "center",
     color: theme.palette.text.secondary,
 }));
+
+//To be removed when global theme is done
 const buttonStyle = { color: "#008435", border: "1px solid #008435" };
 
-const QuickBook = (props: any) => {
-    const [bookingIsOpen, setBookingIsOpen] = useState(false);
-    const [flag, setFlag] = useState(false);
-    const [open, setOpen] = React.useState(false);
-    const [flag2, setFlag2] = useState(false);
+const QuickBook = () => {
+    const [timeButtonsVisible, setTimeButtonsVisible] = useState(false);
+    const [open, setOpen] = useState(false);
     const [ownerName, setOwnerName] = useState("");
-    const [post, setPost] = useState([]);
     const [owners, setOwners] = useState([""]);
     const [autoComplete, setAutoComplete] = useState(false);
 
     const handleQuickBook = () => {
-        if (!flag) setBookingIsOpen(true);
-        else {
-            setBookingIsOpen(false);
-            setOpen(false);
-            setFlag2(false);
-        }
-        setFlag(!flag);
+        setTimeButtonsVisible(!timeButtonsVisible);
+        if (timeButtonsVisible) setOpen(false);
     };
 
     const handleClickTime = () => {
-        if (!flag2) setOpen(true);
-        else setOpen(false);
+        if (!open) setOpen(true);
         setOwnerName("");
     };
 
@@ -54,18 +49,19 @@ const QuickBook = (props: any) => {
 
     const handleSearchOwner = () => {
         console.log(ownerName);
+        //To be implemented. Final step, needs to create meeting
     };
 
-    useEffect(() => {
-        let tempOwners: string[] = [];
-        axios.get("http://localhost:3001/participants").then((request) => {
-            setPost(request?.data);
-            request.data.forEach((participant: { name: string }) => {
-                tempOwners.push(participant.name);
-            });
-        });
+    const populateOwners = async () => {
+        let tempOwners: any[] = [];
+        const response = await getParticipants();
+        response.data.forEach(({ name }: { name: string }) =>
+            tempOwners.push(name)
+        );
         setOwners(tempOwners);
-    }, []);
+    };
+
+    if (owners.length == 1) populateOwners();
 
     return (
         <Box>
@@ -85,7 +81,7 @@ const QuickBook = (props: any) => {
                     <Typography variant="subtitle1">Quick Book</Typography>
                 </Button>
             </Box>
-            {bookingIsOpen ? (
+            {timeButtonsVisible ? (
                 <Box sx={{ flexGrow: 1 }}>
                     <Grid
                         container
@@ -97,21 +93,29 @@ const QuickBook = (props: any) => {
                     >
                         <Grid item xs={2}>
                             <Item sx={buttonStyle} onClick={handleClickTime}>
+                                {" "}
+                                {/* To be replaced when global theme is done*/}
                                 15 Min
                             </Item>
                         </Grid>
                         <Grid item xs={2}>
                             <Item sx={buttonStyle} onClick={handleClickTime}>
+                                {" "}
+                                {/* To be replaced when global theme is done*/}
                                 20 Min
                             </Item>
                         </Grid>
                         <Grid item xs={2}>
                             <Item sx={buttonStyle} onClick={handleClickTime}>
+                                {" "}
+                                {/* To be replaced when global theme is done*/}
                                 30 Min
                             </Item>
                         </Grid>
                         <Grid item xs={2}>
                             <Item sx={buttonStyle} onClick={handleClickTime}>
+                                {" "}
+                                {/* To be replaced when global theme is done*/}
                                 40 Min
                             </Item>
                         </Grid>
