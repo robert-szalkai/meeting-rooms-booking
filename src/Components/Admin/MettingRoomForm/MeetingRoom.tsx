@@ -1,6 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { Box, IconButton, Typography, Button, TextField } from "@mui/material";
+import {
+    Box,
+    IconButton,
+    Typography,
+    Button,
+    TextField,
+    FormHelperText,
+    InputLabel,
+} from "@mui/material";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
+import InputAdornment from "@mui/material/InputAdornment";
 interface iCard {
     title: string;
     id: number;
@@ -125,17 +134,26 @@ export const MeetingRoomForm = ({
                         required
                         multiline={true}
                     ></TextField>
+
                     <TextField
+                        type="number"
+                        InputProps={{
+                            inputProps: { min: 1 },
+                        }}
                         value={meetinfRoomCap}
                         onChange={(e) => {
                             handleChange(e, setCapacity);
                         }}
                         sx={{ width: "50%", height: "50px" }}
                         variant="filled"
-                        label="Please provide capacity"
+                        label="Please provide capacity(only numbers admitted)"
                         color="secondary"
                         required
-                    ></TextField>
+                    >
+                        <FormHelperText>
+                            Enter a positive integer value
+                        </FormHelperText>
+                    </TextField>
                 </Box>
                 <Box
                     sx={{
