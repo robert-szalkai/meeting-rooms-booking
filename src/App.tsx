@@ -9,7 +9,8 @@ import TabletApp from "./Components/TabletApp/TabletApp";
 function App() {
     return (
         <ThemeProvider theme={GlobalTheme}>
-            <TabletApp />
+            {/* <TabletApp /> */}
+            <Admin />
         </ThemeProvider>
     );
 }
