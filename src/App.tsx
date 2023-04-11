@@ -4,14 +4,12 @@ import { Box } from "@mui/material";
 import Admin from "./Components/Admin/Admin";
 import GlobalTheme from "./GlobalThemes/GlobalThemes";
 import { ThemeProvider } from "@mui/material/styles";
-import QuickBook from "./Components/TabletView/QuickBook";
+import TabletApp from "./Components/TabletApp/TabletApp";
 
 function App() {
     return (
         <ThemeProvider theme={GlobalTheme}>
-            <Box>
-                <QuickBook />
-            </Box>
+            <TabletApp />
         </ThemeProvider>
     );
 }
