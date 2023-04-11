@@ -3,6 +3,7 @@ import { Grid, Typography, TextField, MenuItem } from "@mui/material";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { DateField } from "@mui/x-date-pickers";
 
 const hours = [
     { value: 8, label: "08:00" },
@@ -24,17 +25,16 @@ const DateSelector = () => {
     return (
         <Grid container paddingTop={2}>
             <Grid item xs={4}>
-                <Typography>Day</Typography>
-            </Grid>
-            <Grid item xs={4}>
-                <Typography>Start</Typography>
-            </Grid>
-            <Grid item xs={4}>
-                <Typography>End</Typography>
-            </Grid>
-            <Grid item xs={4}>
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DatePicker />
+                <LocalizationProvider size="small" dateAdapter={AdapterDayjs}>
+                    <DatePicker
+                        label="Day"
+                        slotProps={{
+                            textField: {
+                                size: "small",
+                                variant: "filled",
+                            },
+                        }}
+                    />
                 </LocalizationProvider>
                 {/* <TextField
                     select
@@ -53,12 +53,12 @@ const DateSelector = () => {
             </Grid>
             <Grid item xs={4}>
                 <TextField
+                    required
                     type="time"
                     variant="filled"
                     sx={{ minWidth: 197 }}
                     InputProps={{ disableUnderline: true }}
-                    hiddenLabel
-                    size="small"
+                    label="Hour"
                 >
                     {hours
                         .filter((crHour) => {

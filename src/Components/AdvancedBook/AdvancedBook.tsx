@@ -25,11 +25,11 @@ const AdvancedBook = () => {
             <Typography variant="h5" fontWeight={"bold"}>
                 New meeting
             </Typography>
-            <Typography paddingTop={2}>Meeting Name</Typography>
+            {/* <Typography paddingTop={2}>Meeting Name</Typography> */}
             <TextField
                 placeholder="Provide meeting name"
                 variant="filled"
-                hiddenLabel
+                label="Meeting name"
                 size="small"
                 sx={{ minWidth: "100%" }}
                 InputProps={{ disableUnderline: true }}
@@ -57,25 +57,10 @@ const AdvancedBook = () => {
             ></TextField>
             <Participants />
             <Box sx={{ display: "flex", marginLeft: "auto", gap: 2 }}>
-                <Button
-                    variant="outlined"
-                    sx={{
-                        height: 30,
-                        borderRadius: 10,
-                        color: "green",
-                        borderColor: "green",
-                    }}
-                >
+                <Button variant="outlined" color="success">
                     Cancel
                 </Button>
-                <Button
-                    variant="contained"
-                    sx={{
-                        height: 30,
-                        borderRadius: 10,
-                        backgroundColor: "green",
-                    }}
-                >
+                <Button variant="contained" color="success">
                     <CalendarMonthIcon fontSize="small" />
                     Book
                 </Button>
