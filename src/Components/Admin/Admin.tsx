@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Header from "./Header/Header";
-import { Container, Modal, Grid, Box } from "@mui/material";
+import { Container, Modal, Grid } from "@mui/material";
 import Cards from "./MettingRoom/Cards";
 import MeetingRoomForm from "./MettingRoomForm/MeetingRoom";
 import {
@@ -10,8 +10,6 @@ import {
     getRoomById,
     updateRoomData,
 } from "../../HandleRequests/RoomApi";
-import { DeleteConfirmationModal } from "./DeleteConfirmationModal/DeleteConfirmationModal";
-
 interface iCard {
     title: string;
     id: number;
@@ -91,7 +89,7 @@ const Admin = () => {
     };
     const displayCards = () => {
         return datacontent?.map((e) => (
-            <Grid key={e.id} item xs={6}>
+            <Grid key={e.id} item xs={12} md={6} lg={6}>
                 <Cards
                     handleEdit={handleEditOnClick}
                     handleDelete={handleDeleteOnClick}
@@ -182,6 +180,7 @@ const Admin = () => {
             >
                 {datacontent && displayCards()}
             </Grid>
+            <AdvancedBook />
         </Container>
     );
 };
