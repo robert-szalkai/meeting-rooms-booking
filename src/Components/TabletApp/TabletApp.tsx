@@ -6,7 +6,7 @@ import RightSide from "./RightSide/RightSide";
 const TabletApp = () => {
     const colorStates = ["#008435", "#BCA900", "#DD6764"];
 
-    const [availability, setAvailability] = useState(1);
+    const [availability, setAvailability] = useState(0);
     const [roomName, setRoomName] = useState("Focus Room");
 
     return (
@@ -18,8 +18,16 @@ const TabletApp = () => {
                 height: "100%",
             }}
         >
-            <LeftSide roomName={roomName} />
-            <RightSide roomName={roomName} availability={availability} />
+            <LeftSide
+                roomName={roomName}
+                availability={availability}
+                quickBookAvaible={1}
+            />
+            <RightSide
+                roomName={roomName}
+                availability={availability}
+                quickBookAvaible={0}
+            />
         </Box>
     );
 };

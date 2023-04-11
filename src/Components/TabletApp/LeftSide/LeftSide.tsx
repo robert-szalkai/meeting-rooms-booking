@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 import { Box } from "@mui/system";
 import { Typography } from "@mui/material";
+import QuickBookGlobal from "../../TabletView/QuickBook/QuickBookGlobal";
 
 interface iLeftSide {
     roomName: string;
+    availability: number;
+    quickBookAvaible?: number;
 }
 
-const LeftSide = ({ roomName }: iLeftSide) => {
+const LeftSide = ({ roomName, availability, quickBookAvaible }: iLeftSide) => {
     let currDate = new Date();
     let hoursMin;
 
@@ -24,6 +27,10 @@ const LeftSide = ({ roomName }: iLeftSide) => {
 
     const formattedDate: string = currDate.toLocaleDateString("en-US", options);
     const [time, setTime] = useState(hoursMin);
+    const [showQuickBookButton, setShowQuickBookButton] = useState(true);
+
+    if (availability === 2 || quickBookAvaible === 0)
+        setShowQuickBookButton(false);
 
     return (
         <Box sx={{ width: "40%", height: "100%" }}>
@@ -42,6 +49,13 @@ const LeftSide = ({ roomName }: iLeftSide) => {
                     <Typography variant="h2">{time}</Typography>
                     <Typography variant="h3">{formattedDate}</Typography>
                 </Box>
+                {showQuickBookButton ? (
+                    <QuickBookGlobal
+                        roomName={roomName}
+                        availability={availability}
+                        quickBookAvaible={1}
+                    />
+                ) : null}
             </Box>
 
             <Box></Box>

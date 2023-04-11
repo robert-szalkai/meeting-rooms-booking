@@ -1,6 +1,7 @@
 import React from "react";
 import { Box } from "@mui/system";
 import { Typography } from "@mui/material";
+import QuickBook from "../../TabletView/QuickBook/QuickBook";
 
 const availabilityMessages = [
     "currently available",
@@ -11,9 +12,14 @@ const availabilityMessages = [
 interface iRightSide {
     roomName: string;
     availability: number;
+    quickBookAvaible?: number;
 }
 
-const RightSide = ({ roomName, availability }: iRightSide) => {
+const RightSide = ({
+    roomName,
+    availability,
+    quickBookAvaible,
+}: iRightSide) => {
     return (
         <Box
             sx={{
@@ -36,6 +42,7 @@ const RightSide = ({ roomName, availability }: iRightSide) => {
                     <Typography variant="h4">
                         {roomName} is {availabilityMessages[availability]}.
                     </Typography>
+                    {quickBookAvaible ? <QuickBook /> : null}
                 </Box>
             </Box>
         </Box>

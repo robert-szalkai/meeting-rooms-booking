@@ -12,7 +12,7 @@ import EditCalendarIcon from "@mui/icons-material/EditCalendar";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { styled } from "@mui/material/styles";
-import { getParticipants } from "../../HandleRequests/RoomApi";
+import { getParticipants } from "../../../HandleRequests/RoomApi";
 
 //To be removed when globla theme is done
 const Item = styled(Paper)(({ theme }) => ({
