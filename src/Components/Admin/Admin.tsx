@@ -10,6 +10,7 @@ import {
     getRoomById,
     updateRoomData,
 } from "../../HandleRequests/RoomApi";
+import AdvancedBook from "../AdvancedBook/AdvancedBook";
 interface iCard {
     title: string;
     id: number;
@@ -151,6 +152,7 @@ const Admin = () => {
             >
                 {datacontent && displayCards()}
             </Grid>
+            <AdvancedBook />
         </Container>
     );
 };
