@@ -1,8 +1,6 @@
 import { createTheme } from "@mui/material/styles";
 import COLORS from "../CustomColors";
 import SIZE from "../CustomSize";
-const cardWidth="400px";
-const cardHeight="200px"
 const GlobalTheme = createTheme({
     components: {
         MuiButton: {
