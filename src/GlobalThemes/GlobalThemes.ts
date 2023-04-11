@@ -1,8 +1,6 @@
 import { createTheme } from "@mui/material/styles";
 import COLORS from "../CustomColors";
 import SIZE from "../CustomSize";
-const cardWidth="400px";
-const cardHeight="200px"
 const GlobalTheme = createTheme({
     components: {
         MuiButton: {
@@ -71,7 +69,7 @@ const GlobalTheme = createTheme({
                 },
                 {
                     // white rounded button with black boreder
-                    props: { variant: "outlined", color: "primary" },
+                    props: { variant: "outlined", color: "inherit" },
                     style: {
                         height:SIZE.HEIGHT_ROUNDED_TABLE_BUTTON,
                         width: SIZE.WIDTH_ROUNDED_TABLE_BUTTON,
