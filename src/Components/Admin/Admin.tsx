@@ -68,14 +68,14 @@ const Admin = () => {
     };
     const handleDelete = async (id: number) => {
         const result = await deleteRooms(id);
-        if (result.status == 200) {
+        if (result.status === 200) {
             setLoaded(true);
-            handleClose(setShowDeleteModal);
+            setShowDeleteModal(false);
         }
     };
     const handleEditOnClick = async (id: number) => {
         const result = await getRoomById(id);
-        if (result.status == 200) {
+        if (result.status === 200) {
             setEditData(result.data);
             handleClickForm(setEditModal);
         }
@@ -83,10 +83,10 @@ const Admin = () => {
 
     const handleDeleteOnClick = async (id: number) => {
         const result = await getRoomById(id);
-        if (result.status == 200) {
+        if (result.status === 200) {
             setDeleteRoomTitle(result.data.title);
             setDeleteRoomId(result.data.id);
-            handleClickForm(setShowDeleteModal);
+            setShowDeleteModal(true);
         }
     };
     const displayCards = () => {
@@ -162,7 +162,6 @@ const Admin = () => {
                 open={showDeleteModal}
                 onClose={() => {
                     handleClose(setShowDeleteModal);
-                    setDeleteRoomId(null);
                 }}
                 onSubmit={() =>
                     deleteRoomId !== null && handleDelete(deleteRoomId)
