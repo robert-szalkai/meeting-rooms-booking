@@ -71,7 +71,7 @@ const GlobalTheme = createTheme({
                 },
                 {
                     // white rounded button with black boreder
-                    props: { variant: "outlined", color: "primary" },
+                    props: { variant: "outlined", color: "inherit" },
                     style: {
                         height:SIZE.HEIGHT_ROUNDED_TABLE_BUTTON,
                         width: SIZE.WIDTH_ROUNDED_TABLE_BUTTON,
