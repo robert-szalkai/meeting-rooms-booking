@@ -20,40 +20,35 @@ const AdvancedBook = () => {
                 padding: 5,
                 border: 2,
                 borderColor: "gray",
+                rowGap: 2,
             }}
         >
             <Typography variant="h5" fontWeight={"bold"}>
                 New meeting
             </Typography>
-            {/* <Typography paddingTop={2}>Meeting Name</Typography> */}
             <TextField
                 placeholder="Provide meeting name"
                 variant="filled"
                 label="Meeting name"
-                size="small"
                 sx={{ minWidth: "100%" }}
                 InputProps={{ disableUnderline: true }}
             />
-            <Typography paddingTop={2}>Meeting Description</Typography>
             <TextField
                 placeholder="Provide meeting description"
                 variant="filled"
-                size="small"
                 multiline
                 rows={4}
                 sx={{ minWidth: "100%" }}
                 InputProps={{ disableUnderline: true }}
-                hiddenLabel
+                label="Meeting description"
             />
             <DateSelector />
-            <Typography paddingTop={2}>Meeting owner</Typography>
             <TextField
                 placeholder="An employee from doctari group"
                 variant="filled"
                 sx={{ minWidth: "100%" }}
                 InputProps={{ disableUnderline: true }}
-                hiddenLabel
-                size="small"
+                label="Meeting description"
             ></TextField>
             <Participants />
             <Box sx={{ display: "flex", marginLeft: "auto", gap: 2 }}>

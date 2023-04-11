@@ -1,9 +1,8 @@
 import React from "react";
-import { Grid, Typography, TextField, MenuItem } from "@mui/material";
+import { Grid, TextField, MenuItem } from "@mui/material";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { DateField } from "@mui/x-date-pickers";
 
 const hours = [
     { value: 8, label: "08:00" },
@@ -23,42 +22,29 @@ const DateSelector = () => {
     const date = new Date();
     let currentHour = date.getHours();
     return (
-        <Grid container paddingTop={2}>
+        <Grid container columnSpacing={1}>
             <Grid item xs={4}>
                 <LocalizationProvider size="small" dateAdapter={AdapterDayjs}>
                     <DatePicker
                         label="Day"
                         slotProps={{
                             textField: {
-                                size: "small",
                                 variant: "filled",
+                                InputProps: { disableUnderline: true },
+                                sx: { minWidth: "100%", paddingTop: 0.8 },
                             },
                         }}
                     />
                 </LocalizationProvider>
-                {/* <TextField
-                    select
-                    variant="filled"
-                    sx={{ minWidth: 197 }}
-                    InputProps={{ disableUnderline: true }}
-                    hiddenLabel
-                    size="small"
-                >
-                    {days.map((day) => (
-                        <MenuItem key={day.value} value={day.value}>
-                            {day.label}
-                        </MenuItem>
-                    ))}
-                </TextField> */}
             </Grid>
             <Grid item xs={4}>
                 <TextField
                     required
                     type="time"
                     variant="filled"
-                    sx={{ minWidth: 197 }}
+                    sx={{ minWidth: "100%", paddingTop: 0.8 }}
                     InputProps={{ disableUnderline: true }}
-                    label="Hour"
+                    label="Start"
                 >
                     {hours
                         .filter((crHour) => {
@@ -75,10 +61,10 @@ const DateSelector = () => {
                 <TextField
                     type="time"
                     variant="filled"
-                    sx={{ minWidth: 197 }}
+                    sx={{ minWidth: "100%", paddingTop: 0.8 }}
                     InputProps={{ disableUnderline: true }}
-                    hiddenLabel
-                    size="small"
+                    label="End"
+                    size="medium"
                 >
                     {hours
                         .filter((crHour) => {
