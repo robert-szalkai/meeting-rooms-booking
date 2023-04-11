@@ -1,13 +1,6 @@
 {
   "rooms": [
     {
-      "title": "Training Room jjssafgsannbndssd",
-      "description": "This training room is equipped with a projector and has a capacity of 20 people.Sda",
-      "lastBooked": "",
-      "capacity": "3",
-      "id": "2"
-    },
-    {
       "title": "Board Room2134",
       "description": "This is the largest meeting room in the office, with a table that can seat up to 16 people.",
       "lastBooked": "",
@@ -27,6 +20,20 @@
       "lastBooked": "",
       "capacity": "2",
       "id": "-HbPLF7"
+    },
+    {
+      "title": "Testare",
+      "description": "Aici testam tot",
+      "lastBooked": "",
+      "capacity": "12",
+      "id": "cIRUZjZ"
+    },
+    {
+      "title": "cscs",
+      "description": "xsxs",
+      "lastBooked": "",
+      "capacity": "1",
+      "id": "pSd1vsU"
     }
   ]
 }
