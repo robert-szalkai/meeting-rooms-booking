@@ -10,6 +10,8 @@ import {
     getRoomById,
     updateRoomData,
 } from "../../HandleRequests/RoomApi";
+import { DeleteConfirmationModal } from "./DeleteConfirmationModal/DeleteConfirmationModal";
+
 interface iCard {
     title: string;
     id: number;
@@ -19,6 +21,9 @@ interface iCard {
 }
 const Admin = () => {
     const [showModal, setShowModal] = useState<boolean>(false);
+    const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
+    const [deleteRoomId, setDeleteRoomId] = useState<number | null>(null);
+    const [deleteRoomTitle, setDeleteRoomTitle] = useState<string>("");
     const [datacontent, setDataContent] = useState<iCard[]>();
     const [loaded, setLoaded] = useState(false);
     const [showEditModal, setEditModal] = useState<boolean>(false);
@@ -30,7 +35,7 @@ const Admin = () => {
         Capacity: string | undefined
     ) => {
         const result = await addRoom(Name, Description, Capacity);
-        if (result.status == 201) {
+        if (result.status === 201) {
             setLoaded(true);
             handleClose(setShowModal);
         }
@@ -42,7 +47,7 @@ const Admin = () => {
         id?: number
     ) => {
         const result = await updateRoomData(Name, Description, Capacity, id);
-        if (result.status == 200) {
+        if (result.status === 200) {
             setLoaded(true);
             handleClose(setEditModal);
         }
@@ -63,15 +68,25 @@ const Admin = () => {
     };
     const handleDelete = async (id: number) => {
         const result = await deleteRooms(id);
-        if (result.status == 200) {
+        if (result.status === 200) {
             setLoaded(true);
+            setShowDeleteModal(false);
         }
     };
     const handleEditOnClick = async (id: number) => {
         const result = await getRoomById(id);
-        if (result.status == 200) {
+        if (result.status === 200) {
             setEditData(result.data);
             handleClickForm(setEditModal);
+        }
+    };
+
+    const handleDeleteOnClick = async (id: number) => {
+        const result = await getRoomById(id);
+        if (result.status === 200) {
+            setDeleteRoomTitle(result.data.title);
+            setDeleteRoomId(result.data.id);
+            setShowDeleteModal(true);
         }
     };
     const displayCards = () => {
@@ -79,7 +94,7 @@ const Admin = () => {
             <Grid key={e.id} item xs={6}>
                 <Cards
                     handleEdit={handleEditOnClick}
-                    handleDelete={handleDelete}
+                    handleDelete={handleDeleteOnClick}
                     title={e.title}
                     id={e.id}
                     description={e.description}
@@ -92,7 +107,7 @@ const Admin = () => {
         getDataContent();
     }, []);
     useEffect(() => {
-        if (loaded != false) {
+        if (loaded !== false) {
             getDataContent();
             setLoaded(false);
         }
@@ -113,7 +128,7 @@ const Admin = () => {
                     alignItems: "center",
                 }}
                 onClose={() => {
-                    handleClose(setShowModal);
+                    setShowModal(false);
                 }}
                 open={showModal}
             >
@@ -121,6 +136,9 @@ const Admin = () => {
                     edit={false}
                     text={"Create Meeting Room"}
                     handleSubmit={handleSubmitForm}
+                    onClose={() => {
+                        setShowModal(false);
+                    }}
                 />
             </Modal>
             <Modal
@@ -132,7 +150,7 @@ const Admin = () => {
                     alignItems: "center",
                 }}
                 onClose={() => {
-                    handleClose(setEditModal);
+                    setEditModal(false);
                 }}
                 open={showEditModal}
             >
@@ -141,8 +159,21 @@ const Admin = () => {
                     editData={editDataEvent}
                     text={"Configuration"}
                     handleSubmit={handleSubmitEdit}
+                    onClose={() => {
+                        setEditModal(false);
+                    }}
                 />
             </Modal>
+            <DeleteConfirmationModal
+                open={showDeleteModal}
+                onClose={() => {
+                    handleClose(setShowDeleteModal);
+                }}
+                onSubmit={() =>
+                    deleteRoomId !== null && handleDelete(deleteRoomId)
+                }
+                roomTitle={deleteRoomTitle}
+            />
             <Grid
                 flexWrap="wrap"
                 sx={{ paddingTop: "50px" }}
