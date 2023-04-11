@@ -1,13 +1,6 @@
 {
   "rooms": [
     {
-      "title": "Board Room2134",
-      "description": "This is the largest meeting room in the office, with a table that can seat up to 16 people.",
-      "lastBooked": "",
-      "capacity": "3",
-      "id": "1"
-    },
-    {
       "id": "3",
       "title": "Breakout Room",
       "description": "This small room is perfect for quick meetings or phone calls.",
@@ -15,12 +8,13 @@
       "capacity": "3"
     },
     {
-      "title": "Meet1",
-      "description": "sajdas",
+      "title": "fvrefver",
+      "description": "erfcrcfse",
       "lastBooked": "",
-      "capacity": "2",
-      "id": "-HbPLF7"
+      "capacity": "22",
+      "id": "IRnDNK-"
     },
+    
     {
       "title": "Testare",
       "description": "Aici testam tot",
