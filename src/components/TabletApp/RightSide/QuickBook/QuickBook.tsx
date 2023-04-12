@@ -12,7 +12,7 @@ import EditCalendarIcon from "@mui/icons-material/EditCalendar";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { styled } from "@mui/material/styles";
-import { getParticipants } from "../../../../hooks/getRequests";
+import { getParticipants } from "../../../../api/getRequests";
 import COLORS from "../../../../constants/CustomColors";
 
 //To be removed when globla theme is done
