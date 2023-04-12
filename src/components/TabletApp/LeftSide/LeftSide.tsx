@@ -16,7 +16,7 @@ const initialCardData: iUpcomingCards[] = [
     {
         start: "Focus Room",
         end: "Tue Apr 03 2023 16:46:29 GMT+0300",
-        persons: ["ana beluci", "oana, maria"],
+        persons: ["ana beluci", "oana, mari"],
     },
     {
         start: "Round up Room",
