@@ -12,7 +12,8 @@ import EditCalendarIcon from "@mui/icons-material/EditCalendar";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { styled } from "@mui/material/styles";
-import { getParticipants } from "../../HandleRequests/RoomApi";
+import { getParticipants, getParticipant } from "../../HandleRequests/RoomApi";
+import dayjs from "dayjs";
 
 //To be removed when globla theme is done
 const Item = styled(Paper)(({ theme }) => ({
@@ -26,12 +27,27 @@ const Item = styled(Paper)(({ theme }) => ({
 //To be removed when global theme is done
 const buttonStyle = { color: "#008435", border: "1px solid #008435" };
 
+const Owner = {
+    name: "",
+    id: 0,
+    available: true,
+    image: "",
+};
+
+const Meeting = {
+    id: 0,
+    owner: 0,
+    start_time: "",
+    end_time: "",
+};
+
 const QuickBook = () => {
     const [timeButtonsVisible, setTimeButtonsVisible] = useState(false);
     const [open, setOpen] = useState(false);
-    const [ownerName, setOwnerName] = useState("");
+    const [owner, setOwner] = useState(Owner);
     const [owners, setOwners] = useState([""]);
     const [autoComplete, setAutoComplete] = useState(false);
+    const [time_val, setTime_val] = useState(0);
 
     const handleQuickBook = () => {
         setTimeButtonsVisible(!timeButtonsVisible);
@@ -40,16 +56,34 @@ const QuickBook = () => {
 
     const handleClickTime = () => {
         if (!open) setOpen(true);
-        setOwnerName("");
+        setOwner(Owner);
     };
 
-    const handleChange = (e: any) => {
-        setOwnerName(e.target.value);
+    const handleChange = async (e: any) => {
+        const result = await getParticipant(e.target.innerHTML);
+        setOwner(result.data[0]);
     };
 
-    const handleSearchOwner = () => {
-        console.log(ownerName);
-        //To be implemented. Final step, needs to create meeting
+    const handleSubmitOwner = async () => {
+        let now = dayjs();
+        let end_time = now.add(time_val, "minute");
+        let latest_meetings_id = 0;
+        const response = await axios.get("http://localhost:3001/meetings");
+        response.data.forEach(
+            ({ id }: { id: number }) => (latest_meetings_id = id)
+        );
+        const res = await axios.post("http://localhost:3001/meetings", {
+            id: latest_meetings_id + 1,
+            room_id: 1,
+            owner: owner.id,
+            participants_id: [],
+            start_time: now,
+            end_time: end_time,
+            duration: time_val,
+        });
+        console.log(res.status);
+        // Toast for successful confirmation to be added
+        handleQuickBook();
     };
 
     const populateOwners = async () => {
@@ -61,7 +95,7 @@ const QuickBook = () => {
         setOwners(tempOwners);
     };
 
-    if (owners.length == 1) populateOwners();
+    if (owners.length === 1) populateOwners();
 
     return (
         <Box>
@@ -92,28 +126,54 @@ const QuickBook = () => {
                         minHeight="25vh"
                     >
                         <Grid item xs={2}>
-                            <Item sx={buttonStyle} onClick={handleClickTime}>
+                            <Item
+                                sx={buttonStyle}
+                                onClick={() => {
+                                    handleClickTime();
+                                    setTime_val(15);
+                                }}
+                            >
                                 {" "}
                                 {/* To be replaced when global theme is done*/}
+                                {/* <Button onClick={handleClickTime(15)}> */}
                                 15 Min
+                                {/* </Button> */}
                             </Item>
                         </Grid>
                         <Grid item xs={2}>
-                            <Item sx={buttonStyle} onClick={handleClickTime}>
+                            <Item
+                                sx={buttonStyle}
+                                onClick={() => {
+                                    handleClickTime();
+                                    setTime_val(20);
+                                }}
+                            >
                                 {" "}
                                 {/* To be replaced when global theme is done*/}
                                 20 Min
                             </Item>
                         </Grid>
                         <Grid item xs={2}>
-                            <Item sx={buttonStyle} onClick={handleClickTime}>
+                            <Item
+                                sx={buttonStyle}
+                                onClick={() => {
+                                    handleClickTime();
+                                    setTime_val(30);
+                                }}
+                            >
                                 {" "}
                                 {/* To be replaced when global theme is done*/}
                                 30 Min
                             </Item>
                         </Grid>
                         <Grid item xs={2}>
-                            <Item sx={buttonStyle} onClick={handleClickTime}>
+                            <Item
+                                sx={buttonStyle}
+                                onClick={() => {
+                                    handleClickTime();
+                                    setTime_val(40);
+                                }}
+                            >
                                 {" "}
                                 {/* To be replaced when global theme is done*/}
                                 40 Min
@@ -136,27 +196,25 @@ const QuickBook = () => {
                                         }
                                     }}
                                     onClose={() => setAutoComplete(false)}
+                                    onChange={handleChange}
                                     disablePortal
                                     id="combo-box-demo"
                                     options={owners}
                                     sx={{ width: 300 }}
-                                    value={ownerName}
+                                    value={
+                                        owner === undefined ? "" : owner.name
+                                    }
                                     renderInput={(params) => (
-                                        <TextField
-                                            {...params}
-                                            label="Participants"
-                                            value={ownerName}
-                                            onChange={handleChange}
-                                        />
+                                        <TextField {...params} label="Owner" />
                                     )}
                                 />
                             </Box>
                             <Box
                                 display="flex"
                                 justifyContent="center"
-                                onClick={handleSearchOwner}
+                                onClick={handleSubmitOwner}
                             >
-                                <Button>Save</Button>
+                                <Button>Submit</Button>
                             </Box>
                         </Box>
                     ) : null}

@@ -1,6 +1,7 @@
 import React from "react";
 import { Box } from "@mui/system";
 import { Typography } from "@mui/material";
+import QuickBook from "../../TabletView/QuickBook";
 
 const availabilityMessages = [
     "currently available",
@@ -33,9 +34,10 @@ const RightSide = ({ roomName, availability }: iRightSide) => {
                 }}
             >
                 <Box>
-                    <Typography variant="h4">
+                    {/* <Typography variant="h4">
                         {roomName} is {availabilityMessages[availability]}.
-                    </Typography>
+                    </Typography> */}
+                    <QuickBook />
                 </Box>
             </Box>
         </Box>
