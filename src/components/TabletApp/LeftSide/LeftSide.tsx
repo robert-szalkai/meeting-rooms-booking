@@ -1,8 +1,8 @@
 import React, { useRef, useState } from "react";
 import { Box } from "@mui/system";
-import { Button, Typography } from "@mui/material";
+import { Button, Paper, Typography } from "@mui/material";
 import UpcomingCards from "./UpcomingCards/UpcomingCards";
-
+import "./UpcomingCardsScrollCSS.css";
 interface iLeftSide {
     roomName: string;
 }
@@ -70,10 +70,11 @@ const LeftSide = ({ roomName }: iLeftSide) => {
         month: "short",
         year: "numeric",
     };
+    const colorStates = ["#008435", "#BCA900", "#DD6764"];
 
+    const [availability, setAvailability] = useState(0);
     const formattedDate: string = currDate.toLocaleDateString("en-US", options);
     const [time, setTime] = useState(hoursMin);
-    const scrollbarsRef = useRef<HTMLDivElement>(null);
     const displayCards = () => {
         return initialCardData
             .slice(0, cardsToShow)
@@ -86,6 +87,16 @@ const LeftSide = ({ roomName }: iLeftSide) => {
             ));
     };
     const [cardsToShow, setCardsToShow] = useState(2);
+
+    const styles = {
+        root: {
+            overflow: "auto",
+            "&::-webkit-scrollbar": {
+                display: "none",
+            },
+            "&::-webkit-overflow-scrolling": "touch",
+        },
+    };
 
     return (
 
@@ -126,29 +137,31 @@ const LeftSide = ({ roomName }: iLeftSide) => {
                     color: "white",
                     paddingLeft: 0.1,
                     paddingTop: 12,
+                    overflow: "auto",
                 }}
             >
-                {/* {displayCards()}
+                <Paper
+                    style={{
+                        backgroundColor: `${colorStates[availability]}`,
+                        maxHeight: 520,
+                        overflow: "auto",
+                        padding: "10px",
+                        marginBottom: "10px",
+                        boxShadow: "none",
+                    }}
+                    sx={styles.root}
+                >
+                    <Box> {displayCards()}</Box>
+                </Paper>
+
                 {cardsToShow < initialCardData.length && (
                     <Button
-                        sx={{ color: "white" }}
+                        sx={{ color: "black" }}
                         onClick={() => setCardsToShow((num) => num + 2)}
                     >
                         Show More
                     </Button>
-                )} */}
-
-                <Box>
-                    {displayCards()}
-                    {cardsToShow < initialCardData.length && (
-                        <Button
-                            sx={{ color: "white" }}
-                            onClick={() => setCardsToShow((num) => num + 2)}
-                        >
-                            Show More
-                        </Button>
-                    )}
-                </Box>
+                )}
             </Box>
         </Box>
     );
