@@ -1,58 +1,45 @@
 import React from "react";
-import { Box, TextField, Typography, Button } from "@mui/material";
+import { Box, TextField, Typography, Button, InputLabel } from "@mui/material";
 import DateSelector from "./DateSelector";
 import Participants from "./Participants";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
-
+import InputField from "./InputField";
 const AdvancedBook = () => {
     return (
         <Box
-            sx={{
-                minWidth: 600,
-                maxWidth: 600,
-                minHeight: 500,
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "flex-start",
-                backgroundColor: "white",
-                marginLeft: "auto",
-                borderTopLeftRadius: "10%",
-                padding: 5,
-                border: 2,
-                borderColor: "gray",
-                rowGap: 2,
-            }}
+            display="flex"
+            flexDirection="column"
+            justifyContent="center"
+            rowGap={2}
+            boxSizing="border-box"
+            data-testid="advancedbook-container"
         >
             <Typography variant="h5" fontWeight={"bold"}>
                 New meeting
             </Typography>
-            <TextField
-                placeholder="Provide meeting name"
-                variant="filled"
-                label="Meeting name"
-                sx={{ minWidth: "100%" }}
-                InputProps={{ disableUnderline: true }}
+            <InputField
+                inputLabelText="Meeting Name"
+                placeholderText="Provide meeting name"
             />
-            <TextField
-                placeholder="Provide meeting description"
-                variant="filled"
-                multiline
-                rows={4}
-                sx={{ minWidth: "100%" }}
-                InputProps={{ disableUnderline: true }}
-                label="Meeting description"
+            <InputField
+                inputLabelText="Meeting Description"
+                placeholderText="Provide meeting description"
+                multilineSelect
             />
             <DateSelector />
-            <TextField
-                placeholder="An employee from doctari group"
-                variant="filled"
-                sx={{ minWidth: "100%" }}
-                InputProps={{ disableUnderline: true }}
-                label="Meeting description"
-            ></TextField>
+            <InputField
+                inputLabelText="Meeting Owner"
+                placeholderText="An employee from doctari group "
+            />
             <Participants />
-            <Box sx={{ display: "flex", marginLeft: "auto", gap: 2 }}>
-                <Button variant="outlined" color="success">
+            <Box
+                sx={{
+                    display: "flex",
+                    marginLeft: "auto",
+                    gap: 2,
+                }}
+            >
+                <Button variant="contained" color="success">
                     Cancel
                 </Button>
                 <Button variant="contained" color="success">
