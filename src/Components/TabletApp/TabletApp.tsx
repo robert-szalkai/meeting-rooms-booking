@@ -1,26 +1,26 @@
-import { Box } from "@mui/system";
+import { Box,Container} from "@mui/system";
 import React, { useState } from "react";
 import LeftSide from "./LeftSide/LeftSide";
 import RightSide from "./RightSide/RightSide";
-
+import COLORS from "../../CustomColors";
+import Grid from "@mui/material/Grid";
 const TabletApp = () => {
-    const colorStates = ["#008435", "#BCA900", "#DD6764"];
+    const colorStates = [COLORS.SUCCESS, COLORS.WARNING, COLORS.ERROR];
 
     const [availability, setAvailability] = useState(1);
     const [roomName, setRoomName] = useState("Focus Room");
-
+    
     return (
-        <Box
-            sx={{
-                display: "flex",
-                background: `${colorStates[availability]}`,
-                width: "100%",
-                height: "100%",
-            }}
-        >
-            <LeftSide roomName={roomName} />
-            <RightSide roomName={roomName} availability={availability} />
-        </Box>
+        <Grid sx={{backgroundColor:colorStates[availability]}} flexDirection="row"  container>
+            <Grid  item xs={5}>
+                <LeftSide roomName={roomName} />
+            </Grid>
+            <Grid  item xs={7}  >
+            <RightSide  roomName={roomName} availability={availability} />
+            </Grid>
+        </Grid>
+ 
+        
     );
 };
 

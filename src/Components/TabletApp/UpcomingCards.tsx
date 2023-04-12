@@ -35,7 +35,6 @@ const UpcomingCards = ({ start, end, persons }: iUpcomingCards) => {
     return (
         <Card
             sx={{
-                width: SIZE.WIDTH_CARD,
                 height: SIZE.HEIGT_CARD,
                 borderRadius: SIZE.BORDER_RADIUS_CARD,
                 display: "flex",
