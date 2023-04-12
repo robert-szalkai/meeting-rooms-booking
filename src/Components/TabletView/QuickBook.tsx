@@ -9,7 +9,7 @@ import {
     Autocomplete,
 } from "@mui/material";
 import EditCalendarIcon from "@mui/icons-material/EditCalendar";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import axios from "axios";
 import { styled } from "@mui/material/styles";
 import { getParticipants, getParticipant } from "../../HandleRequests/RoomApi";
@@ -32,13 +32,6 @@ const Owner = {
     id: 0,
     available: true,
     image: "",
-};
-
-const Meeting = {
-    id: 0,
-    owner: 0,
-    start_time: "",
-    end_time: "",
 };
 
 const QuickBook = () => {
