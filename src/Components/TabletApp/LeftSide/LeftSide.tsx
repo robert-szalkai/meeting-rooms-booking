@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Box } from "@mui/system";
 import { Typography } from "@mui/material";
 import QuickBookGlobal from "../../TabletView/QuickBook/QuickBookGlobal";
@@ -6,10 +6,16 @@ import QuickBookGlobal from "../../TabletView/QuickBook/QuickBookGlobal";
 interface iLeftSide {
     roomName: string;
     availability: number;
-    quickBookAvaible?: number;
+    onChangeQuickBookRight: () => void;
+    quickBookGlobalAvaible: boolean;
 }
 
-const LeftSide = ({ roomName, availability, quickBookAvaible }: iLeftSide) => {
+const LeftSide = ({
+    roomName,
+    availability,
+    onChangeQuickBookRight,
+    quickBookGlobalAvaible,
+}: iLeftSide) => {
     let currDate = new Date();
     let hoursMin;
 
@@ -29,8 +35,11 @@ const LeftSide = ({ roomName, availability, quickBookAvaible }: iLeftSide) => {
     const [time, setTime] = useState(hoursMin);
     const [showQuickBookButton, setShowQuickBookButton] = useState(true);
 
-    if (availability === 2 || quickBookAvaible === 0)
-        setShowQuickBookButton(false);
+    useEffect(() => {
+        if (availability === 2 || !quickBookGlobalAvaible) {
+            setShowQuickBookButton(false);
+        }
+    }, [availability, quickBookGlobalAvaible]);
 
     return (
         <Box sx={{ width: "40%", height: "100%" }}>
@@ -51,9 +60,7 @@ const LeftSide = ({ roomName, availability, quickBookAvaible }: iLeftSide) => {
                 </Box>
                 {showQuickBookButton ? (
                     <QuickBookGlobal
-                        roomName={roomName}
-                        availability={availability}
-                        quickBookAvaible={1}
+                        onChangeQuickBookRight={onChangeQuickBookRight}
                     />
                 ) : null}
             </Box>

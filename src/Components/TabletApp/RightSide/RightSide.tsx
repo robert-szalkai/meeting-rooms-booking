@@ -12,13 +12,15 @@ const availabilityMessages = [
 interface iRightSide {
     roomName: string;
     availability: number;
-    quickBookAvaible?: number;
+    quickBookAvaible: boolean;
+    timeButtonsAvaible: boolean;
 }
 
 const RightSide = ({
     roomName,
     availability,
     quickBookAvaible,
+    timeButtonsAvaible,
 }: iRightSide) => {
     return (
         <Box
@@ -42,7 +44,9 @@ const RightSide = ({
                     <Typography variant="h4">
                         {roomName} is {availabilityMessages[availability]}.
                     </Typography>
-                    {quickBookAvaible ? <QuickBook /> : null}
+                    {quickBookAvaible ? (
+                        <QuickBook timeButtonsAvaible={timeButtonsAvaible} />
+                    ) : null}
                 </Box>
             </Box>
         </Box>

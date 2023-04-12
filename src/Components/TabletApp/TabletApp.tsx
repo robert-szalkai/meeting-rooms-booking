@@ -6,8 +6,15 @@ import RightSide from "./RightSide/RightSide";
 const TabletApp = () => {
     const colorStates = ["#008435", "#BCA900", "#DD6764"];
 
+    const [quickBookRightSide, setQuickBookRightSide] = useState(false);
+    const [timeButtonsAvaible, setTimeButtonsAvaible] = useState(false);
     const [availability, setAvailability] = useState(0);
     const [roomName, setRoomName] = useState("Focus Room");
+
+    const onChangeQuickBookRight = () => {
+        setQuickBookRightSide(true);
+        setTimeButtonsAvaible(true);
+    };
 
     return (
         <Box
@@ -21,12 +28,14 @@ const TabletApp = () => {
             <LeftSide
                 roomName={roomName}
                 availability={availability}
-                quickBookAvaible={1}
+                onChangeQuickBookRight={onChangeQuickBookRight}
+                quickBookGlobalAvaible={!quickBookRightSide}
             />
             <RightSide
                 roomName={roomName}
                 availability={availability}
-                quickBookAvaible={0}
+                quickBookAvaible={quickBookRightSide}
+                timeButtonsAvaible={timeButtonsAvaible}
             />
         </Box>
     );
