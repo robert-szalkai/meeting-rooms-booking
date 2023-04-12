@@ -3,6 +3,7 @@ import Header from "./Header/Header";
 import { Container, Modal, Grid } from "@mui/material";
 import Cards from "./MettingRoom/Cards";
 import MeetingRoomForm from "./MettingRoomForm/MeetingRoom";
+import  DeleteConfirmationModal from "./DeleteConfirmationModal/DeleteConfirmationModal";
 import {
     getRooms,
     deleteRooms,
@@ -180,7 +181,6 @@ const Admin = () => {
             >
                 {datacontent && displayCards()}
             </Grid>
-            <AdvancedBook />
         </Container>
     );
 };

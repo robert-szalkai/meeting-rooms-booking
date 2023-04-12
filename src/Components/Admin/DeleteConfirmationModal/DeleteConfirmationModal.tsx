@@ -11,7 +11,7 @@ type ConfirmationModalProps = {
     roomTitle: string;
 };
 
-export const DeleteConfirmationModal = ({
+ const DeleteConfirmationModal = ({
     open,
     onClose,
     onSubmit,
@@ -48,3 +48,4 @@ export const DeleteConfirmationModal = ({
         </Modal>
     );
 };
+export default DeleteConfirmationModal
