@@ -16,22 +16,22 @@ const initialCardData: iUpcomingCards[] = [
     {
         start: "Focus Room",
         end: "Tue Apr 03 2023 16:46:29 GMT+0300",
-        persons: ["ana beluci", "oana, mari"],
+        persons: ["ana beluci", "oana mari"],
     },
     {
         start: "Round up Room",
         end: "Tue Apr 03 2023 16:46:29 GMT+0300",
-        persons: ["ana beluci", "oana, maria"],
+        persons: ["ana beluci", "oana maria"],
     },
     {
         start: "Round up Room",
         end: "Tue Apr 03 2023 16:46:29 GMT+0300",
-        persons: ["ana beluci", "oana, maria"],
+        persons: ["ana beluci", "oana maria"],
     },
     {
         start: "Round up Room",
         end: "Tue Apr 03 2023 16:46:29 GMT+0300",
-        persons: ["ana beluci", "oana, maria"],
+        persons: ["ana beluci", "oana maria"],
     },
     {
         start: "Round up Room",
@@ -41,17 +41,17 @@ const initialCardData: iUpcomingCards[] = [
     {
         start: "New Meeting Room",
         end: "Tue Apr 03 2023 16:46:29 GMT+0300",
-        persons: ["ana beluci", "oana, maria"],
+        persons: ["ana beluci", "oana maria"],
     },
     {
         start: "Hello",
         end: "Tue Apr 03 2023 16:46:29 GMT+0300",
-        persons: ["ana beluci", "oana, maria"],
+        persons: ["ana beluci", "oana maria"],
     },
     {
         start: "Wow",
         end: "Tue Apr 03 2023 16:46:29 GMT+0300",
-        persons: ["ana beluci", "oana, maria"],
+        persons: ["ana beluci", "oana maria"],
     },
 ];
 
