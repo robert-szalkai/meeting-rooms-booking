@@ -1,16 +1,11 @@
 import React, { useEffect, useState } from "react";
 import Header from "./Header/Header";
 import { Container, Modal, Grid } from "@mui/material";
-import Cards from "./MettingRoom/Cards";
-import MeetingRoomForm from "./MettingRoomForm/MeetingRoom";
-import  DeleteConfirmationModal from "./DeleteConfirmationModal/DeleteConfirmationModal";
-import {
-    getRooms,
-    deleteRooms,
-    addRoom,
-    getRoomById,
-    updateRoomData,
-} from "../../HandleRequests/RoomApi";
+import Cards from "./MeetingRoom/Cards";
+import MeetingRoomForm from "./MeetingRoomForm/MeetingRoom";
+import DeleteConfirmationModal from "./DeleteConfirmationModal/DeleteConfirmationModal";
+import { deleteRooms, addRoom, updateRoomData } from "../../api/RoomApi";
+import {getRooms, getRoomById} from "../../api/getRequests"
 interface iCard {
     title: string;
     id: number;

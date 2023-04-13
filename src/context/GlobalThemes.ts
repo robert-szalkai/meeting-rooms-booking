@@ -1,6 +1,6 @@
 import { createTheme } from "@mui/material/styles";
-import COLORS from "../CustomColors";
-import SIZE from "../CustomSize";
+import COLORS from "../constants/CustomColors"
+import SIZE from "../constants/CustomSize";
 const GlobalTheme = createTheme({
     components: {
         MuiButton: {

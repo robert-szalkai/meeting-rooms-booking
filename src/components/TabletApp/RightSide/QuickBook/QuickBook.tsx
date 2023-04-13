@@ -12,7 +12,8 @@ import EditCalendarIcon from "@mui/icons-material/EditCalendar";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { styled } from "@mui/material/styles";
-import { getParticipants } from "../../HandleRequests/RoomApi";
+import { getParticipants } from "../../../../api/getRequests";
+import COLORS from "../../../../constants/CustomColors";
 
 //To be removed when globla theme is done
 const Item = styled(Paper)(({ theme }) => ({
@@ -24,7 +25,7 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 //To be removed when global theme is done
-const buttonStyle = { color: "#008435", border: "1px solid #008435" };
+const buttonStyle = { color: COLORS.GREEN, border: `1px solid ${COLORS.GREEN}` };
 
 const QuickBook = () => {
     const [timeButtonsVisible, setTimeButtonsVisible] = useState(false);
@@ -71,7 +72,7 @@ const QuickBook = () => {
                     sx={{
                         "border-radius": "50px",
                         "text-transform": "none",
-                        backgroundColor: "#008435",
+                        backgroundColor: COLORS.GREEN,
                     }}
                     onClick={() => {
                         handleQuickBook();

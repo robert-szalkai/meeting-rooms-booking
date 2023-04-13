@@ -1,6 +1,7 @@
 import React from "react";
 import { Box } from "@mui/system";
 import { Typography } from "@mui/material";
+import AdvancedBook from "./AdvancedBook/AdvancedBook";
 
 const availabilityMessages = [
     "currently available",
@@ -36,6 +37,9 @@ const RightSide = ({ roomName, availability }: iRightSide) => {
                     <Typography variant="h4">
                         {roomName} is {availabilityMessages[availability]}.
                     </Typography>
+                </Box>
+                <Box>
+                  <AdvancedBook />
                 </Box>
             </Box>
         </Box>

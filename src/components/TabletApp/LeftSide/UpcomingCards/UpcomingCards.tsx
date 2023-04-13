@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { Card, Typography, Box, Avatar } from "@mui/material";
-import SIZE from "../../CustomSize";
+import SIZE from "../../../../constants/CustomSize";
 interface iUpcomingCards {
     start: string;
     end: string;

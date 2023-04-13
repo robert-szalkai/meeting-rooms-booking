@@ -44,7 +44,9 @@ const LeftSide = ({ roomName }: iLeftSide) => {
                 </Box>
             </Box>
 
-            <Box></Box>
+            <Box>
+
+            </Box>
         </Box>
     );
 };

@@ -1,10 +1,11 @@
 import { Box } from "@mui/system";
 import React, { useState } from "react";
+import COLORS from "../../constants/CustomColors";
 import LeftSide from "./LeftSide/LeftSide";
 import RightSide from "./RightSide/RightSide";
 
 const TabletApp = () => {
-    const colorStates = ["#008435", "#BCA900", "#DD6764"];
+    const colorStates = [COLORS.GREEN, COLORS.YELLOW, COLORS.RED];
 
     const [availability, setAvailability] = useState(1);
     const [roomName, setRoomName] = useState("Focus Room");

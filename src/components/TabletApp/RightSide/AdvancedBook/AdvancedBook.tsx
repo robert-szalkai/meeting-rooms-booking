@@ -3,6 +3,7 @@ import { Box, TextField, Typography, Button } from "@mui/material";
 import DateSelector from "./DateSelector";
 import Participants from "./Participants";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import COLORS  from "../../../../constants/CustomColors";
 
 const AdvancedBook = () => {
     return (
@@ -14,7 +15,6 @@ const AdvancedBook = () => {
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "flex-start",
-                backgroundColor: "white",
                 marginLeft: "auto",
                 borderTopLeftRadius: "10%",
                 padding: 5,
@@ -62,8 +62,8 @@ const AdvancedBook = () => {
                     sx={{
                         height: 30,
                         borderRadius: 10,
-                        color: "green",
-                        borderColor: "green",
+                        color: COLORS.GREEN,
+                        borderColor: COLORS.GREEN,
                     }}
                 >
                     Cancel
@@ -73,7 +73,7 @@ const AdvancedBook = () => {
                     sx={{
                         height: 30,
                         borderRadius: 10,
-                        backgroundColor: "green",
+                        backgroundColor: COLORS.GREEN,
                     }}
                 >
                     <CalendarMonthIcon fontSize="small" />
