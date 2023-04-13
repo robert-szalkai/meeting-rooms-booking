@@ -162,6 +162,14 @@ const LeftSide = ({ roomName }: iLeftSide) => {
                         Show More
                     </Button>
                 )}
+                {cardsToShow === initialCardData.length && (
+                    <Button
+                        sx={{ color: "black" }}
+                        onClick={() => setCardsToShow((num) => 2)}
+                    >
+                        Show Less
+                    </Button>
+                )}
             </Box>
         </Box>
     );
