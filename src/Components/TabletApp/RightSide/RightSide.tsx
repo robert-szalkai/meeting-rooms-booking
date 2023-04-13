@@ -34,9 +34,6 @@ const RightSide = ({ roomName, availability }: iRightSide) => {
                 }}
             >
                 <Box>
-                    {/* <Typography variant="h4">
-                        {roomName} is {availabilityMessages[availability]}.
-                    </Typography> */}
                     <QuickBook />
                 </Box>
             </Box>

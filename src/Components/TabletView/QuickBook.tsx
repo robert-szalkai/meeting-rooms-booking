@@ -128,9 +128,7 @@ const QuickBook = () => {
                             >
                                 {" "}
                                 {/* To be replaced when global theme is done*/}
-                                {/* <Button onClick={handleClickTime(15)}> */}
                                 15 Min
-                                {/* </Button> */}
                             </Item>
                         </Grid>
                         <Grid item xs={2}>
