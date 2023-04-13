@@ -3,8 +3,19 @@ import { Box } from "@mui/system";
 import { Button, Paper, Typography } from "@mui/material";
 import UpcomingCards from "./UpcomingCards/UpcomingCards";
 import "./UpcomingCardsScrollCSS.css";
+import Dayjs from "dayjs";
+
 interface iLeftSide {
-    roomName: string;
+    name: string | undefined;
+    meetings:
+        | {
+              name: string;
+              id: number;
+              start_time: string;
+              end_time: string;
+              participants: string[];
+          }[]
+        | undefined;
 }
 interface iUpcomingCards {
     start: string;
@@ -55,7 +66,7 @@ const initialCardData: iUpcomingCards[] = [
     },
 ];
 
-const LeftSide = ({ roomName }: iLeftSide) => {
+const LeftSide = ({ name, meetings }: iLeftSide) => {
     let currDate = new Date();
     let hoursMin;
 
@@ -72,17 +83,18 @@ const LeftSide = ({ roomName }: iLeftSide) => {
     };
     const colorStates = ["#008435", "#BCA900", "#DD6764"];
 
-    const [availability, setAvailability] = useState(0);
+    const [availability, setAvailability] = useState(1);
     const formattedDate: string = currDate.toLocaleDateString("en-US", options);
     const [time, setTime] = useState(hoursMin);
     const displayCards = () => {
-        return initialCardData
-            .slice(0, cardsToShow)
+        return meetings
+            ?.slice(0, cardsToShow)
             .map((e) => (
                 <UpcomingCards
-                    start={e.start}
-                    end={e.start}
-                    persons={e.persons}
+                    start={Dayjs(e.start_time).format("HH:MM")}
+                    end={Dayjs(e.end_time).format("HH:MM")}
+                    persons={e.participants}
+                    meetingName={e.name}
                 />
             ));
     };
@@ -118,58 +130,82 @@ const LeftSide = ({ roomName }: iLeftSide) => {
                     flexDirection: "column",
                     alignItems: "center",
                     color: "white",
-                    paddingLeft: 10,
-                    paddingTop: 10,
+                    justifyContent: "space-evenly",
+                    height: "100vh",
+                    boxSizing: "border-box",
                 }}
             >
-                <Box>
-                    <Typography variant="h3">{roomName}</Typography>
-                    <Typography variant="h2">{time}</Typography>
-                    <Typography variant="h3">{formattedDate}</Typography>
-                </Box>
-            </Box>
+                <Box
+                    sx={{
+                        width: "100%",
 
-            <Box
-                sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    color: "white",
-                    paddingLeft: 0.1,
-                    paddingTop: 12,
-                    overflow: "auto",
-                }}
-            >
-                <Paper
-                    style={{
-                        backgroundColor: `${colorStates[availability]}`,
-                        maxHeight: 520,
-                        overflow: "auto",
-                        padding: "10px",
-                        marginBottom: "10px",
-                        boxShadow: "none",
+                        display: "flex",
+
+                        flexDirection: "column",
+
+                        justifyContent: "center",
+
+                        alignItems: "center",
+
+                        height: "200px",
                     }}
-                    sx={styles.root}
                 >
-                    <Box> {displayCards()}</Box>
-                </Paper>
+                    <Box
+                        display="flex"
+                        flexDirection="column"
+                        justifyContent="center"
+                        alignItems="flex-start"
+                    >
+                        <Typography variant="h3">{name}</Typography>
+                        <Typography variant="h2">{time}</Typography>
 
-                {cardsToShow < initialCardData.length && (
-                    <Button
-                        sx={{ color: "black" }}
-                        onClick={() => setCardsToShow((num) => num + 2)}
+                        <Typography variant="h3">{formattedDate}</Typography>
+                    </Box>
+                </Box>
+                <Box
+                    sx={{
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
+                        color: "white",
+                        paddingLeft: 0.1,
+                        paddingTop: 12,
+                        overflow: "auto",
+                    }}
+                >
+                    <Paper
+                        style={{
+                            // backgroundColor: `${colorStates[availability]}`,
+                            backgroundColor: "transparent",
+                            height: "400px",
+                            overflow: "auto",
+                            gap: "10px",
+                            marginBottom: "10px",
+                            boxShadow: "none",
+                            opacity: 1,
+                        }}
+                        sx={styles.root}
                     >
-                        Show More
-                    </Button>
-                )}
-                {cardsToShow === initialCardData.length && (
-                    <Button
-                        sx={{ color: "black" }}
-                        onClick={() => setCardsToShow((num) => 2)}
-                    >
-                        Show Less
-                    </Button>
-                )}
+                        <Box> {displayCards()}</Box>
+                    </Paper>
+
+                    {cardsToShow < initialCardData.length && (
+                        <Button
+                            sx={{ color: "black" }}
+                            onClick={() => setCardsToShow((num) => num + 2)}
+                        >
+                            Show More
+                        </Button>
+                    )}
+                    {cardsToShow === initialCardData.length && (
+                        <Button
+                            sx={{ color: "black" }}
+                            onClick={() => setCardsToShow((num) => 2)}
+                        >
+                            Show Less
+                        </Button>
+                    )}
+                </Box>
             </Box>
         </Box>
     );

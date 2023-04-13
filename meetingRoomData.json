@@ -1,0 +1,38 @@
+{"roomdata":{
+"name": "Focus Room",
+
+    "meetings":[
+        {"name": "Focus Room",
+
+           "id":"1",
+           "start_time": "2023-04-13T08:10:18.386Z",
+           "end_time": "2023-04-13T08:10:18.386Z",
+           "participants":["Stefan Erling", "Stefan Erling", "Stefan Erling", "Stefan Erling", "Stefan Erling", "Stefan Erling", "Stefan Erling", "Stefan Erling" ]
+        },
+
+
+        {"name": "Focus Room",
+
+            "id":"1",
+            "start_time": "2023-04-13T08:10:18.386Z",
+            "end_time": "2023-04-13T08:10:18.386Z",
+            "participants":["Stefan Erling"]
+         },
+         {"name": "Focus Room",
+
+            "id":"1",
+            "start_time": "2023-04-13T08:10:18.386Z",
+            "end_time": "2023-04-13T08:10:18.386Z",
+            "participants":["Stefan Erling"]
+         },
+         {"name": "Focus Room",
+
+            "id":"1",
+            "start_time": "2023-04-13T08:10:18.386Z",
+            "end_time": "2023-04-13T08:10:18.386Z",
+            "participants":["Stefan Erling"]
+         }
+
+    ]
+   }
+}

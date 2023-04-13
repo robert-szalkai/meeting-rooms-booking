@@ -2,27 +2,55 @@ import { Box, Container } from "@mui/system";
 
 import React, { useEffect, useState } from "react";
 
-
-
 import COLORS from "../../constants/CustomColors";
 import LeftSide from "./LeftSide/LeftSide";
 import Grid from "@mui/material/Grid";
+
 import { Route, Routes, useParams } from "react-router-dom";
 import AdvancedBook from "./RightSide/AdvancedBook/AdvancedBook";
 import MeetingInfo from "./RightSide/MeetingInfo/MeetingInfo";
-import {spawnToast} from "../../utils/Toast";
-import {Typography} from "@mui/material";
+import { spawnToast } from "../../utils/Toast";
+import { Typography } from "@mui/material";
+
+import { getMeetingsData } from "../../api/getRequests";
+
+interface iLeftSide {
+    name: string | undefined;
+    meetings: {
+        name: string;
+        id: number;
+        start_time: string;
+        end_time: string;
+        participants: string[];
+    }[];
+}
+
 const TabletApp = () => {
     const colorStates = [COLORS.GREEN, COLORS.YELLOW, COLORS.RED];
-    const { id } = useParams();
+    const [meetingsData, setMeetingsData] = useState<iLeftSide>();
     const [availability, setAvailability] = useState(1);
     const [roomName, setRoomName] = useState("Focus Room");
 
-  useEffect(() => {
-    spawnToast("You have succeded","Your booking was made",true)
-    spawnToast("Something went wrong","Your booking has not been made",false)
-    }, [])
+    const { id } = useParams();
 
+    useEffect(() => {
+        spawnToast("You have succeded", "Your booking was made", true);
+        spawnToast(
+            "Something went wrong",
+            "Your booking has not been made",
+            false
+        );
+    }, []);
+
+    const meetData = async () => {
+        const response = await getMeetingsData();
+        if (response.status === 200) {
+            setMeetingsData(response.data);
+        }
+    };
+    useEffect(() => {
+        meetData();
+    }, []);
 
     return (
         <Grid
@@ -31,10 +59,14 @@ const TabletApp = () => {
             container
         >
             <Grid item xs={5}>
-                <LeftSide roomName={roomName} />
+                {meetingsData && (
+                    <LeftSide
+                        meetings={meetingsData?.meetings}
+                        name={meetingsData?.name}
+                    />
+                )}
             </Grid>
             <Grid item xs={7}>
-
                 <Box
                     sx={{
                         paddingTop: 10,
@@ -42,11 +74,11 @@ const TabletApp = () => {
                         boxSizing: "border-box",
                     }}
                 >
-                    <Box 
-                        overflow={'auto'}
+                    <Box
+                        overflow={"auto"}
                         sx={{
-                            paddingTop:1,
-                            paddingLeft:4,
+                            paddingTop: 1,
+                            paddingLeft: 4,
                             background: "white",
                             height: "100%",
                             borderRadius: "36px 0px 0px 0px",
@@ -55,18 +87,17 @@ const TabletApp = () => {
                             alignItems: "center",
                             justifyContent: "flex-start",
                             boxSizing: "border-box",
-                            
                         }}
                     >
                         <Routes>
                             <Route path="/form" element={<AdvancedBook />} />
                             <Route
                                 path="/meetinginfo/:meetid"
-                                element={<MeetingInfo />} />
+                                element={<MeetingInfo />}
+                            />
                         </Routes>
                     </Box>
                 </Box>
-
             </Grid>
         </Grid>
     );
