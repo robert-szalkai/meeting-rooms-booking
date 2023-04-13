@@ -4,6 +4,9 @@ import SIZE from "../constants/CustomSize";
 const GlobalTheme = createTheme({
     components: {
         MuiButton: {
+            defaultProps:{
+                disableRipple:true
+            },
             variants: [
                 {
                     //green square button
@@ -13,6 +16,10 @@ const GlobalTheme = createTheme({
                         width: SIZE.WIDTH_TABLE_BUTTON,
                         color: COLORS.SUCCESS,
                         borderColor: COLORS.SUCCESS,
+                        ":hover":{
+                            filter:"brightness(85%)",
+                            backgroundColor:COLORS.SUCCESS
+                         }
                     },
                 },
                 {
@@ -23,7 +30,12 @@ const GlobalTheme = createTheme({
                         width: SIZE.WIDTH_TABLE_BUTTON,
                         color: COLORS.WARNING,
                         borderColor: COLORS.WARNING,
+                        ":hover":{
+                            filter:"brightness(85%)",
+                            backgroundColor:COLORS.WARNING
+                         }
                     },
+                    
                 },
                 {
                     // yellow rounded button with green boredr
@@ -33,6 +45,10 @@ const GlobalTheme = createTheme({
                         width: SIZE.WIDTH_ROUNDED_TABLE_BUTTON,
                         backgroundColor: COLORS.WARNING,
                         borderRadius: "20px",
+                        ":hover":{
+                            filter:"brightness(85%)",
+                            backgroundColor:COLORS.WARNING
+                         }
                     },
                 },
                 {
@@ -43,6 +59,10 @@ const GlobalTheme = createTheme({
                         width: SIZE.WIDTH_ROUNDED_TABLE_BUTTON,
                         backgroundColor:COLORS.ERROR,
                         borderRadius: "20px",
+                        ":hover":{
+                            filter:"brightness(85%)",
+                            backgroundColor:COLORS.ERROR
+                         }
                     },
                 },
 
@@ -54,6 +74,10 @@ const GlobalTheme = createTheme({
                         width: SIZE.WIDTH_ROUNDED_TABLE_BUTTON,
                         backgroundColor: COLORS.SUCCESS,
                         borderRadius: "20px",
+                        ":hover":{
+                            filter:"brightness(85%)",
+                            backgroundColor:COLORS.SUCCESS
+                         }
                     },
                 },
                 {
@@ -65,6 +89,7 @@ const GlobalTheme = createTheme({
                         backgroundColor: COLORS.NOTAVAIBLE,
                         borderColor: COLORS.NOTAVAIBLE,
                         color: "white",
+                        
                     },
                 },
                 {
@@ -73,10 +98,14 @@ const GlobalTheme = createTheme({
                     style: {
                         height:SIZE.HEIGHT_ROUNDED_TABLE_BUTTON,
                         width: SIZE.WIDTH_ROUNDED_TABLE_BUTTON,
-                        backgroundColor: "white",
-                        borderColor: "black",
+                        borderColor: "#3A5568",
                         borderRadius: "20px",
+                        backgroundColor:"white",
                         color: "black",
+                        ":hover":{
+                           filter:"brightness(85%)",
+                           backgroundColor:"white"
+                        }
                     },
                 },
             ],

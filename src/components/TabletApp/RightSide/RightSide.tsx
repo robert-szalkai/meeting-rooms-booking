@@ -18,8 +18,9 @@ const RightSide = ({ roomName, availability }: iRightSide) => {
     return (
         <Box
             sx={{
-                width: "100%",
                 paddingTop: 10,
+                height:"100vh",
+                boxSizing:"border-box"
             }}
         >
             <Box
