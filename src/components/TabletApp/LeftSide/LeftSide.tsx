@@ -1,13 +1,23 @@
-import React, { useState } from "react";
+//import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Box } from "@mui/system";
 import { Typography, Button } from "@mui/material";
 import UpcomingCards from "./UpcomingCards/UpcomingCards";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import QuickBookGlobal from "./QuickBookGlobal/QuickBookGlobal";
 interface iLeftSide {
     roomName: string;
+    availability: number;
+    onChangeQuickBookRight: () => void;
+    quickBookGlobalAvaible: boolean;
 }
 
-const LeftSide = ({ roomName }: iLeftSide) => {
+const LeftSide = ({
+    roomName,
+    availability,
+    onChangeQuickBookRight,
+    quickBookGlobalAvaible,
+}: iLeftSide) => {
     let currDate = new Date();
     let hoursMin;
 
@@ -25,6 +35,13 @@ const LeftSide = ({ roomName }: iLeftSide) => {
 
     const formattedDate: string = currDate.toLocaleDateString("en-US", options);
     const [time, setTime] = useState(hoursMin);
+    const [showQuickBookButton, setShowQuickBookButton] = useState(true);
+
+    useEffect(() => {
+        if (availability === 2 || !quickBookGlobalAvaible) {
+            setShowQuickBookButton(false);
+        }
+    }, [availability, quickBookGlobalAvaible]);
 
     return (
         <Box
@@ -105,10 +122,11 @@ const LeftSide = ({ roomName }: iLeftSide) => {
                     Show More
                 </Button>
             </Box>
-            <Button variant="outlined" color="inherit">
-                <CalendarMonthIcon />
-                Quick Book
-            </Button>
+            {showQuickBookButton ? (
+                <QuickBookGlobal
+                    onChangeQuickBookRight={onChangeQuickBookRight}
+                />
+            ) : null}
         </Box>
     );
 };

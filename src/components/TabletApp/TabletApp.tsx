@@ -1,5 +1,6 @@
 import { Box, Container } from "@mui/system";
 import React, { useEffect, useState } from "react";
+
 import COLORS from "../../constants/CustomColors";
 import LeftSide from "./LeftSide/LeftSide";
 import Grid from "@mui/material/Grid";
@@ -10,6 +11,7 @@ import {spawnToast} from "../../utils/Toast";
 import {Typography} from "@mui/material";
 const TabletApp = () => {
     const colorStates = [COLORS.GREEN, COLORS.YELLOW, COLORS.RED];
+
     const { id } = useParams();
     const [availability, setAvailability] = useState(1);
     const [roomName, setRoomName] = useState("Focus Room");
@@ -17,6 +19,18 @@ const TabletApp = () => {
     spawnToast("You have succeded","Your booking was made",true)
     spawnToast("Something went wrong","Your booking has not been made",false)
     }, [])
+
+
+    
+    const [quickBookRightSide, setQuickBookRightSide] = useState(false);
+    const [timeButtonsAvaible, setTimeButtonsAvaible] = useState(false);
+
+    const onChangeQuickBookRight = () => {
+        setQuickBookRightSide(true);
+        setTimeButtonsAvaible(true);
+    };
+
+
     return (
         <Grid
             sx={{ backgroundColor: colorStates[availability] }}
@@ -24,7 +38,11 @@ const TabletApp = () => {
             container
         >
             <Grid item xs={5}>
-                <LeftSide roomName={roomName} />
+
+                <LeftSide roomName={roomName}
+                    availability={availability}
+                    onChangeQuickBookRight={onChangeQuickBookRight}
+                    quickBookGlobalAvaible={!quickBookRightSide} />
             </Grid>
             <Grid item xs={7}>
                 <Box
@@ -58,6 +76,7 @@ const TabletApp = () => {
                         </Routes>
                     </Box>
                 </Box>
+
             </Grid>
         </Grid>
     );
