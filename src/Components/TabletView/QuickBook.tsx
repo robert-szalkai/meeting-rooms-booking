@@ -68,7 +68,7 @@ const QuickBook = () => {
         const res = await axios.post("http://localhost:3001/meetings", {
             id: latest_meetings_id + 1,
             room_id: 1,
-            owner: owner.id,
+            owner_id: owner.id,
             participants_id: [],
             start_time: now,
             end_time: end_time,
