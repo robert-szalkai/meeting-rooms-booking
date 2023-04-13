@@ -2,100 +2,129 @@
   {
     "id": 1,
     "room_id": 1,
-    "owner": 1,
+    "owner_id": 1,
     "participants_id": [1, 2, 3],
-    "start_time": "Tue Apr 03 2023 16:46:29 GMT+0300",
-    "end_time": "Tue Apr 03 2023 17:01:29 GMT+0300",
-    "duration": 15
+    "start_time": "2023-04-03T16:46:29.840z",
+    "end_time": "2023-04-03T17:01:29.840z"
   },
   {
     "id": 2,
     "room_id": 1,
-    "owner": 3,
+    "owner_id": 3,
     "participants_id": [1, 3, 4],
-    "start_time": "Tue Apr 03 2023 17:46:29 GMT+0300",
-    "end_time": "Tue Apr 03 2023 18:16:29 GMT+0300",
-    "duration": 30
+    "start_time": "2023-04-03T17:46:29.845z",
+    "end_time": "2023-04-03T18:16:29.845z"
   },
   {
     "id": 3,
     "room_id": 1,
-    "owner": 4,
+    "owner_id": 4,
     "participants_id": [1, 2, 4],
-    "start_time": "Tue Apr 04 2023 10:30:29 GMT+0300",
-    "end_time": "Tue Apr 04 2023 10:45:29 GMT+0300",
-    "duration": 15
+    "start_time": "2023-04-04T10:30:29.840z",
+    "end_time": "2023-04-04T10:45:29.840z"
   },
   {
     "id": 4,
     "room_id": 2,
-    "owner": 3,
+    "owner_id": 3,
     "participants_id": [3, 2, 5],
-    "start_time": "Tue Apr 04 2023 12:20:29 GMT+0300",
-    "end_time": "Tue Apr 04 2023 12:35:29 GMT+0300",
-    "duration": 15
+    "start_time": "2023-04-04T12:20:29.850z",
+    "end_time": "2023-04-04T12:35:29.850z"
   },
   {
     "id": 5,
     "room_id": 3,
-    "owner": 5,
+    "owner_id": 5,
     "participants_id": [1, 4, 3, 2, 5],
-    "start_time": "Tue Apr 04 2023 14:46:29 GMT+0300",
-    "end_time": "Tue Apr 04 2023 15:06:29 GMT+0300",
-    "duration": 20
+    "start_time": "2023-04-04T14:46:29.840z",
+    "end_time": "2023-04-04T15:06:29.840z"
   },
   {
     "id": 6,
     "room_id": 3,
-    "owner": 4,
+    "owner_id": 4,
     "participants_id": [1, 4, 3, 2, 5, 6, 7],
-    "start_time": "Tue Apr 05 2023 13:01:29 GMT+0300",
-    "end_time": "Tue Apr 05 2023 13:31:29 GMT+0300",
-    "duration": 30
+    "start_time": "2023-04-05T13:01:29.840z",
+    "end_time": "2023-04-05T13:31:29.840z"
   },
   {
     "id": 7,
     "room_id": 4,
-    "owner": 7,
+    "owner_id": 7,
     "participants_id": [1, 4, 3, 2, 5, 6, 7],
-    "start_time": "Tue Apr 07 2023 17:46:29 GMT+0300",
-    "end_time": "Tue Apr 07 2023 18:26:29 GMT+0300",
-    "duration": 40
+    "start_time": "2023-04-07T17:46:29.760z",
+    "end_time": "2023-04-10T18:26:29.760z"
   },
   {
     "id": 8,
     "room_id": 4,
-    "owner": 1,
+    "owner_id": 1,
     "participants_id": [1, 4, 3, 2, 5, 6, 7],
-    "start_time": "Tue Apr 07 2023 18:46:29 GMT+0300",
-    "end_time": "Tue Apr 07 2023 19:01:29 GMT+0300",
-    "duration": 15
+    "start_time": "2023-04-07T18:46:29.840z",
+    "end_time": "2023-04-07T19:01:29.840z"
   },
   {
     "id": 9,
     "room_id": 4,
-    "owner": 3,
+    "owner_id": 3,
     "participants_id": [1, 4, 3, 2, 5, 6, 7],
-    "start_time": "Tue Apr 10 2023 09:40:29 GMT+0300",
-    "end_time": "Tue Apr 10 2023 09:00:29 GMT+0300",
-    "duration": 20
+    "start_time": "2023-04-10T09:40:29.820z",
+    "end_time": "2023-04-10T09:00:29.820z"
   },
   {
     "id": 10,
     "room_id": 5,
-    "owner": 4,
+    "owner_id": 4,
     "participants_id": [1, 4, 3, 2, 5, 6],
-    "start_time": "Tue Apr 10 2023 12:15:29 GMT+0300",
-    "end_time": "Tue Apr 10 2023 12:45:29 GMT+0300",
-    "duration": 30
+    "start_time": "2023-04-10T12:15:29.840z",
+    "end_time": "2023-04-10T12:45:29.840z"
   },
   {
     "id": 11,
     "room_id": 5,
-    "owner": 6,
+    "owner_id": 6,
     "participants_id": [1, 7, 3, 2, 5, 6],
-    "start_time": "Tue Apr 11 2023 08:00:29 GMT+0300",
-    "end_time": "Tue Apr 11 2023 08:30:29 GMT+0300",
-    "duration": 30
+    "start_time": "2023-04-11T08:00:29.830z",
+    "end_time": "2023-04-11T08:30:29.830z"
+  },
+  {
+    "id": 12,
+    "room_id": 1,
+    "owner_id": 1,
+    "participants_id": [],
+    "start_time": "2023-04-12T18:47:47.830Z",
+    "end_time": "2023-04-12T19:02:47.830Z"
+  },
+  {
+    "id": 13,
+    "room_id": 1,
+    "owner_id": 6,
+    "participants_id": [],
+    "start_time": "2023-04-12T18:52:44.473Z",
+    "end_time": "2023-04-12T19:12:44.473Z"
+  },
+  {
+    "id": 14,
+    "room_id": 1,
+    "owner_id": 4,
+    "participants_id": [],
+    "start_time": "2023-04-13T07:51:43.772Z",
+    "end_time": "2023-04-13T08:11:43.772Z"
+  },
+  {
+    "id": 15,
+    "room_id": 1,
+    "owner_id": 6,
+    "participants_id": [],
+    "start_time": "2023-04-13T07:51:57.914Z",
+    "end_time": "2023-04-13T08:31:57.914Z"
+  },
+  {
+    "id": 16,
+    "room_id": 1,
+    "owner_id": 1,
+    "participants_id": [],
+    "start_time": "2023-04-13T08:10:18.386Z",
+    "end_time": "2023-04-13T08:25:18.386Z"
   }
 ]
