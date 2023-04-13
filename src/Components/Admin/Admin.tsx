@@ -126,8 +126,10 @@ const Admin = () => {
                     handleSubmit={handleSubmitForm}
                 />
             </Modal>
+            {/* 
+            This is and exaple of implementation for the Toast
             <Toast message="no" errorCode={400} />
-            <Toast message="yes" errorCode={200} />
+            <Toast message="yes" errorCode={200} /> */}
             <Modal
                 sx={{
                     width: "100%",
