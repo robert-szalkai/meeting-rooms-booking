@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Box } from "@mui/system";
-import { Typography } from "@mui/material";
-
+import { Typography, Button } from "@mui/material";
+import UpcomingCards from "./UpcomingCards/UpcomingCards";
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 interface iLeftSide {
     roomName: string;
 }
@@ -26,27 +27,89 @@ const LeftSide = ({ roomName }: iLeftSide) => {
     const [time, setTime] = useState(hoursMin);
 
     return (
-        <Box sx={{ width: "40%", height: "100%" }}>
+        <Box
+            sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "space-evenly",
+                color: "white",
+                height: "100vh",
+                gap: "20px",
+                boxSizing: "border-box",
+            }}
+        >
             <Box
                 sx={{
+                    width: "100%",
                     display: "flex",
                     flexDirection: "column",
+                    justifyContent: "center",
                     alignItems: "center",
-                    color: "white",
-                    paddingLeft: 10,
-                    paddingTop: 10,
+                    height: "200px",
+                    gap: "10px",
                 }}
             >
-                <Box>
+                <Box
+                    display="flex"
+                    flexDirection="column"
+                    justifyContent="center"
+                    alignItems="flex-start"
+                >
                     <Typography variant="h3">{roomName}</Typography>
                     <Typography variant="h2">{time}</Typography>
                     <Typography variant="h3">{formattedDate}</Typography>
                 </Box>
             </Box>
-
-            <Box>
-
+            <Box
+                sx={{
+                    width: "100%",
+                    height: "400px",
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "flex-start",
+                    alignItems: "center",
+                    gap: "10px",
+                }}
+            >
+                <UpcomingCards
+                    meetingName="Name"
+                    start="10:00"
+                    end="10:20"
+                    persons={[
+                        "Mihai Burada",
+                        "Silviu Manzur",
+                        "Mita Daniel",
+                        "Andrei Toba",
+                        "Mihai Burada",
+                        "Silviu Manzur",
+                        "Mita Daniel",
+                        "Andrei Toba",
+                    ]}
+                ></UpcomingCards>
+                <UpcomingCards
+                    meetingName="Name Name Name Name Name Name"
+                    start="10:00"
+                    end="10:20"
+                    persons={[
+                        "Mihai Burada",
+                        "Silviu Manzur",
+                        "Mita Daniel",
+                        "Andrei Toba",
+                        "Mihai Burada",
+                        "Silviu Manzur",
+                        "Mita Daniel",
+                        "Andrei Toba",
+                    ]}
+                ></UpcomingCards>
+                <Button variant="outlined" color="inherit">
+                    Show More
+                </Button>
             </Box>
+            <Button variant="outlined" color="inherit">
+                <CalendarMonthIcon />
+                Quick Book
+            </Button>
         </Box>
     );
 };

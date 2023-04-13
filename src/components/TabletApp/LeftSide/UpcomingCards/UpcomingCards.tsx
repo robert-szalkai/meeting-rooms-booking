@@ -6,8 +6,9 @@ interface iUpcomingCards {
     start: string;
     end: string;
     persons: string[];
+    meetingName:string;
 }
-const UpcomingCards = ({ start, end, persons }: iUpcomingCards) => {
+const UpcomingCards = ({ start, end, persons,meetingName}: iUpcomingCards) => {
     const getInitilas = () => {
         const filteredata = persons.map((e) => {
             return e
@@ -35,9 +36,11 @@ const UpcomingCards = ({ start, end, persons }: iUpcomingCards) => {
     return (
         <Card
             sx={{
-                width: SIZE.WIDTH_CARD,
                 height: SIZE.HEIGT_CARD,
                 borderRadius: SIZE.BORDER_RADIUS_CARD,
+                width:SIZE.WIDTH_CARD,
+                textOverflow:"ellipsis",
+                overflow:"hidden",
                 display: "flex",
                 flexDirection: "column",
                 padding: "20px",
@@ -47,7 +50,7 @@ const UpcomingCards = ({ start, end, persons }: iUpcomingCards) => {
                     "rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
             }}
         >
-            <Typography variant="h6">Upcoming Meeting</Typography>
+            <Typography noWrap variant="h6">{meetingName}</Typography>
             <Typography variant="h5">
                 Today, {start} - {end}
             </Typography>
