@@ -12,7 +12,11 @@ import EditCalendarIcon from "@mui/icons-material/EditCalendar";
 import { useState } from "react";
 import axios from "axios";
 import { styled } from "@mui/material/styles";
-import { getParticipants, getParticipant } from "../../HandleRequests/RoomApi";
+import {
+    getParticipants,
+    getParticipant,
+    getRoom,
+} from "../../HandleRequests/RoomApi";
 import dayjs from "dayjs";
 
 //To be removed when globla theme is done
@@ -41,10 +45,57 @@ const QuickBook = () => {
     const [owners, setOwners] = useState([""]);
     const [autoComplete, setAutoComplete] = useState(false);
     const [time_val, setTime_val] = useState(0);
+    const [overlapped15, setOverlapped15] = useState(false);
+    const [overlapped20, setOverlapped20] = useState(false);
+    const [overlapped30, setOverlapped30] = useState(false);
+    const [overlapped40, setOverlapped40] = useState(false);
 
-    const handleQuickBook = () => {
+    const handleQuickBook = async () => {
         setTimeButtonsVisible(!timeButtonsVisible);
         if (timeButtonsVisible) setOpen(false);
+        let meetings_start_time: any[] = [];
+        const response = await axios.get("http://localhost:3001/meetings");
+        const now = dayjs();
+        Object.values(response.data).map((value: any) => {
+            if (
+                dayjs(value.start_time).isSame(now, "day") &&
+                dayjs(value.start_time).isAfter(now, "hour")
+            )
+                meetings_start_time.push(
+                    dayjs(value.end_time).diff(
+                        dayjs(value.start_time),
+                        "minute"
+                    )
+                );
+        });
+
+        const latest_meet = meetings_start_time[meetings_start_time.length - 1];
+        console.log(latest_meet);
+
+        if (latest_meet > 15) {
+            setOverlapped15(false);
+            if (latest_meet > 20) {
+                setOverlapped20(false);
+                if (latest_meet > 30) {
+                    setOverlapped30(false);
+                    if (latest_meet > 40) {
+                        setOverlapped40(false);
+                    } else if (latest_meet <= 40) {
+                        setOverlapped40(true);
+                    }
+                } else if (latest_meet <= 30) {
+                    setOverlapped30(true);
+                }
+            } else if (latest_meet <= 20) {
+                setOverlapped20(true);
+            }
+        } else if (latest_meet <= 15) {
+            console.log("no meeting can take place");
+            setOverlapped15(true);
+            setOverlapped20(true);
+            setOverlapped30(true);
+            setOverlapped40(true);
+        }
     };
 
     const handleClickTime = () => {
@@ -72,7 +123,6 @@ const QuickBook = () => {
             participants_id: [],
             start_time: now,
             end_time: end_time,
-            duration: time_val,
         });
         console.log(res.status);
         // Toast for successful confirmation to be added
@@ -119,56 +169,52 @@ const QuickBook = () => {
                         minHeight="25vh"
                     >
                         <Grid item xs={2}>
-                            <Item
-                                sx={buttonStyle}
+                            <Button
                                 onClick={() => {
                                     handleClickTime();
                                     setTime_val(15);
                                 }}
+                                sx={buttonStyle}
+                                disabled={overlapped15}
                             >
-                                {" "}
-                                {/* To be replaced when global theme is done*/}
                                 15 Min
-                            </Item>
+                            </Button>
                         </Grid>
                         <Grid item xs={2}>
-                            <Item
-                                sx={buttonStyle}
+                            <Button
                                 onClick={() => {
                                     handleClickTime();
                                     setTime_val(20);
                                 }}
+                                sx={buttonStyle}
+                                disabled={overlapped20}
                             >
-                                {" "}
-                                {/* To be replaced when global theme is done*/}
                                 20 Min
-                            </Item>
+                            </Button>
                         </Grid>
                         <Grid item xs={2}>
-                            <Item
-                                sx={buttonStyle}
+                            <Button
                                 onClick={() => {
                                     handleClickTime();
                                     setTime_val(30);
                                 }}
+                                sx={buttonStyle}
+                                disabled={overlapped30}
                             >
-                                {" "}
-                                {/* To be replaced when global theme is done*/}
                                 30 Min
-                            </Item>
+                            </Button>
                         </Grid>
                         <Grid item xs={2}>
-                            <Item
-                                sx={buttonStyle}
+                            <Button
                                 onClick={() => {
                                     handleClickTime();
                                     setTime_val(40);
                                 }}
+                                sx={buttonStyle}
+                                disabled={overlapped40}
                             >
-                                {" "}
-                                {/* To be replaced when global theme is done*/}
                                 40 Min
-                            </Item>
+                            </Button>
                         </Grid>
                     </Grid>
 

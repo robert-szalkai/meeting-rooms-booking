@@ -11,6 +11,10 @@ const getParticipant = async (_name: string) => {
 const getRooms = async () => {
     return await axios.get("http://localhost:3001/rooms");
 };
+
+const getRoom = async (_roomid: string) => {
+    return await axios.get(`http://localhost:3001/meetings?room_id=${_roomid}`);
+};
 const deleteRooms = async (id: number) => {
     return await axios.delete(`http://localhost:3001/rooms/${id}`);
 };
@@ -51,4 +55,5 @@ export {
     updateRoomData,
     getParticipants,
     getParticipant,
+    getRoom,
 };
