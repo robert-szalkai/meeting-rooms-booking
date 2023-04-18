@@ -17,7 +17,12 @@ import {
     getParticipant,
     getRoom,
 } from "../../HandleRequests/RoomApi";
-import dayjs from "dayjs";
+import dayjs, { Dayjs } from "dayjs";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 //To be removed when globla theme is done
 const Item = styled(Paper)(({ theme }) => ({
@@ -37,6 +42,10 @@ const Owner = {
     available: true,
     image: "",
 };
+interface MeetTime {
+    end_time: string;
+    start_time: string;
+}
 
 const QuickBook = () => {
     const [timeButtonsVisible, setTimeButtonsVisible] = useState(false);
@@ -53,48 +62,53 @@ const QuickBook = () => {
     const handleQuickBook = async () => {
         setTimeButtonsVisible(!timeButtonsVisible);
         if (timeButtonsVisible) setOpen(false);
+
         let meetings_start_time: any[] = [];
         const response = await axios.get("http://localhost:3001/meetings");
-        const now = dayjs();
-        Object.values(response.data).map((value: any) => {
+
+        Object.values(response.data as MeetTime[]).map((value) => {
+            console.log(value.start_time);
+
             if (
-                dayjs(value.start_time).isSame(now, "day") &&
-                dayjs(value.start_time).isAfter(now, "hour")
+                dayjs(value.start_time).isSame(dayjs(), "day")
+                //dayjs(value.start_time).isAfter(dayjs(), "hour")
             )
                 meetings_start_time.push(
-                    dayjs(value.end_time).diff(
-                        dayjs(value.start_time),
-                        "minute"
-                    )
+                    dayjs(dayjs()).diff(value.start_time, "minute")
                 );
         });
 
-        const latest_meet = meetings_start_time[meetings_start_time.length - 1];
-        console.log(latest_meet);
+        const sorted_meets = meetings_start_time.sort((a, b) =>
+            dayjs(a).isAfter(dayjs(b)) ? 1 : -1
+        );
+        console.log(sorted_meets[0]);
 
-        if (latest_meet > 15) {
+        if (sorted_meets[0] > 15 && sorted_meets[0] < 20) {
             setOverlapped15(false);
-            if (latest_meet > 20) {
-                setOverlapped20(false);
-                if (latest_meet > 30) {
-                    setOverlapped30(false);
-                    if (latest_meet > 40) {
-                        setOverlapped40(false);
-                    } else if (latest_meet <= 40) {
-                        setOverlapped40(true);
-                    }
-                } else if (latest_meet <= 30) {
-                    setOverlapped30(true);
-                }
-            } else if (latest_meet <= 20) {
-                setOverlapped20(true);
-            }
-        } else if (latest_meet <= 15) {
-            console.log("no meeting can take place");
+            setOverlapped20(true);
+            setOverlapped30(true);
+            setOverlapped40(true);
+        } else if (sorted_meets[0] > 20 && sorted_meets[0] < 30) {
+            setOverlapped15(false);
+            setOverlapped20(false);
+            setOverlapped30(true);
+            setOverlapped40(true);
+        } else if (sorted_meets[0] > 30 && sorted_meets[0] < 40) {
+            setOverlapped15(false);
+            setOverlapped20(false);
+            setOverlapped30(false);
+            setOverlapped40(true);
+        } else if (sorted_meets[0] > 40) {
+            setOverlapped15(false);
+            setOverlapped20(false);
+            setOverlapped30(false);
+            setOverlapped40(false);
+        } else if (sorted_meets[0] < 15) {
             setOverlapped15(true);
             setOverlapped20(true);
             setOverlapped30(true);
             setOverlapped40(true);
+            console.log("meetings cannot take place");
         }
     };
 
@@ -116,17 +130,21 @@ const QuickBook = () => {
         response.data.forEach(
             ({ id }: { id: number }) => (latest_meetings_id = id)
         );
+
         const res = await axios.post("http://localhost:3001/meetings", {
             id: latest_meetings_id + 1,
             room_id: 1,
             owner_id: owner.id,
             participants_id: [],
-            start_time: now,
-            end_time: end_time,
+            start_time: now.tz("Europe/Bucharest"),
+            end_time: end_time.utc(),
         });
-        console.log(res.status);
+        console.log(res.data);
+
         // Toast for successful confirmation to be added
         handleQuickBook();
+        console.log(now.tz("Europe/Bucharest"));
+        console.log(end_time.utc());
     };
 
     const populateOwners = async () => {
