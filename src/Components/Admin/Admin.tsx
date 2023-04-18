@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import Header from "./Header/Header";
 import { Container, Modal, Grid, Box, Button } from "@mui/material";
 import Cards from "./MettingRoom/Cards";
-import Toast from "../toast/Toast";
 import MeetingRoomForm from "./MettingRoomForm/MeetingRoom";
 import {
     getRooms,
@@ -11,8 +10,6 @@ import {
     getRoomById,
     updateRoomData,
 } from "../../HandleRequests/RoomApi";
-import { SnackbarProvider } from "notistack";
-import SimpleSnackbar from "../toast/Toast";
 interface iCard {
     title: string;
     id: number;
@@ -126,10 +123,7 @@ const Admin = () => {
                     handleSubmit={handleSubmitForm}
                 />
             </Modal>
-            {/* 
-            This is and exaple of implementation for the Toast
-            <Toast message="no" errorCode={400} />
-            <Toast message="yes" errorCode={200} /> */}
+           
             <Modal
                 sx={{
                     width: "100%",

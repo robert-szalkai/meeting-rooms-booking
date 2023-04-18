@@ -17,3 +17,7 @@ export default function SimpleSnackbar({ message, errorCode }: ToastProps) {
     });
     return <Box></Box>;
 }
+ {/* 
+            This is and exaple of implementation for the Toast
+            <Toast message="no" errorCode={400} />
+            <Toast message="yes" errorCode={200} /> */}
