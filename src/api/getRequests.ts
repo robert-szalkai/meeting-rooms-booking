@@ -12,5 +12,8 @@ const getRoomById = async (id: number) => {
     return await axios.get(`http://localhost:3001/rooms/${id}`);
 };
 
+const getParticipant = async (_name: string) => {
+    return await axios.get(`http://localhost:3001/participants?name=${_name}`);
+};
 
-export {getRooms, getRoomById, getParticipants}
+export { getRooms, getRoomById, getParticipants, getParticipant };

@@ -9,11 +9,16 @@ import {
     Autocomplete,
 } from "@mui/material";
 import EditCalendarIcon from "@mui/icons-material/EditCalendar";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import axios from "axios";
 import { styled } from "@mui/material/styles";
-import { getParticipants } from "../../../../api/getRequests";
-import COLORS from "../../../../constants/CustomColors";
+import { getParticipants, getParticipant } from "../../../../api/getRequests";
+import dayjs, { Dayjs } from "dayjs";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 //To be removed when globla theme is done
 const Item = styled(Paper)(({ theme }) => ({
@@ -25,32 +30,117 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 //To be removed when global theme is done
-const buttonStyle = { color: COLORS.GREEN, border: `1px solid ${COLORS.GREEN}` };
+const buttonStyle = { color: "#008435", border: "1px solid #008435" };
+
+const Owner = {
+    name: "",
+    id: 0,
+    available: true,
+    image: "",
+};
+interface MeetTime {
+    end_time: string;
+    start_time: string;
+}
 
 const QuickBook = () => {
     const [timeButtonsVisible, setTimeButtonsVisible] = useState(false);
     const [open, setOpen] = useState(false);
-    const [ownerName, setOwnerName] = useState("");
+    const [owner, setOwner] = useState(Owner);
     const [owners, setOwners] = useState([""]);
     const [autoComplete, setAutoComplete] = useState(false);
+    const [time_val, setTime_val] = useState(0);
+    const [overlapped15, setOverlapped15] = useState(false);
+    const [overlapped20, setOverlapped20] = useState(false);
+    const [overlapped30, setOverlapped30] = useState(false);
+    const [overlapped40, setOverlapped40] = useState(false);
 
-    const handleQuickBook = () => {
+    const handleQuickBook = async () => {
         setTimeButtonsVisible(!timeButtonsVisible);
         if (timeButtonsVisible) setOpen(false);
+
+        let meetings_start_time: any[] = [];
+        const response = await axios.get("http://localhost:3001/meetings");
+
+        Object.values(response.data as MeetTime[]).map((value) => {
+            console.log(value.start_time);
+
+            if (
+                dayjs(value.start_time).isSame(dayjs(), "day")
+                //dayjs(value.start_time).isAfter(dayjs(), "hour")
+            )
+                meetings_start_time.push(
+                    dayjs(dayjs()).diff(value.start_time, "minute")
+                );
+        });
+
+        const sorted_meets = meetings_start_time.sort((a, b) =>
+            dayjs(a).isAfter(dayjs(b)) ? 1 : -1
+        );
+        console.log(sorted_meets[0]);
+
+        if (sorted_meets[0] > 15 && sorted_meets[0] < 20) {
+            setOverlapped15(false);
+            setOverlapped20(true);
+            setOverlapped30(true);
+            setOverlapped40(true);
+        } else if (sorted_meets[0] > 20 && sorted_meets[0] < 30) {
+            setOverlapped15(false);
+            setOverlapped20(false);
+            setOverlapped30(true);
+            setOverlapped40(true);
+        } else if (sorted_meets[0] > 30 && sorted_meets[0] < 40) {
+            setOverlapped15(false);
+            setOverlapped20(false);
+            setOverlapped30(false);
+            setOverlapped40(true);
+        } else if (sorted_meets[0] > 40) {
+            setOverlapped15(false);
+            setOverlapped20(false);
+            setOverlapped30(false);
+            setOverlapped40(false);
+        } else if (sorted_meets[0] < 15) {
+            setOverlapped15(true);
+            setOverlapped20(true);
+            setOverlapped30(true);
+            setOverlapped40(true);
+            console.log("meetings cannot take place");
+        }
     };
 
     const handleClickTime = () => {
         if (!open) setOpen(true);
-        setOwnerName("");
+        setOwner(Owner);
     };
 
-    const handleChange = (e: any) => {
-        setOwnerName(e.target.value);
+    const handleChange = async (e: any) => {
+        const result = await getParticipant(e.target.innerHTML);
+        setOwner(result.data[0]);
     };
 
-    const handleSearchOwner = () => {
-        console.log(ownerName);
-        //To be implemented. Final step, needs to create meeting
+    const handleSubmitOwner = async () => {
+        let now = dayjs();
+        let end_time = now.add(time_val, "minute");
+        let latest_meetings_id = 0;
+        const response = await axios.get("http://localhost:3001/meetings");
+        response.data.forEach(
+            ({ id }: { id: number }) => (latest_meetings_id = id)
+        );
+
+        const res = await axios.post("http://localhost:3001/meetings", {
+            id: latest_meetings_id + 1,
+            room_id: 1,
+            owner_id: owner.id,
+            participants_id: [],
+            start_time: now.tz("Europe/Bucharest"),
+            end_time: end_time.utc(),
+        });
+        console.log(res.data);
+
+        // Toast for successful confirmation to be added
+        handleQuickBook();
+        console.log(now.tz("Europe/Bucharest"));
+        console.log(end_time.utc());
     };
 
     const populateOwners = async () => {
@@ -62,7 +152,7 @@ const QuickBook = () => {
         setOwners(tempOwners);
     };
 
-    if (owners.length == 1) populateOwners();
+    if (owners.length === 1) populateOwners();
 
     return (
         <Box>
@@ -72,7 +162,7 @@ const QuickBook = () => {
                     sx={{
                         "border-radius": "50px",
                         "text-transform": "none",
-                        backgroundColor: COLORS.GREEN,
+                        backgroundColor: "#008435",
                     }}
                     onClick={() => {
                         handleQuickBook();
@@ -93,32 +183,52 @@ const QuickBook = () => {
                         minHeight="25vh"
                     >
                         <Grid item xs={2}>
-                            <Item sx={buttonStyle} onClick={handleClickTime}>
-                                {" "}
-                                {/* To be replaced when global theme is done*/}
+                            <Button
+                                onClick={() => {
+                                    handleClickTime();
+                                    setTime_val(15);
+                                }}
+                                sx={buttonStyle}
+                                disabled={overlapped15}
+                            >
                                 15 Min
-                            </Item>
+                            </Button>
                         </Grid>
                         <Grid item xs={2}>
-                            <Item sx={buttonStyle} onClick={handleClickTime}>
-                                {" "}
-                                {/* To be replaced when global theme is done*/}
+                            <Button
+                                onClick={() => {
+                                    handleClickTime();
+                                    setTime_val(20);
+                                }}
+                                sx={buttonStyle}
+                                disabled={overlapped20}
+                            >
                                 20 Min
-                            </Item>
+                            </Button>
                         </Grid>
                         <Grid item xs={2}>
-                            <Item sx={buttonStyle} onClick={handleClickTime}>
-                                {" "}
-                                {/* To be replaced when global theme is done*/}
+                            <Button
+                                onClick={() => {
+                                    handleClickTime();
+                                    setTime_val(30);
+                                }}
+                                sx={buttonStyle}
+                                disabled={overlapped30}
+                            >
                                 30 Min
-                            </Item>
+                            </Button>
                         </Grid>
                         <Grid item xs={2}>
-                            <Item sx={buttonStyle} onClick={handleClickTime}>
-                                {" "}
-                                {/* To be replaced when global theme is done*/}
+                            <Button
+                                onClick={() => {
+                                    handleClickTime();
+                                    setTime_val(40);
+                                }}
+                                sx={buttonStyle}
+                                disabled={overlapped40}
+                            >
                                 40 Min
-                            </Item>
+                            </Button>
                         </Grid>
                     </Grid>
 
@@ -137,27 +247,25 @@ const QuickBook = () => {
                                         }
                                     }}
                                     onClose={() => setAutoComplete(false)}
+                                    onChange={handleChange}
                                     disablePortal
                                     id="combo-box-demo"
                                     options={owners}
                                     sx={{ width: 300 }}
-                                    value={ownerName}
+                                    value={
+                                        owner === undefined ? "" : owner.name
+                                    }
                                     renderInput={(params) => (
-                                        <TextField
-                                            {...params}
-                                            label="Participants"
-                                            value={ownerName}
-                                            onChange={handleChange}
-                                        />
+                                        <TextField {...params} label="Owner" />
                                     )}
                                 />
                             </Box>
                             <Box
                                 display="flex"
                                 justifyContent="center"
-                                onClick={handleSearchOwner}
+                                onClick={handleSubmitOwner}
                             >
-                                <Button>Save</Button>
+                                <Button>Submit</Button>
                             </Box>
                         </Box>
                     ) : null}
