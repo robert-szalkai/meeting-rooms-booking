@@ -1,6 +1,5 @@
 import { Box, Container } from "@mui/system";
 import React, { useEffect, useState } from "react";
-
 import COLORS from "../../constants/CustomColors";
 import LeftSide from "./LeftSide/LeftSide";
 import Grid from "@mui/material/Grid";
