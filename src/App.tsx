@@ -4,7 +4,6 @@ import GlobalTheme from "./context/GlobalThemes";
 import { ThemeProvider } from "@mui/material/styles";
 import MainRouter from "./router/router";
 import { SnackbarProvider } from "notistack";
-
 function App() {
     return (
         <ThemeProvider theme={GlobalTheme}>
