@@ -1,0 +1,29 @@
+{
+
+    "participantsData":{
+
+
+        "participants":[
+            {
+                "id": 1,
+                "name":"Alexandru Incicau"
+            },
+            
+            {
+                "id": 2,
+                "name":"Stefan Rudareanu"
+            },
+
+            {
+                "id": 3,
+                "name":"Mita Daniel"
+            },
+
+            {
+                "id":4,
+                "name":"Ruben Vasile"
+
+            }
+        ]
+    }
+}

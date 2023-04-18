@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const getParticipants = async () => {
-    return await axios.get("http://localhost:3001/participants");
+    return await axios.get("http://localhost:3002/participantsData");
 };
 
 const getRooms = async () => {
@@ -11,7 +11,7 @@ const getRooms = async () => {
 const getRoomById = async (id: number) => {
     return await axios.get(`http://localhost:3001/rooms/${id}`);
 };
-const getMeetingsData= async()=>{
+const getMeetingsData = async()=>{
     return await axios.get("http://localhost:3001/roomdata")
 }
 

@@ -21,9 +21,13 @@ interface iLeftSide {
         id: number;
         start_time: string;
         end_time: string;
-        participants: string[];
+        participants_id: [];
     }[];
 }
+
+
+
+
 
 const TabletApp = () => {
     const colorStates = [COLORS.GREEN, COLORS.YELLOW, COLORS.RED];

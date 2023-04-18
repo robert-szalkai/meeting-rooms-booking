@@ -2,35 +2,41 @@
 "name": "Focus Room",
 
     "meetings":[
-        {"name": "Focus Room",
-
+        {"name": "Focus Room 1",
            "id":"1",
            "start_time": "2023-04-13T08:10:18.386Z",
            "end_time": "2023-04-13T08:10:18.386Z",
-           "participants":["Stefan Erling", "Stefan Erling", "Stefan Erling", "Stefan Erling", "Stefan Erling", "Stefan Erling", "Stefan Erling", "Stefan Erling" ]
+           "participants_id":[1, 2, 3, 4 ]
         },
 
 
-        {"name": "Focus Room",
-
+        {"name": "Focus Room 2",
             "id":"1",
             "start_time": "2023-04-13T08:10:18.386Z",
             "end_time": "2023-04-13T08:10:18.386Z",
-            "participants":["Stefan Erling"]
+            "participants_id":[1, 2, 3 ]
+
          },
-         {"name": "Focus Room",
-
+         {
+            "name": "Focus Room 3",
             "id":"1",
             "start_time": "2023-04-13T08:10:18.386Z",
             "end_time": "2023-04-13T08:10:18.386Z",
-            "participants":["Stefan Erling"]
+            "participants_id":[1,2,3]
          },
-         {"name": "Focus Rooasdasdasdm",
+         {"name": "Focus Room 4",
 
             "id":"1",
             "start_time": "2023-04-13T08:10:18.386Z",
             "end_time": "2023-04-13T08:10:18.386Z",
-            "participants":["Stefan Erling"]
+            "participants_id":[1,2]
+         },
+         {"name": "Focus Room 5",
+
+            "id":"1",
+            "start_time": "2023-04-13T08:10:18.386Z",
+            "end_time": "2023-04-13T08:10:18.386Z",
+            "participants_id":[1,2,4]
          }
 
     ]

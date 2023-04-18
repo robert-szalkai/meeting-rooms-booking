@@ -5,7 +5,7 @@ import SIZE from "../../../../constants/CustomSize";
 interface iUpcomingCards {
     start: string;
     end: string;
-    persons: string[];
+    persons: (string | undefined)[];
     meetingName: string;
 }
 const UpcomingCards = ({
@@ -16,8 +16,7 @@ const UpcomingCards = ({
 }: iUpcomingCards) => {
     const getInitilas = () => {
         const filteredata = persons.map((e) => {
-            return e
-                .match(/(\b\S)?/g)
+            return e?.match(/(\b\S)?/g)
                 ?.join("")
                 .toUpperCase();
         });
