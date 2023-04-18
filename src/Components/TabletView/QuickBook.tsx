@@ -4,34 +4,19 @@ import {
     Button,
     Typography,
     Grid,
-    Paper,
     TextField,
     Autocomplete,
 } from "@mui/material";
 import EditCalendarIcon from "@mui/icons-material/EditCalendar";
 import { useState } from "react";
 import axios from "axios";
-import { styled } from "@mui/material/styles";
-import {
-    getParticipants,
-    getParticipant,
-    getRoom,
-} from "../../HandleRequests/RoomApi";
+import { getParticipants, getParticipant } from "../../HandleRequests/RoomApi";
 import dayjs, { Dayjs } from "dayjs";
 import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
-
-//To be removed when globla theme is done
-const Item = styled(Paper)(({ theme }) => ({
-    backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
-    ...theme.typography.body2,
-    padding: theme.spacing(1),
-    textAlign: "center",
-    color: theme.palette.text.secondary,
-}));
 
 //To be removed when global theme is done
 const buttonStyle = { color: "#008435", border: "1px solid #008435" };
@@ -69,10 +54,7 @@ const QuickBook = () => {
         Object.values(response.data as MeetTime[]).map((value) => {
             console.log(value.start_time);
 
-            if (
-                dayjs(value.start_time).isSame(dayjs(), "day")
-                //dayjs(value.start_time).isAfter(dayjs(), "hour")
-            )
+            if (dayjs(value.start_time).isSame(dayjs(), "day"))
                 meetings_start_time.push(
                     dayjs(dayjs()).diff(value.start_time, "minute")
                 );
@@ -81,7 +63,8 @@ const QuickBook = () => {
         const sorted_meets = meetings_start_time.sort((a, b) =>
             dayjs(a).isAfter(dayjs(b)) ? 1 : -1
         );
-        console.log(sorted_meets[0]);
+
+        const closest_meet = sorted_meets[0];
 
         if (sorted_meets[0] > 15 && sorted_meets[0] < 20) {
             setOverlapped15(false);
@@ -136,15 +119,12 @@ const QuickBook = () => {
             room_id: 1,
             owner_id: owner.id,
             participants_id: [],
-            start_time: now.tz("Europe/Bucharest"),
-            end_time: end_time.utc(),
+            start_time: now,
+            end_time: end_time,
         });
-        console.log(res.data);
 
         // Toast for successful confirmation to be added
         handleQuickBook();
-        console.log(now.tz("Europe/Bucharest"));
-        console.log(end_time.utc());
     };
 
     const populateOwners = async () => {
