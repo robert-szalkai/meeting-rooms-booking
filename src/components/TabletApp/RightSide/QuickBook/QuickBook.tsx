@@ -20,15 +20,6 @@ import timezone from "dayjs/plugin/timezone";
 dayjs.extend(utc);
 dayjs.extend(timezone);
 
-//To be removed when globla theme is done
-const Item = styled(Paper)(({ theme }) => ({
-    backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
-    ...theme.typography.body2,
-    padding: theme.spacing(1),
-    textAlign: "center",
-    color: theme.palette.text.secondary,
-}));
-
 //To be removed when global theme is done
 const buttonStyle = { color: "#008435", border: "1px solid #008435" };
 
@@ -50,10 +41,7 @@ const QuickBook = () => {
     const [owners, setOwners] = useState([""]);
     const [autoComplete, setAutoComplete] = useState(false);
     const [time_val, setTime_val] = useState(0);
-    const [overlapped15, setOverlapped15] = useState(false);
-    const [overlapped20, setOverlapped20] = useState(false);
-    const [overlapped30, setOverlapped30] = useState(false);
-    const [overlapped40, setOverlapped40] = useState(false);
+    const [closest_meet, setMeet] = useState(Number);
 
     const handleQuickBook = async () => {
         setTimeButtonsVisible(!timeButtonsVisible);
@@ -63,49 +51,16 @@ const QuickBook = () => {
         const response = await axios.get("http://localhost:3001/meetings");
 
         Object.values(response.data as MeetTime[]).map((value) => {
-            console.log(value.start_time);
-
-            if (
-                dayjs(value.start_time).isSame(dayjs(), "day")
-                //dayjs(value.start_time).isAfter(dayjs(), "hour")
-            )
+            if (dayjs(value.start_time).isSame(dayjs(), "day"))
                 meetings_start_time.push(
                     dayjs(dayjs()).diff(value.start_time, "minute")
                 );
         });
 
-        const sorted_meets = meetings_start_time.sort((a, b) =>
+        meetings_start_time.sort((a, b) =>
             dayjs(a).isAfter(dayjs(b)) ? 1 : -1
         );
-        console.log(sorted_meets[0]);
-
-        if (sorted_meets[0] > 15 && sorted_meets[0] < 20) {
-            setOverlapped15(false);
-            setOverlapped20(true);
-            setOverlapped30(true);
-            setOverlapped40(true);
-        } else if (sorted_meets[0] > 20 && sorted_meets[0] < 30) {
-            setOverlapped15(false);
-            setOverlapped20(false);
-            setOverlapped30(true);
-            setOverlapped40(true);
-        } else if (sorted_meets[0] > 30 && sorted_meets[0] < 40) {
-            setOverlapped15(false);
-            setOverlapped20(false);
-            setOverlapped30(false);
-            setOverlapped40(true);
-        } else if (sorted_meets[0] > 40) {
-            setOverlapped15(false);
-            setOverlapped20(false);
-            setOverlapped30(false);
-            setOverlapped40(false);
-        } else if (sorted_meets[0] < 15) {
-            setOverlapped15(true);
-            setOverlapped20(true);
-            setOverlapped30(true);
-            setOverlapped40(true);
-            console.log("meetings cannot take place");
-        }
+        setMeet(meetings_start_time[0]);
     };
 
     const handleClickTime = () => {
@@ -132,15 +87,12 @@ const QuickBook = () => {
             room_id: 1,
             owner_id: owner.id,
             participants_id: [],
-            start_time: now.tz("Europe/Bucharest"),
-            end_time: end_time.utc(),
+            start_time: now,
+            end_time: end_time,
         });
-        console.log(res.data);
 
         // Toast for successful confirmation to be added
         handleQuickBook();
-        console.log(now.tz("Europe/Bucharest"));
-        console.log(end_time.utc());
     };
 
     const populateOwners = async () => {
@@ -189,7 +141,7 @@ const QuickBook = () => {
                                     setTime_val(15);
                                 }}
                                 sx={buttonStyle}
-                                disabled={overlapped15}
+                                disabled={closest_meet > 15 ? false : true}
                             >
                                 15 Min
                             </Button>
@@ -201,7 +153,7 @@ const QuickBook = () => {
                                     setTime_val(20);
                                 }}
                                 sx={buttonStyle}
-                                disabled={overlapped20}
+                                disabled={closest_meet > 20 ? false : true}
                             >
                                 20 Min
                             </Button>
@@ -213,7 +165,7 @@ const QuickBook = () => {
                                     setTime_val(30);
                                 }}
                                 sx={buttonStyle}
-                                disabled={overlapped30}
+                                disabled={closest_meet > 30 ? false : true}
                             >
                                 30 Min
                             </Button>
@@ -225,7 +177,7 @@ const QuickBook = () => {
                                     setTime_val(40);
                                 }}
                                 sx={buttonStyle}
-                                disabled={overlapped40}
+                                disabled={closest_meet > 40 ? false : true}
                             >
                                 40 Min
                             </Button>
