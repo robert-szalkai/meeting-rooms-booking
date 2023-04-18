@@ -3,6 +3,7 @@ import { Box } from "@mui/system";
 import { Typography, Button } from "@mui/material";
 import UpcomingCards from "./UpcomingCards/UpcomingCards";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import Clock from "./Clock/Clock";
 interface iLeftSide {
     roomName: string;
 }
@@ -57,7 +58,7 @@ const LeftSide = ({ roomName }: iLeftSide) => {
                     alignItems="flex-start"
                 >
                     <Typography variant="h3">{roomName}</Typography>
-                    <Typography variant="h2">{time}</Typography>
+                    <Clock />
                     <Typography variant="h3">{formattedDate}</Typography>
                 </Box>
             </Box>
