@@ -60,16 +60,11 @@ const LeftSide = ({ name, meetings }: iLeftSide) => {
     }, []);
 
     const getNames = (ids: string[]) => {
-        let names: (string | undefined)[] = [];
-        ids.forEach((e) => {
-            const pos = participantsData?.participants
-                .map((p) => {
-                    return p.id;
-                })
-                .indexOf(e);
-            names?.push(participantsData?.participants[pos as number].name);
-        });
-        return names;
+        return (
+            participantsData?.participants
+                .filter((participants) => ids.includes(participants.id))
+                .map((value) => value.name) || []
+        );
     };
 
     const [availability, setAvailability] = useState(1);
