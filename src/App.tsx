@@ -4,7 +4,6 @@ import GlobalTheme from "./context/GlobalThemes";
 import { ThemeProvider } from "@mui/material/styles";
 import MainRouter from "./router/router";
 import { SnackbarProvider } from "notistack";
-import QuickBook from "./components/TabletApp/RightSide/QuickBook/QuickBook";
 
 function App() {
     return (

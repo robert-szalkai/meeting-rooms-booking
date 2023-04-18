@@ -4,16 +4,14 @@ import {
     Button,
     Typography,
     Grid,
-    Paper,
     TextField,
     Autocomplete,
 } from "@mui/material";
 import EditCalendarIcon from "@mui/icons-material/EditCalendar";
 import { useState } from "react";
 import axios from "axios";
-import { styled } from "@mui/material/styles";
 import { getParticipants, getParticipant } from "../../../../api/getRequests";
-import dayjs, { Dayjs } from "dayjs";
+import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
 
@@ -41,7 +39,7 @@ const QuickBook = () => {
     const [owners, setOwners] = useState([""]);
     const [autoComplete, setAutoComplete] = useState(false);
     const [time_val, setTime_val] = useState(0);
-    const [closest_meet, setMeet] = useState(Number);
+    const [closest_meet, setMeet] = useState(0);
 
     const handleQuickBook = async () => {
         setTimeButtonsVisible(!timeButtonsVisible);
@@ -53,14 +51,21 @@ const QuickBook = () => {
         Object.values(response.data as MeetTime[]).map((value) => {
             if (dayjs(value.start_time).isSame(dayjs(), "day"))
                 meetings_start_time.push(
-                    dayjs(dayjs()).diff(value.start_time, "minute")
+                    dayjs(value.start_time).diff(dayjs(), "minute")
                 );
         });
 
+        console.log(meetings_start_time);
+
         meetings_start_time.sort((a, b) =>
-            dayjs(a).isAfter(dayjs(b)) ? 1 : -1
+            dayjs(a).isAfter(dayjs(b)) ? -1 : 1
         );
-        setMeet(meetings_start_time[0]);
+        if (meetings_start_time[0] < 0) {
+            setMeet(-meetings_start_time[0]);
+        } else {
+            setMeet(meetings_start_time[0]);
+        }
+        console.log(closest_meet);
     };
 
     const handleClickTime = () => {
