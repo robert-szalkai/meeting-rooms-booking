@@ -43,17 +43,9 @@ const RightSide = ({ roomName, availability,componentToShow}: iRightSide) => {
                     boxSizing:"border-box"
                 }}
             >
-                {/* <Box>
-                    <Typography variant="h4">
-                        {roomName} is {availabilityMessages[availability]}.
-                    </Typography>
-                </Box> */}
                 {
                     RenderComponents()
-                }
-                 
-                
-                
+                }   
             </Box>
         </Box>
     );
