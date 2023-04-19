@@ -1,34 +1,35 @@
-import { Box, Container } from "@mui/system";
+import { Box } from "@mui/system";
 import React, { useEffect, useState } from "react";
 import COLORS from "../../constants/CustomColors";
 import LeftSide from "./LeftSide/LeftSide";
 import Grid from "@mui/material/Grid";
-import { Route, Routes, useParams } from "react-router-dom";
+import { Route, Routes, useNavigate, useParams } from "react-router-dom";
 import AdvancedBook from "./RightSide/AdvancedBook/AdvancedBook";
 import MeetingInfo from "./RightSide/MeetingInfo/MeetingInfo";
-import {spawnToast} from "../../utils/Toast";
-import {Typography} from "@mui/material";
+import { spawnToast } from "../../utils/Toast";
+import QuickBook from "./RightSide/QuickBook/QuickBook";
 const TabletApp = () => {
     const colorStates = [COLORS.GREEN, COLORS.YELLOW, COLORS.RED];
 
     const { id } = useParams();
     const [availability, setAvailability] = useState(1);
     const [roomName, setRoomName] = useState("Focus Room");
-  useEffect(() => {
-    spawnToast("You have succeded","Your booking was made",true)
-    spawnToast("Something went wrong","Your booking has not been made",false)
-    }, [])
+    useEffect(() => {
+        spawnToast("You have succeded", "Your booking was made", true);
+        spawnToast(
+            "Something went wrong",
+            "Your booking has not been made",
+            false
+        );
+    }, []);
 
-
-    
     const [quickBookRightSide, setQuickBookRightSide] = useState(false);
-    const [timeButtonsAvaible, setTimeButtonsAvaible] = useState(false);
+    const navigate = useNavigate();
 
     const onChangeQuickBookRight = () => {
         setQuickBookRightSide(true);
-        setTimeButtonsAvaible(true);
+        navigate("quickbookglobal");
     };
-
 
     return (
         <Grid
@@ -37,11 +38,12 @@ const TabletApp = () => {
             container
         >
             <Grid item xs={5}>
-
-                <LeftSide roomName={roomName}
+                <LeftSide
+                    roomName={roomName}
                     availability={availability}
                     onChangeQuickBookRight={onChangeQuickBookRight}
-                    quickBookGlobalAvaible={!quickBookRightSide} />
+                    quickBookGlobalAvaible={!quickBookRightSide}
+                />
             </Grid>
             <Grid item xs={7}>
                 <Box
@@ -51,11 +53,11 @@ const TabletApp = () => {
                         boxSizing: "border-box",
                     }}
                 >
-                    <Box 
-                        overflow={'auto'}
+                    <Box
+                        overflow={"auto"}
                         sx={{
-                            paddingTop:1,
-                            paddingLeft:4,
+                            paddingTop: 1,
+                            paddingLeft: 4,
                             background: "white",
                             height: "100%",
                             borderRadius: "36px 0px 0px 0px",
@@ -64,18 +66,23 @@ const TabletApp = () => {
                             alignItems: "center",
                             justifyContent: "flex-start",
                             boxSizing: "border-box",
-                            
                         }}
                     >
                         <Routes>
                             <Route path="/form" element={<AdvancedBook />} />
                             <Route
                                 path="/meetinginfo/:meetid"
-                                element={<MeetingInfo />} />
+                                element={<MeetingInfo />}
+                            />
+                            <Route
+                                path="/quickbookglobal"
+                                element={
+                                    <QuickBook timeButtonsAvaible={true} />
+                                }
+                            />
                         </Routes>
                     </Box>
                 </Box>
-
             </Grid>
         </Grid>
     );
