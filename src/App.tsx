@@ -10,7 +10,7 @@ function App() {
         <ThemeProvider theme={GlobalTheme}>
             <SnackbarProvider
                 anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
-                style={{display:"flex", alignItems:"start" }}
+                style={{ display: "flex", alignItems: "start" }}
                 autoHideDuration={100000}
             >
                 <MainRouter />
