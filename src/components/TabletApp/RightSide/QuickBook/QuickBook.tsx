@@ -82,6 +82,7 @@ const QuickBook = () => {
         let now = dayjs();
         let end_time = now.add(time_val, "minute");
         let latest_meetings_id = 0;
+
         const response = await axios.get("http://localhost:3001/meetings");
         response.data.forEach(
             ({ id }: { id: number }) => (latest_meetings_id = id)
@@ -110,6 +111,10 @@ const QuickBook = () => {
     };
 
     if (owners.length === 1) populateOwners();
+
+    const handleDisable = (val: any) => {
+        return closest_meet > val || in_session === false ? false : true;
+    };
 
     return (
         <Box>
@@ -146,11 +151,7 @@ const QuickBook = () => {
                                     setTime_val(15);
                                 }}
                                 sx={buttonStyle}
-                                disabled={
-                                    closest_meet > 15 || in_session === false
-                                        ? false
-                                        : true
-                                }
+                                disabled={handleDisable(15)}
                             >
                                 15 Min
                             </Button>
@@ -162,11 +163,7 @@ const QuickBook = () => {
                                     setTime_val(20);
                                 }}
                                 sx={buttonStyle}
-                                disabled={
-                                    closest_meet > 20 || in_session === false
-                                        ? false
-                                        : true
-                                }
+                                disabled={handleDisable(20)}
                             >
                                 20 Min
                             </Button>
@@ -178,11 +175,8 @@ const QuickBook = () => {
                                     setTime_val(30);
                                 }}
                                 sx={buttonStyle}
-                                disabled={
-                                    closest_meet > 30 || in_session === false
-                                        ? false
-                                        : true
-                                }
+                                disabled={handleDisable(30)}
+                                value={30}
                             >
                                 30 Min
                             </Button>
@@ -194,11 +188,7 @@ const QuickBook = () => {
                                     setTime_val(40);
                                 }}
                                 sx={buttonStyle}
-                                disabled={
-                                    closest_meet > 40 || in_session === false
-                                        ? false
-                                        : true
-                                }
+                                disabled={handleDisable(40)}
                             >
                                 40 Min
                             </Button>
