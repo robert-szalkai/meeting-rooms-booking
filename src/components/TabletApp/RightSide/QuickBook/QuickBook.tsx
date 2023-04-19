@@ -14,6 +14,7 @@ import { getParticipants, getParticipant } from "../../../../api/getRequests";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
+import { spawnToast } from "../../../../utils/Toast";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -98,6 +99,7 @@ const QuickBook = () => {
         });
 
         // Toast for successful confirmation to be added
+        spawnToast("You have succeded", "Your booking was made", true);
         handleQuickBook();
     };
 
@@ -121,11 +123,8 @@ const QuickBook = () => {
             <Box display="flex" justifyContent="center">
                 <Button
                     variant="contained"
-                    sx={{
-                        "border-radius": "50px",
-                        "text-transform": "none",
-                        backgroundColor: "#008435",
-                    }}
+                    color="success"
+                    sx={{ textTransform: "none" }}
                     onClick={() => {
                         handleQuickBook();
                     }}
@@ -150,7 +149,8 @@ const QuickBook = () => {
                                     handleClickTime();
                                     setTime_val(15);
                                 }}
-                                sx={buttonStyle}
+                                variant="outlined"
+                                color="success"
                                 disabled={handleDisable(15)}
                             >
                                 15 Min
@@ -162,7 +162,8 @@ const QuickBook = () => {
                                     handleClickTime();
                                     setTime_val(20);
                                 }}
-                                sx={buttonStyle}
+                                variant="outlined"
+                                color="success"
                                 disabled={handleDisable(20)}
                             >
                                 20 Min
@@ -174,7 +175,8 @@ const QuickBook = () => {
                                     handleClickTime();
                                     setTime_val(30);
                                 }}
-                                sx={buttonStyle}
+                                variant="outlined"
+                                color="success"
                                 disabled={handleDisable(30)}
                                 value={30}
                             >
@@ -187,7 +189,8 @@ const QuickBook = () => {
                                     handleClickTime();
                                     setTime_val(40);
                                 }}
-                                sx={buttonStyle}
+                                variant="outlined"
+                                color="success"
                                 disabled={handleDisable(40)}
                             >
                                 40 Min
