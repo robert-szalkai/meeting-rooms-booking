@@ -137,11 +137,25 @@ const QuickBook = () => {
                 <Box sx={{ flexGrow: 1 }}>
                     <Grid
                         container
+                        direction="row"
+                        justifyContent="center"
+                        alignItems="center"
+                        paddingTop="5vh"
+                        paddingBottom="1vh"
+                    >
+                        <Grid item xs={8}>
+                            <Typography sx={{ fontWeight: "bold" }}>
+                                Select meeting duration
+                            </Typography>
+                        </Grid>
+                    </Grid>
+                    <Grid
+                        container
                         spacing={5}
                         direction="row"
                         justifyContent="center"
                         alignItems="center"
-                        minHeight="25vh"
+                        minHeight="0vh"
                     >
                         <Grid item xs={2}>
                             <Button
@@ -199,7 +213,7 @@ const QuickBook = () => {
                     </Grid>
 
                     {open ? (
-                        <Box>
+                        <Box paddingTop="5vh">
                             <Box display="flex" justifyContent="center">
                                 <Autocomplete
                                     open={autoComplete}
@@ -230,8 +244,11 @@ const QuickBook = () => {
                                 display="flex"
                                 justifyContent="center"
                                 onClick={handleSubmitOwner}
+                                paddingTop="1vh"
                             >
-                                <Button>Submit</Button>
+                                <Button variant="outlined" color="success">
+                                    Submit
+                                </Button>
                             </Box>
                         </Box>
                     ) : null}
