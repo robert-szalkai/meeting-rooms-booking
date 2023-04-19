@@ -1,29 +1,29 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Grid, Typography, Box, Avatar } from "@mui/material";
-interface iMettingInfo{
-    persons:string;
-    descriptin:string;
-    start_time:string;
-    end_time:string;
+import { getParticipants } from "../../../../api/getRequests";
+
+interface iMettingInfo {
+    name: string;
+    //description: string;
+    start_time: string;
+    end_time: string;
+    participants_names: (string | undefined)[];
+}
+interface participantsID {
+    participants: {
+        id: string;
+        name: string;
+    }[];
 }
 
-const MeetingInfo = () => {
-    const meetingPersons = [
-        "Stefan Rudareanu",
-        "Andrei Cineva",
-        "Cosmin Liuba",
-        "Andrei Toba Daniel",
-        "Andrei Cineva",
-        "Cosmin Liuba",
-        "Stefan Rudareanu",
-        "Andrei Cineva",
-        "Cosmin Liuba",
-        "Andrei Cineva",
-        "Cosmin Liuba",
-        "Cosmin Liuba",
-    ];
+const MeetingInfo = ({
+    name,
+    start_time,
+    end_time,
+    participants_names,
+}: iMettingInfo) => {
     const getInitilas = () => {
-        const filteredata = meetingPersons.map((e) => {
+        const filteredata = participants_names.map((e: any) => {
             return e
                 .match(/(\b\S)?/g)
                 ?.join("")
@@ -46,20 +46,28 @@ const MeetingInfo = () => {
                 >
                     <Avatar>{person}</Avatar>
                     <Typography variant="body1">
-                        {meetingPersons[index]}
+                        {participants_names[index]}
                     </Typography>
                 </Box>
             </Grid>
         ));
     };
     return (
-        <Grid height={"100%"}  padding={1} container direction={"row"} spacing={1}>
+        <Grid
+            height={"100%"}
+            padding={1}
+            container
+            direction={"row"}
+            spacing={1}
+        >
             <Grid item xs={12}>
                 <Grid container direction={"row"} spacing={5}>
                     <Grid item xs={12}></Grid>
                     <Grid item xs={12}>
-                        <Typography variant="h4">Upcoming Meeting</Typography>
-                        <Typography variant="h4">Today,15:30-16:30</Typography>
+                        <Typography variant="h4">{name}</Typography>
+                        <Typography variant="h4">
+                            Today,{start_time}-{end_time}
+                        </Typography>
                     </Grid>
                 </Grid>
             </Grid>

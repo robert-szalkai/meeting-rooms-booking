@@ -5,16 +5,25 @@ import SIZE from "../../../../constants/CustomSize";
 import { useNavigate } from "react-router";
 import COLORS from "../../../../constants/CustomColors";
 interface iUpcomingCards {
+    id: string;
     start: string;
     end: string;
     persons: (string | undefined)[];
     meetingName: string;
+    onChangeMeetData: (
+        name: string,
+        start: string,
+        end: string,
+        participants: (string | undefined)[]
+    ) => void;
 }
 const UpcomingCards = ({
+    id,
     start,
     end,
     persons,
     meetingName,
+    onChangeMeetData,
 }: iUpcomingCards) => {
     const getInitilas = () => {
         const filteredata = persons.map((e) => {
@@ -41,10 +50,12 @@ const UpcomingCards = ({
                 index <= 5 && <Avatar sx={{ bgcolor: "purple" }}>{e}</Avatar>
         );
     };
-
+    const [meetingId, setMeetingId] = useState("1");
     const navigate = useNavigate();
     const handleCardOnClick = () => {
-        navigate("meetinginfo/:id");
+        console.log(id);
+        onChangeMeetData(meetingName, start, end, persons);
+        navigate(`meetinginfo/${id}`);
     };
 
     return (

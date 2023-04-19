@@ -10,11 +10,17 @@ interface iLeftSide {
     name: string | undefined;
     meetings: {
         name: string;
-        id: number;
+        id: string;
         start_time: string;
         end_time: string;
         participants_id: [];
     }[];
+    onChangeMeetData: (
+        name: string,
+        start: string,
+        end: string,
+        participants: (string | undefined)[]
+    ) => void;
 }
 interface participantsID {
     participants: {
@@ -23,7 +29,7 @@ interface participantsID {
     }[];
 }
 
-const LeftSide = ({ name, meetings }: iLeftSide) => {
+const LeftSide = ({ name, meetings, onChangeMeetData }: iLeftSide) => {
     let currDate = new Date();
     let hoursMin;
 
@@ -67,10 +73,12 @@ const LeftSide = ({ name, meetings }: iLeftSide) => {
             ?.slice(0, cardsToShow)
             .map((e) => (
                 <UpcomingCards
+                    id={e.id}
                     start={Dayjs(e.start_time).format("HH:MM")}
                     end={Dayjs(e.end_time).format("HH:MM")}
                     persons={getNames(e.participants_id)}
                     meetingName={e.name}
+                    onChangeMeetData={onChangeMeetData}
                 />
             ));
     };
@@ -87,7 +95,6 @@ const LeftSide = ({ name, meetings }: iLeftSide) => {
     };
 
     return (
-
         <Box
             sx={{
                 display: "flex",
@@ -99,7 +106,6 @@ const LeftSide = ({ name, meetings }: iLeftSide) => {
                 boxSizing: "border-box",
             }}
         >
-
             <Box
                 sx={{
                     display: "flex",
@@ -174,7 +180,7 @@ const LeftSide = ({ name, meetings }: iLeftSide) => {
                             Show More
                         </Button>
                     )}
-                    {cardsToShow > meetings?.length && (
+                    {cardsToShow >= meetings?.length && (
                         <Button
                             variant="outlined"
                             color="inherit"

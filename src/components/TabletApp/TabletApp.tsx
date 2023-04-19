@@ -18,24 +18,38 @@ interface iLeftSide {
     name: string | undefined;
     meetings: {
         name: string;
-        id: number;
+        id: string;
         start_time: string;
         end_time: string;
         participants_id: [];
     }[];
 }
 
-
-
-
-
 const TabletApp = () => {
     const colorStates = [COLORS.GREEN, COLORS.YELLOW, COLORS.RED];
     const [meetingsData, setMeetingsData] = useState<iLeftSide>();
     const [availability, setAvailability] = useState(1);
     const [roomName, setRoomName] = useState("Focus Room");
-
     const { id } = useParams();
+
+    const [meetName, setMeetName] = useState("alabala");
+    const [startTime, setStartTime] = useState("15:30");
+    const [endTime, setEndTime] = useState("16:30");
+    const [participantsName, setParticipantsName] = useState<string[]>([]);
+
+    function onChangeMeetData(
+        name: string,
+        start: string,
+        end: string,
+        participants: (string | undefined)[]
+    ) {
+        setMeetName(name);
+        setStartTime(start);
+        setEndTime(end);
+        setParticipantsName(
+            participants.filter((p) => p !== undefined) as string[]
+        );
+    }
 
     useEffect(() => {
         spawnToast("You have succeded", "Your booking was made", true);
@@ -67,6 +81,7 @@ const TabletApp = () => {
                     <LeftSide
                         meetings={meetingsData?.meetings}
                         name={meetingsData?.name}
+                        onChangeMeetData={onChangeMeetData}
                     />
                 )}
             </Grid>
@@ -97,7 +112,14 @@ const TabletApp = () => {
                             <Route path="/form" element={<AdvancedBook />} />
                             <Route
                                 path="/meetinginfo/:meetid"
-                                element={<MeetingInfo />}
+                                element={
+                                    <MeetingInfo
+                                        name={meetName}
+                                        start_time={startTime}
+                                        end_time={endTime}
+                                        participants_names={participantsName}
+                                    />
+                                }
                             />
                         </Routes>
                     </Box>
