@@ -8,6 +8,10 @@ html, body, #root{
   -moz-osx-font-smoothing: grayscale;
 }
 
+#notistack-snackbar{
+align-items:start
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
