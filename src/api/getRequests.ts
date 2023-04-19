@@ -15,5 +15,4 @@ const getMeetingsData = async()=>{
     return await axios.get("http://localhost:3001/roomdata")
 }
 
-
 export {getRooms, getRoomById, getParticipants, getMeetingsData}

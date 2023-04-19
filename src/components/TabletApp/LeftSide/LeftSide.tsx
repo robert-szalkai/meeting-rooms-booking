@@ -1,10 +1,9 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Box } from "@mui/system";
-import { Button, Paper, ThemeProvider, Typography } from "@mui/material";
+import { Button, Paper, Typography } from "@mui/material";
 import UpcomingCards from "./UpcomingCards/UpcomingCards";
 import "./UpcomingCardsScrollCSS.css";
 import Dayjs from "dayjs";
-import GlobalTheme from "../../../context/GlobalThemes";
 import { getParticipants } from "../../../api/getRequests";
 
 interface iLeftSide {
@@ -22,12 +21,6 @@ interface participantsID {
         id: string;
         name: string;
     }[];
-}
-
-interface iUpcomingCards {
-    start: string;
-    end: string;
-    persons: (string | undefined)[];
 }
 
 const LeftSide = ({ name, meetings }: iLeftSide) => {
@@ -67,7 +60,6 @@ const LeftSide = ({ name, meetings }: iLeftSide) => {
         );
     };
 
-    const [availability, setAvailability] = useState(1);
     const formattedDate: string = currDate.toLocaleDateString("en-US", options);
     const [time, setTime] = useState(hoursMin);
     const displayCards = () => {
@@ -159,7 +151,6 @@ const LeftSide = ({ name, meetings }: iLeftSide) => {
                 >
                     <Paper
                         style={{
-                            // backgroundColor: `${colorStates[availability]}`,
                             backgroundColor: "transparent",
                             height: "420px",
                             overflow: "auto",
