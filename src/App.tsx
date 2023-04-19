@@ -5,11 +5,12 @@ import Admin from "./components/Admin/Admin";
 import GlobalTheme from "./context/GlobalThemes";
 import { ThemeProvider } from "@mui/material/styles";
 import TabletApp from "./components/TabletApp/TabletApp";
+import MainRouter from "./router/router";
 
 function App() {
     return (
         <ThemeProvider theme={GlobalTheme}>
-            <TabletApp />
+           <MainRouter/>
         </ThemeProvider>
     );
 }
