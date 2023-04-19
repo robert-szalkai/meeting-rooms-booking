@@ -1,5 +1,11 @@
 import React from "react";
 import { Grid, Typography, Box, Avatar } from "@mui/material";
+interface iMettingInfo{
+    persons:string;
+    descriptin:string;
+    start_time:string;
+    end_time:string;
+}
 
 const MeetingInfo = () => {
     const meetingPersons = [
@@ -39,7 +45,7 @@ const MeetingInfo = () => {
                     }}
                 >
                     <Avatar>{person}</Avatar>
-                    <Typography sx={{ typography: { md: "h6", sm: "body1" } }}>
+                    <Typography variant="body1">
                         {meetingPersons[index]}
                     </Typography>
                 </Box>
@@ -47,7 +53,7 @@ const MeetingInfo = () => {
         ));
     };
     return (
-        <Grid height={"100%"}  padding={1} container direction={"row"} spacing={3}>
+        <Grid height={"100%"}  padding={1} container direction={"row"} spacing={1}>
             <Grid item xs={12}>
                 <Grid container direction={"row"} spacing={5}>
                     <Grid item xs={12}></Grid>
@@ -83,7 +89,7 @@ const MeetingInfo = () => {
                 </Grid>
             </Grid>
             <Grid item xs={12}>
-                <Grid padding={1} container direction={"row"}>
+                <Grid padding={0.5} container direction={"row"}>
                     <Grid item xs={12}>
                         <Typography variant="subtitle1">
                             The Terno is a modular light and sound system
