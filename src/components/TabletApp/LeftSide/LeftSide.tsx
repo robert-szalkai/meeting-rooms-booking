@@ -161,7 +161,7 @@ const LeftSide = ({ name, meetings }: iLeftSide) => {
                         style={{
                             // backgroundColor: `${colorStates[availability]}`,
                             backgroundColor: "transparent",
-                            height: "400px",
+                            height: "420px",
                             overflow: "auto",
                             gap: "10px",
                             marginBottom: "10px",
