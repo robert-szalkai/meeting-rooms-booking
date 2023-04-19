@@ -2,6 +2,8 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { Card, Typography, Box, Avatar } from "@mui/material";
 import SIZE from "../../../../constants/CustomSize";
+import { useNavigate } from "react-router";
+import COLORS from "../../../../constants/CustomColors";
 interface iUpcomingCards {
     start: string;
     end: string;
@@ -16,7 +18,8 @@ const UpcomingCards = ({
 }: iUpcomingCards) => {
     const getInitilas = () => {
         const filteredata = persons.map((e) => {
-            return e?.match(/(\b\S)?/g)
+            return e
+                ?.match(/(\b\S)?/g)
                 ?.join("")
                 .toUpperCase();
         });
@@ -39,8 +42,14 @@ const UpcomingCards = ({
         );
     };
 
+    const navigate = useNavigate();
+    const handleCardOnClick = () => {
+        navigate("meetinginfo/:id");
+    };
+
     return (
         <Card
+            onClick={handleCardOnClick}
             sx={{
                 height: SIZE.HEIGT_CARD,
                 borderRadius: SIZE.BORDER_RADIUS_CARD,
@@ -55,6 +64,10 @@ const UpcomingCards = ({
                 boxShadow:
                     "rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
                 marginBottom: 2,
+                ":hover": {
+                    filter: "brightness(85%)",
+                    backgroundColor: COLORS.WHITE,
+                },
             }}
         >
             <Typography noWrap variant="h6">
