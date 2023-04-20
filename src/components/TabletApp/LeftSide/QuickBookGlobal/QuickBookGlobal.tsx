@@ -1,30 +1,21 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { Box, Button, Typography } from "@mui/material";
 import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
+
 import COLORS from "../../../../constants/CustomColors";
-import SIZE from "../../../../constants/CustomSize";
 
-interface iQuickBookGlobal {
-    onChangeQuickBookRight: () => void;
-}
-
-const QuickBookGlobal = ({ onChangeQuickBookRight }: iQuickBookGlobal) => {
+const QuickBookGlobal = () => {
+    const navigate = useNavigate();
     const handleQuickBook = () => {
-        onChangeQuickBookRight();
+        navigate("quickbookglobal");
     };
 
     return (
         <Box display="flex" justifyContent="center">
             <Button
                 variant="outlined"
-                sx={{
-                    "border-radius": "50px",
-                    "text-transform": "none",
-                    width: SIZE.WIDTH_ROUNDED_TABLE_BUTTON,
-                    height: SIZE.HEIGHT_ROUNDED_TABLE_BUTTON,
-                    color: COLORS.BLACK,
-                    backgroundColor: COLORS.WHITE,
-                }}
+                color="inherit"
                 onClick={() => {
                     handleQuickBook();
                 }}

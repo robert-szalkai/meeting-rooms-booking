@@ -1,20 +1,19 @@
 import React, { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import { Box } from "@mui/system";
 import { Typography, Button } from "@mui/material";
+
 import UpcomingCards from "./UpcomingCards/UpcomingCards";
 import QuickBookGlobal from "./QuickBookGlobal/QuickBookGlobal";
+
 interface iLeftSide {
     roomName: string;
     availability: number;
-    onChangeQuickBookRight: () => void;
-    quickBookGlobalAvaible: boolean;
 }
 
 const LeftSide = ({
     roomName,
     availability,
-    onChangeQuickBookRight,
-    quickBookGlobalAvaible,
 }: iLeftSide) => {
     let currDate = new Date();
     let hoursMin;
@@ -34,12 +33,16 @@ const LeftSide = ({
     const formattedDate: string = currDate.toLocaleDateString("en-US", options);
     const [time, setTime] = useState(hoursMin);
     const [showQuickBookButton, setShowQuickBookButton] = useState(true);
+    const location = useLocation();
 
     useEffect(() => {
-        if (availability === 2 || !quickBookGlobalAvaible) {
+        if (
+            availability === 2 ||
+            location.pathname.includes("quickbookglobal")
+        ) {
             setShowQuickBookButton(false);
         }
-    }, [availability, quickBookGlobalAvaible]);
+    }, [availability, location]);
 
     return (
         <Box
@@ -120,11 +123,7 @@ const LeftSide = ({
                     Show More
                 </Button>
             </Box>
-            {showQuickBookButton ? (
-                <QuickBookGlobal
-                    onChangeQuickBookRight={onChangeQuickBookRight}
-                />
-            ) : null}
+            {showQuickBookButton ? <QuickBookGlobal /> : null}
         </Box>
     );
 };
