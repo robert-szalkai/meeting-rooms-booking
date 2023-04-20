@@ -1,5 +1,5 @@
-import React, { SyntheticEvent } from "react";
-import { useState } from "react";
+import React from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import dayjs from "dayjs";
 import {
@@ -19,30 +19,30 @@ import {
 } from "../../../../api/getRequests";
 import { spawnToast } from "../../../../utils/Toast";
 
-const INITIALOWNER = {
-    name: "",
-    id: 0,
-    available: true,
-    image: "",
-};
+interface INITIALOWNER {
+    name: string;
+    id: number;
+}
 
-const QuickBook = ({ isDurationOpen = false }: iQuickBook) => {
+const QuickBook = () => {
     const [timeButtonsVisible, setTimeButtonsVisible] =
-        useState(isDurationOpen);
-    const [open, setOpen] = useState(false);
-    const [owner, setOwner] = useState(INITIALOWNER);
-    const [owners, setOwners] = useState([""]);
-    const [autoComplete, setAutoComplete] = useState(false);
-    const [timeVal, setTimeVal] = useState(0);
-    const [closestMeet, setMeet] = useState(0);
-    const [inSession, setInSession] = useState(false);
+        useState<boolean>(false);
+    const [openQuickButtonMenu, setOpenQuickButtonMenu] =
+        useState<boolean>(false);
+    const [owner, setOwner] = useState<INITIALOWNER>();
+    const [possibleOwners, setPossibleOwners] = useState<string[]>([""]);
+    const [autoComplete, setAutoComplete] = useState<boolean>(false);
+    const [timeVal, setTimeVal] = useState<number>(0);
+    const [closestMeet, setMeet] = useState<number>(0);
+    const [inSession, setInSession] = useState<boolean>(false);
 
     const handleQuickBookButton = async () => {
         setInSession(false);
         setTimeButtonsVisible(!timeButtonsVisible);
-        if (timeButtonsVisible) setOpen(false);
+        if (timeButtonsVisible) setOpenQuickButtonMenu(false);
 
         let meetings_start_time: number[] = [];
+
         const response = await getMeetings();
 
         Object.values(response.data).map((value: any) => {
@@ -64,8 +64,8 @@ const QuickBook = ({ isDurationOpen = false }: iQuickBook) => {
     };
 
     const handleClickTime = () => {
-        if (!open) setOpen(true);
-        setOwner(INITIALOWNER);
+        if (!openQuickButtonMenu) setOpenQuickButtonMenu(true);
+        setOwner(undefined);
     };
 
     const handleChange = async (e: string) => {
@@ -80,7 +80,7 @@ const QuickBook = ({ isDurationOpen = false }: iQuickBook) => {
         try {
             await axios.post("http://localhost:3001/meetings", {
                 room_id: 1,
-                owner_id: owner.id,
+                owner_id: owner?.id,
                 participants_id: [],
                 start_time: now,
                 end_time: end_time,
@@ -104,10 +104,10 @@ const QuickBook = ({ isDurationOpen = false }: iQuickBook) => {
         response.data.forEach(({ name }: { name: string }) =>
             tempOwners.push(name)
         );
-        setOwners(tempOwners);
+        setPossibleOwners(tempOwners);
     };
 
-    if (owners.length === 1) populateOwners();
+    if (possibleOwners.length === 1) populateOwners();
 
     const handleDisable = (val: number) => {
         return closestMeet > val || inSession === false ? false : true;
@@ -207,7 +207,7 @@ const QuickBook = ({ isDurationOpen = false }: iQuickBook) => {
                         </Grid>
                     </Grid>
 
-                    {open ? (
+                    {openQuickButtonMenu ? (
                         <Box paddingTop="5vh">
                             <Box display="flex" justifyContent="center">
                                 <Autocomplete
@@ -225,7 +225,7 @@ const QuickBook = ({ isDurationOpen = false }: iQuickBook) => {
                                     onClose={() => setAutoComplete(false)}
                                     disablePortal
                                     id="combo-box-demo"
-                                    options={owners}
+                                    options={possibleOwners}
                                     sx={{ width: 300 }}
                                     value={
                                         owner === undefined ? "" : owner.name
