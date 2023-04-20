@@ -33,34 +33,47 @@ const QuickBook = () => {
     const [possibleOwners, setPossibleOwners] = useState<string[]>([""]);
     const [autoComplete, setAutoComplete] = useState<boolean>(false);
     const [timeVal, setTimeVal] = useState<number>(0);
-    const [closestMeet, setMeet] = useState<number>(0);
-    const [inSession, setInSession] = useState<boolean>(false);
+    const [closestMeet, setClosestMeet] = useState<number>(0);
 
-    const handleQuickBookButton = async () => {
-        setInSession(false);
+    useEffect(() => {
+        const fetchData = async () => {
+            let tempOwners: any[] = [];
+            let meetings_start_time: number[] = [];
+
+            const owners_response = await getParticipants();
+            owners_response.data.map(({ name }: { name: string }) =>
+                tempOwners.push(name)
+            );
+            setPossibleOwners(tempOwners);
+
+            const meetings_response = await getMeetings();
+            Object.values(meetings_response.data).map((value: any) => {
+                if (dayjs(value.start_time).isSame(dayjs(), "day")) {
+                    meetings_start_time.push(
+                        dayjs(value.start_time).diff(dayjs(), "minute")
+                    );
+                }
+            });
+
+            meetings_start_time.sort((a, b) =>
+                dayjs(a).isAfter(dayjs(b)) ? -1 : 1
+            );
+
+            setClosestMeet(meetings_start_time[0]);
+        };
+
+        fetchData();
+    }, []);
+
+    //if (possibleOwners.length === 1) populateOwners();
+
+    const handleDisable = (val: number) => {
+        return closestMeet > val ? true : false;
+    };
+
+    const handleQuickBookButton = () => {
         setTimeButtonsVisible(!timeButtonsVisible);
         if (timeButtonsVisible) setOpenQuickButtonMenu(false);
-
-        let meetings_start_time: number[] = [];
-
-        const response = await getMeetings();
-
-        Object.values(response.data).map((value: any) => {
-            if (dayjs(value.start_time).isSame(dayjs(), "day")) {
-                meetings_start_time.push(
-                    dayjs(value.start_time).diff(dayjs(), "minute")
-                );
-                if (dayjs(value.end_time).isAfter(dayjs())) {
-                    setInSession(true);
-                }
-            }
-        });
-
-        meetings_start_time.sort((a, b) =>
-            dayjs(a).isAfter(dayjs(b)) ? -1 : 1
-        );
-
-        setMeet(meetings_start_time[0]);
     };
 
     const handleClickTime = () => {
@@ -86,6 +99,8 @@ const QuickBook = () => {
                 end_time: end_time,
             });
             spawnToast("You have succeded", "Your booking was made", true);
+            //From here the code should take you to the yellow/Meeting in Progress Screen
+            //and not allow you to make anymore quick bookings
         } catch (error) {
             spawnToast(
                 "Something went wrong",
@@ -96,21 +111,6 @@ const QuickBook = () => {
         }
 
         handleQuickBookButton();
-    };
-
-    const populateOwners = async () => {
-        let tempOwners: any[] = [];
-        const response = await getParticipants();
-        response.data.forEach(({ name }: { name: string }) =>
-            tempOwners.push(name)
-        );
-        setPossibleOwners(tempOwners);
-    };
-
-    if (possibleOwners.length === 1) populateOwners();
-
-    const handleDisable = (val: number) => {
-        return closestMeet > val || inSession === false ? false : true;
     };
 
     return (
