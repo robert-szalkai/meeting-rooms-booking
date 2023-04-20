@@ -16,4 +16,8 @@ const getRoomById = async (id: number) => {
     return await axios.get(`http://localhost:3001/rooms/${id}`);
 };
 
-export { getRooms, getRoomById, getParticipants, getParticipant };
+const getMeetings = async () => {
+    return await axios.get("http://localhost:3001/meetings");
+};
+
+export { getRooms, getRoomById, getParticipants, getParticipant, getMeetings };

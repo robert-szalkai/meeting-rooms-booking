@@ -12,7 +12,11 @@ import {
 } from "@mui/material";
 import EditCalendarIcon from "@mui/icons-material/EditCalendar";
 
-import { getParticipants, getParticipant } from "../../../../api/getRequests";
+import {
+    getParticipants,
+    getParticipant,
+    getMeetings,
+} from "../../../../api/getRequests";
 import { spawnToast } from "../../../../utils/Toast";
 
 const INITIALOWNER = {
@@ -39,7 +43,7 @@ const QuickBook = ({ isDurationOpen = false }: iQuickBook) => {
         if (timeButtonsVisible) setOpen(false);
 
         let meetings_start_time: number[] = [];
-        const response = await axios.get("http://localhost:3001/meetings");
+        const response = await getMeetings();
 
         Object.values(response.data).map((value: any) => {
             if (dayjs(value.start_time).isSame(dayjs(), "day")) {
@@ -73,24 +77,25 @@ const QuickBook = ({ isDurationOpen = false }: iQuickBook) => {
     const handleCreateMeeting = async () => {
         let now = dayjs();
         let end_time = now.add(timeVal, "minute");
-        let latest_meetings_id = 0;
 
-        const response = await axios.get("http://localhost:3001/meetings");
-        response.data.forEach(
-            ({ id }: { id: number }) => (latest_meetings_id = id)
-        );
+        try {
+            await axios.post("http://localhost:3001/meetings", {
+                room_id: 1,
+                owner_id: owner.id,
+                participants_id: [],
+                start_time: now,
+                end_time: end_time,
+            });
+            spawnToast("You have succeded", "Your booking was made", true);
+        } catch (error) {
+            spawnToast(
+                "Something went wrong",
+                "Your booking has not been made",
+                false
+            );
+            console.log(error);
+        }
 
-        //De adaugat try catch
-        await axios.post("http://localhost:3001/meetings", {
-            id: latest_meetings_id + 1,
-            room_id: 1,
-            owner_id: owner.id,
-            participants_id: [],
-            start_time: now,
-            end_time: end_time,
-        });
-
-        spawnToast("You have succeded", "Your booking was made", true);
         handleQuickBookButton();
     };
 
@@ -227,14 +232,7 @@ const QuickBook = ({ isDurationOpen = false }: iQuickBook) => {
                                         owner === undefined ? "" : owner.name
                                     }
                                     renderInput={(params) => (
-                                        <TextField
-                                            {...params}
-                                            label="Owner"
-                                            // onChange={(e) => {
-                                            //     //handleChange(e);
-                                            //     //console.log(e.target.value);
-                                            // }}
-                                        />
+                                        <TextField {...params} label="Owner" />
                                     )}
                                 />
                             </Box>
