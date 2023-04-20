@@ -22,7 +22,6 @@ const LeftSide = ({ roomName }: iLeftSide) => {
                 justifyContent: "space-evenly",
                 color: "white",
                 height: "100vh",
-                gap: "20px",
                 boxSizing: "border-box",
             }}
         >

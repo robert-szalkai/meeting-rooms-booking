@@ -8,10 +8,10 @@ const MainRouter = () => {
         <BrowserRouter>
             <Routes>
                 <Route path="admin" element={<Admin />} />
-                <Route path="/" element={<TabletApp />} />
+
+                <Route path="rooms/:id*" element={<TabletApp />} />
             </Routes>
         </BrowserRouter>
     );
 };
-
 export default MainRouter;
