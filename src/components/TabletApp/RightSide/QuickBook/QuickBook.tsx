@@ -69,7 +69,6 @@ const QuickBook = ({ isDurationOpen = false }: iQuickBook) => {
     };
 
     const handleChange = async (e: string) => {
-        console.log(e);
         const result = await getParticipant(e);
         setOwner(result.data[0]);
     };
