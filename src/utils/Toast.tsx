@@ -7,12 +7,7 @@ export const spawnToast = (
     message: string,
     successful: boolean
 ) => {
-    if (successful)
         enqueueSnackbar(<ToastMessage title={title} message={message} />, {
-            variant: "success",
-        });
-    else
-        enqueueSnackbar(<ToastMessage title={title} message={message} />, {
-            variant: "error",
+            variant: successful ?  "success" : "error"
         });
 };
