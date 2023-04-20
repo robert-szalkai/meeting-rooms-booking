@@ -20,10 +20,6 @@ const Owner = {
     available: true,
     image: "",
 };
-interface MeetTime {
-    end_time: string;
-    start_time: string;
-}
 
 const QuickBook = ({ isDurationOpen = false }: iQuickBook) => {
     const [timeButtonsVisible, setTimeButtonsVisible] =
@@ -32,25 +28,25 @@ const QuickBook = ({ isDurationOpen = false }: iQuickBook) => {
     const [owner, setOwner] = useState(Owner);
     const [owners, setOwners] = useState([""]);
     const [autoComplete, setAutoComplete] = useState(false);
-    const [time_val, setTime_val] = useState(0);
-    const [closest_meet, setMeet] = useState(0);
-    const [in_session, set_in_session] = useState(false);
+    const [timeVal, setTimeVal] = useState(0);
+    const [closestMeet, setMeet] = useState(0);
+    const [inSession, setInSession] = useState(false);
 
     const handleQuickBook = async () => {
-        set_in_session(false);
+        setInSession(false);
         setTimeButtonsVisible(!timeButtonsVisible);
         if (timeButtonsVisible) setOpen(false);
 
-        let meetings_start_time: any[] = [];
+        let meetings_start_time: number[] = [];
         const response = await axios.get("http://localhost:3001/meetings");
 
-        Object.values(response.data as MeetTime[]).map((value) => {
+        Object.values(response.data).map((value: any) => {
             if (dayjs(value.start_time).isSame(dayjs(), "day")) {
                 meetings_start_time.push(
                     dayjs(value.start_time).diff(dayjs(), "minute")
                 );
                 if (dayjs(value.end_time).isAfter(dayjs())) {
-                    set_in_session(true);
+                    setInSession(true);
                 }
             }
         });
@@ -74,7 +70,7 @@ const QuickBook = ({ isDurationOpen = false }: iQuickBook) => {
 
     const handleSubmitOwner = async () => {
         let now = dayjs();
-        let end_time = now.add(time_val, "minute");
+        let end_time = now.add(timeVal, "minute");
         let latest_meetings_id = 0;
 
         const response = await axios.get("http://localhost:3001/meetings");
@@ -106,8 +102,8 @@ const QuickBook = ({ isDurationOpen = false }: iQuickBook) => {
 
     if (owners.length === 1) populateOwners();
 
-    const handleDisable = (val: any) => {
-        return closest_meet > val || in_session === false ? false : true;
+    const handleDisable = (val: number) => {
+        return closestMeet > val || inSession === false ? false : true;
     };
 
     return (
@@ -153,7 +149,7 @@ const QuickBook = ({ isDurationOpen = false }: iQuickBook) => {
                             <Button
                                 onClick={() => {
                                     handleClickTime();
-                                    setTime_val(15);
+                                    setTimeVal(15);
                                 }}
                                 variant="outlined"
                                 color="success"
@@ -166,7 +162,7 @@ const QuickBook = ({ isDurationOpen = false }: iQuickBook) => {
                             <Button
                                 onClick={() => {
                                     handleClickTime();
-                                    setTime_val(20);
+                                    setTimeVal(20);
                                 }}
                                 variant="outlined"
                                 color="success"
@@ -179,7 +175,7 @@ const QuickBook = ({ isDurationOpen = false }: iQuickBook) => {
                             <Button
                                 onClick={() => {
                                     handleClickTime();
-                                    setTime_val(30);
+                                    setTimeVal(30);
                                 }}
                                 variant="outlined"
                                 color="success"
@@ -193,7 +189,7 @@ const QuickBook = ({ isDurationOpen = false }: iQuickBook) => {
                             <Button
                                 onClick={() => {
                                     handleClickTime();
-                                    setTime_val(40);
+                                    setTimeVal(40);
                                 }}
                                 variant="outlined"
                                 color="success"
@@ -235,10 +231,13 @@ const QuickBook = ({ isDurationOpen = false }: iQuickBook) => {
                             <Box
                                 display="flex"
                                 justifyContent="center"
-                                onClick={handleSubmitOwner}
                                 paddingTop="1vh"
                             >
-                                <Button variant="outlined" color="success">
+                                <Button
+                                    variant="outlined"
+                                    color="success"
+                                    onClick={handleSubmitOwner}
+                                >
                                     Submit
                                 </Button>
                             </Box>
