@@ -5,13 +5,14 @@ import UpcomingCards from "./UpcomingCards/UpcomingCards";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import Clock from "./Clock/Clock";
 import dayjs from 'dayjs'
+import CONSTANTS from "../../../constants/Constants";
 interface iLeftSide {
     roomName: string;
 }
 
 const LeftSide = ({ roomName }: iLeftSide) => {
 
-    const formattedDate = dayjs().format("DD MMM,YYYY").toString();
+    const formattedDate = dayjs().format(CONSTANTS.TODAY);
 
     return (
         <Box

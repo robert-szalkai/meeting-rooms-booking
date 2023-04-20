@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Box } from "@mui/system";
 import COLORS from "../../constants/CustomColors";
 import LeftSide from "./LeftSide/LeftSide";
 import Grid from "@mui/material/Grid";
@@ -11,10 +12,6 @@ const TabletApp = () => {
     const { id } = useParams();
     const [availability, setAvailability] = useState(1);
     const [roomName, setRoomName] = useState("Focus Room");
-  useEffect(() => {
-    spawnToast("You have succeded","Your booking was made","success")
-    spawnToast("Something went wrong","Your booking has not been made","error")
-    }, [])
     return (
         <Grid
             sx={{ backgroundColor: colorStates[availability] }}
