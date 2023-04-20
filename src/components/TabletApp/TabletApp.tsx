@@ -1,11 +1,9 @@
-import { Box,Container} from "@mui/system";
 import React, { useEffect, useState } from "react";
 import COLORS from "../../constants/CustomColors";
 import LeftSide from "./LeftSide/LeftSide";
 import RightSide from "./RightSide/RightSide";
 import Grid from "@mui/material/Grid";
 import {spawnToast} from "../../utils/Toast";
-import {Typography} from "@mui/material";
 const TabletApp = () => {
     const colorStates = [COLORS.GREEN, COLORS.YELLOW, COLORS.RED];
 
@@ -13,8 +11,8 @@ const TabletApp = () => {
     const [roomName, setRoomName] = useState("Focus Room");
 
   useEffect(() => {
-    spawnToast("You have succeded","Your booking was made",true)
-    spawnToast("Something went wrong","Your booking has not been made",false)
+    spawnToast("You have succeded","Your booking was made","success")
+    spawnToast("Something went wrong","Your booking has not been made","error")
     }, [])
    
     return (
