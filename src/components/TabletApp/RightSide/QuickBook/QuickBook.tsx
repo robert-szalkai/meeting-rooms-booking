@@ -1,4 +1,7 @@
-import React from "react";
+import React, { SyntheticEvent } from "react";
+import { useState } from "react";
+import axios from "axios";
+import dayjs from "dayjs";
 import {
     Box,
     Button,
@@ -8,13 +11,11 @@ import {
     Autocomplete,
 } from "@mui/material";
 import EditCalendarIcon from "@mui/icons-material/EditCalendar";
-import { useState } from "react";
-import axios from "axios";
+
 import { getParticipants, getParticipant } from "../../../../api/getRequests";
-import dayjs from "dayjs";
 import { spawnToast } from "../../../../utils/Toast";
 
-const Owner = {
+const INITIALOWNER = {
     name: "",
     id: 0,
     available: true,
@@ -25,14 +26,14 @@ const QuickBook = ({ isDurationOpen = false }: iQuickBook) => {
     const [timeButtonsVisible, setTimeButtonsVisible] =
         useState(isDurationOpen);
     const [open, setOpen] = useState(false);
-    const [owner, setOwner] = useState(Owner);
+    const [owner, setOwner] = useState(INITIALOWNER);
     const [owners, setOwners] = useState([""]);
     const [autoComplete, setAutoComplete] = useState(false);
     const [timeVal, setTimeVal] = useState(0);
     const [closestMeet, setMeet] = useState(0);
     const [inSession, setInSession] = useState(false);
 
-    const handleQuickBook = async () => {
+    const handleQuickBookButton = async () => {
         setInSession(false);
         setTimeButtonsVisible(!timeButtonsVisible);
         if (timeButtonsVisible) setOpen(false);
@@ -60,15 +61,16 @@ const QuickBook = ({ isDurationOpen = false }: iQuickBook) => {
 
     const handleClickTime = () => {
         if (!open) setOpen(true);
-        setOwner(Owner);
+        setOwner(INITIALOWNER);
     };
 
-    const handleChange = async (e: any) => {
-        const result = await getParticipant(e.target.innerHTML);
+    const handleChange = async (e: string) => {
+        console.log(e);
+        const result = await getParticipant(e);
         setOwner(result.data[0]);
     };
 
-    const handleSubmitOwner = async () => {
+    const handleCreateMeeting = async () => {
         let now = dayjs();
         let end_time = now.add(timeVal, "minute");
         let latest_meetings_id = 0;
@@ -78,7 +80,8 @@ const QuickBook = ({ isDurationOpen = false }: iQuickBook) => {
             ({ id }: { id: number }) => (latest_meetings_id = id)
         );
 
-        const res = await axios.post("http://localhost:3001/meetings", {
+        //De adaugat try catch
+        await axios.post("http://localhost:3001/meetings", {
             id: latest_meetings_id + 1,
             room_id: 1,
             owner_id: owner.id,
@@ -88,7 +91,7 @@ const QuickBook = ({ isDurationOpen = false }: iQuickBook) => {
         });
 
         spawnToast("You have succeded", "Your booking was made", true);
-        handleQuickBook();
+        handleQuickBookButton();
     };
 
     const populateOwners = async () => {
@@ -114,7 +117,7 @@ const QuickBook = ({ isDurationOpen = false }: iQuickBook) => {
                     color="success"
                     sx={{ textTransform: "none" }}
                     onClick={() => {
-                        handleQuickBook();
+                        handleQuickBookButton();
                     }}
                 >
                     <EditCalendarIcon fontSize="small" />
@@ -213,9 +216,9 @@ const QuickBook = ({ isDurationOpen = false }: iQuickBook) => {
                                             if (!autoComplete)
                                                 setAutoComplete(true);
                                         }
+                                        handleChange(value);
                                     }}
                                     onClose={() => setAutoComplete(false)}
-                                    onChange={handleChange}
                                     disablePortal
                                     id="combo-box-demo"
                                     options={owners}
@@ -224,7 +227,14 @@ const QuickBook = ({ isDurationOpen = false }: iQuickBook) => {
                                         owner === undefined ? "" : owner.name
                                     }
                                     renderInput={(params) => (
-                                        <TextField {...params} label="Owner" />
+                                        <TextField
+                                            {...params}
+                                            label="Owner"
+                                            // onChange={(e) => {
+                                            //     //handleChange(e);
+                                            //     //console.log(e.target.value);
+                                            // }}
+                                        />
                                     )}
                                 />
                             </Box>
@@ -236,7 +246,7 @@ const QuickBook = ({ isDurationOpen = false }: iQuickBook) => {
                                 <Button
                                     variant="outlined"
                                     color="success"
-                                    onClick={handleSubmitOwner}
+                                    onClick={handleCreateMeeting}
                                 >
                                     Submit
                                 </Button>
