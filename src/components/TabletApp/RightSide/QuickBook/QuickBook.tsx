@@ -68,7 +68,6 @@ const QuickBook = () => {
     };
 
     const handleChange = async (e: string) => {
-        console.log(e);
         const result = await getParticipant(e);
         setOwner(result.data[0]);
     };
