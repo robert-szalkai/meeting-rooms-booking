@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Route, Routes, useParams } from "react-router-dom";
-import { Box } from "@mui/system";
+import { Box } from "@mui/material";
 import Grid from "@mui/material/Grid";
 
 import LeftSide from "./LeftSide/LeftSide";
@@ -15,16 +15,6 @@ const TabletApp = () => {
 
     const [availability, setAvailability] = useState(1);
     const [roomName, setRoomName] = useState("Focus Room");
-
-    useEffect(() => {
-        spawnToast("You have succeded", "Your booking was made", true);
-        spawnToast(
-            "Something went wrong",
-            "Your booking has not been made",
-            false
-        );
-    }, []);
-
     return (
         <Grid
             sx={{ backgroundColor: colorStates[availability] }}
@@ -65,7 +55,7 @@ const TabletApp = () => {
                             />
                             <Route
                                 path="/quickbookglobal"
-                                element={<QuickBook  />}
+                                element={<QuickBook />}
                             />
                         </Routes>
                     </Box>

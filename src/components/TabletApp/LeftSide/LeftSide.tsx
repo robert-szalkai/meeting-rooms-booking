@@ -1,37 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { Box } from "@mui/system";
-import { Typography, Button } from "@mui/material";
+import { Typography, Button, Box } from "@mui/material";
+import dayjs from "dayjs";
 
 import UpcomingCards from "./UpcomingCards/UpcomingCards";
 import QuickBookGlobal from "./QuickBookGlobal/QuickBookGlobal";
+import CONSTANTS from "../../../constants/Constants";
+import Clock from "./Clock/Clock";
 
 interface iLeftSide {
     roomName: string;
     availability: number;
 }
 
-const LeftSide = ({
-    roomName,
-    availability,
-}: iLeftSide) => {
-    let currDate = new Date();
-    let hoursMin;
+const LeftSide = ({ roomName, availability }: iLeftSide) => {
+    const formattedDate = dayjs().format(CONSTANTS.TODAY);
 
-    if (currDate.getMinutes() < 10) {
-        hoursMin = currDate.getHours() + ":0" + currDate.getMinutes();
-    } else {
-        hoursMin = currDate.getHours() + ":" + currDate.getMinutes();
-    }
-
-    const options: Intl.DateTimeFormatOptions = {
-        day: "numeric",
-        month: "short",
-        year: "numeric",
-    };
-
-    const formattedDate: string = currDate.toLocaleDateString("en-US", options);
-    const [time, setTime] = useState(hoursMin);
     const [showQuickBookButton, setShowQuickBookButton] = useState(true);
     const location = useLocation();
 
@@ -74,7 +58,7 @@ const LeftSide = ({
                     alignItems="flex-start"
                 >
                     <Typography variant="h3">{roomName}</Typography>
-                    <Typography variant="h2">{time}</Typography>
+                    <Clock />
                     <Typography variant="h3">{formattedDate}</Typography>
                 </Box>
             </Box>
