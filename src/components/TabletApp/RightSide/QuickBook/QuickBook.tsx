@@ -48,11 +48,11 @@ const QuickBook = () => {
                 console.log(tempOwners);
                 setPossibleOwners(tempOwners);
             } catch (error) {
-                spawnToast(
-                    "Something went wrong",
-                    "Your booking has not been made",
-                    false
-                );
+                spawnToast({
+                    title: "Something went wrong",
+                    message: "Your booking has not been made",
+                    toastType: "error",
+                });
                 console.log(error);
             }
 
@@ -66,11 +66,11 @@ const QuickBook = () => {
                     }
                 });
             } catch (error) {
-                spawnToast(
-                    "Something went wrong",
-                    "Your booking has not been made",
-                    false
-                );
+                spawnToast({
+                    title: "Something went wrong",
+                    message: "Your booking has not been made",
+                    toastType: "error",
+                });
                 console.log(error);
             }
 
@@ -120,15 +120,19 @@ const QuickBook = () => {
                 start_time: now,
                 end_time: end_time,
             });
-            spawnToast("You have succeded", "Your booking was made", true);
+            spawnToast({
+                title: "You have succeded",
+                message: "Your booking was made",
+                toastType: "success",
+            });
             //From here the code should take you to the red/Meeting in Progress Screen
             //and not allow you to make anymore quick bookings
         } catch (error) {
-            spawnToast(
-                "Something went wrong",
-                "Your booking has not been made",
-                false
-            );
+            spawnToast({
+                title: "Something went wrong",
+                message: "Your booking has not been made",
+                toastType: "error",
+            });
             console.log(error);
         }
 
