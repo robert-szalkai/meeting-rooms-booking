@@ -1,14 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { Box } from "@mui/system";
-import COLORS from "../../constants/CustomColors";
-import LeftSide from "./LeftSide/LeftSide";
-import Grid from "@mui/material/Grid";
 import { Route, Routes, useParams } from "react-router-dom";
+import { Box } from "@mui/material";
+import Grid from "@mui/material/Grid";
+
+import LeftSide from "./LeftSide/LeftSide";
 import AdvancedBook from "./RightSide/AdvancedBook/AdvancedBook";
 import MeetingInfo from "./RightSide/MeetingInfo/MeetingInfo";
+import QuickBook from "./RightSide/QuickBook/QuickBook";
+import COLORS from "../../constants/CustomColors";
+import { spawnToast } from "../../utils/Toast";
+
 const TabletApp = () => {
     const colorStates = [COLORS.GREEN, COLORS.YELLOW, COLORS.RED];
-    const { id } = useParams();
+
     const [availability, setAvailability] = useState(1);
     const [roomName, setRoomName] = useState("Focus Room");
     return (
@@ -18,7 +22,7 @@ const TabletApp = () => {
             container
         >
             <Grid item xs={5}>
-                <LeftSide roomName={roomName} />
+                <LeftSide roomName={roomName} availability={availability} />
             </Grid>
             <Grid item xs={7}>
                 <Box
@@ -28,11 +32,11 @@ const TabletApp = () => {
                         boxSizing: "border-box",
                     }}
                 >
-                    <Box 
-                        overflow={'auto'}
+                    <Box
+                        overflow={"auto"}
                         sx={{
-                            paddingTop:1,
-                            paddingLeft:4,
+                            paddingTop: 1,
+                            paddingLeft: 4,
                             background: "white",
                             height: "100%",
                             borderRadius: "36px 0px 0px 0px",
@@ -41,14 +45,18 @@ const TabletApp = () => {
                             alignItems: "center",
                             justifyContent: "flex-start",
                             boxSizing: "border-box",
-                            
                         }}
                     >
                         <Routes>
                             <Route path="/form" element={<AdvancedBook />} />
                             <Route
                                 path="/meetinginfo/:meetid"
-                                element={<MeetingInfo />} />
+                                element={<MeetingInfo />}
+                            />
+                            <Route
+                                path="/quickbookglobal"
+                                element={<QuickBook />}
+                            />
                         </Routes>
                     </Box>
                 </Box>

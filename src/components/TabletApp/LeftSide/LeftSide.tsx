@@ -1,18 +1,32 @@
-import React from "react";
-import { Box } from "@mui/system";
-import { Typography, Button } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
+import { Typography, Button, Box } from "@mui/material";
+import dayjs from "dayjs";
+
 import UpcomingCards from "./UpcomingCards/UpcomingCards";
-import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
-import Clock from "./Clock/Clock";
-import dayjs from 'dayjs'
+import QuickBookGlobal from "./QuickBookGlobal/QuickBookGlobal";
 import CONSTANTS from "../../../constants/Constants";
+import Clock from "./Clock/Clock";
+
 interface iLeftSide {
     roomName: string;
+    availability: number;
 }
 
-const LeftSide = ({ roomName }: iLeftSide) => {
-
+const LeftSide = ({ roomName, availability }: iLeftSide) => {
     const formattedDate = dayjs().format(CONSTANTS.TODAY);
+
+    const [showQuickBookButton, setShowQuickBookButton] = useState(true);
+    const location = useLocation();
+
+    useEffect(() => {
+        if (
+            availability === 2 ||
+            location.pathname.includes("quickbookglobal")
+        ) {
+            setShowQuickBookButton(false);
+        }
+    }, [availability, location]);
 
     return (
         <Box
@@ -93,10 +107,7 @@ const LeftSide = ({ roomName }: iLeftSide) => {
                     Show More
                 </Button>
             </Box>
-            <Button variant="outlined" color="inherit">
-                <CalendarMonthIcon />
-                Quick Book
-            </Button>
+            {showQuickBookButton ? <QuickBookGlobal /> : null}
         </Box>
     );
 };

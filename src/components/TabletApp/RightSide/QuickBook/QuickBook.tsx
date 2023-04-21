@@ -25,10 +25,18 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 //To be removed when global theme is done
-const buttonStyle = { color: COLORS.GREEN, border: `1px solid ${COLORS.GREEN}` };
+const buttonStyle = {
+    color: COLORS.GREEN,
+    border: `1px solid ${COLORS.GREEN}`,
+};
 
-const QuickBook = () => {
-    const [timeButtonsVisible, setTimeButtonsVisible] = useState(false);
+interface iQuickBook {
+    isDurationOpen?: boolean;
+}
+
+const QuickBook = ({ isDurationOpen = false }: iQuickBook) => {
+    const [timeButtonsVisible, setTimeButtonsVisible] =
+        useState(isDurationOpen);
     const [open, setOpen] = useState(false);
     const [ownerName, setOwnerName] = useState("");
     const [owners, setOwners] = useState([""]);
