@@ -29,7 +29,7 @@ const QuickBook = () => {
         useState<boolean>(false);
     const [openQuickButtonMenu, setOpenQuickButtonMenu] =
         useState<boolean>(false);
-    const [owner, setOwner] = useState<INITIALOWNER>();
+    const [owner, setOwner] = useState<INITIALOWNER>({ name: "", id: 0 });
     const [possibleOwners, setPossibleOwners] = useState<string[]>([""]);
     const [autoComplete, setAutoComplete] = useState<boolean>(false);
     const [timeVal, setTimeVal] = useState<number>(0);
@@ -37,23 +37,42 @@ const QuickBook = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            let tempOwners: any[] = [];
+            let tempOwners: string[] = [];
             let meetings_start_time: number[] = [];
 
-            const owners_response = await getParticipants();
-            owners_response.data.map(({ name }: { name: string }) =>
-                tempOwners.push(name)
-            );
-            setPossibleOwners(tempOwners);
+            try {
+                const owners_response = await getParticipants();
+                Object.values(owners_response).forEach((value: any) =>
+                    tempOwners.push(value.name)
+                );
+                console.log(tempOwners);
+                setPossibleOwners(tempOwners);
+            } catch (error) {
+                spawnToast(
+                    "Something went wrong",
+                    "Your booking has not been made",
+                    false
+                );
+                console.log(error);
+            }
 
-            const meetings_response = await getMeetings();
-            Object.values(meetings_response.data).map((value: any) => {
-                if (dayjs(value.start_time).isSame(dayjs(), "day")) {
-                    meetings_start_time.push(
-                        dayjs(value.start_time).diff(dayjs(), "minute")
-                    );
-                }
-            });
+            try {
+                const meetings_response = await getMeetings();
+                Object.values(meetings_response).forEach((value: any) => {
+                    if (dayjs(value.start_time).isSame(dayjs(), "day")) {
+                        meetings_start_time.push(
+                            dayjs(value.start_time).diff(dayjs(), "minute")
+                        );
+                    }
+                });
+            } catch (error) {
+                spawnToast(
+                    "Something went wrong",
+                    "Your booking has not been made",
+                    false
+                );
+                console.log(error);
+            }
 
             meetings_start_time.sort((a, b) =>
                 dayjs(a).isAfter(dayjs(b)) ? -1 : 1
@@ -61,7 +80,6 @@ const QuickBook = () => {
 
             setClosestMeet(meetings_start_time[0]);
         };
-
         fetchData();
     }, []);
 
@@ -78,12 +96,16 @@ const QuickBook = () => {
 
     const handleClickTime = () => {
         if (!openQuickButtonMenu) setOpenQuickButtonMenu(true);
-        setOwner(undefined);
+        setOwner({ name: "", id: 0 });
     };
 
     const handleChange = async (e: string) => {
-        const result = await getParticipant(e);
-        setOwner(result.data[0]);
+        try {
+            const result = await getParticipant(e);
+            setOwner({ name: result.name, id: result.id });
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     const handleCreateMeeting = async () => {
@@ -99,7 +121,7 @@ const QuickBook = () => {
                 end_time: end_time,
             });
             spawnToast("You have succeded", "Your booking was made", true);
-            //From here the code should take you to the yellow/Meeting in Progress Screen
+            //From here the code should take you to the red/Meeting in Progress Screen
             //and not allow you to make anymore quick bookings
         } catch (error) {
             spawnToast(
