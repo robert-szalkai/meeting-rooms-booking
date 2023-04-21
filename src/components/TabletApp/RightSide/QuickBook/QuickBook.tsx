@@ -31,19 +31,16 @@ const buttonStyle = {
 };
 
 interface iQuickBook {
-    timeButtonsAvaible: boolean;
+    isDurationOpen?: boolean;
 }
 
-const QuickBook = ({ timeButtonsAvaible }: iQuickBook) => {
-    const [timeButtonsVisible, setTimeButtonsVisible] = useState(false);
+const QuickBook = ({ isDurationOpen = false }: iQuickBook) => {
+    const [timeButtonsVisible, setTimeButtonsVisible] =
+        useState(isDurationOpen);
     const [open, setOpen] = useState(false);
     const [ownerName, setOwnerName] = useState("");
     const [owners, setOwners] = useState([""]);
     const [autoComplete, setAutoComplete] = useState(false);
-
-    useEffect(() => {
-        if (timeButtonsAvaible) setTimeButtonsVisible(true);
-    }, [timeButtonsAvaible]);
 
     const handleQuickBook = () => {
         setTimeButtonsVisible(!timeButtonsVisible);

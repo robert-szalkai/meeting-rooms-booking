@@ -65,9 +65,7 @@ const TabletApp = () => {
                             />
                             <Route
                                 path="/quickbookglobal"
-                                element={
-                                    <QuickBook timeButtonsAvaible={true} />
-                                }
+                                element={<QuickBook  />}
                             />
                         </Routes>
                     </Box>
