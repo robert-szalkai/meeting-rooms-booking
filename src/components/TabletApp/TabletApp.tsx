@@ -6,7 +6,6 @@ import Grid from "@mui/material/Grid";
 import { Route, Routes, useParams } from "react-router-dom";
 import AdvancedBook from "./RightSide/AdvancedBook/AdvancedBook";
 import MeetingInfo from "./RightSide/MeetingInfo/MeetingInfo";
-import {spawnToast} from "../../utils/Toast";
 const TabletApp = () => {
     const colorStates = [COLORS.GREEN, COLORS.YELLOW, COLORS.RED];
     const { id } = useParams();
