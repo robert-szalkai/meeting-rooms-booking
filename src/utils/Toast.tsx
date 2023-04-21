@@ -5,14 +5,8 @@ import React from "react";
 export const spawnToast = (
     title: string,
     message: string,
-    successful: boolean
+    toastType: "success" | "error"
 ) => {
-    if (successful)
         enqueueSnackbar(<ToastMessage title={title} message={message} />, {
-            variant: "success",
-        });
-    else
-        enqueueSnackbar(<ToastMessage title={title} message={message} />, {
-            variant: "error",
-        });
+            variant: toastType})
 };

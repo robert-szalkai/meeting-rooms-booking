@@ -1,30 +1,18 @@
-import React, { useState } from "react";
+import React from "react";
 import { Box } from "@mui/system";
 import { Typography, Button } from "@mui/material";
 import UpcomingCards from "./UpcomingCards/UpcomingCards";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import Clock from "./Clock/Clock";
+import dayjs from 'dayjs'
+import CONSTANTS from "../../../constants/Constants";
 interface iLeftSide {
     roomName: string;
 }
 
 const LeftSide = ({ roomName }: iLeftSide) => {
-    let currDate = new Date();
-    let hoursMin;
 
-    if (currDate.getMinutes() < 10) {
-        hoursMin = currDate.getHours() + ":0" + currDate.getMinutes();
-    } else {
-        hoursMin = currDate.getHours() + ":" + currDate.getMinutes();
-    }
-
-    const options: Intl.DateTimeFormatOptions = {
-        day: "numeric",
-        month: "short",
-        year: "numeric",
-    };
-
-    const formattedDate: string = currDate.toLocaleDateString("en-US", options);
-    const [time, setTime] = useState(hoursMin);
+    const formattedDate = dayjs().format(CONSTANTS.TODAY);
 
     return (
         <Box
@@ -56,7 +44,7 @@ const LeftSide = ({ roomName }: iLeftSide) => {
                     alignItems="flex-start"
                 >
                     <Typography variant="h3">{roomName}</Typography>
-                    <Typography variant="h2">{time}</Typography>
+                    <Clock />
                     <Typography variant="h3">{formattedDate}</Typography>
                 </Box>
             </Box>
