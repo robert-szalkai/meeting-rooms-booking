@@ -6,17 +6,11 @@ import Grid from "@mui/material/Grid";
 import { Route, Routes, useParams } from "react-router-dom";
 import AdvancedBook from "./RightSide/AdvancedBook/AdvancedBook";
 import MeetingInfo from "./RightSide/MeetingInfo/MeetingInfo";
-import {spawnToast} from "../../utils/Toast";
-import {Typography} from "@mui/material";
 const TabletApp = () => {
     const colorStates = [COLORS.GREEN, COLORS.YELLOW, COLORS.RED];
     const { id } = useParams();
     const [availability, setAvailability] = useState(1);
     const [roomName, setRoomName] = useState("Focus Room");
-  useEffect(() => {
-    spawnToast("You have succeded","Your booking was made",true)
-    spawnToast("Something went wrong","Your booking has not been made",false)
-    }, [])
     return (
         <Grid
             sx={{ backgroundColor: colorStates[availability] }}

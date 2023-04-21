@@ -11,7 +11,7 @@ function App() {
             <SnackbarProvider
                 anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
                 style={{ display: "flex", alignItems: "start" }}
-                autoHideDuration={5000}
+                autoHideDuration={3000}
             >
                 <MainRouter />
             </SnackbarProvider>
