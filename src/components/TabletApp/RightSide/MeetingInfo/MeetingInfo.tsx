@@ -53,21 +53,21 @@ const MeetingInfo = ({
 
     const getMeetingById = async (meetid: string): Promise<iMeetingData> => {
         const result = await axios.get(
-            `http://localhost:3003/meetingInfo?id=${meetid}`
+            `http://localhost:3003/meetingInfo/${meetid}`
         );
 
         return result.data;
     };
 
-    useEffect(() => {
-        const _getMeetingById = async () => {
-            if (meetid) await getMeetingById(meetid);
-        };
+    // useEffect(() => {
+    //     const _getMeetingById = async () => {
+    //         if (meetid) await getMeetingById(meetid);
+    //     };
 
-        if (meetid) console.log("duhfiuehdwifue", getMeetingById(meetid));
+    //     if (meetid) console.log("duhfiuehdwifue", getMeetingById(meetid));
 
-        // setMeetingData(_getMeetingById)
-    }, [meetid]);
+    //     // setMeetingData(_getMeetingById)
+    // }, [meetid]);
 
     const getParticipantsData = async () => {
         const response = await getParticipants();
@@ -116,6 +116,30 @@ const MeetingInfo = ({
         .filter((meeting) => meeting.id === meetid)
         .map((meeting) => getNames(meeting.participants_id));
 
+    // aici e ce trebuie  AICIIIIIIIIIIII
+
+    const getMeetingData = async () => {
+        if (meetid) {
+            const response = await getMeetingById(meetid);
+            setMeetingData(response);
+            console.log("duhfiuehdwifue", response);
+        }
+    };
+
+    useEffect(() => {
+        const _getMeetingData = async () => {
+            getMeetingData();
+        };
+
+        _getMeetingData();
+    }, []);
+
+    useEffect(() => {
+        console.log("sasasasas", meetingData);
+    }, [meetingData]);
+
+    //pana aici
+
     const getInitilas = () => {
         console.log("data persons", persons);
         const filteredata =
@@ -151,7 +175,7 @@ const MeetingInfo = ({
         ));
     };
 
-    return (
+    return meetingData ? (
         <Grid
             height={"100%"}
             padding={1}
@@ -164,23 +188,25 @@ const MeetingInfo = ({
                     <Grid item xs={12}></Grid>
                     <Grid item xs={12}>
                         <Typography variant="h4">
-                            {meetingsData?.meetings
+                            {/* {meetingsData?.meetings
                                 .filter((meeting) => meeting.id === meetid)
-                                .map((meeting) => meeting.name)}
+                                .map((meeting) => meeting.name)} */}
+                            {meetingData.name}
                         </Typography>
                         <Typography variant="h4">
                             Today,
-                            {meetingsData?.meetings
+                            {/* {meetingsData?.meetings
                                 .filter((meeting) => meeting.id === meetid)
                                 .map((meeting) =>
                                     dayjs(meeting.start_time).format("HH:MM")
-                                )}
-                            -
-                            {meetingsData?.meetings
+                                )} */}
+                            {dayjs(meetingData.start_time).format("HH:MM")}-
+                            {/* {meetingsData?.meetings
                                 .filter((meeting) => meeting.id === meetid)
                                 .map((meeting) =>
                                     dayjs(meeting.end_time).format("HH:MM")
-                                )}
+                                )} */}
+                            {dayjs(meetingData.end_time).format("HH:MM")}
                         </Typography>
                     </Grid>
                 </Grid>
@@ -216,26 +242,14 @@ const MeetingInfo = ({
                         <Typography variant="subtitle1">
                             The Terno is a modular light and sound system
                             designed for stage and recording applications,
-                            providing an intuitive on-stage interface for both
-                            technical and non-technical personnel. With features
-                            such as redundant power supply for maximum
-                            reliability, easy transportability, and dozens of
-                            mounting options, the Terno is perfect for any live
-                            event. Product Features: - Modular design makes
-                            setup quick and simple. - 60 W amplifier delivers
-                            quality sound with clear, defined mid frequencies. -
-                            8 channels (2 each of omni/ambient/speaker 1/2)
-                            provide ample sound coverage for larger venues. -
-                            Front panel aux input lets you link music or audio
-                            from other sources. - Portable, lightweight design
-                            makes set up quick and easy. - Durable aluminum
-                            housing with PVC trim frame provides years of use. -
-                            RoHS compliant.
+                            providing an intuitive on-stage
                         </Typography>
                     </Grid>
                 </Grid>
             </Grid>
         </Grid>
+    ) : (
+        <Typography variant="h4">Loading...</Typography>
     );
 };
 
