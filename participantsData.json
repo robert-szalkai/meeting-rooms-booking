@@ -6,7 +6,7 @@
         "participants":[
             {
                 "id": 1,
-                "name":"Alexandru Incicau"
+                "name":"Alexandru Incicau"   
             },
             
             {
@@ -22,6 +22,11 @@
             {
                 "id":4,
                 "name":"Ruben Vasile"
+
+            },
+            {
+                "id":5,
+                "name":"William Willis"
 
             }
         ]

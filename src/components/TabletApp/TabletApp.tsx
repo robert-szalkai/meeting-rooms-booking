@@ -25,6 +25,7 @@ interface iLeftSide {
     }[];
 }
 
+
 const TabletApp = () => {
     const colorStates = [COLORS.GREEN, COLORS.YELLOW, COLORS.RED];
     const [meetingsData, setMeetingsData] = useState<iLeftSide>();
@@ -118,6 +119,7 @@ const TabletApp = () => {
                                         start_time={startTime}
                                         end_time={endTime}
                                         participants_names={participantsName}
+                                        meetings={[]}
                                     />
                                 }
                             />

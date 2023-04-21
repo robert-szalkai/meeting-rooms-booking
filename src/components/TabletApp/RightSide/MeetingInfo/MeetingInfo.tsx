@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Grid, Typography, Box, Avatar } from "@mui/material";
-import { getParticipants } from "../../../../api/getRequests";
+import { getMeetingsData, getParticipants } from "../../../../api/getRequests";
+import { useParams } from "react-router-dom";
+import axios, { AxiosResponse } from "axios";
+import dayjs, { Dayjs } from "dayjs";
 
 interface iMettingInfo {
     name: string;
@@ -8,6 +11,13 @@ interface iMettingInfo {
     start_time: string;
     end_time: string;
     participants_names: (string | undefined)[];
+    meetings: {
+        name: string;
+        id: string;
+        start_time: string;
+        end_time: string;
+        participants_id: [];
+    }[];
 }
 interface participantsID {
     participants: {
@@ -16,24 +26,114 @@ interface participantsID {
     }[];
 }
 
+interface iMeetingData {
+    name: string;
+    id: string;
+    start_time: string;
+    end_time: string;
+    participants_id: [];
+}
+
 const MeetingInfo = ({
     name,
     start_time,
     end_time,
     participants_names,
+    meetings,
 }: iMettingInfo) => {
-    const getInitilas = () => {
-        const filteredata = participants_names.map((e: any) => {
-            return e
-                .match(/(\b\S)?/g)
-                ?.join("")
-                .toUpperCase();
+    const [participantsData, setParticipantsData] = useState<participantsID>();
+    const [meetingsData, setMeetingsData] = useState<iMettingInfo>();
+    const [meetingParticipants, setMeetingParticipants] = useState<
+        string[] | undefined
+    >([]);
+
+    const [meetingData, setMeetingData] = useState<iMeetingData>();
+
+    const { meetid } = useParams<string>();
+
+    const getMeetingById = async (meetid: string): Promise<iMeetingData> => {
+        const result = await axios.get(
+            `http://localhost:3003/meetingInfo?id=${meetid}`
+        );
+
+        return result.data;
+    };
+
+    useEffect(() => {
+        const _getMeetingById = async () => {
+            if (meetid) await getMeetingById(meetid);
+        };
+
+        if (meetid) console.log("duhfiuehdwifue", getMeetingById(meetid));
+
+        // setMeetingData(_getMeetingById)
+    }, [meetid]);
+
+    const getParticipantsData = async () => {
+        const response = await getParticipants();
+        if (response.status === 200) {
+            setParticipantsData(response.data);
+        }
+    };
+
+    useEffect(() => {
+        const _getParticipants = async () => {
+            await getParticipantsData();
+        };
+
+        _getParticipants();
+    }, []);
+
+    const getMeetingsRoomData = async (): Promise<AxiosResponse> => {
+        const response = await getMeetingsData();
+
+        return response;
+    };
+
+    useEffect(() => {
+        getMeetingsRoomData().then((response) => {
+            setMeetingsData(response.data);
         });
+    }, []);
+
+    useEffect(() => {
+        if (meetingsData) {
+            const id = parseInt(meetid as string);
+            console.log("meet data: ", meetingsData);
+            setMeetingParticipants(meetingsData?.meetings[id]?.participants_id);
+        }
+    }, [meetingsData]);
+
+    const getNames = (ids: string[]) => {
+        return (
+            participantsData?.participants
+                .filter((participants) => ids.includes(participants.id))
+                .map((value) => value.name) || []
+        );
+    };
+
+    const persons = meetingsData?.meetings
+        .filter((meeting) => meeting.id === meetid)
+        .map((meeting) => getNames(meeting.participants_id));
+
+    const getInitilas = () => {
+        console.log("data persons", persons);
+        const filteredata =
+            // meetingsData?.meetings
+            // .filter((meeting) => meeting.id === meetid)
+            // .map((meeting) => getNames(meeting.participants_id))
+            participantsData?.participants.map((e) => {
+                return e.name
+                    .match(/(\b\S)?/g)
+                    ?.join("")
+                    .toUpperCase();
+            });
 
         return filteredata;
     };
+
     const mapersons = () => {
-        return getInitilas().map((person, index) => (
+        return getInitilas()?.map((person, index) => (
             <Grid item xs={4}>
                 <Box
                     sx={{
@@ -45,13 +145,12 @@ const MeetingInfo = ({
                     }}
                 >
                     <Avatar>{person}</Avatar>
-                    <Typography variant="body1">
-                        {participants_names[index]}
-                    </Typography>
+                    <Typography variant="body1">{persons?.[index]}</Typography>
                 </Box>
             </Grid>
         ));
     };
+
     return (
         <Grid
             height={"100%"}
@@ -64,9 +163,24 @@ const MeetingInfo = ({
                 <Grid container direction={"row"} spacing={5}>
                     <Grid item xs={12}></Grid>
                     <Grid item xs={12}>
-                        <Typography variant="h4">{name}</Typography>
                         <Typography variant="h4">
-                            Today,{start_time}-{end_time}
+                            {meetingsData?.meetings
+                                .filter((meeting) => meeting.id === meetid)
+                                .map((meeting) => meeting.name)}
+                        </Typography>
+                        <Typography variant="h4">
+                            Today,
+                            {meetingsData?.meetings
+                                .filter((meeting) => meeting.id === meetid)
+                                .map((meeting) =>
+                                    dayjs(meeting.start_time).format("HH:MM")
+                                )}
+                            -
+                            {meetingsData?.meetings
+                                .filter((meeting) => meeting.id === meetid)
+                                .map((meeting) =>
+                                    dayjs(meeting.end_time).format("HH:MM")
+                                )}
                         </Typography>
                     </Grid>
                 </Grid>
