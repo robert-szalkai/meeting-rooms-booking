@@ -31,7 +31,7 @@ interface iMeetingData {
     id: string;
     start_time: string;
     end_time: string;
-    participants_id: [];
+    participants_id: string[] | undefined;
 }
 
 const MeetingInfo = ({
@@ -104,10 +104,10 @@ const MeetingInfo = ({
         }
     }, [meetingsData]);
 
-    const getNames = (ids: string[]) => {
+    const getNames = (ids: string[] | undefined) => {
         return (
             participantsData?.participants
-                .filter((participants) => ids.includes(participants.id))
+                .filter((participants) => ids?.includes(participants.id))
                 .map((value) => value.name) || []
         );
     };
@@ -115,6 +115,8 @@ const MeetingInfo = ({
     const persons = meetingsData?.meetings
         .filter((meeting) => meeting.id === meetid)
         .map((meeting) => getNames(meeting.participants_id));
+
+    const personsById = getNames(meetingData?.participants_id);
 
     // aici e ce trebuie  AICIIIIIIIIIIII
 
@@ -142,16 +144,13 @@ const MeetingInfo = ({
 
     const getInitilas = () => {
         console.log("data persons", persons);
-        const filteredata =
-            // meetingsData?.meetings
-            // .filter((meeting) => meeting.id === meetid)
-            // .map((meeting) => getNames(meeting.participants_id))
-            participantsData?.participants.map((e) => {
-                return e.name
-                    .match(/(\b\S)?/g)
-                    ?.join("")
-                    .toUpperCase();
-            });
+       
+        const filteredata = personsById.map((e) => {
+            return e
+                .match(/(\b\S)?/g)
+                ?.join("")
+                .toUpperCase();
+        });
 
         return filteredata;
     };
@@ -169,7 +168,9 @@ const MeetingInfo = ({
                     }}
                 >
                     <Avatar>{person}</Avatar>
-                    <Typography variant="body1">{persons?.[index]}</Typography>
+                    <Typography variant="body1">
+                        {personsById?.[index]}
+                    </Typography>
                 </Box>
             </Grid>
         ));
