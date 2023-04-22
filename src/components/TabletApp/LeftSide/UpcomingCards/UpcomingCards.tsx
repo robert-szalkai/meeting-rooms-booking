@@ -10,12 +10,6 @@ interface iUpcomingCards {
     end: string;
     persons: (string | undefined)[];
     meetingName: string;
-    onChangeMeetData: (
-        name: string,
-        start: string,
-        end: string,
-        participants: (string | undefined)[]
-    ) => void;
 }
 const UpcomingCards = ({
     id,
@@ -23,7 +17,6 @@ const UpcomingCards = ({
     end,
     persons,
     meetingName,
-    onChangeMeetData,
 }: iUpcomingCards) => {
     const getInitilas = () => {
         const filteredata = persons.map((e) => {
@@ -54,7 +47,6 @@ const UpcomingCards = ({
     const navigate = useNavigate();
     const handleCardOnClick = () => {
         console.log(id);
-        onChangeMeetData(meetingName, start, end, persons);
         navigate(`meetinginfo/${id}`);
     };
 

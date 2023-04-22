@@ -15,12 +15,7 @@ interface iLeftSide {
         end_time: string;
         participants_id: [];
     }[];
-    onChangeMeetData: (
-        name: string,
-        start: string,
-        end: string,
-        participants: (string | undefined)[]
-    ) => void;
+    
 }
 interface participantsID {
     participants: {
@@ -29,7 +24,7 @@ interface participantsID {
     }[];
 }
 
-const LeftSide = ({ name, meetings, onChangeMeetData }: iLeftSide) => {
+const LeftSide = ({ name, meetings }: iLeftSide) => {
     let currDate = new Date();
     let hoursMin;
 
@@ -78,7 +73,6 @@ const LeftSide = ({ name, meetings, onChangeMeetData }: iLeftSide) => {
                     end={Dayjs(e.end_time).format("HH:MM")}
                     persons={getNames(e.participants_id)}
                     meetingName={e.name}
-                    onChangeMeetData={onChangeMeetData}
                 />
             ));
     };

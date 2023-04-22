@@ -5,20 +5,6 @@ import { useParams } from "react-router-dom";
 import axios, { AxiosResponse } from "axios";
 import dayjs, { Dayjs } from "dayjs";
 
-interface iMettingInfo {
-    name: string;
-    //description: string;
-    start_time: string;
-    end_time: string;
-    participants_names: (string | undefined)[];
-    meetings: {
-        name: string;
-        id: string;
-        start_time: string;
-        end_time: string;
-        participants_id: [];
-    }[];
-}
 interface participantsID {
     participants: {
         id: string;
@@ -34,22 +20,15 @@ interface iMeetingData {
     participants_id: string[] | undefined;
 }
 
-const MeetingInfo = ({
-    name,
-    start_time,
-    end_time,
-    participants_names,
-    meetings,
-}: iMettingInfo) => {
+const MeetingInfo = () => {
     const [participantsData, setParticipantsData] = useState<participantsID>();
-    const [meetingsData, setMeetingsData] = useState<iMettingInfo>();
     const [meetingParticipants, setMeetingParticipants] = useState<
         string[] | undefined
     >([]);
 
     const [meetingData, setMeetingData] = useState<iMeetingData>();
-
     const { meetid } = useParams<string>();
+    const [meetId, setMeetId] = useState<string>();
 
     const getMeetingById = async (meetid: string): Promise<iMeetingData> => {
         const result = await axios.get(
@@ -58,16 +37,6 @@ const MeetingInfo = ({
 
         return result.data;
     };
-
-    // useEffect(() => {
-    //     const _getMeetingById = async () => {
-    //         if (meetid) await getMeetingById(meetid);
-    //     };
-
-    //     if (meetid) console.log("duhfiuehdwifue", getMeetingById(meetid));
-
-    //     // setMeetingData(_getMeetingById)
-    // }, [meetid]);
 
     const getParticipantsData = async () => {
         const response = await getParticipants();
@@ -84,26 +53,6 @@ const MeetingInfo = ({
         _getParticipants();
     }, []);
 
-    const getMeetingsRoomData = async (): Promise<AxiosResponse> => {
-        const response = await getMeetingsData();
-
-        return response;
-    };
-
-    useEffect(() => {
-        getMeetingsRoomData().then((response) => {
-            setMeetingsData(response.data);
-        });
-    }, []);
-
-    useEffect(() => {
-        if (meetingsData) {
-            const id = parseInt(meetid as string);
-            console.log("meet data: ", meetingsData);
-            setMeetingParticipants(meetingsData?.meetings[id]?.participants_id);
-        }
-    }, [meetingsData]);
-
     const getNames = (ids: string[] | undefined) => {
         return (
             participantsData?.participants
@@ -112,13 +61,7 @@ const MeetingInfo = ({
         );
     };
 
-    const persons = meetingsData?.meetings
-        .filter((meeting) => meeting.id === meetid)
-        .map((meeting) => getNames(meeting.participants_id));
-
     const personsById = getNames(meetingData?.participants_id);
-
-    // aici e ce trebuie  AICIIIIIIIIIIII
 
     const getMeetingData = async () => {
         if (meetid) {
@@ -134,17 +77,9 @@ const MeetingInfo = ({
         };
 
         _getMeetingData();
-    }, []);
-
-    useEffect(() => {
-        console.log("sasasasas", meetingData);
-    }, [meetingData]);
-
-    //pana aici
+    }, [meetid]);
 
     const getInitilas = () => {
-        console.log("data persons", persons);
-       
         const filteredata = personsById.map((e) => {
             return e
                 .match(/(\b\S)?/g)
@@ -188,25 +123,10 @@ const MeetingInfo = ({
                 <Grid container direction={"row"} spacing={5}>
                     <Grid item xs={12}></Grid>
                     <Grid item xs={12}>
-                        <Typography variant="h4">
-                            {/* {meetingsData?.meetings
-                                .filter((meeting) => meeting.id === meetid)
-                                .map((meeting) => meeting.name)} */}
-                            {meetingData.name}
-                        </Typography>
+                        <Typography variant="h4">{meetingData.name}</Typography>
                         <Typography variant="h4">
                             Today,
-                            {/* {meetingsData?.meetings
-                                .filter((meeting) => meeting.id === meetid)
-                                .map((meeting) =>
-                                    dayjs(meeting.start_time).format("HH:MM")
-                                )} */}
                             {dayjs(meetingData.start_time).format("HH:MM")}-
-                            {/* {meetingsData?.meetings
-                                .filter((meeting) => meeting.id === meetid)
-                                .map((meeting) =>
-                                    dayjs(meeting.end_time).format("HH:MM")
-                                )} */}
                             {dayjs(meetingData.end_time).format("HH:MM")}
                         </Typography>
                     </Grid>
