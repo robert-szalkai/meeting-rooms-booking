@@ -4,20 +4,34 @@ import { Box } from "@mui/material";
 import Grid from "@mui/material/Grid";
 
 import LeftSide from "./LeftSide/LeftSide";
+import Menu from "./RightSide/Menu/Menu";
 import AdvancedBook from "./RightSide/AdvancedBook/AdvancedBook";
 import MeetingInfo from "./RightSide/MeetingInfo/MeetingInfo";
-import QuickBook from "./RightSide/QuickBook/QuickBook";
 import COLORS from "../../constants/CustomColors";
-import { spawnToast } from "../../utils/Toast";
+import { getRoomById } from "../../api/getRequests";
 
 const TabletApp = () => {
     const colorStates = [COLORS.GREEN, COLORS.YELLOW, COLORS.RED];
 
-    const [availability, setAvailability] = useState(1);
-    const [roomName, setRoomName] = useState("Focus Room");
+    const { id } = useParams();
+
+    const [availability, setAvailability] = useState(0);
+    const [roomName, setRoomName] = useState("");
+
+    useEffect(() => {
+        if (id !== undefined)
+            getRoomById(parseInt(id)).then((response) => {
+                setRoomName(response.data.name);
+                setAvailability(response.data.state);
+            });
+    }, []);
+
     return (
         <Grid
-            sx={{ backgroundColor: colorStates[availability] }}
+            sx={{
+                backgroundColor: colorStates[availability],
+                transition: "background-color 1s ease",
+            }}
             flexDirection="row"
             container
         >
@@ -48,14 +62,19 @@ const TabletApp = () => {
                         }}
                     >
                         <Routes>
+                            <Route
+                                path="/menu"
+                                element={
+                                    <Menu
+                                        RoomName={roomName}
+                                        RoomStatus={availability}
+                                    />
+                                }
+                            />
                             <Route path="/form" element={<AdvancedBook />} />
                             <Route
                                 path="/meetinginfo/:meetid"
                                 element={<MeetingInfo />}
-                            />
-                            <Route
-                                path="/quickbookglobal"
-                                element={<QuickBook />}
                             />
                         </Routes>
                     </Box>

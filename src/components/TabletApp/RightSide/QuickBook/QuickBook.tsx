@@ -32,9 +32,10 @@ const buttonStyle = {
 
 interface iQuickBook {
     isDurationOpen?: boolean;
+    isDisabled?:boolean
 }
 
-const QuickBook = ({ isDurationOpen = false }: iQuickBook) => {
+const QuickBook = ({ isDurationOpen = false, isDisabled}: iQuickBook) => {
     const [timeButtonsVisible, setTimeButtonsVisible] =
         useState(isDurationOpen);
     const [open, setOpen] = useState(false);
@@ -77,8 +78,10 @@ const QuickBook = ({ isDurationOpen = false }: iQuickBook) => {
             <Box display="flex" justifyContent="center">
                 <Button
                     variant="contained"
+                    disabled={isDisabled}
                     sx={{
                         "border-radius": "50px",
+                        width: "200px",
                         "text-transform": "none",
                         backgroundColor: COLORS.GREEN,
                     }}
