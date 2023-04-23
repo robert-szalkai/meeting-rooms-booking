@@ -1,20 +1,56 @@
 import React, { useEffect, useState } from "react";
-import { Route, Routes, useParams } from "react-router-dom";
-import { Box } from "@mui/material";
-import Grid from "@mui/material/Grid";
+import { Route, Routes } from "react-router-dom";
+import { Box, Grid } from "@mui/material";
+import dayjs from "dayjs";
 
 import LeftSide from "./LeftSide/LeftSide";
 import AdvancedBook from "./RightSide/AdvancedBook/AdvancedBook";
 import MeetingInfo from "./RightSide/MeetingInfo/MeetingInfo";
 import QuickBook from "./RightSide/QuickBook/QuickBook";
 import COLORS from "../../constants/CustomColors";
-import { spawnToast } from "../../utils/Toast";
+import { getMeetings } from "../../api/getRequests";
 
 const TabletApp = () => {
     const colorStates = [COLORS.GREEN, COLORS.YELLOW, COLORS.RED];
 
-    const [availability, setAvailability] = useState(1);
+    const [availability, setAvailability] = useState<number>(0);
     const [roomName, setRoomName] = useState("Focus Room");
+
+    useEffect(() => {
+        const isMeetingRightNow = async () => {
+            const allMeetings = await getMeetings();
+            let inMeetingRightNow = false;
+            let willFollow = false;
+
+            Object.values(allMeetings).map((meeting) => {
+                const diffInMinutesStartTime =
+                    dayjs(meeting.start_time).diff(dayjs()) / 60000;
+
+                const diffInMinutesEndTime =
+                    dayjs(meeting.end_time).diff(dayjs()) / 60000;
+
+                if (diffInMinutesStartTime < 0 && diffInMinutesEndTime > 0) {
+                    console.log("finish in: ", diffInMinutesEndTime);
+                    inMeetingRightNow = true;
+                    setAvailability(2);
+                } else if (!inMeetingRightNow) {
+                    if (
+                        diffInMinutesStartTime > 0 &&
+                        diffInMinutesStartTime <= 45
+                    ) {
+                        console.log("start in: ", diffInMinutesStartTime);
+                        willFollow = true;
+                        setAvailability(1);
+                    } else if (!willFollow) {
+                        setAvailability(0);
+                    }
+                }
+            });
+        };
+
+        isMeetingRightNow();
+    }, []);
+
     return (
         <Grid
             sx={{ backgroundColor: colorStates[availability] }}
@@ -55,7 +91,7 @@ const TabletApp = () => {
                             />
                             <Route
                                 path="/quickbookglobal"
-                                element={<QuickBook />}
+                                element={<QuickBook isDurationOpen />}
                             />
                         </Routes>
                     </Box>
