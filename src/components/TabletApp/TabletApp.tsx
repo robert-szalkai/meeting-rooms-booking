@@ -60,6 +60,7 @@ const TabletApp = () => {
                     <LeftSide
                         meetings={meetingsData?.meetings}
                         name={meetingsData?.name}
+                        availability={availability}
                     />
                 )}
             </Grid>
