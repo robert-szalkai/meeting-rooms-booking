@@ -15,6 +15,7 @@ const TabletApp = () => {
 
     const [availability, setAvailability] = useState<number>(0);
     const [roomName, setRoomName] = useState("Focus Room");
+    const [time, setTime] = useState<number>(0);
 
     useEffect(() => {
         const isMeetingRightNow = async () => {
@@ -47,9 +48,14 @@ const TabletApp = () => {
                 }
             });
         };
-
         isMeetingRightNow();
-    }, []);
+
+        const interval = setInterval(() => {
+            setTime(Date.now());
+        }, 5000);
+
+        return () => clearInterval(interval);
+    }, [time]);
 
     return (
         <Grid
