@@ -1,30 +1,34 @@
-import React, { useState, useEffect } from "react";
-import { Box } from "@mui/system";
-import { Typography, Button } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
+import { Typography, Button, Box } from "@mui/material";
+import dayjs from "dayjs";
 import UpcomingCards from "./UpcomingCards/UpcomingCards";
-import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import QuickBookGlobal from "./QuickBookGlobal/QuickBookGlobal";
+import CONSTANTS from "../../../constants/Constants";
+import Clock from "./Clock/Clock";
+import AdvancedBookGlobal from "./AdvancedBookGlobal/AdvancedBookGlobal";
+
 interface iLeftSide {
     roomName: string;
+    availability: number;
 }
 
-const LeftSide = ({ roomName }: iLeftSide) => {
-    let currDate = new Date();
-    let hoursMin;
+const LeftSide = ({ roomName, availability }: iLeftSide) => {
+    const formattedDate = dayjs().format(CONSTANTS.TODAY);
 
-    if (currDate.getMinutes() < 10) {
-        hoursMin = currDate.getHours() + ":0" + currDate.getMinutes();
-    } else {
-        hoursMin = currDate.getHours() + ":" + currDate.getMinutes();
-    }
+    const [showQuickBookButton, setShowQuickBookButton] = useState(true);
+    const location = useLocation();
 
-    const options: Intl.DateTimeFormatOptions = {
-        day: "numeric",
-        month: "short",
-        year: "numeric",
-    };
-
-    const formattedDate: string = currDate.toLocaleDateString("en-US", options);
-    const [time, setTime] = useState(hoursMin);
+    useEffect(() => {
+        if (
+            availability === CONSTANTS.MEETING_IN_PROGRESS ||
+            location.pathname.includes("quickbookglobal")
+        ) {
+            setShowQuickBookButton(false);
+            return;
+        }
+        setShowQuickBookButton(true);
+    }, [availability, location]);
 
     return (
         <Box
@@ -56,7 +60,7 @@ const LeftSide = ({ roomName }: iLeftSide) => {
                     alignItems="flex-start"
                 >
                     <Typography variant="h3">{roomName}</Typography>
-                    <Typography variant="h2">{time}</Typography>
+                    <Clock />
                     <Typography variant="h3">{formattedDate}</Typography>
                 </Box>
             </Box>
@@ -105,10 +109,11 @@ const LeftSide = ({ roomName }: iLeftSide) => {
                     Show More
                 </Button>
             </Box>
-            <Button variant="contained" color="success">
-                <CalendarMonthIcon />
-                Quick Book
-            </Button>
+            {showQuickBookButton ? (
+                <QuickBookGlobal />
+            ) : availability === CONSTANTS.MEETING_IN_PROGRESS ? (
+                <AdvancedBookGlobal />
+            ) : null}
         </Box>
     );
 };

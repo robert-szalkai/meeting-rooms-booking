@@ -1,129 +1,252 @@
 import React from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
+import dayjs from "dayjs";
 import {
     Box,
     Button,
     Typography,
     Grid,
-    Paper,
     TextField,
     Autocomplete,
 } from "@mui/material";
 import EditCalendarIcon from "@mui/icons-material/EditCalendar";
-import { useState, useEffect } from "react";
-import axios from "axios";
-import { styled } from "@mui/material/styles";
-import { getParticipants } from "../../../../api/getRequests";
-import COLORS from "../../../../constants/CustomColors";
 
-//To be removed when globla theme is done
-const Item = styled(Paper)(({ theme }) => ({
-    backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
-    ...theme.typography.body2,
-    padding: theme.spacing(1),
-    textAlign: "center",
-    color: theme.palette.text.secondary,
-}));
+import {
+    getParticipants,
+    getParticipant,
+    getMeetings,
+} from "../../../../api/getRequests";
+import { spawnToast } from "../../../../utils/Toast";
 
-//To be removed when global theme is done
-const buttonStyle = { color: COLORS.GREEN, border: `1px solid ${COLORS.GREEN}` };
+interface INITIALOWNER {
+    name: string;
+    id: number;
+}
+interface iQuickBook {
+    isDurationOpen?: boolean;
+}
 
-const QuickBook = () => {
-    const [timeButtonsVisible, setTimeButtonsVisible] = useState(false);
-    const [open, setOpen] = useState(false);
-    const [ownerName, setOwnerName] = useState("");
-    const [owners, setOwners] = useState([""]);
-    const [autoComplete, setAutoComplete] = useState(false);
+const QuickBook = ({ isDurationOpen = false }: iQuickBook) => {
+    const [timeButtonsVisible, setTimeButtonsVisible] =
+        useState<boolean>(isDurationOpen);
+    const [openQuickButtonMenu, setOpenQuickButtonMenu] =
+        useState<boolean>(false);
+    const [owner, setOwner] = useState<INITIALOWNER>({ name: "", id: 0 });
+    const [possibleOwners, setPossibleOwners] = useState<string[]>([""]);
+    const [autoComplete, setAutoComplete] = useState<boolean>(false);
+    const [timeVal, setTimeVal] = useState<number>(0);
+    const [closestMeet, setClosestMeet] = useState<number>(0);
 
-    const handleQuickBook = () => {
+    useEffect(() => {
+        const fetchData = async () => {
+            let tempOwners: string[] = [];
+            let meetings_start_time: number[] = [];
+
+            try {
+                const owners_response = await getParticipants();
+                Object.values(owners_response).forEach((value: any) =>
+                    tempOwners.push(value.name)
+                );
+                console.log(tempOwners);
+                setPossibleOwners(tempOwners);
+            } catch (error) {
+                spawnToast({
+                    title: "Something went wrong",
+                    message: "Your booking has not been made",
+                    toastType: "error",
+                });
+                console.log(error);
+            }
+
+            try {
+                const meetings_response = await getMeetings();
+                Object.values(meetings_response).forEach((value: any) => {
+                    if (dayjs(value.start_time).isSame(dayjs(), "day")) {
+                        meetings_start_time.push(
+                            dayjs(value.start_time).diff(dayjs(), "minute")
+                        );
+                    }
+                });
+            } catch (error) {
+                spawnToast({
+                    title: "Something went wrong",
+                    message: "Your booking has not been made",
+                    toastType: "error",
+                });
+                console.log(error);
+            }
+
+            meetings_start_time.sort((a, b) =>
+                dayjs(a).isAfter(dayjs(b)) ? -1 : 1
+            );
+
+            setClosestMeet(meetings_start_time[0]);
+        };
+        fetchData();
+    }, []);
+
+    //if (possibleOwners.length === 1) populateOwners();
+
+    const handleDisable = (val: number) => {
+        return closestMeet > val ? true : false;
+    };
+
+    const handleQuickBookButton = () => {
         setTimeButtonsVisible(!timeButtonsVisible);
-        if (timeButtonsVisible) setOpen(false);
+        if (timeButtonsVisible) setOpenQuickButtonMenu(false);
     };
 
     const handleClickTime = () => {
-        if (!open) setOpen(true);
-        setOwnerName("");
+        if (!openQuickButtonMenu) setOpenQuickButtonMenu(true);
+        setOwner({ name: "", id: 0 });
     };
 
-    const handleChange = (e: any) => {
-        setOwnerName(e.target.value);
+    const handleChange = async (e: string) => {
+        try {
+            const result = await getParticipant(e);
+            setOwner({ name: result.name, id: result.id });
+        } catch (error) {
+            console.log(error);
+        }
     };
 
-    const handleSearchOwner = () => {
-        console.log(ownerName);
-        //To be implemented. Final step, needs to create meeting
-    };
+    const handleCreateMeeting = async () => {
+        let now = dayjs();
+        let end_time = now.add(timeVal, "minute");
 
-    const populateOwners = async () => {
-        let tempOwners: any[] = [];
-        const response = await getParticipants();
-        response.data.forEach(({ name }: { name: string }) =>
-            tempOwners.push(name)
-        );
-        setOwners(tempOwners);
-    };
+        try {
+            await axios.post("http://localhost:3001/meetings", {
+                room_id: 1,
+                owner_id: owner?.id,
+                participants_id: [],
+                start_time: now,
+                end_time: end_time,
+            });
+            spawnToast({
+                title: "You have succeded",
+                message: "Your booking was made",
+                toastType: "success",
+            });
+            //From here the code should take you to the red/Meeting in Progress Screen
+            //and not allow you to make anymore quick bookings
+        } catch (error) {
+            spawnToast({
+                title: "Something went wrong",
+                message: "Your booking has not been made",
+                toastType: "error",
+            });
+            console.log(error);
+        }
 
-    if (owners.length == 1) populateOwners();
+        handleQuickBookButton();
+    };
 
     return (
-        <Box>
-            <Box display="flex" justifyContent="center">
-                <Button
-                    variant="contained"
+        <Box
+            sx={{
+                display: "flex",
+                width: "100%",
+                height: "100vh",
+                flexDirection: "column",
+                justifyContent: "flex-start",
+                alignItems: "center",
+            }}
+            gap={3}
+        >
+            <Button
+                variant="contained"
+                color="success"
+                sx={{ textTransform: "none" }}
+                onClick={() => {
+                    handleQuickBookButton();
+                }}
+            >
+                <EditCalendarIcon fontSize="small" />
+                <Typography variant="subtitle1">Quick Book</Typography>
+            </Button>
+            {timeButtonsVisible ? (
+                <Box
                     sx={{
-                        "border-radius": "50px",
-                        "text-transform": "none",
-                        backgroundColor: COLORS.GREEN,
-                    }}
-                    onClick={() => {
-                        handleQuickBook();
+                        width: "100%",
+                        gap: "30px",
+                        boxSizing: "border-box",
                     }}
                 >
-                    <EditCalendarIcon fontSize="small" />
-                    <Typography variant="subtitle1">Quick Book</Typography>
-                </Button>
-            </Box>
-            {timeButtonsVisible ? (
-                <Box sx={{ flexGrow: 1 }}>
-                    <Grid
-                        container
-                        spacing={5}
-                        direction="row"
-                        justifyContent="center"
-                        alignItems="center"
-                        minHeight="25vh"
+                    <Box
+                        sx={{
+                            display: "flex",
+                            width: "100%",
+                            justifyContent: "flex-start",
+                        }}
                     >
-                        <Grid item xs={2}>
-                            <Item sx={buttonStyle} onClick={handleClickTime}>
-                                {" "}
-                                {/* To be replaced when global theme is done*/}
-                                15 Min
-                            </Item>
-                        </Grid>
-                        <Grid item xs={2}>
-                            <Item sx={buttonStyle} onClick={handleClickTime}>
-                                {" "}
-                                {/* To be replaced when global theme is done*/}
-                                20 Min
-                            </Item>
-                        </Grid>
-                        <Grid item xs={2}>
-                            <Item sx={buttonStyle} onClick={handleClickTime}>
-                                {" "}
-                                {/* To be replaced when global theme is done*/}
-                                30 Min
-                            </Item>
-                        </Grid>
-                        <Grid item xs={2}>
-                            <Item sx={buttonStyle} onClick={handleClickTime}>
-                                {" "}
-                                {/* To be replaced when global theme is done*/}
-                                40 Min
-                            </Item>
-                        </Grid>
-                    </Grid>
+                        <Typography
+                            sx={{ fontWeight: "bold", marginRight: "auto" }}
+                        >
+                            Select meeting duration
+                        </Typography>
+                    </Box>
 
-                    {open ? (
-                        <Box>
+                    <Box
+                        sx={{
+                            display: "flex",
+                            justifyContent: "space-evenly",
+                            alignItems: "center",
+                            width: "100%",
+                        }}
+                    >
+                        <Button
+                            onClick={() => {
+                                handleClickTime();
+                                setTimeVal(15);
+                            }}
+                            variant="outlined"
+                            color="success"
+                            disabled={handleDisable(15)}
+                        >
+                            15 Min
+                        </Button>
+
+                        <Button
+                            onClick={() => {
+                                handleClickTime();
+                                setTimeVal(20);
+                            }}
+                            variant="outlined"
+                            color="success"
+                            disabled={handleDisable(20)}
+                        >
+                            20 Min
+                        </Button>
+
+                        <Button
+                            onClick={() => {
+                                handleClickTime();
+                                setTimeVal(30);
+                            }}
+                            variant="outlined"
+                            color="success"
+                            disabled={handleDisable(30)}
+                            value={30}
+                        >
+                            30 Min
+                        </Button>
+
+                        <Button
+                            onClick={() => {
+                                handleClickTime();
+                                setTimeVal(40);
+                            }}
+                            variant="outlined"
+                            color="success"
+                            disabled={handleDisable(40)}
+                        >
+                            40 Min
+                        </Button>
+                    </Box>
+
+                    {openQuickButtonMenu ? (
+                        <Box paddingTop="5vh">
                             <Box display="flex" justifyContent="center">
                                 <Autocomplete
                                     open={autoComplete}
@@ -135,29 +258,33 @@ const QuickBook = () => {
                                             if (!autoComplete)
                                                 setAutoComplete(true);
                                         }
+                                        handleChange(value);
                                     }}
                                     onClose={() => setAutoComplete(false)}
                                     disablePortal
                                     id="combo-box-demo"
-                                    options={owners}
+                                    options={possibleOwners}
                                     sx={{ width: 300 }}
-                                    value={ownerName}
+                                    value={
+                                        owner === undefined ? "" : owner.name
+                                    }
                                     renderInput={(params) => (
-                                        <TextField
-                                            {...params}
-                                            label="Participants"
-                                            value={ownerName}
-                                            onChange={handleChange}
-                                        />
+                                        <TextField {...params} label="Owner" />
                                     )}
                                 />
                             </Box>
                             <Box
                                 display="flex"
                                 justifyContent="center"
-                                onClick={handleSearchOwner}
+                                paddingTop="1vh"
                             >
-                                <Button>Save</Button>
+                                <Button
+                                    variant="outlined"
+                                    color="success"
+                                    onClick={handleCreateMeeting}
+                                >
+                                    Submit
+                                </Button>
                             </Box>
                         </Box>
                     ) : null}
