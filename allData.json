@@ -5,8 +5,8 @@
       "room_id": 1,
       "owner": 1,
       "participants_id": [1, 2, 3],
-      "start_time": "2023-04-24T10:51:18.386Z",
-      "end_time": "2023-04-24T11:20:18.386Z",
+      "start_time": "2023-04-24T10:11:18.386Z",
+      "end_time": "2023-04-24T12:20:18.386Z",
       "duration": 15
     },
     {

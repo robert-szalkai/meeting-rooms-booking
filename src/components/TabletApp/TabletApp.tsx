@@ -24,7 +24,7 @@ const TabletApp = () => {
             let inMeetingRightNow = false;
             let willFollow = false;
 
-            Object.values(allMeetings).map((meeting) => {
+            Object.values(allMeetings).forEach((meeting) => {
                 const diffInMinutesStartTime = dayjs(meeting.start_time).diff(
                     dayjs(),
                     "minute",
@@ -43,7 +43,7 @@ const TabletApp = () => {
 
                 if (
                     diffInMinutesStartTime > 0 &&
-                    diffInMinutesStartTime <= CONSTANTS.TIME_FOR_WILL_FOLLOW
+                    diffInMinutesStartTime <= CONSTANTS.MAX_QUICKBOOK_DURATION
                 ) {
                     willFollow = true;
                 }
