@@ -6,6 +6,12 @@ import "./UpcomingCardsScrollCSS.css";
 import Dayjs from "dayjs";
 import { getParticipantsIdName } from "../../../api/getRequests";
 
+import { useLocation } from "react-router-dom";
+import dayjs from "dayjs";
+import QuickBookGlobal from "./QuickBookGlobal/QuickBookGlobal";
+import CONSTANTS from "../../../constants/Constants";
+import Clock from "./Clock/Clock";
+
 interface iLeftSide {
     name: string | undefined;
     meetings: {
@@ -15,7 +21,7 @@ interface iLeftSide {
         end_time: string;
         participants_id: [];
     }[];
-    
+    availability: number;
 }
 interface participantsID {
     participants: {
@@ -24,15 +30,13 @@ interface participantsID {
     }[];
 }
 
-const LeftSide = ({ name, meetings }: iLeftSide) => {
+const LeftSide = ({ name, meetings, availability }: iLeftSide) => {
     let currDate = new Date();
     let hoursMin;
+    const formattedDate = dayjs().format(CONSTANTS.TODAY);
 
-    if (currDate.getMinutes() < 10) {
-        hoursMin = currDate.getHours() + ":0" + currDate.getMinutes();
-    } else {
-        hoursMin = currDate.getHours() + ":" + currDate.getMinutes();
-    }
+    const [showQuickBookButton, setShowQuickBookButton] = useState(true);
+    const location = useLocation();
 
     const options: Intl.DateTimeFormatOptions = {
         day: "numeric",
@@ -52,6 +56,14 @@ const LeftSide = ({ name, meetings }: iLeftSide) => {
     useEffect(() => {
         getParticipantsData();
     }, []);
+    useEffect(() => {
+        if (
+            availability === 2 ||
+            location.pathname.includes("quickbookglobal")
+        ) {
+            setShowQuickBookButton(false);
+        }
+    }, [availability, location]);
 
     const getNames = (ids: string[]) => {
         return (
@@ -61,7 +73,7 @@ const LeftSide = ({ name, meetings }: iLeftSide) => {
         );
     };
 
-    const formattedDate: string = currDate.toLocaleDateString("en-US", options);
+    // const formattedDate: string = currDate.toLocaleDateString("en-US", options);
     const [time, setTime] = useState(hoursMin);
     const displayCards = () => {
         return meetings
@@ -133,7 +145,7 @@ const LeftSide = ({ name, meetings }: iLeftSide) => {
                         alignItems="flex-start"
                     >
                         <Typography variant="h3">{name}</Typography>
-                        <Typography variant="h2">{time}</Typography>
+                        {/* <Typography variant="h2">{time}</Typography> */}
 
                         <Typography variant="h3">{formattedDate}</Typography>
                     </Box>
@@ -184,6 +196,7 @@ const LeftSide = ({ name, meetings }: iLeftSide) => {
                         </Button>
                     )}
                 </Box>
+                {showQuickBookButton ? <QuickBookGlobal /> : null}
             </Box>
         </Box>
     );

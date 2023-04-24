@@ -7,10 +7,12 @@ import LeftSide from "./LeftSide/LeftSide";
 import Grid from "@mui/material/Grid";
 
 import { Route, Routes, useParams } from "react-router-dom";
+
 import AdvancedBook from "./RightSide/AdvancedBook/AdvancedBook";
 import MeetingInfo from "./RightSide/MeetingInfo/MeetingInfo";
 import { spawnToast } from "../../utils/Toast";
 import { Typography } from "@mui/material";
+import QuickBook from "./RightSide/QuickBook/QuickBook";
 
 import { getMeetingsData } from "../../api/getRequests";
 
@@ -36,15 +38,6 @@ const TabletApp = () => {
     const [startTime, setStartTime] = useState("15:30");
     const [endTime, setEndTime] = useState("16:30");
     const [participantsName, setParticipantsName] = useState<string[]>([]);
-
-    useEffect(() => {
-        spawnToast("You have succeded", "Your booking was made", true);
-        spawnToast(
-            "Something went wrong",
-            "Your booking has not been made",
-            false
-        );
-    }, []);
 
     const meetData = async () => {
         const response = await getMeetingsData();
@@ -98,6 +91,10 @@ const TabletApp = () => {
                             <Route
                                 path="/meetinginfo/:meetid"
                                 element={<MeetingInfo />}
+                            />
+                            <Route
+                                path="/quickbookglobal"
+                                element={<QuickBook />}
                             />
                         </Routes>
                     </Box>
