@@ -9,6 +9,7 @@ import MeetingInfo from "./RightSide/MeetingInfo/MeetingInfo";
 import QuickBook from "./RightSide/QuickBook/QuickBook";
 import COLORS from "../../constants/CustomColors";
 import { getMeetings } from "../../api/getRequests";
+import CONSTANTS from "../../constants/Constants";
 
 const TabletApp = () => {
     const colorStates = [COLORS.GREEN, COLORS.YELLOW, COLORS.RED];
@@ -24,35 +25,44 @@ const TabletApp = () => {
             let willFollow = false;
 
             Object.values(allMeetings).map((meeting) => {
-                const diffInMinutesStartTime =
-                    dayjs(meeting.start_time).diff(dayjs()) / 60000;
+                const diffInMinutesStartTime = dayjs(meeting.start_time).diff(
+                    dayjs(),
+                    "minute",
+                    true
+                );
 
-                const diffInMinutesEndTime =
-                    dayjs(meeting.end_time).diff(dayjs()) / 60000;
+                const diffInMinutesEndTime = dayjs(meeting.end_time).diff(
+                    dayjs(),
+                    "minute",
+                    true
+                );
 
                 if (diffInMinutesStartTime < 0 && diffInMinutesEndTime > 0) {
-                    console.log("finish in: ", diffInMinutesEndTime);
                     inMeetingRightNow = true;
-                    setAvailability(2);
-                } else if (!inMeetingRightNow) {
-                    if (
-                        diffInMinutesStartTime > 0 &&
-                        diffInMinutesStartTime <= 45
-                    ) {
-                        console.log("start in: ", diffInMinutesStartTime);
-                        willFollow = true;
-                        setAvailability(1);
-                    } else if (!willFollow) {
-                        setAvailability(0);
-                    }
+                }
+
+                if (
+                    diffInMinutesStartTime > 0 &&
+                    diffInMinutesStartTime <= CONSTANTS.TIME_FOR_WILL_FOLLOW
+                ) {
+                    willFollow = true;
                 }
             });
+            if (inMeetingRightNow) {
+                setAvailability(CONSTANTS.MEETING_IN_PROGRESS);
+                return;
+            }
+            if (willFollow) {
+                setAvailability(CONSTANTS.MEETING_WILL_FOLLOW);
+                return;
+            }
+            setAvailability(CONSTANTS.ROOM_AVAILABLE);
         };
         isMeetingRightNow();
 
         const interval = setInterval(() => {
             setTime(Date.now());
-        }, 5000);
+        }, CONSTANTS.INTERVAL_BACKGROUND_RESET);
 
         return () => clearInterval(interval);
     }, [time]);

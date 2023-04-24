@@ -7,6 +7,7 @@ import UpcomingCards from "./UpcomingCards/UpcomingCards";
 import QuickBookGlobal from "./QuickBookGlobal/QuickBookGlobal";
 import CONSTANTS from "../../../constants/Constants";
 import Clock from "./Clock/Clock";
+import AdvancedBookGlobal from "./AdvancedBookGlobal/AdvancedBookGlobal";
 
 interface iLeftSide {
     roomName: string;
@@ -21,11 +22,13 @@ const LeftSide = ({ roomName, availability }: iLeftSide) => {
 
     useEffect(() => {
         if (
-            availability === 2 ||
+            availability === CONSTANTS.MEETING_IN_PROGRESS ||
             location.pathname.includes("quickbookglobal")
         ) {
             setShowQuickBookButton(false);
+            return;
         }
+        setShowQuickBookButton(true);
     }, [availability, location]);
 
     return (
@@ -107,7 +110,11 @@ const LeftSide = ({ roomName, availability }: iLeftSide) => {
                     Show More
                 </Button>
             </Box>
-            {showQuickBookButton ? <QuickBookGlobal /> : null}
+            {showQuickBookButton ? (
+                <QuickBookGlobal />
+            ) : availability === CONSTANTS.MEETING_IN_PROGRESS ? (
+                <AdvancedBookGlobal />
+            ) : null}
         </Box>
     );
 };
