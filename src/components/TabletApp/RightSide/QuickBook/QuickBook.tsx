@@ -23,10 +23,13 @@ interface INITIALOWNER {
     name: string;
     id: number;
 }
+interface iQuickBook {
+    isDurationOpen?: boolean;
+}
 
-const QuickBook = () => {
+const QuickBook = ({ isDurationOpen = false }: iQuickBook) => {
     const [timeButtonsVisible, setTimeButtonsVisible] =
-        useState<boolean>(false);
+        useState<boolean>(isDurationOpen);
     const [openQuickButtonMenu, setOpenQuickButtonMenu] =
         useState<boolean>(false);
     const [owner, setOwner] = useState<INITIALOWNER>({ name: "", id: 0 });
