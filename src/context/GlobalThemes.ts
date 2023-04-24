@@ -18,7 +18,8 @@ const GlobalTheme = createTheme({
                         borderColor: COLORS.SUCCESS,
                         ":hover":{
                             filter:"brightness(85%)",
-                            backgroundColor:COLORS.SUCCESS
+                            backgroundColor:COLORS.SUCCESS,
+                            color:"white"
                          }
                     },
                 },
@@ -32,7 +33,8 @@ const GlobalTheme = createTheme({
                         borderColor: COLORS.WARNING,
                         ":hover":{
                             filter:"brightness(85%)",
-                            backgroundColor:COLORS.WARNING
+                            backgroundColor:COLORS.WARNING,
+                            color:"white"
                          }
                     },
                     
