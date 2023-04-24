@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { Box } from "@mui/system";
-import { Button, Paper, Typography } from "@mui/material";
+
+import { useLocation } from "react-router-dom";
+import { Typography, Button, Box, Paper } from "@mui/material";
+import dayjs from "dayjs";
 import UpcomingCards from "./UpcomingCards/UpcomingCards";
 import "./UpcomingCardsScrollCSS.css";
 import Dayjs from "dayjs";
 import { getParticipantsIdName } from "../../../api/getRequests";
 
-import { useLocation } from "react-router-dom";
-import dayjs from "dayjs";
 import QuickBookGlobal from "./QuickBookGlobal/QuickBookGlobal";
 import CONSTANTS from "../../../constants/Constants";
 import Clock from "./Clock/Clock";
+import AdvancedBookGlobal from "./AdvancedBookGlobal/AdvancedBookGlobal";
 
 interface iLeftSide {
     name: string | undefined;
@@ -58,11 +59,13 @@ const LeftSide = ({ name, meetings, availability }: iLeftSide) => {
     }, []);
     useEffect(() => {
         if (
-            availability === 2 ||
+            availability === CONSTANTS.MEETING_IN_PROGRESS ||
             location.pathname.includes("quickbookglobal")
         ) {
             setShowQuickBookButton(false);
+            return;
         }
+        setShowQuickBookButton(true);
     }, [availability, location]);
 
     const getNames = (ids: string[]) => {
@@ -196,7 +199,11 @@ const LeftSide = ({ name, meetings, availability }: iLeftSide) => {
                         </Button>
                     )}
                 </Box>
-                {showQuickBookButton ? <QuickBookGlobal /> : null}
+                {showQuickBookButton ? (
+                    <QuickBookGlobal />
+                ) : availability === CONSTANTS.MEETING_IN_PROGRESS ? (
+                    <AdvancedBookGlobal />
+                ) : null}
             </Box>
         </Box>
     );

@@ -1,10 +1,13 @@
-import { Box, Container } from "@mui/system";
+
 
 import React, { useEffect, useState } from "react";
 
 import COLORS from "../../constants/CustomColors";
 import LeftSide from "./LeftSide/LeftSide";
-import Grid from "@mui/material/Grid";
+
+
+import { Box, Grid } from "@mui/material";
+import dayjs from "dayjs";
 
 import { Route, Routes, useParams } from "react-router-dom";
 
@@ -14,7 +17,9 @@ import { spawnToast } from "../../utils/Toast";
 import { Typography } from "@mui/material";
 import QuickBook from "./RightSide/QuickBook/QuickBook";
 
-import { getMeetingsData } from "../../api/getRequests";
+import { getMeetings, getMeetingsData } from "../../api/getRequests";
+
+import CONSTANTS from "../../constants/Constants";
 
 interface iLeftSide {
     name: string | undefined;
@@ -30,7 +35,7 @@ interface iLeftSide {
 const TabletApp = () => {
     const colorStates = [COLORS.GREEN, COLORS.YELLOW, COLORS.RED];
     const [meetingsData, setMeetingsData] = useState<iLeftSide>();
-    const [availability, setAvailability] = useState(1);
+    
     const [roomName, setRoomName] = useState("Focus Room");
     const { id } = useParams();
 
@@ -38,6 +43,13 @@ const TabletApp = () => {
     const [startTime, setStartTime] = useState("15:30");
     const [endTime, setEndTime] = useState("16:30");
     const [participantsName, setParticipantsName] = useState<string[]>([]);
+
+
+
+    const [availability, setAvailability] = useState<number>(
+        CONSTANTS.ROOM_AVAILABLE
+    );
+    const [time, setTime] = useState<number>(0);
 
     const meetData = async () => {
         const response = await getMeetingsData();
@@ -48,6 +60,63 @@ const TabletApp = () => {
     useEffect(() => {
         meetData();
     }, []);
+
+
+
+
+    useEffect(() => {
+        const isMeetingRightNow = async () => {
+            const allMeetings = await getMeetings();
+            let inMeetingRightNow = false;
+            let willFollow = false;
+
+            Object.values(allMeetings).forEach((meeting) => {
+                const diffInMinutesStartTime = dayjs(meeting.start_time).diff(
+                    dayjs(),
+                    "minute",
+                    true
+                );
+
+                const diffInMinutesEndTime = dayjs(meeting.end_time).diff(
+                    dayjs(),
+                    "minute",
+                    true
+                );
+
+                if (diffInMinutesStartTime < 0 && diffInMinutesEndTime > 0) {
+                    inMeetingRightNow = true;
+                }
+
+                if (
+                    diffInMinutesStartTime > 0 &&
+                    diffInMinutesStartTime <= CONSTANTS.MAX_QUICKBOOK_DURATION
+                ) {
+                    willFollow = true;
+                }
+            });
+            if (inMeetingRightNow) {
+                setAvailability(CONSTANTS.MEETING_IN_PROGRESS);
+                return;
+            }
+            if (willFollow) {
+                setAvailability(CONSTANTS.MEETING_WILL_FOLLOW);
+                return;
+            }
+            setAvailability(CONSTANTS.ROOM_AVAILABLE);
+        };
+        isMeetingRightNow();
+
+        const interval = setInterval(() => {
+            setTime(Date.now());
+        }, CONSTANTS.INTERVAL_BACKGROUND_RESET);
+
+        return () => clearInterval(interval);
+    }, [time]);
+
+
+
+
+
 
     return (
         <Grid
@@ -95,8 +164,14 @@ const TabletApp = () => {
                             />
                             <Route
                                 path="/quickbookglobal"
-                                element={<QuickBook />}
+                                element={<QuickBook isDurationOpen />}
                             />
+                            {/* {availability === 2 ? null : (
+                                <Route
+                                    path="/quickbookglobal"
+                                    element={<QuickBook isDurationOpen />}
+                                />
+                            )} */}
                         </Routes>
                     </Box>
                 </Box>
