@@ -19,6 +19,11 @@ const TabletApp = () => {
     );
     const [roomName, setRoomName] = useState("Focus Room");
     const [time, setTime] = useState<number>(0);
+    const [quickBookDone, setQuickBookDone] = useState<boolean>(false);
+
+    const handleQuickBookDone = () => {
+        setQuickBookDone(true);
+    };
 
     useEffect(() => {
         const isMeetingRightNow = async () => {
@@ -67,7 +72,7 @@ const TabletApp = () => {
         }, CONSTANTS.INTERVAL_BACKGROUND_RESET);
 
         return () => clearInterval(interval);
-    }, [time]);
+    }, [time, quickBookDone]);
 
     return (
         <Grid
@@ -107,16 +112,19 @@ const TabletApp = () => {
                                 path="/meetinginfo/:meetid"
                                 element={<MeetingInfo />}
                             />
-                            <Route
-                                path="/quickbookglobal"
-                                element={<QuickBook isDurationOpen />}
-                            />
-                            {/* {availability === 2 ? null : (
+                            {availability === 2 ? null : (
                                 <Route
                                     path="/quickbookglobal"
-                                    element={<QuickBook isDurationOpen />}
+                                    element={
+                                        <QuickBook
+                                            isDurationOpen
+                                            handleQuickBookDone={
+                                                handleQuickBookDone
+                                            }
+                                        />
+                                    }
                                 />
-                            )} */}
+                            )}
                         </Routes>
                     </Box>
                 </Box>
