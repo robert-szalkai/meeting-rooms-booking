@@ -4,8 +4,11 @@ import DateSelector from "./DateSelector";
 import Participants from "./Participants";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import COLORS  from "../../../../constants/CustomColors";
+import { useParams } from "react-router-dom";
 
 const AdvancedBook = () => {
+    const { meetid } = useParams<string>();
+    console.log('param meetid: ', meetid);
     return (
         <Box
             sx={{
