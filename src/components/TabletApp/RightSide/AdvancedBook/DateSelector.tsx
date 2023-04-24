@@ -25,12 +25,6 @@ interface MeetingDateObject {
     endDate: Dayjs;
 }
 
-// const getMeetings = async () => {
-//     return axios
-//         .get("http://localhost:3001/meetings")
-//         .then((response) => response.data);
-// };
-
 const DateSelector: FC<Props> = ({
     handleMeetingDate,
     handleStartTime,
