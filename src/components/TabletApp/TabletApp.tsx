@@ -1,24 +1,68 @@
+
+
 import React, { useEffect, useState } from "react";
-import { Route, Routes } from "react-router-dom";
+
+import COLORS from "../../constants/CustomColors";
+import LeftSide from "./LeftSide/LeftSide";
+
+
 import { Box, Grid } from "@mui/material";
 import dayjs from "dayjs";
 
-import LeftSide from "./LeftSide/LeftSide";
+import { Route, Routes, useParams } from "react-router-dom";
+
 import AdvancedBook from "./RightSide/AdvancedBook/AdvancedBook";
 import MeetingInfo from "./RightSide/MeetingInfo/MeetingInfo";
+import { spawnToast } from "../../utils/Toast";
+import { Typography } from "@mui/material";
 import QuickBook from "./RightSide/QuickBook/QuickBook";
-import COLORS from "../../constants/CustomColors";
-import { getMeetings } from "../../api/getRequests";
+
+import { getMeetings, getMeetingsData } from "../../api/getRequests";
+
 import CONSTANTS from "../../constants/Constants";
+
+interface iLeftSide {
+    name: string | undefined;
+    meetings: {
+        name: string;
+        id: string;
+        start_time: string;
+        end_time: string;
+        participants_id: [];
+    }[];
+}
 
 const TabletApp = () => {
     const colorStates = [COLORS.GREEN, COLORS.YELLOW, COLORS.RED];
+    const [meetingsData, setMeetingsData] = useState<iLeftSide>();
+    
+    const [roomName, setRoomName] = useState("Focus Room");
+    const { id } = useParams();
+
+    const [meetName, setMeetName] = useState("alabala");
+    const [startTime, setStartTime] = useState("15:30");
+    const [endTime, setEndTime] = useState("16:30");
+    const [participantsName, setParticipantsName] = useState<string[]>([]);
+
+
 
     const [availability, setAvailability] = useState<number>(
         CONSTANTS.ROOM_AVAILABLE
     );
-    const [roomName, setRoomName] = useState("Focus Room");
     const [time, setTime] = useState<number>(0);
+
+    const meetData = async () => {
+        const response = await getMeetingsData();
+        if (response.status === 200) {
+            setMeetingsData(response.data);
+        }
+    };
+    useEffect(() => {
+        meetData();
+    }, []);
+
+
+
 
     useEffect(() => {
         const isMeetingRightNow = async () => {
@@ -69,6 +113,11 @@ const TabletApp = () => {
         return () => clearInterval(interval);
     }, [time]);
 
+
+
+
+
+
     return (
         <Grid
             sx={{ backgroundColor: colorStates[availability] }}
@@ -76,7 +125,13 @@ const TabletApp = () => {
             container
         >
             <Grid item xs={5}>
-                <LeftSide roomName={roomName} availability={availability} />
+                {meetingsData && (
+                    <LeftSide
+                        meetings={meetingsData?.meetings}
+                        name={meetingsData?.name}
+                        availability={availability}
+                    />
+                )}
             </Grid>
             <Grid item xs={7}>
                 <Box

@@ -1,0 +1,189 @@
+{
+    "meetings": [
+      {
+        "id": 1,
+        "room_id": 1,
+        "owner": 1,
+        "participants_id": [1, 2, 3],
+        "start_time": "Tue Apr 03 2023 16:46:29 GMT+0300",
+        "end_time": "Tue Apr 03 2023 17:01:29 GMT+0300",
+        "duration": 15
+      },
+      {
+        "id": 2,
+        "room_id": 1,
+        "owner": 3,
+        "participants_id": [1, 3, 4],
+        "start_time": "Tue Apr 03 2023 17:46:29 GMT+0300",
+        "end_time": "Tue Apr 03 2023 18:16:29 GMT+0300",
+        "duration": 30
+      },
+      {
+        "id": 3,
+        "room_id": 1,
+        "owner": 4,
+        "participants_id": [1, 2, 4],
+        "start_time": "Tue Apr 04 2023 10:30:29 GMT+0300",
+        "end_time": "Tue Apr 04 2023 10:45:29 GMT+0300",
+        "duration": 15
+      },
+      {
+        "id": 4,
+        "room_id": 2,
+        "owner": 3,
+        "participants_id": [3, 2, 5],
+        "start_time": "Tue Apr 04 2023 12:20:29 GMT+0300",
+        "end_time": "Tue Apr 04 2023 12:35:29 GMT+0300",
+        "duration": 15
+      },
+      {
+        "id": 5,
+        "room_id": 3,
+        "owner": 5,
+        "participants_id": [1, 4, 3, 2, 5],
+        "start_time": "Tue Apr 04 2023 14:46:29 GMT+0300",
+        "end_time": "Tue Apr 04 2023 15:06:29 GMT+0300",
+        "duration": 20
+      },
+      {
+        "id": 6,
+        "room_id": 3,
+        "owner": 4,
+        "participants_id": [1, 4, 3, 2, 5, 6, 7],
+        "start_time": "Tue Apr 05 2023 13:01:29 GMT+0300",
+        "end_time": "Tue Apr 05 2023 13:31:29 GMT+0300",
+        "duration": 30
+      },
+      {
+        "id": 7,
+        "room_id": 4,
+        "owner": 7,
+        "participants_id": [1, 4, 3, 2, 5, 6, 7],
+        "start_time": "Tue Apr 07 2023 17:46:29 GMT+0300",
+        "end_time": "Tue Apr 07 2023 18:26:29 GMT+0300",
+        "duration": 40
+      },
+      {
+        "id": 8,
+        "room_id": 4,
+        "owner": 1,
+        "participants_id": [1, 4, 3, 2, 5, 6, 7],
+        "start_time": "Tue Apr 07 2023 18:46:29 GMT+0300",
+        "end_time": "Tue Apr 07 2023 19:01:29 GMT+0300",
+        "duration": 15
+      },
+      {
+        "id": 9,
+        "room_id": 4,
+        "owner": 3,
+        "participants_id": [1, 4, 3, 2, 5, 6, 7],
+        "start_time": "Tue Apr 10 2023 09:40:29 GMT+0300",
+        "end_time": "Tue Apr 10 2023 09:00:29 GMT+0300",
+        "duration": 20
+      },
+      {
+        "id": 10,
+        "room_id": 5,
+        "owner": 4,
+        "participants_id": [1, 4, 3, 2, 5, 6],
+        "start_time": "Tue Apr 10 2023 12:15:29 GMT+0300",
+        "end_time": "Tue Apr 10 2023 12:45:29 GMT+0300",
+        "duration": 30
+      },
+      {
+        "id": 11,
+        "room_id": 5,
+        "owner": 6,
+        "participants_id": [1, 7, 3, 2, 5, 6],
+        "start_time": "Tue Apr 11 2023 08:00:29 GMT+0300",
+        "end_time": "Tue Apr 11 2023 08:30:29 GMT+0300",
+        "duration": 30
+      }
+    ],
+    "meetingRooms": [
+      {
+        "name": "Focus Room",
+        "id": 1,
+        "description": "This room is desgined for focused meetings and discussions",
+        "meetings_id": [1, 2, 3],
+        "capacity": 3,
+        "state": 0
+      },
+      {
+        "name": "Room for Growth",
+        "id": 2,
+        "description": "This room is desgined for growth meetings and discussions",
+        "meetings_id": [4],
+        "capacity": 3,
+        "state": 2
+      },
+      {
+        "name": "Collective IQ Room",
+        "id": 3,
+        "description": "This room is desgined for focused meetings and discussions",
+        "meetings_id": [5, 6],
+        "capacity": 10,
+        "state": 1
+      },
+      {
+        "name": "Everyones's Room",
+        "id": 4,
+        "description": "This room is desgined for focused meetings and discussions",
+        "meetings_id": [7, 8, 9],
+        "capacity": 12,
+        "state": 1
+      },
+      {
+        "name": "High Table Room",
+        "id": 5,
+        "description": "This room is desgined for focused meetings and discussions",
+        "meetings_id": [10, 11],
+        "capacity": 6,
+        "state": 2
+      }
+    ],
+    "participants": [
+      {
+        "name": "Alexandru Mariustiuc",
+        "id": 1,
+        "available": true,
+        "image": "https://w7.pngwing.com/pngs/205/731/png-transparent-default-avatar.png"
+      },
+      {
+        "name": "Maria Popovici",
+        "id": 2,
+        "available": true,
+        "image": "https://w7.pngwing.com/pngs/205/731/png-transparent-default-avatar.png"
+      },
+      {
+        "name": "Alexei Serghei",
+        "id": 3,
+        "available": true,
+        "image": "https://w7.pngwing.com/pngs/205/731/png-transparent-default-avatar.png"
+      },
+      {
+        "name": "Sulei Marianovici",
+        "id": 4,
+        "available": true,
+        "image": "https://w7.pngwing.com/pngs/205/731/png-transparent-default-avatar.png"
+      },
+      {
+        "name": "Alexa Amazon",
+        "id": 5,
+        "available": true,
+        "image": "https://w7.pngwing.com/pngs/205/731/png-transparent-default-avatar.png"
+      },
+      {
+        "name": "Dora Barbat",
+        "id": 6,
+        "available": true,
+        "image": "https://w7.pngwing.com/pngs/205/731/png-transparent-default-avatar.png"
+      },
+      {
+        "name": "Flavia Mioc",
+        "id": 7,
+        "available": true,
+        "image": "https://w7.pngwing.com/pngs/205/731/png-transparent-default-avatar.png"
+      }
+    ]
+  }
