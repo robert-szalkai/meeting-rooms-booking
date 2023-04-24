@@ -149,6 +149,7 @@ const LeftSide = ({ name, meetings, availability }: iLeftSide) => {
                     >
                         <Typography variant="h3">{name}</Typography>
                         {/* <Typography variant="h2">{time}</Typography> */}
+                        <Clock />
 
                         <Typography variant="h3">{formattedDate}</Typography>
                     </Box>
