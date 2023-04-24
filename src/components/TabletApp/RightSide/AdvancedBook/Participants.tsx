@@ -45,7 +45,6 @@ const Participants: FC<Props> = ({
                             (person) => person.name === value
                         );
                         handleMeetingOwner(result);
-                        console.log(result);
                     }}
                     getOptionDisabled={(option) => {
                         if (meetingParticipants.includes(option)) {

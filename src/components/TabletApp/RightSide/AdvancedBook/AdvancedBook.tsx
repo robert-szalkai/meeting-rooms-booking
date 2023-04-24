@@ -65,7 +65,6 @@ const AdvancedBook = () => {
         const dateObj = dayjs(date);
         const startDate = dayjs(start);
         const endDate = dayjs(end);
-        console.log(endDate);
         const meetingStartDate = dateObj
             .set("hour", getHour(startDate))
             .set("minute", getMinute(startDate));

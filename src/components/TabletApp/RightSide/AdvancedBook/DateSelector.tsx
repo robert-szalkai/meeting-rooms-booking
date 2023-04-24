@@ -6,7 +6,7 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import dayjs, { Dayjs } from "dayjs";
 import axios from "axios";
 
-// import { getMeetings } from "../../../../api/getRequests";
+import { getMeetings } from "../../../../api/getRequests";
 
 interface Props {
     handleMeetingDate: (values: any) => void;
@@ -25,11 +25,11 @@ interface MeetingDateObject {
     endDate: Dayjs;
 }
 
-const getMeetings = async () => {
-    return axios
-        .get("http://localhost:3001/meetings")
-        .then((response) => response.data);
-};
+// const getMeetings = async () => {
+//     return axios
+//         .get("http://localhost:3001/meetings")
+//         .then((response) => response.data);
+// };
 
 const DateSelector: FC<Props> = ({
     handleMeetingDate,
@@ -68,7 +68,6 @@ const DateSelector: FC<Props> = ({
         const meetingDates = meetings.map((value: MeetingDateObject) => {
             return { startDate: value.startDate, endDate: value.endDate };
         });
-        console.log(meetingDates);
 
         selectHour.forEach((selectedHour) => {
             meetingDates.forEach((meetingDate: MeetingDateObject) => {

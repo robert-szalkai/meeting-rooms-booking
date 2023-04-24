@@ -22,13 +22,7 @@ const getRoomById = async (id: number) => {
     return await axios.get(`http://localhost:3001/rooms/${id}`);
 };
 
-const getMeetings = async (): Promise<{
-    room_id: number;
-    owner_id: number;
-    participants_id: any;
-    start_time: string;
-    end_time: string;
-}> => {
+const getMeetings = async () => {
     const result = await axios.get("http://localhost:3001/meetings");
     return result.data;
 };
