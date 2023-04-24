@@ -6,7 +6,7 @@ import LeftSide from "./LeftSide/LeftSide";
 import { Box, Grid } from "@mui/material";
 import dayjs from "dayjs";
 
-import { Route, Routes, useParams } from "react-router-dom";
+import { Navigate, Route, Routes, useParams } from "react-router-dom";
 
 import AdvancedBook from "./RightSide/AdvancedBook/AdvancedBook";
 import MeetingInfo from "./RightSide/MeetingInfo/MeetingInfo";
@@ -179,6 +179,10 @@ const TabletApp = () => {
                                     }
                                 />
                             )}
+                            <Route
+                                path="*"
+                                element={<Navigate to="/selection" />}
+                            />
                         </Routes>
                     </Box>
                 </Box>
