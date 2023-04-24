@@ -18,11 +18,11 @@ export const RoomSelection = () => {
         <RoomSelectionCards
           name={e.name}
           key={e.id}
-          avaibility={e.avaibility}
+          availability={e.availability}
           capacity={e.capacity}
           description={e.description}
           id={e.id}
-        ></RoomSelectionCards>
+        />
 
         )
     }
@@ -40,7 +40,7 @@ export const RoomSelection = () => {
                     zIndex: "-1000",
                 }}
                 src={require("../../assets/images/doctarigorup.png")}
-            ></Box>
+            />
             <Container
                 maxWidth="xl"
                 sx={{

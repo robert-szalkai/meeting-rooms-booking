@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Box } from "@mui/system";
 import { Typography, Button } from "@mui/material";
 import UpcomingCards from "./UpcomingCards/UpcomingCards";
@@ -25,9 +25,6 @@ const LeftSide = ({ roomName }: iLeftSide) => {
 
     const formattedDate: string = currDate.toLocaleDateString("en-US", options);
     const [time, setTime] = useState(hoursMin);
-    useEffect(()=>{
-        console.log("Left side");
-    },[])
 
     return (
         <Box
@@ -108,7 +105,7 @@ const LeftSide = ({ roomName }: iLeftSide) => {
                     Show More
                 </Button>
             </Box>
-            <Button variant="outlined" color="inherit">
+            <Button variant="contained" color="success">
                 <CalendarMonthIcon />
                 Quick Book
             </Button>

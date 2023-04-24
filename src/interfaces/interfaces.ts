@@ -1,6 +1,6 @@
 export  interface iRoomCards{
     name:string,
-    avaibility:string;
+    availability:"free"| "booked"|"coming";
     description:string;
     capacity:number;
     id:number;
