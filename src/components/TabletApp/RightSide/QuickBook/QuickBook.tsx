@@ -6,7 +6,6 @@ import {
     Box,
     Button,
     Typography,
-    Grid,
     TextField,
     Autocomplete,
 } from "@mui/material";
@@ -89,8 +88,6 @@ const QuickBook = ({
         };
         fetchData();
     }, []);
-
-    //if (possibleOwners.length === 1) populateOwners();
 
     const handleDisable = (val: number) => {
         return closestMeet > val ? true : false;
