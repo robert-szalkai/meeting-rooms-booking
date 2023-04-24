@@ -7,11 +7,15 @@ import { Link } from "react-router-dom";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 
 interface iMenu {
-    RoomName: string;
-    RoomStatus: number;
+    roomId: string;
+    roomName: string;
+    roomStatus: number;
 }
 
-const Menu = ({ RoomName, RoomStatus }: iMenu) => {
+const Menu = ({ roomId, roomName, roomStatus }: iMenu) => {
+
+    const advancedBookLink = `/rooms/${roomId}/form`;
+
     const RoomStatusMessage = [
         "currently available",
         "Going to be in use soon",
@@ -34,7 +38,7 @@ const Menu = ({ RoomName, RoomStatus }: iMenu) => {
                 paddingTop: "20%",
             }}
         >
-            {RoomName != "" ? (
+            {roomName ? (
                 <Box
                     sx={{
                         display: "flex",
@@ -44,9 +48,9 @@ const Menu = ({ RoomName, RoomStatus }: iMenu) => {
                     }}
                 >
                     <Typography variant="h4">
-                        {RoomName} is {RoomStatusMessage[RoomStatus]}
+                        {roomName} is {RoomStatusMessage[roomStatus]}
                     </Typography>
-                    <Typography variant="h6">{subText[RoomStatus]}</Typography>
+                    <Typography variant="h6">{subText[roomStatus]}</Typography>
                 </Box>
             ) : (
                 <Box
@@ -65,7 +69,7 @@ const Menu = ({ RoomName, RoomStatus }: iMenu) => {
                     <Skeleton variant="rectangular" width={300} />
                 </Box>
             )}
-            <Link to="/rooms/1/form" style={{ textDecoration: "none" }}>
+            <Link to={advancedBookLink} style={{ textDecoration: "none" }}>
                 <Button
                     variant="contained"
                     sx={{
@@ -84,7 +88,7 @@ const Menu = ({ RoomName, RoomStatus }: iMenu) => {
                     <Typography fontWeight="bold">Advanced Book</Typography>
                 </Button>
             </Link>
-            <QuickBook isDisabled={RoomStatus === 2} />
+            <QuickBook isDisabled={roomStatus === 2} />
         </Box>
     );
 };

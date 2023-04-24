@@ -66,8 +66,9 @@ const TabletApp = () => {
                                 path="/menu"
                                 element={
                                     <Menu
-                                        RoomName={roomName}
-                                        RoomStatus={availability}
+                                        roomId={id ? id : ""}
+                                        roomName={roomName}
+                                        roomStatus={availability}
                                     />
                                 }
                             />

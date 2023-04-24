@@ -24,9 +24,11 @@ interface INITIALOWNER {
     id: number;
 }
 
-const iQuickBook{isDisabled : boolean}
+interface iQuickBook {
+    isDisabled: boolean;
+}
 
-const QuickBook = ({isDisabled} : iQuickBook) => {
+const QuickBook = ({ isDisabled }: iQuickBook) => {
     const [timeButtonsVisible, setTimeButtonsVisible] =
         useState<boolean>(false);
     const [openQuickButtonMenu, setOpenQuickButtonMenu] =

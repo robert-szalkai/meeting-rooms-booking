@@ -57,7 +57,7 @@ const LeftSide = ({ roomName, availability }: iLeftSide) => {
                     justifyContent="center"
                     alignItems="flex-start"
                 >
-                    {roomName != "" ? (<Typography variant="h3">{roomName}</Typography>) : (<Skeleton variant="rectangular" width={210} height={18} />)}
+                    {roomName ? (<Typography variant="h3">{roomName}</Typography>) : (<Skeleton variant="rectangular" width={210} height={18} />)}
                     <Clock />
                     <Typography variant="h3">{formattedDate}</Typography>
                 </Box>
