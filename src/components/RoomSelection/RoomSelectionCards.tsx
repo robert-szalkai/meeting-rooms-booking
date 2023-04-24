@@ -25,7 +25,7 @@ export const RoomSelectionCards = ({
                 handleClick(id);
             }}
             sx={{
-                height: "250px",
+                height: "200px",
                 width: "400px",
                 borderRadius: "10px",
                 boxShadow:
@@ -66,8 +66,8 @@ export const RoomSelectionCards = ({
                 </Box>
                 <Box
                     sx={{
-                        width: "400px",
-                        maxHeight: "70px",
+                        width: "100%",
+                        maxHeight: "50px",
                         overflow: "hidden",
                     }}
                 >
