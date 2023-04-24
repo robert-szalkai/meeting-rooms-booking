@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { Typography, Button, Box } from "@mui/material";
 import dayjs from "dayjs";
-
 import UpcomingCards from "./UpcomingCards/UpcomingCards";
 import QuickBookGlobal from "./QuickBookGlobal/QuickBookGlobal";
 import CONSTANTS from "../../../constants/Constants";
