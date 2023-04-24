@@ -1,9 +1,6 @@
 import axios from "axios";
 
-const getParticipants = async (): Promise<{
-    name: string;
-    id: number;
-}> => {
+const getParticipants = async ()=> {
     const result = await axios.get("http://localhost:3001/participants");
     return result.data;
 };
