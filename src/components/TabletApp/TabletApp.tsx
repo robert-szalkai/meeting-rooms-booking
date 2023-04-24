@@ -14,7 +14,9 @@ import CONSTANTS from "../../constants/Constants";
 const TabletApp = () => {
     const colorStates = [COLORS.GREEN, COLORS.YELLOW, COLORS.RED];
 
-    const [availability, setAvailability] = useState<number>(0);
+    const [availability, setAvailability] = useState<number>(
+        CONSTANTS.ROOM_AVAILABLE
+    );
     const [roomName, setRoomName] = useState("Focus Room");
     const [time, setTime] = useState<number>(0);
 
