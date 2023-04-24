@@ -4,7 +4,7 @@ import { Button, Paper, Typography } from "@mui/material";
 import UpcomingCards from "./UpcomingCards/UpcomingCards";
 import "./UpcomingCardsScrollCSS.css";
 import Dayjs from "dayjs";
-import { getParticipants } from "../../../api/getRequests";
+import { getParticipantsIdName } from "../../../api/getRequests";
 
 interface iLeftSide {
     name: string | undefined;
@@ -44,7 +44,7 @@ const LeftSide = ({ name, meetings }: iLeftSide) => {
     const [participantsData, setParticipantsData] = useState<participantsID>();
 
     const getParticipantsData = async () => {
-        const response = await getParticipants();
+        const response = await getParticipantsIdName();
         if (response.status === 200) {
             setParticipantsData(response.data);
         }

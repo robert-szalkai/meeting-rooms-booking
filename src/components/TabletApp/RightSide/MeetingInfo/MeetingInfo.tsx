@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Grid, Typography, Box, Avatar } from "@mui/material";
-import { getMeetingsData, getParticipants } from "../../../../api/getRequests";
+import { getMeetingsData, getParticipantsIdName } from "../../../../api/getRequests";
 import { useParams } from "react-router-dom";
 import axios, { AxiosResponse } from "axios";
 import dayjs, { Dayjs } from "dayjs";
@@ -39,7 +39,7 @@ const MeetingInfo = () => {
     };
 
     const getParticipantsData = async () => {
-        const response = await getParticipants();
+        const response = await getParticipantsIdName();
         if (response.status === 200) {
             setParticipantsData(response.data);
         }

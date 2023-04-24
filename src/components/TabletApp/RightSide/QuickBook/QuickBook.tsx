@@ -12,7 +12,7 @@ import EditCalendarIcon from "@mui/icons-material/EditCalendar";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { styled } from "@mui/material/styles";
-import { getParticipants } from "../../../../api/getRequests";
+import { getParticipantsIdName } from "../../../../api/getRequests";
 import COLORS from "../../../../constants/CustomColors";
 
 //To be removed when globla theme is done
@@ -55,7 +55,7 @@ const QuickBook = () => {
 
     const populateOwners = async () => {
         let tempOwners: any[] = [];
-        const response = await getParticipants();
+        const response = await getParticipantsIdName();
         response.data.forEach(({ name }: { name: string }) =>
             tempOwners.push(name)
         );
