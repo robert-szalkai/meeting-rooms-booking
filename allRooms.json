@@ -1,0 +1,40 @@
+{
+    "rooms": [
+        {
+            "name": "Focus Room",
+            "avaibility": "book",
+            "description": "Good Room Good Room Good Room Good Room Good Room Good RoomGood RoomGood RoomGood RoomGood RoomGood RoomGood Room",
+            "capacity": 10,
+            "id": 1
+        },
+        {
+            "name": "High Table",
+            "avaibility": "free",
+            "description": "Good Room",
+            "capacity": 10,
+            "id": 2
+        },
+
+        {
+            "name": "Room for Growth",
+            "avaibility": "coming",
+            "description": "Good Room",
+            "capacity": 10,
+            "id": 3
+        },
+        {
+            "name": "Room for Growth",
+            "avaibility": "booked",
+            "description": "Good Room",
+            "capacity": 10,
+            "id": 4
+        },
+        {
+            "name": "Room for Growth",
+            "avaibility": "booked",
+            "description": "Good Room",
+            "capacity": 10,
+            "id": 5
+        }
+    ]
+}
