@@ -6,7 +6,6 @@ import {
     Box,
     Button,
     Typography,
-    Grid,
     TextField,
     Autocomplete,
 } from "@mui/material";
@@ -25,9 +24,13 @@ interface INITIALOWNER {
 }
 interface iQuickBook {
     isDurationOpen?: boolean;
+    handleQuickBookDone: () => void;
 }
 
-const QuickBook = ({ isDurationOpen = false }: iQuickBook) => {
+const QuickBook = ({
+    isDurationOpen = false,
+    handleQuickBookDone,
+}: iQuickBook) => {
     const [timeButtonsVisible, setTimeButtonsVisible] =
         useState<boolean>(isDurationOpen);
     const [openQuickButtonMenu, setOpenQuickButtonMenu] =
@@ -86,8 +89,6 @@ const QuickBook = ({ isDurationOpen = false }: iQuickBook) => {
         fetchData();
     }, []);
 
-    //if (possibleOwners.length === 1) populateOwners();
-
     const handleDisable = (val: number) => {
         return closestMeet > val ? true : false;
     };
@@ -130,6 +131,7 @@ const QuickBook = ({ isDurationOpen = false }: iQuickBook) => {
             });
             //From here the code should take you to the red/Meeting in Progress Screen
             //and not allow you to make anymore quick bookings
+            handleQuickBookDone();
         } catch (error) {
             spawnToast({
                 title: "Something went wrong",
