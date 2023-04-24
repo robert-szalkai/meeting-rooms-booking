@@ -23,10 +23,13 @@ interface INITIALOWNER {
     name: string;
     id: number;
 }
+interface iQuickBook {
+    isDurationOpen?: boolean;
+}
 
-const QuickBook = () => {
+const QuickBook = ({ isDurationOpen = false }: iQuickBook) => {
     const [timeButtonsVisible, setTimeButtonsVisible] =
-        useState<boolean>(false);
+        useState<boolean>(isDurationOpen);
     const [openQuickButtonMenu, setOpenQuickButtonMenu] =
         useState<boolean>(false);
     const [owner, setOwner] = useState<INITIALOWNER>({ name: "", id: 0 });
@@ -140,98 +143,107 @@ const QuickBook = () => {
     };
 
     return (
-        <Box>
-            <Box display="flex" justifyContent="center">
-                <Button
-                    variant="contained"
-                    color="success"
-                    sx={{ textTransform: "none" }}
-                    onClick={() => {
-                        handleQuickBookButton();
+        <Box
+            sx={{
+                display: "flex",
+                width: "100%",
+                height: "100vh",
+                flexDirection: "column",
+                justifyContent: "flex-start",
+                alignItems: "center",
+            }}
+            gap={3}
+        >
+            <Button
+                variant="contained"
+                color="success"
+                sx={{ textTransform: "none" }}
+                onClick={() => {
+                    handleQuickBookButton();
+                }}
+            >
+                <EditCalendarIcon fontSize="small" />
+                <Typography variant="subtitle1">Quick Book</Typography>
+            </Button>
+            {timeButtonsVisible ? (
+                <Box
+                    sx={{
+                        width: "100%",
+                        gap: "30px",
+                        boxSizing: "border-box",
                     }}
                 >
-                    <EditCalendarIcon fontSize="small" />
-                    <Typography variant="subtitle1">Quick Book</Typography>
-                </Button>
-            </Box>
-            {timeButtonsVisible ? (
-                <Box sx={{ flexGrow: 1 }}>
-                    <Grid
-                        container
-                        direction="row"
-                        justifyContent="center"
-                        alignItems="center"
-                        paddingTop="5vh"
-                        paddingBottom="1vh"
+                    <Box
+                        sx={{
+                            display: "flex",
+                            width: "100%",
+                            justifyContent: "flex-start",
+                        }}
                     >
-                        <Grid item xs={8}>
-                            <Typography sx={{ fontWeight: "bold" }}>
-                                Select meeting duration
-                            </Typography>
-                        </Grid>
-                    </Grid>
-                    <Grid
-                        container
-                        spacing={5}
-                        direction="row"
-                        justifyContent="center"
-                        alignItems="center"
-                        minHeight="0vh"
+                        <Typography
+                            sx={{ fontWeight: "bold", marginRight: "auto" }}
+                        >
+                            Select meeting duration
+                        </Typography>
+                    </Box>
+
+                    <Box
+                        sx={{
+                            display: "flex",
+                            justifyContent: "space-evenly",
+                            alignItems: "center",
+                            width: "100%",
+                        }}
                     >
-                        <Grid item xs={2}>
-                            <Button
-                                onClick={() => {
-                                    handleClickTime();
-                                    setTimeVal(15);
-                                }}
-                                variant="outlined"
-                                color="success"
-                                disabled={handleDisable(15)}
-                            >
-                                15 Min
-                            </Button>
-                        </Grid>
-                        <Grid item xs={2}>
-                            <Button
-                                onClick={() => {
-                                    handleClickTime();
-                                    setTimeVal(20);
-                                }}
-                                variant="outlined"
-                                color="success"
-                                disabled={handleDisable(20)}
-                            >
-                                20 Min
-                            </Button>
-                        </Grid>
-                        <Grid item xs={2}>
-                            <Button
-                                onClick={() => {
-                                    handleClickTime();
-                                    setTimeVal(30);
-                                }}
-                                variant="outlined"
-                                color="success"
-                                disabled={handleDisable(30)}
-                                value={30}
-                            >
-                                30 Min
-                            </Button>
-                        </Grid>
-                        <Grid item xs={2}>
-                            <Button
-                                onClick={() => {
-                                    handleClickTime();
-                                    setTimeVal(40);
-                                }}
-                                variant="outlined"
-                                color="success"
-                                disabled={handleDisable(40)}
-                            >
-                                40 Min
-                            </Button>
-                        </Grid>
-                    </Grid>
+                        <Button
+                            onClick={() => {
+                                handleClickTime();
+                                setTimeVal(15);
+                            }}
+                            variant="outlined"
+                            color="success"
+                            disabled={handleDisable(15)}
+                        >
+                            15 Min
+                        </Button>
+
+                        <Button
+                            onClick={() => {
+                                handleClickTime();
+                                setTimeVal(20);
+                            }}
+                            variant="outlined"
+                            color="success"
+                            disabled={handleDisable(20)}
+                        >
+                            20 Min
+                        </Button>
+
+                        <Button
+                            onClick={() => {
+                                handleClickTime();
+                                setTimeVal(30);
+                            }}
+                            variant="outlined"
+                            color="success"
+                            disabled={handleDisable(30)}
+                            value={30}
+                        >
+                            30 Min
+                        </Button>
+
+                        <Button
+                            onClick={() => {
+                                handleClickTime();
+                                setTimeVal(40);
+                            }}
+                            variant="outlined"
+                            color="success"
+                            disabled={handleDisable(40)}
+                        >
+                            40 Min
+                        </Button>
+                    </Box>
 
                     {openQuickButtonMenu ? (
                         <Box paddingTop="5vh">

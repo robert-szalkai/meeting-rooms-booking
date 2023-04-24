@@ -53,10 +53,12 @@ const TabletApp = () => {
                                 path="/meetinginfo/:meetid"
                                 element={<MeetingInfo />}
                             />
-                            <Route
-                                path="/quickbookglobal"
-                                element={<QuickBook />}
-                            />
+                            {availability === 2 ? null : (
+                                <Route
+                                    path="/quickbookglobal"
+                                    element={<QuickBook isDurationOpen />}
+                                />
+                            )}
                         </Routes>
                     </Box>
                 </Box>
