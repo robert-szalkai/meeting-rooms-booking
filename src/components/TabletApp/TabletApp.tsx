@@ -109,6 +109,12 @@ const TabletApp = () => {
                                 path="/quickbookglobal"
                                 element={<QuickBook isDurationOpen />}
                             />
+                            {/* {availability === 2 ? null : (
+                                <Route
+                                    path="/quickbookglobal"
+                                    element={<QuickBook isDurationOpen />}
+                                />
+                            )} */}
                         </Routes>
                     </Box>
                 </Box>
