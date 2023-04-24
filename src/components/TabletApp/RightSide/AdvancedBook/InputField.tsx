@@ -7,6 +7,8 @@ interface InputFieldProps {
     multilineSelect?: boolean;
     handleMeetingName?: (values: any) => void;
     handleMeetingDescription?: (values: any) => void;
+    fieldTextValid?: string;
+    formValidationSetter: (values: boolean) => void;
 }
 
 const InputField = ({
@@ -15,11 +17,21 @@ const InputField = ({
     multilineSelect = false,
     handleMeetingDescription,
     handleMeetingName,
+    fieldTextValid,
+    formValidationSetter,
 }: InputFieldProps) => {
     return (
         <Box>
             <InputLabel>{inputLabelText}</InputLabel>
             <TextField
+                error={fieldTextValid === ""}
+                helperText={
+                    multilineSelect
+                        ? ""
+                        : fieldTextValid === ""
+                        ? "Provide meeting name"
+                        : ""
+                }
                 placeholder={placeholderText}
                 variant="filled"
                 size="small"
@@ -28,10 +40,13 @@ const InputField = ({
                 InputProps={{ disableUnderline: true }}
                 multiline={multilineSelect}
                 rows={multilineSelect ? 4 : 0}
-                onChange={(value) => {
+                onChange={(event) => {
+                    event.target.value === ""
+                        ? formValidationSetter(false)
+                        : formValidationSetter(true);
                     multilineSelect
-                        ? handleMeetingDescription?.(value.target.value)
-                        : handleMeetingName?.(value.target.value);
+                        ? handleMeetingDescription?.(event.target.value)
+                        : handleMeetingName?.(event.target.value);
                 }}
             />
         </Box>

@@ -9,11 +9,10 @@ import {
     AvatarGroup,
 } from "@mui/material";
 
-interface Participant {
-    name: string;
-    id: number;
-    available: boolean;
-    image: string;
+import { Participant } from "./AdvancedBook";
+
+interface ParticipantsValid {
+    meetingOwnerValid: Participant[];
 }
 
 interface Props {
@@ -22,6 +21,8 @@ interface Props {
     meetingOwner: Participant[];
     handleMeetingParticipants: (values: any) => void;
     handleMeetingOwner: (values: any) => void;
+    fieldTextValid: ParticipantsValid;
+    formValidationOwnerSetter: (values: boolean) => void;
 }
 
 const Participants: FC<Props> = ({
@@ -30,11 +31,13 @@ const Participants: FC<Props> = ({
     meetingOwner,
     handleMeetingParticipants,
     handleMeetingOwner,
+    fieldTextValid,
+    formValidationOwnerSetter,
 }) => {
     return (
         <Box>
             <Box>
-                <InputLabel>Meeting owner</InputLabel>
+                <InputLabel>Meeting owner*</InputLabel>
                 <Autocomplete
                     id="size-small-filled"
                     size="small"
@@ -45,6 +48,9 @@ const Participants: FC<Props> = ({
                             (person) => person.name === value
                         );
                         handleMeetingOwner(result);
+                        value === ""
+                            ? formValidationOwnerSetter(false)
+                            : formValidationOwnerSetter(true);
                     }}
                     getOptionDisabled={(option) => {
                         if (meetingParticipants.includes(option)) {
@@ -69,6 +75,14 @@ const Participants: FC<Props> = ({
                             {...params}
                             variant="filled"
                             hiddenLabel
+                            error={
+                                fieldTextValid.meetingOwnerValid.length === 0
+                            }
+                            helperText={
+                                fieldTextValid.meetingOwnerValid.length === 0
+                                    ? "Provide a meeting owner"
+                                    : ""
+                            }
                             placeholder="An employee from doctari group"
                             InputProps={{
                                 ...params.InputProps,
