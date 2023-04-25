@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { Typography, Button, Box, Skeleton, Paper } from "@mui/material";
 import dayjs from "dayjs";
 import UpcomingCards from "./UpcomingCards/UpcomingCards";
@@ -23,6 +23,7 @@ interface iLeftSide {
         participants_id: [];
     }[];
     availability: number;
+    selectedCardId: string;
 }
 interface participantsID {
     participants: {
@@ -31,13 +32,19 @@ interface participantsID {
     }[];
 }
 
-const LeftSide = ({ name, meetings, availability }: iLeftSide) => {
+const LeftSide = ({
+    name,
+    meetings,
+    availability,
+    selectedCardId,
+}: iLeftSide) => {
     let currDate = new Date();
     let hoursMin;
     const formattedDate = dayjs().format(CONSTANTS.TODAY);
 
     const [showQuickBookButton, setShowQuickBookButton] = useState(true);
     const location = useLocation();
+    const { meetid } = useParams<string>();
 
     const options: Intl.DateTimeFormatOptions = {
         day: "numeric",
@@ -56,6 +63,7 @@ const LeftSide = ({ name, meetings, availability }: iLeftSide) => {
     };
     useEffect(() => {
         getParticipantsData();
+        console.log("rares rupe", selectedCardId);
     }, []);
     useEffect(() => {
         if (
@@ -88,6 +96,7 @@ const LeftSide = ({ name, meetings, availability }: iLeftSide) => {
                     end={Dayjs(e.end_time).format("HH:MM")}
                     persons={getNames(e.participants_id)}
                     meetingName={e.name}
+                    selectedCardId={selectedCardId}
                 />
             ));
     };

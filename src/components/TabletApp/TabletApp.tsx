@@ -1,5 +1,3 @@
-
-
 import React, { useEffect, useState } from "react";
 
 import COLORS from "../../constants/CustomColors";
@@ -7,7 +5,7 @@ import LeftSide from "./LeftSide/LeftSide";
 import { Box, Grid } from "@mui/material";
 import dayjs from "dayjs";
 
-import { Route, Routes, useParams } from "react-router-dom";
+import { Navigate, Route, Routes, useParams } from "react-router-dom";
 
 import AdvancedBook from "./RightSide/AdvancedBook/AdvancedBook";
 import MeetingInfo from "./RightSide/MeetingInfo/MeetingInfo";
@@ -34,7 +32,7 @@ interface iLeftSide {
 const TabletApp = () => {
     const colorStates = [COLORS.GREEN, COLORS.YELLOW, COLORS.RED];
     const [meetingsData, setMeetingsData] = useState<iLeftSide>();
-    
+
     const [roomName, setRoomName] = useState("Focus Room");
     const { id } = useParams();
 
@@ -43,13 +41,17 @@ const TabletApp = () => {
     const [endTime, setEndTime] = useState("16:30");
     const [participantsName, setParticipantsName] = useState<string[]>([]);
 
-
+    const [selectedCardId, setSelectedCardId] = useState<string>();
 
     const [availability, setAvailability] = useState<number>(
         CONSTANTS.ROOM_AVAILABLE
     );
     const [time, setTime] = useState<number>(0);
     const [quickBookDone, setQuickBookDone] = useState<boolean>(false);
+
+    const handleSetSelectedCardId = (cardId: string) => {
+        setSelectedCardId(cardId);
+    };
 
     const handleQuickBookDone = () => {
         setQuickBookDone(true);
@@ -64,9 +66,6 @@ const TabletApp = () => {
     useEffect(() => {
         meetData();
     }, []);
-
-
-
 
     useEffect(() => {
         const isMeetingRightNow = async () => {
@@ -132,6 +131,7 @@ const TabletApp = () => {
                         meetings={meetingsData?.meetings}
                         name={meetingsData?.name}
                         availability={availability}
+                        selectedCardId={selectedCardId as string}
                     />
                 )}
             </Grid>
@@ -172,7 +172,13 @@ const TabletApp = () => {
                             <Route path="/form" element={<AdvancedBook />} />
                             <Route
                                 path="/meetinginfo/:meetid"
-                                element={<MeetingInfo />}
+                                element={
+                                    <MeetingInfo
+                                        setSelectedCardId={
+                                            handleSetSelectedCardId
+                                        }
+                                    />
+                                }
                             />
                             {availability === 2 ? null : (
                                 <Route
@@ -187,6 +193,10 @@ const TabletApp = () => {
                                     }
                                 />
                             )}
+                            <Route
+                                path="*"
+                                element={<Navigate to="/selection" />}
+                            />
                         </Routes>
                     </Box>
                 </Box>
