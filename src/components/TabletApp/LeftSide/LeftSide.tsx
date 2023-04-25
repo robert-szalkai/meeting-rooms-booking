@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import { useLocation, useParams } from "react-router-dom";
-import { Typography, Button, Box, Paper } from "@mui/material";
+import { Typography, Button, Box, Skeleton, Paper } from "@mui/material";
 import dayjs from "dayjs";
 import UpcomingCards from "./UpcomingCards/UpcomingCards";
 import "./UpcomingCardsScrollCSS.css";
@@ -156,7 +156,15 @@ const LeftSide = ({
                         justifyContent="center"
                         alignItems="flex-start"
                     >
-                        <Typography variant="h3">{name}</Typography>
+                        {name ? (
+                            <Typography variant="h3">{name}</Typography>
+                        ) : (
+                            <Skeleton
+                                variant="rectangular"
+                                width={210}
+                                height={18}
+                            />
+                        )}
                         {/* <Typography variant="h2">{time}</Typography> */}
                         <Clock />
 
