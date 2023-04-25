@@ -16,6 +16,7 @@ import { Typography } from "@mui/material";
 import QuickBook from "./RightSide/QuickBook/QuickBook";
 
 import { getMeetings, getMeetingsData } from "../../api/getRequests";
+import Menu from "./RightSide/Menu/Menu";
 
 import CONSTANTS from "../../constants/Constants";
 

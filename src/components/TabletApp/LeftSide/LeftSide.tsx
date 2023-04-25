@@ -147,8 +147,17 @@ const LeftSide = ({ name, meetings, availability }: iLeftSide) => {
                         justifyContent="center"
                         alignItems="flex-start"
                     >
-                        <Typography variant="h3">{name}</Typography>
+                        {name ? (
+                            <Typography variant="h3">{name}</Typography>
+                        ) : (
+                            <Skeleton
+                                variant="rectangular"
+                                width={210}
+                                height={18}
+                            />
+                        )}
                         {/* <Typography variant="h2">{time}</Typography> */}
+                        <Clock />
 
                         <Typography variant="h3">{formattedDate}</Typography>
                     </Box>
@@ -164,9 +173,6 @@ const LeftSide = ({ name, meetings, availability }: iLeftSide) => {
                         overflow: "auto",
                     }}
                 >
-                    {roomName ? (<Typography variant="h3">{roomName}</Typography>) : (<Skeleton variant="rectangular" width={210} height={18} />)}
-                    <Clock />
-                    <Typography variant="h3">{formattedDate}</Typography>
                     <Paper
                         style={{
                             backgroundColor: "transparent",

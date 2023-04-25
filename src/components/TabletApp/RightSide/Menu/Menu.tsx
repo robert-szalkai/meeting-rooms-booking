@@ -13,7 +13,6 @@ interface iMenu {
 }
 
 const Menu = ({ roomId, roomName, roomStatus }: iMenu) => {
-
     const advancedBookLink = `/rooms/${roomId}/form`;
 
     const RoomStatusMessage = [
@@ -37,9 +36,7 @@ const Menu = ({ roomId, roomName, roomStatus }: iMenu) => {
                 alignItems: "center",
                 paddingTop: "20%",
             }}
-        >
-            {roomName ? (
-                <Box
+        >   <Box
                     sx={{
                         display: "flex",
                         flexDirection: "column",
@@ -47,28 +44,25 @@ const Menu = ({ roomId, roomName, roomStatus }: iMenu) => {
                         paddingBottom: "30px",
                     }}
                 >
-                    <Typography variant="h4">
+              
+            {roomName ? (
+            <Box>
+                   <Typography variant="h4">
                         {roomName} is {RoomStatusMessage[roomStatus]}
                     </Typography>
                     <Typography variant="h6">{subText[roomStatus]}</Typography>
-                </Box>
+                    </Box>
             ) : (
-                <Box
-                    sx={{
-                        display: "flex",
-                        flexDirection: "column",
-                        alignItems: "center",
-                        paddingBottom: "30px",
-                    }}
-                >
-                    <Skeleton
+            <Box>
+                   <Skeleton
                         sx={{ marginBottom: "30px" }}
                         variant="rectangular"
                         width={500}
                     />
                     <Skeleton variant="rectangular" width={300} />
-                </Box>
+                    </Box>
             )}
+                </Box>
             <Link to={advancedBookLink} style={{ textDecoration: "none" }}>
                 <Button
                     variant="contained"
@@ -88,7 +82,6 @@ const Menu = ({ roomId, roomName, roomStatus }: iMenu) => {
                     <Typography fontWeight="bold">Advanced Book</Typography>
                 </Button>
             </Link>
-            <QuickBook isDisabled={roomStatus === 2} />
         </Box>
     );
 };
