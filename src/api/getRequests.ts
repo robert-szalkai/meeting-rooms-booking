@@ -29,7 +29,7 @@ const getRooms = async () => {
 };
 
 const getRoomById = async (id: number) => {
-    return await axios.get(`http://localhost:3001/rooms/${id}`);
+    return await axios.get(`http://localhost:3001/meetingRooms/${id}`);
 };
 const getMeetingsData = async()=>{
     return await axios.get("http://localhost:3001/roomdata")

@@ -4,7 +4,7 @@ import dayjs from "dayjs";
 import CONSTANTS from "../../../../constants/Constants";
 
 const Clock = () => {
-    const [time, setTime] = useState("");
+    const [time, setTime] = useState(dayjs().format(CONSTANTS.TIME_NOW));
     const getTime = () => {
         const currentTime = dayjs().format(CONSTANTS.TIME_NOW);
         setTime(currentTime);

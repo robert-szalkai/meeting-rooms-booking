@@ -8,7 +8,7 @@ import COLORS from "../../../../constants/CustomColors";
 const QuickBookGlobal = () => {
     const navigate = useNavigate();
     const handleQuickBook = () => {
-        navigate("quickbookglobal");
+        navigate("/rooms/menu");
     };
 
     return (

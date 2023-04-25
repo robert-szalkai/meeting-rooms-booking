@@ -4,8 +4,6 @@ import React, { useEffect, useState } from "react";
 
 import COLORS from "../../constants/CustomColors";
 import LeftSide from "./LeftSide/LeftSide";
-
-
 import { Box, Grid } from "@mui/material";
 import dayjs from "dayjs";
 
@@ -18,6 +16,7 @@ import { Typography } from "@mui/material";
 import QuickBook from "./RightSide/QuickBook/QuickBook";
 
 import { getMeetings, getMeetingsData } from "../../api/getRequests";
+import Menu from "./RightSide/Menu/Menu";
 
 import CONSTANTS from "../../constants/Constants";
 
@@ -118,14 +117,12 @@ const TabletApp = () => {
         return () => clearInterval(interval);
     }, [time, quickBookDone]);
 
-
-
-
-
-
     return (
         <Grid
-            sx={{ backgroundColor: colorStates[availability] }}
+            sx={{
+                backgroundColor: colorStates[availability],
+                transition: "background-color 1s ease",
+            }}
             flexDirection="row"
             container
         >
@@ -162,6 +159,16 @@ const TabletApp = () => {
                         }}
                     >
                         <Routes>
+                            <Route
+                                path="/menu"
+                                element={
+                                    <Menu
+                                        roomId={id ? id : ""}
+                                        roomName={roomName}
+                                        roomStatus={availability}
+                                    />
+                                }
+                            />
                             <Route path="/form" element={<AdvancedBook />} />
                             <Route
                                 path="/meetinginfo/:meetid"
