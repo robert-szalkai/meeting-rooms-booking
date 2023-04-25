@@ -24,6 +24,7 @@ interface iLeftSide {
     }[];
     availability: number;
     selectedCardId: string;
+    onClickQuickBookGlobal: () => void;
 }
 interface participantsID {
     participants: {
@@ -37,6 +38,7 @@ const LeftSide = ({
     meetings,
     availability,
     selectedCardId,
+    onClickQuickBookGlobal,
 }: iLeftSide) => {
     let currDate = new Date();
     let hoursMin;
@@ -68,7 +70,7 @@ const LeftSide = ({
     useEffect(() => {
         if (
             availability === CONSTANTS.MEETING_IN_PROGRESS ||
-            location.pathname.includes("quickbookglobal")
+            location.pathname.includes("menu")
         ) {
             setShowQuickBookButton(false);
             return;
@@ -165,7 +167,7 @@ const LeftSide = ({
                                 height={18}
                             />
                         )}
-                        {/* <Typography variant="h2">{time}</Typography> */}
+
                         <Clock />
 
                         <Typography variant="h3">{formattedDate}</Typography>
@@ -218,7 +220,9 @@ const LeftSide = ({
                     )}
                 </Box>
                 {showQuickBookButton ? (
-                    <QuickBookGlobal />
+                    <QuickBookGlobal
+                        onClickQuickBookGlobal={onClickQuickBookGlobal}
+                    />
                 ) : availability === CONSTANTS.MEETING_IN_PROGRESS ? (
                     <AdvancedBookGlobal />
                 ) : null}
