@@ -1,19 +1,15 @@
 import React, { useEffect, useState } from "react";
-
-import COLORS from "../../constants/CustomColors";
-import LeftSide from "./LeftSide/LeftSide";
+import { Navigate, Route, Routes, useParams } from "react-router-dom";
 import { Box, Grid } from "@mui/material";
 import dayjs from "dayjs";
 
-import { Navigate, Route, Routes, useParams } from "react-router-dom";
-
+import LeftSide from "./LeftSide/LeftSide";
 import AdvancedBook from "./RightSide/AdvancedBook/AdvancedBook";
 import MeetingInfo from "./RightSide/MeetingInfo/MeetingInfo";
-
-import { getMeetings, getMeetingsData } from "../../api/getRequests";
 import Menu from "./RightSide/Menu/Menu";
-
 import CONSTANTS from "../../constants/Constants";
+import { getMeetings, getMeetingsData } from "../../api/getRequests";
+import COLORS from "../../constants/CustomColors";
 
 interface iLeftSide {
     name: string | undefined;

@@ -1,10 +1,9 @@
 import { Button, Box, Typography, Skeleton } from "@mui/material";
 import React from "react";
-import COLORS from "../../../../constants/CustomColors";
-
-import QuickBook from "../QuickBook/QuickBook";
 import { Link } from "react-router-dom";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+
+import QuickBook from "../QuickBook/QuickBook";
 
 interface iMenu {
     roomId: string;

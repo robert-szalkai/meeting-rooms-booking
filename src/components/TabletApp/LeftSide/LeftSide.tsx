@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from "react";
-
 import { useLocation, useParams } from "react-router-dom";
 import { Typography, Button, Box, Skeleton, Paper } from "@mui/material";
 import dayjs from "dayjs";
+import Dayjs from "dayjs";
+
 import UpcomingCards from "./UpcomingCards/UpcomingCards";
 import "./UpcomingCardsScrollCSS.css";
-import Dayjs from "dayjs";
-import { getParticipantsIdName } from "../../../api/getRequests";
-
 import QuickBookGlobal from "./QuickBookGlobal/QuickBookGlobal";
-import CONSTANTS from "../../../constants/Constants";
-import Clock from "./Clock/Clock";
 import AdvancedBookGlobal from "./AdvancedBookGlobal/AdvancedBookGlobal";
+import Clock from "./Clock/Clock";
+import { getParticipantsIdName } from "../../../api/getRequests";
+import CONSTANTS from "../../../constants/Constants";
 
 interface iLeftSide {
     name: string | undefined;
