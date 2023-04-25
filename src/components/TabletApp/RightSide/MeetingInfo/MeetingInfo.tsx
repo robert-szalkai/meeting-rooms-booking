@@ -21,6 +21,7 @@ interface iMeetingData {
     start_time: string;
     end_time: string;
     participants_id: string[] | undefined;
+    description: string;
 }
 
 interface iMeetingInfo {
@@ -174,16 +175,14 @@ const MeetingInfo = ({ setSelectedCardId }: iMeetingInfo) => {
                 <Grid padding={0.5} container direction={"row"}>
                     <Grid item xs={12}>
                         <Typography variant="subtitle1">
-                            The Terno is a modular light and sound system
-                            designed for stage and recording applications,
-                            providing an intuitive on-stage
+                            {meetingData.description}
                         </Typography>
                     </Grid>
                 </Grid>
             </Grid>
         </Grid>
     ) : (
-        <Typography variant="h4">Loading...</Typography>
+        <Typography variant="h4">Meeting not found...</Typography>
     );
 };
 

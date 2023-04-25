@@ -51,4 +51,3 @@ const getMeetings = async (): Promise<{
 };
 
 export { getRooms, getRoomById, getParticipants, getParticipant, getMeetings, getMeetingsData, getParticipantsIdName, getAllRooms };
-
