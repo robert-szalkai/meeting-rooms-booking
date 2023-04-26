@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Grid, Typography, Box, Avatar } from "@mui/material";
+import { Grid, Typography, Box, Avatar, Alert, Stack } from "@mui/material";
 import {
     getMeetingsData,
     getParticipantsIdName,
@@ -182,7 +182,20 @@ const MeetingInfo = ({ setSelectedCardId }: iMeetingInfo) => {
             </Grid>
         </Grid>
     ) : (
-        <Typography variant="h4">Meeting not found...</Typography>
+        <Grid
+            height={"100%"}
+            padding={70}
+            container
+            direction={"row"}
+            spacing={1}
+        >
+            <Stack sx={{ width: "100%" }}>
+                <Alert severity="error">
+                    Meeting not found, please select a meeting from one of the
+                    cards displayed on the left.
+                </Alert>
+            </Stack>
+        </Grid>
     );
 };
 
