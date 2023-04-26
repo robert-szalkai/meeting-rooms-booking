@@ -1,12 +1,12 @@
 import axios from "axios";
+
 import { iRoomCards } from "../interfaces/interfaces";
+import { Participant, Meeting } from "../interfaces/interfaces";
 
 
 const getParticipantsIdName = async () => {
     return await axios.get("http://localhost:3002/participantsData");
 }
-
-import { Participant, Meeting } from "../components/TabletApp/RightSide/AdvancedBook/AdvancedBook";
 
 const getParticipants = async (): Promise<Participant[]>=> {
     const result = await axios.get("http://localhost:3001/participants");

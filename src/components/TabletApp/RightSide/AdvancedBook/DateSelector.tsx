@@ -5,35 +5,13 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import dayjs, { Dayjs } from "dayjs";
 
-interface Props {
-    handleMeetingDate: (values: any) => void;
-    handleStartTime: (values: any) => void;
-    handleEndTime: (values: any) => void;
-    fieldTextValid: dateSelectorValid;
-    formValidationDateSetter: (values: boolean, key: string) => void;
-    formValidationStartSetter: (values: boolean, key: string) => void;
-    formValidationEndSetter: (values: boolean, key: string) => void;
-    bookedMeetings: any;
-}
+import {
+    DateSelectorProps,
+    SelectHour,
+    MeetingDate,
+} from "../../../../interfaces/interfaces";
 
-interface SelectHour {
-    val: Dayjs;
-    text: string;
-    isdisabled: boolean;
-}
-
-interface MeetingDate {
-    startDate: Dayjs;
-    endDate: Dayjs;
-}
-
-interface dateSelectorValid {
-    dateValid: Dayjs;
-    startValid: string;
-    endValid: string;
-}
-
-const DateSelector: FC<Props> = ({
+const DateSelector: FC<DateSelectorProps> = ({
     handleMeetingDate,
     handleStartTime,
     handleEndTime,
@@ -124,10 +102,9 @@ const DateSelector: FC<Props> = ({
                                     disableUnderline: true,
                                     hiddenLabel: true,
                                 },
-                                error:
-                                    fieldTextValid.dateValid.toString() === "",
+                                error: fieldTextValid.dateValid === "",
                                 helperText:
-                                    fieldTextValid.dateValid.toString() === ""
+                                    fieldTextValid.dateValid === ""
                                         ? "Provide meeting date"
                                         : "",
                             },

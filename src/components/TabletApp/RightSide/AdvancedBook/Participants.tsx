@@ -9,23 +9,9 @@ import {
     AvatarGroup,
 } from "@mui/material";
 
-import { Participant } from "./AdvancedBook";
+import { ParticipantsProps } from "../../../../interfaces/interfaces";
 
-interface ParticipantsValid {
-    meetingOwnerValid: Participant[];
-}
-
-interface Props {
-    meetingParticipants: Participant[];
-    allEmployees: Participant[];
-    meetingOwner: Participant[];
-    handleMeetingParticipants: (values: any) => void;
-    handleMeetingOwner: (values: any) => void;
-    fieldTextValid: ParticipantsValid;
-    formValidationOwnerSetter: (values: boolean, key: string) => void;
-}
-
-const Participants: FC<Props> = ({
+const Participants: FC<ParticipantsProps> = ({
     meetingParticipants,
     allEmployees,
     meetingOwner,

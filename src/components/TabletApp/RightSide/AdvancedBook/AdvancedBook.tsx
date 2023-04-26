@@ -10,30 +10,11 @@ import InputField from "./InputField";
 import { getMeetings, getParticipants } from "../../../../api/getRequests";
 import { addMeeting } from "../../../../api/MeetingApi";
 import { spawnToast } from "../../../../utils/Toast";
-
-interface Participant {
-    name: string;
-    id: number;
-    available: boolean;
-    image: string;
-}
-
-interface Meeting {
-    meeting_name: string;
-    meeting_description: string;
-    startDate: string;
-    endDate: string;
-    participants: number[];
-    id: number;
-}
-
-interface FormValidity {
-    isNameValid: boolean;
-    isDateValid: boolean;
-    isStartValid: boolean;
-    isEndValid: boolean;
-    isOwnerValid: boolean;
-}
+import {
+    FormValidity,
+    Meeting,
+    Participant,
+} from "../../../../interfaces/interfaces";
 
 const AdvancedBook = () => {
     const [validForm, setValidForm] = useState<FormValidity>({
@@ -190,7 +171,7 @@ const AdvancedBook = () => {
                         handleStartTime={handleStartTime}
                         handleEndTime={handleEndTime}
                         fieldTextValid={{
-                            dateValid: dateSelectorDate,
+                            dateValid: dateSelectorDate.toString(),
                             startValid: startTime,
                             endValid: endTime,
                         }}
@@ -253,4 +234,3 @@ const AdvancedBook = () => {
 };
 
 export default AdvancedBook;
-export { FormValidity, Participant, Meeting };

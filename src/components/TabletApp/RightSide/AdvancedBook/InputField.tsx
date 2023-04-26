@@ -1,15 +1,7 @@
 import React from "react";
 import { Box, InputLabel, TextField } from "@mui/material";
 
-interface InputFieldProps {
-    inputLabelText: string;
-    placeholderText: string;
-    multilineSelect?: boolean;
-    handleMeetingName: (values: string) => void;
-    handleMeetingDescription: (values: string) => void;
-    fieldTextValid?: string;
-    formValidationSetter: (values: boolean, key: string) => void;
-}
+import { InputFieldProps } from "../../../../interfaces/interfaces";
 
 const InputField = ({
     inputLabelText,
