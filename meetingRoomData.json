@@ -50,7 +50,7 @@
       {  
          "meetingName": "Focus Room 1",
          "id":"1",
-         "startDate": "2023-04-26T16:30:18.386Z",
+         "startDate": "2023-04-26T18:30:18.386Z",
          "endDate": "2023-04-26T18:35:18.386Z",
          "participants":[1,5],
          "description":"Here we go for some fun"
@@ -85,7 +85,7 @@
        {
          "meetingName": "Focus Room 5",
           "id":"5",
-          "startDate": "2023-04-26T17:10:18.386Z",
+          "startDate": "2023-04-26T18:10:18.386Z",
           "endDate": "2023-04-26T18:10:18.386Z",
           "participants_id":[1,2,4, 3],
           "description":"Exit"
