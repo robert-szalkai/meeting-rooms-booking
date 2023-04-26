@@ -17,10 +17,11 @@ export const Cards = ({
     description,
     lastBooked,
     handleDelete,
-    handleEdit,
+    handleEdit
 }: iCard) => {
     return (
         <Card
+           onClick={()=>{console.log(title)}}
             key={id}
             sx={{
                 maxWidth: "821px",

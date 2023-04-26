@@ -7,7 +7,17 @@ export  interface iRoomCards{
     capacity:number;
     id:number;
 }
-
+export interface MeetingRoomsData {
+    title: string;
+    id: number;
+    description: string;
+    lastBooked: string;
+    capacity: number;
+    meetings:{
+        start_time:string;
+        end_time:string;
+    }[]
+}
 export interface Participant {
     name: string;
     id: number;

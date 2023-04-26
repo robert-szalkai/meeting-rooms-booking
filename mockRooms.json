@@ -1,34 +1,46 @@
 {
   "rooms": [
     {
-      "id": "3",
-      "title": "Breakout Room",
+      "title": "sdadassss",
       "description": "This small room is perfect for quick meetings or phone calls.",
-      "lastBooked": "2023-04-06T11:30",
-      "capacity": "3"
+      "lastBooked": "",
+      "capacity": "3",
+      "id": "3"
     },
     {
-      "title": "fvrefver",
+      "title": "RoomNa",
       "description": "erfcrcfse",
       "lastBooked": "",
       "capacity": "22",
-      "id": "IRnDNK-"
+      "id": "2"
     },
-    
     {
       "title": "Testare",
       "description": "Aici testam tot",
       "lastBooked": "",
       "capacity": "12",
-      "id": "cIRUZjZ"
+      "id": "1"
     },
     {
       "title": "cscs",
       "description": "xsxs",
       "lastBooked": "",
       "capacity": "1",
-      "id": "pSd1vsU"
+      "id": "4"
+    },
+    {
+      "name": "Room",
+      "description": "1",
+      "lastBooked": "",
+      "capacity": "12",
+      "id": "5"
+    },
+    {
+      "title": "Room1`",
+      "description": "jdsjas",
+      "lastBooked": "",
+      "capacity": "10",
+      "id": "ZfrwrLC"
     }
   ]
 }
-

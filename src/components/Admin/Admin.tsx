@@ -6,23 +6,17 @@ import MeetingRoomForm from "./MeetingRoomForm/MeetingRoom";
 import DeleteConfirmationModal from "./DeleteConfirmationModal/DeleteConfirmationModal";
 import { deleteRooms, addRoom, updateRoomData } from "../../api/RoomApi";
 import {getRooms, getRoomById} from "../../api/getRequests"
-interface iCard {
-    title: string;
-    id: number;
-    description: string;
-    lastBooked: string;
-    capacity: number;
-}
+import { MeetingRoomsData } from "../../interfaces/interfaces";
 const Admin = () => {
     
     const [showModal, setShowModal] = useState<boolean>(false);
     const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
     const [deleteRoomId, setDeleteRoomId] = useState<number | null>(null);
     const [deleteRoomTitle, setDeleteRoomTitle] = useState<string>("");
-    const [datacontent, setDataContent] = useState<iCard[]>();
+    const [datacontent, setDataContent] = useState<MeetingRoomsData[]>();
     const [loaded, setLoaded] = useState(false);
     const [showEditModal, setEditModal] = useState<boolean>(false);
-    const [editDataEvent, setEditData] = useState<iCard>();
+    const [editDataEvent, setEditData] = useState<MeetingRoomsData>();
 
     const handleSubmitForm = async (
         Name: string | undefined,
@@ -60,6 +54,7 @@ const Admin = () => {
     const getDataContent = async () => {
         const result = await getRooms();
         setDataContent(result.data);
+        console.log(result.data);
     };
     const handleDelete = async (id: number) => {
         const result = await deleteRooms(id);
