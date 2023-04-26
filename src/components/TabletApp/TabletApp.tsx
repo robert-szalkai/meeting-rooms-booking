@@ -66,7 +66,7 @@ const TabletApp = () => {
             let inMeetingRightNow = false;
             let willFollow = false;
 
-            Object.values(allMeetings).forEach((meeting) => {
+            allMeetings.forEach((meeting) => {
                 const diffInMinutesStartTime = dayjs(meeting.startDate).diff(
                     dayjs(),
                     "minute",
