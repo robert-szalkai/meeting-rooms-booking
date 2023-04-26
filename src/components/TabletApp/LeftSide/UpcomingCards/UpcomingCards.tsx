@@ -4,12 +4,14 @@ import { Card, Typography, Box, Avatar } from "@mui/material";
 import SIZE from "../../../../constants/CustomSize";
 import { useNavigate } from "react-router";
 import COLORS from "../../../../constants/CustomColors";
+import { StringDecoder } from "string_decoder";
 interface iUpcomingCards {
     id: string;
     start: string;
     end: string;
     persons: (string | undefined)[];
     meetingName: string;
+    selectedCardId?: string;
 }
 const UpcomingCards = ({
     id,
@@ -17,6 +19,7 @@ const UpcomingCards = ({
     end,
     persons,
     meetingName,
+    selectedCardId,
 }: iUpcomingCards) => {
     const getInitilas = () => {
         const filteredata = persons.map((e) => {
@@ -36,6 +39,7 @@ const UpcomingCards = ({
             setSurplus(persons.length - 6);
         }
         setJoiners(getInitilas());
+        console.log("top g", selectedCardId);
     }, []);
     const mapJoiners = () => {
         return joiners?.map(
@@ -43,7 +47,7 @@ const UpcomingCards = ({
                 index <= 5 && <Avatar sx={{ bgcolor: "purple" }}>{e}</Avatar>
         );
     };
-    const [meetingId, setMeetingId] = useState("1");
+
     const navigate = useNavigate();
     const handleCardOnClick = () => {
         console.log(id);
@@ -54,6 +58,7 @@ const UpcomingCards = ({
         <Card
             onClick={handleCardOnClick}
             sx={{
+                border: selectedCardId === id ? "4px solid purple" : "none",
                 height: SIZE.HEIGT_CARD,
                 borderRadius: SIZE.BORDER_RADIUS_CARD,
                 width: SIZE.WIDTH_CARD,

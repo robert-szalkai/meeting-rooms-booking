@@ -5,10 +5,15 @@ import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined
 
 import COLORS from "../../../../constants/CustomColors";
 
-const QuickBookGlobal = () => {
+interface iQuickBookGlobal {
+    onClickQuickBookGlobal: () => void;
+}
+
+const QuickBookGlobal = ({ onClickQuickBookGlobal }: iQuickBookGlobal) => {
     const navigate = useNavigate();
     const handleQuickBook = () => {
-        navigate("quickbookglobal");
+        onClickQuickBookGlobal();
+        navigate("menu");
     };
 
     return (
