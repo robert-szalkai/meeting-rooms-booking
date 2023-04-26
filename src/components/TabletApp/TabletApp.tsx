@@ -154,7 +154,7 @@ const TabletApp = () => {
                     >
                         <Routes>
                             <Route
-                                path="/menu"
+                                path="/:menu"
                                 element={
                                     <Menu
                                         roomId={id ? id : ""}

@@ -18,8 +18,8 @@ interface participantsID {
 interface iMeetingData {
     name: string;
     id: string;
-    start_time: string;
-    end_time: string;
+    startTime: string;
+    endTime: string;
     participants_id: string[] | undefined;
     description: string;
 }
@@ -140,8 +140,8 @@ const MeetingInfo = ({ setSelectedCardId }: iMeetingInfo) => {
                         <Typography variant="h4">{meetingData.name}</Typography>
                         <Typography variant="h4">
                             Today,
-                            {dayjs(meetingData.start_time).format("HH:MM")}-
-                            {dayjs(meetingData.end_time).format("HH:MM")}
+                            {dayjs(meetingData.startTime).format("HH:MM")}-
+                            {dayjs(meetingData.endTime).format("HH:MM")}
                         </Typography>
                     </Grid>
                 </Grid>
