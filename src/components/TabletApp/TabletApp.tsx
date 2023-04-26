@@ -8,8 +8,9 @@ import AdvancedBook from "./RightSide/AdvancedBook/AdvancedBook";
 import MeetingInfo from "./RightSide/MeetingInfo/MeetingInfo";
 import Menu from "./RightSide/Menu/Menu";
 import CONSTANTS from "../../constants/Constants";
-import { getMeetings, getMeetingsData } from "../../api/getRequests";
+import { getMeetingsData } from "../../api/getRequests";
 import COLORS from "../../constants/CustomColors";
+import getRoomStatus from "../../functions/getRoomStatus";
 
 interface iLeftSide {
     name: string | undefined;
@@ -61,46 +62,11 @@ const TabletApp = () => {
     }, []);
 
     useEffect(() => {
-        const isMeetingRightNow = async () => {
-            const allMeetings = await getMeetings();
-            let inMeetingRightNow = false;
-            let willFollow = false;
-
-            allMeetings.forEach((meeting) => {
-                const diffInMinutesStartTime = dayjs(meeting.startDate).diff(
-                    dayjs(),
-                    "minute",
-                    true
-                );
-
-                const diffInMinutesEndTime = dayjs(meeting.endDate).diff(
-                    dayjs(),
-                    "minute",
-                    true
-                );
-
-                if (diffInMinutesStartTime < 0 && diffInMinutesEndTime > 0) {
-                    inMeetingRightNow = true;
-                }
-
-                if (
-                    diffInMinutesStartTime > 0 &&
-                    diffInMinutesStartTime <= CONSTANTS.MAX_QUICKBOOK_DURATION
-                ) {
-                    willFollow = true;
-                }
-            });
-            if (inMeetingRightNow) {
-                setAvailability(CONSTANTS.MEETING_IN_PROGRESS);
-                return;
-            }
-            if (willFollow) {
-                setAvailability(CONSTANTS.MEETING_WILL_FOLLOW);
-                return;
-            }
-            setAvailability(CONSTANTS.ROOM_AVAILABLE);
+        const setRoomStatus = async () => {
+            const roomStatus = await getRoomStatus();
+            setAvailability(roomStatus);
         };
-        isMeetingRightNow();
+        setRoomStatus();
 
         const interval = setInterval(() => {
             setTime(Date.now());

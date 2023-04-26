@@ -2,12 +2,12 @@ import CONSTANTS from "../constants/Constants";
 import dayjs from "dayjs";
 import { getMeetings } from "../api/getRequests";
 
-const GetRoomStatus = async () => {
+const getRoomStatus = async () => {
     const allMeetings = await getMeetings();
     let inMeetingRightNow = false;
     let willFollow = false;
 
-    Object.values(allMeetings).forEach((meeting) => {
+    allMeetings.forEach((meeting) => {
         const diffInMinutesStartTime = dayjs(meeting.startDate).diff(
             dayjs(),
             "minute",
@@ -31,15 +31,14 @@ const GetRoomStatus = async () => {
             willFollow = true;
         }
     });
-    // if (inMeetingRightNow) {
-    //     setAvailability(CONSTANTS.MEETING_IN_PROGRESS);
-    //     return;
-    // }
-    // if (willFollow) {
-    //     setAvailability(CONSTANTS.MEETING_WILL_FOLLOW);
-    //     return;
-    // }
-    // setAvailability(CONSTANTS.ROOM_AVAILABLE);
+
+    if (inMeetingRightNow) {
+        return CONSTANTS.MEETING_IN_PROGRESS;
+    }
+    if (willFollow) {
+        return CONSTANTS.MEETING_WILL_FOLLOW;
+    }
+    return CONSTANTS.ROOM_AVAILABLE;
 };
 
-export default GetRoomStatus;
+export default getRoomStatus;
