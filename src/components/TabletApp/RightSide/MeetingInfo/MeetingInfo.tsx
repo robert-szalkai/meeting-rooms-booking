@@ -1,29 +1,100 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Grid, Typography, Box, Avatar } from "@mui/material";
-interface iMettingInfo{
-    persons:string;
-    descriptin:string;
-    start_time:string;
-    end_time:string;
+import {
+    getMeetingsData,
+    getParticipantsIdName,
+} from "../../../../api/getRequests";
+import { useParams } from "react-router-dom";
+import axios, { AxiosResponse } from "axios";
+import dayjs, { Dayjs } from "dayjs";
+
+interface participantsID {
+    participants: {
+        id: string;
+        name: string;
+    }[];
 }
 
-const MeetingInfo = () => {
-    const meetingPersons = [
-        "Stefan Rudareanu",
-        "Andrei Cineva",
-        "Cosmin Liuba",
-        "Andrei Toba Daniel",
-        "Andrei Cineva",
-        "Cosmin Liuba",
-        "Stefan Rudareanu",
-        "Andrei Cineva",
-        "Cosmin Liuba",
-        "Andrei Cineva",
-        "Cosmin Liuba",
-        "Cosmin Liuba",
-    ];
+interface iMeetingData {
+    name: string;
+    id: string;
+    start_time: string;
+    end_time: string;
+    participants_id: string[] | undefined;
+    description: string;
+}
+
+interface iMeetingInfo {
+    setSelectedCardId: (meetid: string) => void;
+}
+
+const MeetingInfo = ({ setSelectedCardId }: iMeetingInfo) => {
+    const [participantsData, setParticipantsData] = useState<participantsID>();
+    const [meetingParticipants, setMeetingParticipants] = useState<
+        string[] | undefined
+    >([]);
+
+    const [meetingData, setMeetingData] = useState<iMeetingData>();
+    const { meetid } = useParams<string>();
+    const [meetId, setMeetId] = useState<string>();
+
+    const getMeetingById = async (meetid: string): Promise<iMeetingData> => {
+        const result = await axios.get(
+            `http://localhost:3003/meetingInfo/${meetid}`
+        );
+
+        return result.data;
+    };
+
+    const getParticipantsData = async () => {
+        const response = await getParticipantsIdName();
+        if (response.status === 200) {
+            setParticipantsData(response.data);
+        }
+    };
+
+    useEffect(() => {
+        const _getParticipants = async () => {
+            await getParticipantsData();
+        };
+
+        _getParticipants();
+    }, []);
+
+    useEffect(() => {
+        console.log("param: ", meetid);
+
+        setSelectedCardId(meetid as string);
+    }, [meetid]);
+
+    const getNames = (ids: string[] | undefined) => {
+        return (
+            participantsData?.participants
+                .filter((participants) => ids?.includes(participants.id))
+                .map((value) => value.name) || []
+        );
+    };
+
+    const personsById = getNames(meetingData?.participants_id);
+
+    const getMeetingData = async () => {
+        if (meetid) {
+            const response = await getMeetingById(meetid);
+            setMeetingData(response);
+            console.log("duhfiuehdwifue", response);
+        }
+    };
+
+    useEffect(() => {
+        const _getMeetingData = async () => {
+            getMeetingData();
+        };
+
+        _getMeetingData();
+    }, [meetid]);
+
     const getInitilas = () => {
-        const filteredata = meetingPersons.map((e) => {
+        const filteredata = personsById.map((e) => {
             return e
                 .match(/(\b\S)?/g)
                 ?.join("")
@@ -32,8 +103,9 @@ const MeetingInfo = () => {
 
         return filteredata;
     };
+
     const mapersons = () => {
-        return getInitilas().map((person, index) => (
+        return getInitilas()?.map((person, index) => (
             <Grid item xs={4}>
                 <Box
                     sx={{
@@ -46,20 +118,31 @@ const MeetingInfo = () => {
                 >
                     <Avatar>{person}</Avatar>
                     <Typography variant="body1">
-                        {meetingPersons[index]}
+                        {personsById?.[index]}
                     </Typography>
                 </Box>
             </Grid>
         ));
     };
-    return (
-        <Grid height={"100%"}  padding={1} container direction={"row"} spacing={1}>
+
+    return meetingData ? (
+        <Grid
+            height={"100%"}
+            padding={1}
+            container
+            direction={"row"}
+            spacing={1}
+        >
             <Grid item xs={12}>
                 <Grid container direction={"row"} spacing={5}>
                     <Grid item xs={12}></Grid>
                     <Grid item xs={12}>
-                        <Typography variant="h4">Upcoming Meeting</Typography>
-                        <Typography variant="h4">Today,15:30-16:30</Typography>
+                        <Typography variant="h4">{meetingData.name}</Typography>
+                        <Typography variant="h4">
+                            Today,
+                            {dayjs(meetingData.start_time).format("HH:MM")}-
+                            {dayjs(meetingData.end_time).format("HH:MM")}
+                        </Typography>
                     </Grid>
                 </Grid>
             </Grid>
@@ -92,28 +175,14 @@ const MeetingInfo = () => {
                 <Grid padding={0.5} container direction={"row"}>
                     <Grid item xs={12}>
                         <Typography variant="subtitle1">
-                            The Terno is a modular light and sound system
-                            designed for stage and recording applications,
-                            providing an intuitive on-stage interface for both
-                            technical and non-technical personnel. With features
-                            such as redundant power supply for maximum
-                            reliability, easy transportability, and dozens of
-                            mounting options, the Terno is perfect for any live
-                            event. Product Features: - Modular design makes
-                            setup quick and simple. - 60 W amplifier delivers
-                            quality sound with clear, defined mid frequencies. -
-                            8 channels (2 each of omni/ambient/speaker 1/2)
-                            provide ample sound coverage for larger venues. -
-                            Front panel aux input lets you link music or audio
-                            from other sources. - Portable, lightweight design
-                            makes set up quick and easy. - Durable aluminum
-                            housing with PVC trim frame provides years of use. -
-                            RoHS compliant.
+                            {meetingData.description}
                         </Typography>
                     </Grid>
                 </Grid>
             </Grid>
         </Grid>
+    ) : (
+        <Typography variant="h4">Meeting not found...</Typography>
     );
 };
 

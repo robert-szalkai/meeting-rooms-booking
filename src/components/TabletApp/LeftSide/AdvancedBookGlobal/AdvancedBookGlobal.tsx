@@ -5,15 +5,10 @@ import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined
 
 import COLORS from "../../../../constants/CustomColors";
 
-interface iQuickBookGlobal {
-    onClickQuickBookGlobal: () => void;
-}
-
-const QuickBookGlobal = ({ onClickQuickBookGlobal }: iQuickBookGlobal) => {
+const AdvancedBookGlobal = () => {
     const navigate = useNavigate();
-    const handleQuickBook = () => {
-        onClickQuickBookGlobal();
-        navigate("menu");
+    const handleAdvancedBook = () => {
+        navigate("form");
     };
 
     return (
@@ -22,17 +17,17 @@ const QuickBookGlobal = ({ onClickQuickBookGlobal }: iQuickBookGlobal) => {
                 variant="outlined"
                 color="inherit"
                 onClick={() => {
-                    handleQuickBook();
+                    handleAdvancedBook();
                 }}
             >
                 <CalendarMonthOutlinedIcon
                     fontSize="small"
                     sx={{ color: COLORS.BLACK }}
                 />
-                <Typography variant="subtitle1">Quick Book</Typography>
+                <Typography variant="subtitle1">Book a Meeting</Typography>
             </Button>
         </Box>
     );
 };
 
-export default QuickBookGlobal;
+export default AdvancedBookGlobal;

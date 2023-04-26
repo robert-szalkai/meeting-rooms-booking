@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Box, Typography, Button, Grid } from "@mui/material";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import dayjs, { Dayjs } from "dayjs";
+import { useParams } from "react-router-dom";
 
 import DateSelector from "./DateSelector";
 import Participants from "./Participants";
@@ -132,6 +133,8 @@ const AdvancedBook = () => {
         }
     };
 
+    const { meetid } = useParams<string>();
+    console.log("param meetid: ", meetid);
     return (
         <form
             onSubmit={() =>

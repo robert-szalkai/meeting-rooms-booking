@@ -1,0 +1,9 @@
+.container {
+    height: 200px; /* Example height */
+    overflow: auto;
+  }
+  
+  .paper {
+    padding: 20px;
+    overflow: hidden; /* Hide the scrollbar */
+  }
