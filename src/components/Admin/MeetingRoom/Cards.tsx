@@ -21,7 +21,6 @@ export const Cards = ({
 }: iCard) => {
     return (
         <Card
-           onClick={()=>{console.log(title)}}
             key={id}
             sx={{
                 maxWidth: "821px",
