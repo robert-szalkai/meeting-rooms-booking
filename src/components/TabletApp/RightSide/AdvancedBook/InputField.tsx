@@ -5,10 +5,10 @@ interface InputFieldProps {
     inputLabelText: string;
     placeholderText: string;
     multilineSelect?: boolean;
-    handleMeetingName?: (values: any) => void;
-    handleMeetingDescription?: (values: any) => void;
+    handleMeetingName: (values: string) => void;
+    handleMeetingDescription: (values: string) => void;
     fieldTextValid?: string;
-    formValidationSetter: (values: boolean) => void;
+    formValidationSetter: (values: boolean, key: string) => void;
 }
 
 const InputField = ({
@@ -42,11 +42,11 @@ const InputField = ({
                 rows={multilineSelect ? 4 : 0}
                 onChange={(event) => {
                     event.target.value === ""
-                        ? formValidationSetter(false)
-                        : formValidationSetter(true);
+                        ? formValidationSetter(false, "isNameValid")
+                        : formValidationSetter(true, "isNameValid");
                     multilineSelect
-                        ? handleMeetingDescription?.(event.target.value)
-                        : handleMeetingName?.(event.target.value);
+                        ? handleMeetingDescription(event.target.value)
+                        : handleMeetingName(event.target.value);
                 }}
             />
         </Box>

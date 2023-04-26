@@ -6,7 +6,7 @@ import dayjs, { Dayjs } from "dayjs";
 import DateSelector from "./DateSelector";
 import Participants from "./Participants";
 import InputField from "./InputField";
-import { getParticipants } from "../../../../api/getRequests";
+import { getMeetings, getParticipants } from "../../../../api/getRequests";
 import { addMeeting } from "../../../../api/MeetingApi";
 import { spawnToast } from "../../../../utils/Toast";
 
@@ -17,32 +17,34 @@ interface Participant {
     image: string;
 }
 
-interface FormValidity {
-    meetingNameValid: boolean;
-    meetingDateValid: boolean;
-    meetingStartValid: boolean;
-    meetingEndValid: boolean;
-    meetingOwnerValid: boolean;
+interface Meeting {
+    meeting_name: string;
+    meeting_description: string;
+    startDate: string;
+    endDate: string;
+    participants: number[];
+    id: number;
 }
 
-const getHour = (time: Dayjs) => {
-    return time.hour();
-};
-const getMinute = (time: Dayjs) => {
-    return time.minute();
-};
+interface FormValidity {
+    isNameValid: boolean;
+    isDateValid: boolean;
+    isStartValid: boolean;
+    isEndValid: boolean;
+    isOwnerValid: boolean;
+}
 
 const AdvancedBook = () => {
     const [validForm, setValidForm] = useState<FormValidity>({
-        meetingNameValid: false,
-        meetingDateValid: false,
-        meetingStartValid: false,
-        meetingEndValid: false,
-        meetingOwnerValid: false,
+        isNameValid: false,
+        isDateValid: false,
+        isStartValid: false,
+        isEndValid: false,
+        isOwnerValid: false,
     });
     const [meetingName, setMeetingName] = useState<string>("");
     const [meetingDescription, setMeetingDescription] = useState<string>("");
-    const [dateSelectorDate, setDateSelectorDate] = useState<string>("");
+    const [dateSelectorDate, setDateSelectorDate] = useState<Dayjs>(dayjs());
     const [startTime, setStartTime] = useState<string>("");
     const [endTime, setEndTime] = useState<string>("");
     const [allEmployees, setAllEmployees] = useState<Participant[]>([]);
@@ -50,15 +52,19 @@ const AdvancedBook = () => {
         Participant[]
     >([]);
     const [meetingOwner, setMeetingOwner] = useState<Participant[]>([]);
+    const [bookedMeetings, setBookedMeetings] = useState<Meeting[]>([]);
 
     useEffect(() => {
         getParticipants().then((res) => {
             setAllEmployees(res);
         });
+        getMeetings().then((res) => {
+            setBookedMeetings(res);
+        });
     }, []);
 
     const handleMeetingDate = (meetingDate: Dayjs) => {
-        setDateSelectorDate(meetingDate.toString());
+        setDateSelectorDate(meetingDate);
     };
 
     const handleStartTime = (start_time: Dayjs) => {
@@ -69,40 +75,23 @@ const AdvancedBook = () => {
         setEndTime(end_time.toString());
     };
 
-    const handleValidFormName = (propertyValue: boolean) => {
-        setValidForm({ ...validForm, meetingNameValid: propertyValue });
-    };
-    const handleValidFormDate = (propertyValue: boolean) => {
-        setValidForm({ ...validForm, meetingDateValid: propertyValue });
-    };
-    const handleValidFormStart = (propertyValue: boolean) => {
-        setValidForm({ ...validForm, meetingStartValid: propertyValue });
-    };
-    const handleValidFormEnd = (propertyValue: boolean) => {
-        setValidForm({ ...validForm, meetingEndValid: propertyValue });
-    };
-    const handleValidFormOwner = (propertyValue: boolean) => {
-        setValidForm({ ...validForm, meetingOwnerValid: propertyValue });
+    const handleValid = (propertyValue: boolean, key: string) => {
+        setValidForm({ ...validForm, [key]: propertyValue });
     };
 
     const checkFormValid = (validForm: FormValidity) => {
-        if (
-            validForm.meetingStartValid === true &&
-            validForm.meetingNameValid === true &&
-            validForm.meetingEndValid === true &&
-            validForm.meetingDateValid === true &&
-            validForm.meetingOwnerValid === true
-        ) {
+        const values: boolean[] = Object.values(validForm);
+        const valid = values.filter((val) => val === false);
+        if (valid.length === 0) {
             return false;
-        } else {
-            return true;
         }
+        return true;
     };
 
     const handleFormSubmit = (
         name: string,
         description: string,
-        date: string,
+        date: Dayjs,
         start: string,
         end: string,
         participants: Participant[]
@@ -111,12 +100,12 @@ const AdvancedBook = () => {
         const startDate = dayjs(start);
         const endDate = dayjs(end);
         const meetingStartDate = dateObj
-            .set("hour", getHour(startDate))
-            .set("minute", getMinute(startDate));
+            .set("hour", startDate.get("hour"))
+            .set("minute", startDate.get("minute"));
 
         const meetingEndDate = dateObj
-            .set("hour", getHour(endDate))
-            .set("minute", getMinute(endDate));
+            .set("hour", endDate.get("hour"))
+            .set("minute", endDate.get("minute"));
 
         const participants_id = participants.map((participant) => {
             return participant.id;
@@ -160,7 +149,7 @@ const AdvancedBook = () => {
                 container
                 display="flex"
                 flexDirection="row"
-                rowGap={2}
+                rowGap={1}
                 boxSizing="border-box"
                 data-testid="advancedbook-container"
                 paddingLeft={2}
@@ -177,8 +166,9 @@ const AdvancedBook = () => {
                         inputLabelText="Meeting Name*"
                         placeholderText="Provide meeting name"
                         handleMeetingName={setMeetingName}
+                        handleMeetingDescription={setMeetingDescription}
                         fieldTextValid={meetingName}
-                        formValidationSetter={handleValidFormName}
+                        formValidationSetter={handleValid}
                     />
                 </Grid>
                 <Grid item xs={12}>
@@ -186,8 +176,9 @@ const AdvancedBook = () => {
                         inputLabelText="Meeting Description"
                         placeholderText="Provide meeting description"
                         multilineSelect
+                        handleMeetingName={setMeetingName}
                         handleMeetingDescription={setMeetingDescription}
-                        formValidationSetter={handleValidFormName}
+                        formValidationSetter={handleValid}
                     />
                 </Grid>
                 <Grid item xs={12}>
@@ -200,9 +191,10 @@ const AdvancedBook = () => {
                             startValid: startTime,
                             endValid: endTime,
                         }}
-                        formValidationDateSetter={handleValidFormDate}
-                        formValidationStartSetter={handleValidFormStart}
-                        formValidationEndSetter={handleValidFormEnd}
+                        formValidationDateSetter={handleValid}
+                        formValidationStartSetter={handleValid}
+                        formValidationEndSetter={handleValid}
+                        bookedMeetings={bookedMeetings}
                     />
                 </Grid>
                 <Grid item xs={12}>
@@ -215,7 +207,7 @@ const AdvancedBook = () => {
                         fieldTextValid={{
                             meetingOwnerValid: meetingOwner,
                         }}
-                        formValidationOwnerSetter={handleValidFormOwner}
+                        formValidationOwnerSetter={handleValid}
                     />
                 </Grid>
                 <Grid item xs={12}>
@@ -258,4 +250,4 @@ const AdvancedBook = () => {
 };
 
 export default AdvancedBook;
-export { FormValidity, Participant };
+export { FormValidity, Participant, Meeting };

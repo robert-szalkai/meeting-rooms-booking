@@ -5,31 +5,30 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import dayjs, { Dayjs } from "dayjs";
 
-import { getMeetings } from "../../../../api/getRequests";
-
 interface Props {
     handleMeetingDate: (values: any) => void;
     handleStartTime: (values: any) => void;
     handleEndTime: (values: any) => void;
     fieldTextValid: dateSelectorValid;
-    formValidationDateSetter: (values: boolean) => void;
-    formValidationStartSetter: (values: boolean) => void;
-    formValidationEndSetter: (values: boolean) => void;
+    formValidationDateSetter: (values: boolean, key: string) => void;
+    formValidationStartSetter: (values: boolean, key: string) => void;
+    formValidationEndSetter: (values: boolean, key: string) => void;
+    bookedMeetings: any;
 }
 
-interface SelectHourObject {
+interface SelectHour {
     val: Dayjs;
     text: string;
     isdisabled: boolean;
 }
 
-interface MeetingDateObject {
+interface MeetingDate {
     startDate: Dayjs;
     endDate: Dayjs;
 }
 
 interface dateSelectorValid {
-    dateValid: string;
+    dateValid: Dayjs;
     startValid: string;
     endValid: string;
 }
@@ -42,6 +41,7 @@ const DateSelector: FC<Props> = ({
     formValidationDateSetter,
     formValidationStartSetter,
     formValidationEndSetter,
+    bookedMeetings,
 }) => {
     const [selectedDate, setSelectedDate] = useState<Dayjs>(dayjs());
     const [index, setIndex] = useState<number>(0);
@@ -53,7 +53,8 @@ const DateSelector: FC<Props> = ({
         } else {
             startingHour = selectedDate.hour(7).minute(30);
         }
-        let dateGenerate: SelectHourObject[] = [];
+
+        let dateGenerate: SelectHour[] = [];
         while (startingHour.isBefore(selectedDate.set("hour", 19))) {
             startingHour = startingHour.add(30, "minute");
             dateGenerate.push({
@@ -70,37 +71,30 @@ const DateSelector: FC<Props> = ({
         return dateGenerate;
     };
 
-    const getDisabled = async () => {
-        const meetings = await getMeetings();
-        const meetingDates = meetings.map((value: MeetingDateObject) => {
+    const setHoursDisabled = () => {
+        const meetings = bookedMeetings;
+        const meetingDates = meetings.map((value: MeetingDate) => {
             return { startDate: value.startDate, endDate: value.endDate };
         });
-
-        selectHour.forEach((selectedHour) => {
-            meetingDates.forEach((meetingDate: MeetingDateObject) => {
+        let newHourList = generateDates();
+        newHourList.forEach((selectedHour) => {
+            meetingDates.forEach((meetingDate: MeetingDate) => {
                 if (
-                    selectedHour.val.isAfter(meetingDate.startDate) ||
+                    (selectedHour.val.isAfter(meetingDate.startDate) &&
+                        selectedHour.val.isBefore(meetingDate.endDate)) ||
                     selectedHour.val.isSame(meetingDate.startDate, "minute")
                 ) {
-                    if (selectedHour.val.isBefore(meetingDate.endDate)) {
-                        selectedHour.isdisabled = true;
-                    }
+                    selectedHour.isdisabled = true;
                 }
             });
         });
-        setSelectHourState(selectHour);
+        setHourList(newHourList);
     };
 
-    const [selectHourState, setSelectHourState] = useState<SelectHourObject[]>(
-        generateDates()
-    );
-
-    let selectHour = generateDates();
+    const [hourList, setHourList] = useState<SelectHour[]>([]);
 
     useEffect(() => {
-        getDisabled();
-        const generatedDates = generateDates();
-        setSelectHourState(generatedDates);
+        setHoursDisabled();
     }, [selectedDate]);
 
     const handleSelectedDate = (meetingDate: Dayjs) => {
@@ -116,8 +110,8 @@ const DateSelector: FC<Props> = ({
                         format="DD/MM/YYYY"
                         onChange={(event: any) => {
                             event.toString() === ""
-                                ? formValidationDateSetter(false)
-                                : formValidationDateSetter(true);
+                                ? formValidationDateSetter(false, "isDateValid")
+                                : formValidationDateSetter(true, "isDateValid");
                             const val = event as Dayjs;
                             handleSelectedDate(val);
                             handleMeetingDate(event);
@@ -130,9 +124,10 @@ const DateSelector: FC<Props> = ({
                                     disableUnderline: true,
                                     hiddenLabel: true,
                                 },
-                                error: fieldTextValid.dateValid === "",
+                                error:
+                                    fieldTextValid.dateValid.toString() === "",
                                 helperText:
-                                    fieldTextValid.dateValid === ""
+                                    fieldTextValid.dateValid.toString() === ""
                                         ? "Provide meeting date"
                                         : "",
                             },
@@ -147,8 +142,14 @@ const DateSelector: FC<Props> = ({
                         onChange={(e) => {
                             handleStartTime(e.target.value);
                             e.target.value === ""
-                                ? formValidationStartSetter(false)
-                                : formValidationStartSetter(true);
+                                ? formValidationStartSetter(
+                                      false,
+                                      "isStartValid"
+                                  )
+                                : formValidationStartSetter(
+                                      true,
+                                      "isStartValid"
+                                  );
                         }}
                         hiddenLabel
                         fullWidth
@@ -168,19 +169,17 @@ const DateSelector: FC<Props> = ({
                             },
                         }}
                     >
-                        {selectHourState.map(
-                            (hour: SelectHourObject, index: number) => (
-                                <MenuItem
-                                    onClick={() => {
-                                        setIndex(index);
-                                    }}
-                                    value={hour.val.toString()}
-                                    disabled={hour.isdisabled}
-                                >
-                                    {hour.text}
-                                </MenuItem>
-                            )
-                        )}
+                        {hourList.map((hour: SelectHour, index: number) => (
+                            <MenuItem
+                                onClick={() => {
+                                    setIndex(index);
+                                }}
+                                value={hour.val.toString()}
+                                disabled={hour.isdisabled}
+                            >
+                                {hour.text}
+                            </MenuItem>
+                        ))}
                     </TextField>
                 </Box>
                 <Box flexGrow={1}>
@@ -191,8 +190,8 @@ const DateSelector: FC<Props> = ({
                         onChange={(e) => {
                             handleEndTime(e.target.value);
                             e.target.value === ""
-                                ? formValidationEndSetter(false)
-                                : formValidationEndSetter(true);
+                                ? formValidationEndSetter(false, "isEndValid")
+                                : formValidationEndSetter(true, "isEndValid");
                         }}
                         error={fieldTextValid.endValid === ""}
                         helperText={
@@ -210,12 +209,12 @@ const DateSelector: FC<Props> = ({
                             },
                         }}
                     >
-                        {selectHourState
+                        {hourList
                             .filter(
-                                (hour: SelectHourObject, position: number) =>
+                                (hour: SelectHour, position: number) =>
                                     position > index
                             )
-                            .map((hour: SelectHourObject) => (
+                            .map((hour: SelectHour) => (
                                 <MenuItem
                                     value={hour.val.toString()}
                                     disabled={hour.isdisabled}

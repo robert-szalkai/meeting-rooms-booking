@@ -1,6 +1,8 @@
 import axios from "axios";
 
-const getParticipants = async ()=> {
+import { Participant, Meeting } from "../components/TabletApp/RightSide/AdvancedBook/AdvancedBook";
+
+const getParticipants = async (): Promise<Participant[]>=> {
     const result = await axios.get("http://localhost:3001/participants");
     return result.data;
 };
@@ -22,7 +24,7 @@ const getRoomById = async (id: number) => {
     return await axios.get(`http://localhost:3001/rooms/${id}`);
 };
 
-const getMeetings = async () => {
+const getMeetings = async ():Promise<Meeting[]> => {
     const result = await axios.get("http://localhost:3001/meetings");
     return result.data;
 };

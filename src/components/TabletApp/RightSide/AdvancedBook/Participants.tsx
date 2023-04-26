@@ -22,7 +22,7 @@ interface Props {
     handleMeetingParticipants: (values: any) => void;
     handleMeetingOwner: (values: any) => void;
     fieldTextValid: ParticipantsValid;
-    formValidationOwnerSetter: (values: boolean) => void;
+    formValidationOwnerSetter: (values: boolean, key: string) => void;
 }
 
 const Participants: FC<Props> = ({
@@ -49,8 +49,8 @@ const Participants: FC<Props> = ({
                         );
                         handleMeetingOwner(result);
                         value === ""
-                            ? formValidationOwnerSetter(false)
-                            : formValidationOwnerSetter(true);
+                            ? formValidationOwnerSetter(false, "isOwnerValid")
+                            : formValidationOwnerSetter(true, "isOwnerValid");
                     }}
                     getOptionDisabled={(option) => {
                         if (meetingParticipants.includes(option)) {
@@ -109,9 +109,8 @@ const Participants: FC<Props> = ({
                             meetingOwner[0].name === option.name
                         ) {
                             return true;
-                        } else {
-                            return false;
                         }
+                        return false;
                     }}
                     getOptionLabel={(participant) => participant.name}
                     renderTags={(value, getTagProps) =>
