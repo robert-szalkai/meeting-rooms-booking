@@ -1,25 +1,15 @@
-
-
 import React, { useEffect, useState } from "react";
-
-import COLORS from "../../constants/CustomColors";
-import LeftSide from "./LeftSide/LeftSide";
-
-
+import { Navigate, Route, Routes, useParams } from "react-router-dom";
 import { Box, Grid } from "@mui/material";
 import dayjs from "dayjs";
 
-import { Route, Routes, useParams } from "react-router-dom";
-
+import LeftSide from "./LeftSide/LeftSide";
 import AdvancedBook from "./RightSide/AdvancedBook/AdvancedBook";
 import MeetingInfo from "./RightSide/MeetingInfo/MeetingInfo";
-import { spawnToast } from "../../utils/Toast";
-import { Typography } from "@mui/material";
-import QuickBook from "./RightSide/QuickBook/QuickBook";
-
-import { getMeetings, getMeetingsData } from "../../api/getRequests";
-
+import Menu from "./RightSide/Menu/Menu";
 import CONSTANTS from "../../constants/Constants";
+import { getMeetings, getMeetingsData } from "../../api/getRequests";
+import COLORS from "../../constants/CustomColors";
 
 interface iLeftSide {
     name: string | undefined;
@@ -35,22 +25,26 @@ interface iLeftSide {
 const TabletApp = () => {
     const colorStates = [COLORS.GREEN, COLORS.YELLOW, COLORS.RED];
     const [meetingsData, setMeetingsData] = useState<iLeftSide>();
-    
+
     const [roomName, setRoomName] = useState("Focus Room");
     const { id } = useParams();
 
-    const [meetName, setMeetName] = useState("alabala");
-    const [startTime, setStartTime] = useState("15:30");
-    const [endTime, setEndTime] = useState("16:30");
-    const [participantsName, setParticipantsName] = useState<string[]>([]);
-
-
+    const [selectedCardId, setSelectedCardId] = useState<string>();
 
     const [availability, setAvailability] = useState<number>(
         CONSTANTS.ROOM_AVAILABLE
     );
     const [time, setTime] = useState<number>(0);
     const [quickBookDone, setQuickBookDone] = useState<boolean>(false);
+    const [isDurationOpen, setIsDurationOpen] = useState<boolean>(false);
+
+    const onClickQuickBookGlobal = () => {
+        setIsDurationOpen(true);
+    };
+
+    const handleSetSelectedCardId = (cardId: string) => {
+        setSelectedCardId(cardId);
+    };
 
     const handleQuickBookDone = () => {
         setQuickBookDone(true);
@@ -66,9 +60,6 @@ const TabletApp = () => {
         meetData();
     }, []);
 
-
-
-
     useEffect(() => {
         const isMeetingRightNow = async () => {
             const allMeetings = await getMeetings();
@@ -76,13 +67,13 @@ const TabletApp = () => {
             let willFollow = false;
 
             Object.values(allMeetings).forEach((meeting) => {
-                const diffInMinutesStartTime = dayjs(meeting.start_time).diff(
+                const diffInMinutesStartTime = dayjs(meeting.startDate).diff(
                     dayjs(),
                     "minute",
                     true
                 );
 
-                const diffInMinutesEndTime = dayjs(meeting.end_time).diff(
+                const diffInMinutesEndTime = dayjs(meeting.endDate).diff(
                     dayjs(),
                     "minute",
                     true
@@ -118,14 +109,12 @@ const TabletApp = () => {
         return () => clearInterval(interval);
     }, [time, quickBookDone]);
 
-
-
-
-
-
     return (
         <Grid
-            sx={{ backgroundColor: colorStates[availability] }}
+            sx={{
+                backgroundColor: colorStates[availability],
+                transition: "background-color 1s ease",
+            }}
             flexDirection="row"
             container
         >
@@ -135,6 +124,8 @@ const TabletApp = () => {
                         meetings={meetingsData?.meetings}
                         name={meetingsData?.name}
                         availability={availability}
+                        selectedCardId={selectedCardId as string}
+                        onClickQuickBookGlobal={onClickQuickBookGlobal}
                     />
                 )}
             </Grid>
@@ -162,24 +153,35 @@ const TabletApp = () => {
                         }}
                     >
                         <Routes>
+                            <Route
+                                path="/menu"
+                                element={
+                                    <Menu
+                                        roomId={id ? id : ""}
+                                        roomName={roomName}
+                                        roomStatus={availability}
+                                        handleQuickBookDone={
+                                            handleQuickBookDone
+                                        }
+                                        isDurationOpen={isDurationOpen}
+                                    />
+                                }
+                            />
                             <Route path="/form" element={<AdvancedBook />} />
                             <Route
                                 path="/meetinginfo/:meetid"
-                                element={<MeetingInfo />}
+                                element={
+                                    <MeetingInfo
+                                        setSelectedCardId={
+                                            handleSetSelectedCardId
+                                        }
+                                    />
+                                }
                             />
-                            {availability === 2 ? null : (
-                                <Route
-                                    path="/quickbookglobal"
-                                    element={
-                                        <QuickBook
-                                            isDurationOpen
-                                            handleQuickBookDone={
-                                                handleQuickBookDone
-                                            }
-                                        />
-                                    }
-                                />
-                            )}
+                            <Route
+                                path="*"
+                                element={<Navigate to="/selection" />}
+                            />
                         </Routes>
                     </Box>
                 </Box>

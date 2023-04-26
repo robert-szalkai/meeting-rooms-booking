@@ -6,7 +6,8 @@
            "id":"1",
            "start_time": "2023-04-13T08:10:18.386Z",
            "end_time": "2023-04-13T10:10:18.386Z",
-           "participants_id":[1,5]
+           "participants_id":[1,5],
+           "description":"Here we go for some fun"
         },
 
 
@@ -14,7 +15,8 @@
             "id":"2",
             "start_time": "2023-04-13T09:10:18.386Z",
             "end_time": "2023-04-13T12:10:18.386Z",
-            "participants_id":[1, 2, 3, 5 ]
+            "participants_id":[1, 2, 3, 5 ],
+            "description":"Nothing to see here"
 
          },
          {
@@ -22,21 +24,24 @@
             "id":"3",
             "start_time": "2023-04-13T06:10:18.386Z",
             "end_time": "2023-04-13T08:10:18.386Z",
-            "participants_id":[1,2,3]
+            "participants_id":[1,2,3],
+            "description":"Hello there"
          },
          {"name": "Focus Room 4",
 
             "id":"4",
             "start_time": "2023-04-13T08:10:18.386Z",
             "end_time": "2023-04-13T11:11:18.386Z",
-            "participants_id":[1,2]
+            "participants_id":[1,2],
+            "description":"Forbidden for people under 30 years old"
          },
          {"name": "Focus Room 5",
 
             "id":"5",
             "start_time": "2023-04-13T12:10:18.386Z",
             "end_time": "2023-04-13T13:10:18.386Z",
-            "participants_id":[1,2,4, 3]
+            "participants_id":[1,2,4, 3],
+            "description":"Exit"
          }
 
     ]

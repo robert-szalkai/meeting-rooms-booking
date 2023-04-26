@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Grid, Typography, Box, Avatar } from "@mui/material";
-import { getMeetingsData, getParticipantsIdName } from "../../../../api/getRequests";
+import {
+    getMeetingsData,
+    getParticipantsIdName,
+} from "../../../../api/getRequests";
 import { useParams } from "react-router-dom";
 import axios, { AxiosResponse } from "axios";
 import dayjs, { Dayjs } from "dayjs";
@@ -18,9 +21,14 @@ interface iMeetingData {
     start_time: string;
     end_time: string;
     participants_id: string[] | undefined;
+    description: string;
 }
 
-const MeetingInfo = () => {
+interface iMeetingInfo {
+    setSelectedCardId: (meetid: string) => void;
+}
+
+const MeetingInfo = ({ setSelectedCardId }: iMeetingInfo) => {
     const [participantsData, setParticipantsData] = useState<participantsID>();
     const [meetingParticipants, setMeetingParticipants] = useState<
         string[] | undefined
@@ -52,6 +60,12 @@ const MeetingInfo = () => {
 
         _getParticipants();
     }, []);
+
+    useEffect(() => {
+        console.log("param: ", meetid);
+
+        setSelectedCardId(meetid as string);
+    }, [meetid]);
 
     const getNames = (ids: string[] | undefined) => {
         return (
@@ -161,16 +175,14 @@ const MeetingInfo = () => {
                 <Grid padding={0.5} container direction={"row"}>
                     <Grid item xs={12}>
                         <Typography variant="subtitle1">
-                            The Terno is a modular light and sound system
-                            designed for stage and recording applications,
-                            providing an intuitive on-stage
+                            {meetingData.description}
                         </Typography>
                     </Grid>
                 </Grid>
             </Grid>
         </Grid>
     ) : (
-        <Typography variant="h4">Loading...</Typography>
+        <Typography variant="h4">Meeting not found...</Typography>
     );
 };
 
