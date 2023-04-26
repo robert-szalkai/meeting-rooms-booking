@@ -14,8 +14,8 @@ import EditCalendarIcon from "@mui/icons-material/EditCalendar";
 import {
     getParticipants,
     getParticipant,
-    getMeetings,
-} from "../../../../api/getRequests";
+} from "../../../../api/ParticipantAPI";
+import { getMeetings } from "../../../../api/MeetingApi";
 import { spawnToast } from "../../../../utils/Toast";
 
 interface INITIALOWNER {

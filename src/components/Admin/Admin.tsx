@@ -1,11 +1,17 @@
 import React, { useEffect, useState } from "react";
 import Header from "./Header/Header";
-import { Container, Modal, Grid, Typography } from "@mui/material";
+import { Container, Modal, Grid } from "@mui/material";
 import Cards from "./MeetingRoom/Cards";
 import MeetingRoomForm from "./MeetingRoomForm/MeetingRoom";
 import DeleteConfirmationModal from "./DeleteConfirmationModal/DeleteConfirmationModal";
-import { deleteRooms, addRoom, updateRoomData } from "../../api/RoomApi";
-import {getRooms, getRoomById} from "../../api/getRequests"
+import {
+    deleteRooms,
+    addRoom,
+    updateRoomData,
+    getRooms,
+    getRoomById,
+} from "../../api/RoomAPI";
+
 interface iCard {
     title: string;
     id: number;
@@ -14,7 +20,6 @@ interface iCard {
     capacity: number;
 }
 const Admin = () => {
-    
     const [showModal, setShowModal] = useState<boolean>(false);
     const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
     const [deleteRoomId, setDeleteRoomId] = useState<number | null>(null);
@@ -176,9 +181,7 @@ const Admin = () => {
                 container
             >
                 {datacontent && displayCards()}
-               
             </Grid>
-
         </Container>
     );
 };

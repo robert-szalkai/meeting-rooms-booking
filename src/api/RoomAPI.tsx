@@ -1,5 +1,13 @@
 import axios from "axios";
 
+const getRooms = async () => {
+    return await axios.get("http://localhost:3001/rooms");
+};
+
+const getRoomById = async (id: number) => {
+    return await axios.get(`http://localhost:3001/meetingRooms/${id}`);
+};
+
 const deleteRooms = async (id: number) => {
     return await axios.delete(`http://localhost:3001/rooms/${id}`);
 };
@@ -31,5 +39,4 @@ const updateRoomData = async (
     });
 };
 
-export { deleteRooms, addRoom, updateRoomData };
-
+export { deleteRooms, addRoom, updateRoomData, getRooms, getRoomById };
