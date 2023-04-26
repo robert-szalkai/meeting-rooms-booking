@@ -1,0 +1,98 @@
+{
+    "monthData": [
+      {
+        "name": "Juanary",
+        "uv": 4000
+      },
+      {
+        "name": "February",
+        "uv": 3000
+      },
+      {
+        "name": "March",
+        "uv": 2000
+      },
+      {
+        "name": "April",
+        "uv": 2780
+      },
+      {
+        "name": "May",
+        "uv": 1890
+      },
+      {
+        "name": "June",
+        "uv": 2390
+      },
+      {
+        "name": "July",
+        "uv": 3490
+      },
+      {
+        "name": "August",
+        "uv": 4000
+      },
+      {
+        "name": "September",
+        "uv": 3000
+      },
+      {
+        "name": "October",
+        "uv": 2000
+      },
+      {
+        "name": "November",
+        "uv": 2780
+      },
+      {
+        "name": "December",
+        "uv": 1890
+      }
+    ],
+    
+    "roomData": [
+      {
+        "name": "Room A",
+        "uv": 4000
+      },
+      {
+        "name": "Room B",
+        "uv": 3000
+      },
+      {
+        "name": "Room C",
+        "uv": 2000
+      }
+    ],
+    "weeksData": [
+      {
+        "name": "Monday",
+        "uv": 4000
+      },
+      {
+        "name": "Tuestay",
+        "uv": 3000
+      },
+      {
+        "name": "Wednesday",
+        "uv": 2000
+      },
+      {
+        "name": "Thursday",
+        "uv": 2780
+      },
+      {
+        "name": "Friday",
+        "uv": 1890
+      },
+      {
+        "name": "Saturday",
+        "uv": 2390
+      },
+      {
+        "name": "Sunday",
+        "uv": 3490
+      }
+    ]
+  }
+  
