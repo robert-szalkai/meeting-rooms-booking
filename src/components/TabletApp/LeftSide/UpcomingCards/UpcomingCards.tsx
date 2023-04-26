@@ -60,7 +60,11 @@ const UpcomingCards = ({
         <Card
             onClick={handleCardOnClick}
             sx={{
-                border: (selectedCardId === id && location.pathname.includes(`/meetinginfo/${selectedCardId}`)) ? "4px solid purple" : "none",
+                border:
+                    selectedCardId === id &&
+                    location.pathname.includes(`/meetinginfo/${selectedCardId}`)
+                        ? "4px solid purple"
+                        : "none",
                 height: SIZE.HEIGT_CARD,
                 borderRadius: SIZE.BORDER_RADIUS_CARD,
                 width: SIZE.WIDTH_CARD,
