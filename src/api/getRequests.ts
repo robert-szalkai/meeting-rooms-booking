@@ -1,15 +1,14 @@
 import axios from "axios";
+
 import { iRoomCards } from "../interfaces/interfaces";
+import { Participant, Meeting } from "../interfaces/interfaces";
 
 
 const getParticipantsIdName = async () => {
     return await axios.get("http://localhost:3002/participantsData");
 }
 
-const getParticipants = async (): Promise<{
-    name: string;
-    id: number;
-}> => {
+const getParticipants = async (): Promise<Participant[]>=> {
     const result = await axios.get("http://localhost:3001/participants");
     return result.data;
 };
@@ -39,13 +38,7 @@ const getAllRooms=async () :Promise<iRoomCards[]>=>{
     return (await axios.get(`http://localhost:3001/rooms/`)).data;
 }
 
-const getMeetings = async (): Promise<{
-    room_id: number;
-    owner_id: number;
-    participants_id: any;
-    start_time: string;
-    end_time: string;
-}> => {
+const getMeetings = async ():Promise<Meeting[]> => {
     const result = await axios.get("http://localhost:3001/meetings");
     return result.data;
 };

@@ -1,97 +1,208 @@
-import React from "react";
-import { Grid, Typography, TextField, MenuItem } from "@mui/material";
+import React, { FC, useEffect, useState } from "react";
+import { Box, InputLabel, MenuItem, TextField } from "@mui/material";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import dayjs, { Dayjs } from "dayjs";
 
-const hours = [
-    { value: 8, label: "08:00" },
-    { value: 9, label: "09:00" },
-    { value: 10, label: "10:00" },
-    { value: 11, label: "11:00" },
-    { value: 12, label: "12:00" },
-    { value: 13, label: "13:00" },
-    { value: 14, label: "14:00" },
-    { value: 15, label: "15:00" },
-    { value: 16, label: "16:00" },
-    { value: 17, label: "17:00" },
-    { value: 18, label: "18:00" },
-];
+import {
+    DateSelectorProps,
+    SelectHour,
+    MeetingDate,
+} from "../../../../interfaces/interfaces";
 
-const DateSelector = () => {
-    const date = new Date();
-    let currentHour = date.getHours();
+const DateSelector: FC<DateSelectorProps> = ({
+    handleMeetingDate,
+    handleStartTime,
+    handleEndTime,
+    fieldTextValid,
+    formValidationDateSetter,
+    formValidationStartSetter,
+    formValidationEndSetter,
+    bookedMeetings,
+}) => {
+    const [selectedDate, setSelectedDate] = useState<Dayjs>(dayjs());
+    const [index, setIndex] = useState<number>(0);
+
+    const generateDates = () => {
+        let startingHour = selectedDate;
+        if (selectedDate.isSame(dayjs(), "day")) {
+            startingHour = selectedDate.hour(dayjs().get("hour")).minute(0);
+        } else {
+            startingHour = selectedDate.hour(7).minute(30);
+        }
+
+        let dateGenerate: SelectHour[] = [];
+        while (startingHour.isBefore(selectedDate.set("hour", 19))) {
+            startingHour = startingHour.add(30, "minute");
+            dateGenerate.push({
+                val: startingHour,
+                text:
+                    startingHour.get("hour").toString() +
+                    ":" +
+                    (startingHour.get("minute").toString() === "0"
+                        ? "00"
+                        : "30"),
+                isdisabled: false,
+            });
+        }
+        return dateGenerate;
+    };
+
+    const setHoursDisabled = () => {
+        const meetings = bookedMeetings;
+        const meetingDates = meetings.map((value: MeetingDate) => {
+            return { startDate: value.startDate, endDate: value.endDate };
+        });
+        let newHourList = generateDates();
+        newHourList.forEach((selectedHour) => {
+            meetingDates.forEach((meetingDate: MeetingDate) => {
+                if (
+                    (selectedHour.val.isAfter(meetingDate.startDate) &&
+                        selectedHour.val.isBefore(meetingDate.endDate)) ||
+                    selectedHour.val.isSame(meetingDate.startDate, "minute")
+                ) {
+                    selectedHour.isdisabled = true;
+                }
+            });
+        });
+        setHourList(newHourList);
+    };
+
+    const [hourList, setHourList] = useState<SelectHour[]>([]);
+
+    useEffect(() => {
+        setHoursDisabled();
+    }, [selectedDate]);
+
+    const handleSelectedDate = (meetingDate: Dayjs) => {
+        setSelectedDate(meetingDate);
+    };
+
     return (
-        <Grid container paddingTop={2}>
-            <Grid item xs={4}>
-                <Typography>Day</Typography>
-            </Grid>
-            <Grid item xs={4}>
-                <Typography>Start</Typography>
-            </Grid>
-            <Grid item xs={4}>
-                <Typography>End</Typography>
-            </Grid>
-            <Grid item xs={4}>
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DatePicker />
-                </LocalizationProvider>
-                {/* <TextField
-                    select
-                    variant="filled"
-                    sx={{ minWidth: 197 }}
-                    InputProps={{ disableUnderline: true }}
-                    hiddenLabel
-                    size="small"
-                >
-                    {days.map((day) => (
-                        <MenuItem key={day.value} value={day.value}>
-                            {day.label}
-                        </MenuItem>
-                    ))}
-                </TextField> */}
-            </Grid>
-            <Grid item xs={4}>
-                <TextField
-                    type="time"
-                    variant="filled"
-                    sx={{ minWidth: 197 }}
-                    InputProps={{ disableUnderline: true }}
-                    hiddenLabel
-                    size="small"
-                >
-                    {hours
-                        .filter((crHour) => {
-                            return crHour.value >= currentHour;
-                        })
-                        .map((hour) => (
-                            <MenuItem key={hour.value} value={hour.value}>
-                                {hour.label}
+        <LocalizationProvider size="small" dateAdapter={AdapterDayjs}>
+            <Box display="flex" justifyContent={"space-between"} gap={2}>
+                <Box flexGrow={1}>
+                    <InputLabel>Day*</InputLabel>
+                    <DatePicker
+                        format="DD/MM/YYYY"
+                        onChange={(event: any) => {
+                            event.toString() === ""
+                                ? formValidationDateSetter(false, "isDateValid")
+                                : formValidationDateSetter(true, "isDateValid");
+                            const val = event as Dayjs;
+                            handleSelectedDate(val);
+                            handleMeetingDate(event);
+                        }}
+                        slotProps={{
+                            textField: {
+                                variant: "filled",
+                                fullWidth: true,
+                                InputProps: {
+                                    disableUnderline: true,
+                                    hiddenLabel: true,
+                                },
+                                error: fieldTextValid.dateValid === "",
+                                helperText:
+                                    fieldTextValid.dateValid === ""
+                                        ? "Provide meeting date"
+                                        : "",
+                            },
+                        }}
+                    />
+                </Box>
+                <Box flexGrow={1}>
+                    <InputLabel>Start*</InputLabel>
+                    <TextField
+                        select
+                        variant="filled"
+                        onChange={(e) => {
+                            handleStartTime(e.target.value);
+                            e.target.value === ""
+                                ? formValidationStartSetter(
+                                      false,
+                                      "isStartValid"
+                                  )
+                                : formValidationStartSetter(
+                                      true,
+                                      "isStartValid"
+                                  );
+                        }}
+                        hiddenLabel
+                        fullWidth
+                        error={fieldTextValid.startValid === ""}
+                        helperText={
+                            fieldTextValid.startValid === ""
+                                ? "Provide start time"
+                                : ""
+                        }
+                        sx={{ minWidth: 110 }}
+                        InputProps={{ disableUnderline: true }}
+                        SelectProps={{
+                            MenuProps: {
+                                PaperProps: {
+                                    sx: { maxHeight: 150 },
+                                },
+                            },
+                        }}
+                    >
+                        {hourList.map((hour: SelectHour, index: number) => (
+                            <MenuItem
+                                onClick={() => {
+                                    setIndex(index);
+                                }}
+                                value={hour.val.toString()}
+                                disabled={hour.isdisabled}
+                            >
+                                {hour.text}
                             </MenuItem>
                         ))}
-                </TextField>
-            </Grid>
-            <Grid item xs={4}>
-                <TextField
-                    type="time"
-                    variant="filled"
-                    sx={{ minWidth: 197 }}
-                    InputProps={{ disableUnderline: true }}
-                    hiddenLabel
-                    size="small"
-                >
-                    {hours
-                        .filter((crHour) => {
-                            return crHour.value > currentHour;
-                        })
-                        .map((hour) => (
-                            <MenuItem key={hour.value} value={hour.value}>
-                                {hour.label}
-                            </MenuItem>
-                        ))}
-                </TextField>
-            </Grid>
-        </Grid>
+                    </TextField>
+                </Box>
+                <Box flexGrow={1}>
+                    <InputLabel>End*</InputLabel>
+                    <TextField
+                        select
+                        variant="filled"
+                        onChange={(e) => {
+                            handleEndTime(e.target.value);
+                            e.target.value === ""
+                                ? formValidationEndSetter(false, "isEndValid")
+                                : formValidationEndSetter(true, "isEndValid");
+                        }}
+                        error={fieldTextValid.endValid === ""}
+                        helperText={
+                            fieldTextValid.endValid === ""
+                                ? "Provide end time"
+                                : ""
+                        }
+                        fullWidth
+                        hiddenLabel
+                        sx={{ minWidth: 110 }}
+                        InputProps={{ disableUnderline: true }}
+                        SelectProps={{
+                            MenuProps: {
+                                PaperProps: { sx: { maxHeight: 150 } },
+                            },
+                        }}
+                    >
+                        {hourList
+                            .filter(
+                                (hour: SelectHour, position: number) =>
+                                    position > index
+                            )
+                            .map((hour: SelectHour) => (
+                                <MenuItem
+                                    value={hour.val.toString()}
+                                    disabled={hour.isdisabled}
+                                >
+                                    {hour.text}
+                                </MenuItem>
+                            ))}
+                    </TextField>
+                </Box>
+            </Box>
+        </LocalizationProvider>
     );
 };
 
