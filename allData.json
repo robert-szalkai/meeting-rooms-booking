@@ -185,5 +185,91 @@
       "available": true,
       "image": "https://w7.pngwing.com/pngs/205/731/png-transparent-default-avatar.png"
     }
-  ]
+  ],
+  "rooms": [
+    {
+        "name": "Focus Room",
+        "availability": "booked",
+        "description": "Good Room Good Room Good Room Good Room Good Room Good RoomGood RoomGood RoomGood RoomGood RoomGood RoomGood Room",
+        "capacity": 10,
+        "id": 1
+    },
+    {
+        "name": "High Table",
+        "availability": "free",
+        "description": "Good Room",
+        "capacity": 10,
+        "id": 2
+    },
+
+    {
+        "name": "Room for Growth",
+        "availability": "coming",
+        "description": "Good Room",
+        "capacity": 10,
+        "id": 3
+    },
+    {
+        "name": "Room for Growth",
+        "availability": "booked",
+        "description": "Good Room",
+        "capacity": 10,
+        "id": 4
+    },
+    {
+        "name": "Room for Growth",
+        "availability": "booked",
+        "description": "Good Room",
+        "capacity": 10,
+        "id": 5
+    }
+  ],
+  "roomdata":{
+    "name": "Focus Room",
+    
+        "meetings":[
+            {"name": "Focus Room 1",
+               "id":"1",
+               "start_time": "2023-04-13T08:10:18.386Z",
+               "end_time": "2023-04-13T10:10:18.386Z",
+               "participants_id":[1,5],
+               "description":"Here we go for some fun"
+            },
+    
+    
+            {"name": "Focus Room 2",
+                "id":"2",
+                "start_time": "2023-04-13T09:10:18.386Z",
+                "end_time": "2023-04-13T12:10:18.386Z",
+                "participants_id":[1, 2, 3, 5 ],
+                "description":"Nothing to see here"
+    
+             },
+             {
+                "name": "Focus Room 3",
+                "id":"3",
+                "start_time": "2023-04-13T06:10:18.386Z",
+                "end_time": "2023-04-13T08:10:18.386Z",
+                "participants_id":[1,2,3],
+                "description":"Hello there"
+             },
+             {"name": "Focus Room 4",
+    
+                "id":"4",
+                "start_time": "2023-04-13T08:10:18.386Z",
+                "end_time": "2023-04-13T11:11:18.386Z",
+                "participants_id":[1,2],
+                "description":"Forbidden for people under 30 years old"
+             },
+             {"name": "Focus Room 5",
+    
+                "id":"5",
+                "start_time": "2023-04-13T12:10:18.386Z",
+                "end_time": "2023-04-13T13:10:18.386Z",
+                "participants_id":[1,2,4, 3],
+                "description":"Exit"
+             }
+    
+        ]
+    }
 }

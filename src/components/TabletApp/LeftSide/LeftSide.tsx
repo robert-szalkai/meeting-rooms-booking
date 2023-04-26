@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from "react";
-
 import { useLocation, useParams } from "react-router-dom";
 import { Typography, Button, Box, Skeleton, Paper } from "@mui/material";
 import dayjs from "dayjs";
+import Dayjs from "dayjs";
+
 import UpcomingCards from "./UpcomingCards/UpcomingCards";
 import "./UpcomingCardsScrollCSS.css";
-import Dayjs from "dayjs";
-import { getParticipantsIdName } from "../../../api/getRequests";
-
 import QuickBookGlobal from "./QuickBookGlobal/QuickBookGlobal";
-import CONSTANTS from "../../../constants/Constants";
-import Clock from "./Clock/Clock";
 import AdvancedBookGlobal from "./AdvancedBookGlobal/AdvancedBookGlobal";
+import Clock from "./Clock/Clock";
+import { getParticipantsIdName } from "../../../api/getRequests";
+import CONSTANTS from "../../../constants/Constants";
 
 interface iLeftSide {
     name: string | undefined;
@@ -24,6 +23,7 @@ interface iLeftSide {
     }[];
     availability: number;
     selectedCardId: string;
+    onClickQuickBookGlobal: () => void;
 }
 interface participantsID {
     participants: {
@@ -37,6 +37,7 @@ const LeftSide = ({
     meetings,
     availability,
     selectedCardId,
+    onClickQuickBookGlobal,
 }: iLeftSide) => {
     let currDate = new Date();
     let hoursMin;
@@ -68,7 +69,7 @@ const LeftSide = ({
     useEffect(() => {
         if (
             availability === CONSTANTS.MEETING_IN_PROGRESS ||
-            location.pathname.includes("quickbookglobal")
+            location.pathname.includes("menu")
         ) {
             setShowQuickBookButton(false);
             return;
@@ -165,7 +166,7 @@ const LeftSide = ({
                                 height={18}
                             />
                         )}
-                        {/* <Typography variant="h2">{time}</Typography> */}
+
                         <Clock />
 
                         <Typography variant="h3">{formattedDate}</Typography>
@@ -218,7 +219,9 @@ const LeftSide = ({
                     )}
                 </Box>
                 {showQuickBookButton ? (
-                    <QuickBookGlobal />
+                    <QuickBookGlobal
+                        onClickQuickBookGlobal={onClickQuickBookGlobal}
+                    />
                 ) : availability === CONSTANTS.MEETING_IN_PROGRESS ? (
                     <AdvancedBookGlobal />
                 ) : null}
