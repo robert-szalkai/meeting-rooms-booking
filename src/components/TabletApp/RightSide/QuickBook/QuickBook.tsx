@@ -37,6 +37,7 @@ const QuickBook = ({
     const [autoComplete, setAutoComplete] = useState<boolean>(false);
     const [timeVal, setTimeVal] = useState<number>(0);
     const [closestMeet, setClosestMeet] = useState<number>(0);
+    const [submitButton, setSubmitButton] = useState<boolean>(false);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -104,6 +105,7 @@ const QuickBook = ({
         try {
             const result = await getParticipant(e);
             setOwner({ name: result.name, id: result.id });
+            setSubmitButton(true);
         } catch (error) {
             console.log(error);
         }
@@ -161,7 +163,10 @@ const QuickBook = ({
                     handleQuickBookButton();
                 }}
             >
-                <EditCalendarIcon fontSize="small" />
+                <EditCalendarIcon
+                    fontSize="small"
+                    sx={{ marginRight: "10px" }}
+                />
                 <Typography variant="subtitle1">Quick Book</Typography>
             </Button>
             {timeButtonsVisible ? (
@@ -281,6 +286,7 @@ const QuickBook = ({
                                     variant="outlined"
                                     color="success"
                                     onClick={handleCreateMeeting}
+                                    disabled={!submitButton}
                                 >
                                     Submit
                                 </Button>
