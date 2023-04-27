@@ -15,8 +15,13 @@ import {
     Meeting,
     Participant,
 } from "../../../../interfaces/interfaces";
+import CONSTANTS from "../../../../constants/Constants";
 
-const AdvancedBook = () => {
+interface iAdvancedBook {
+    availability: number;
+}
+
+const AdvancedBook = ({ availability }: iAdvancedBook) => {
     const [validForm, setValidForm] = useState<FormValidity>({
         isNameValid: false,
         isDateValid: false,
@@ -215,8 +220,8 @@ const AdvancedBook = () => {
                         >
                             <Button
                                 onClick={handleClickCancel}
-                                variant="contained"
-                                color="success"
+                                variant="outlined"
+                                color="inherit"
                                 sx={{ maxWidth: 140 }}
                             >
                                 Cancel
@@ -225,7 +230,15 @@ const AdvancedBook = () => {
                                 sx={{ maxWidth: 140 }}
                                 type="submit"
                                 variant="contained"
-                                color="success"
+                                color={
+                                    availability ===
+                                    CONSTANTS.MEETING_WILL_FOLLOW
+                                        ? "warning"
+                                        : availability ===
+                                          CONSTANTS.MEETING_IN_PROGRESS
+                                        ? "error"
+                                        : "success"
+                                }
                                 disabled={checkFormValid(validForm)}
                             >
                                 <CalendarMonthIcon fontSize="small" />

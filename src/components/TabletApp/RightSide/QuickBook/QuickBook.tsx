@@ -17,6 +17,7 @@ import {
     getMeetings,
 } from "../../../../api/getRequests";
 import { spawnToast } from "../../../../utils/Toast";
+import CONSTANTS from "../../../../constants/Constants";
 
 interface INITIALOWNER {
     name: string;
@@ -25,11 +26,13 @@ interface INITIALOWNER {
 interface iQuickBook {
     isDurationOpen?: boolean;
     handleQuickBookDone: () => void;
+    availability: number;
 }
 
 const QuickBook = ({
     isDurationOpen = false,
     handleQuickBookDone,
+    availability,
 }: iQuickBook) => {
     const [timeButtonsVisible, setTimeButtonsVisible] =
         useState<boolean>(isDurationOpen);
@@ -157,8 +160,15 @@ const QuickBook = ({
             gap={3}
         >
             <Button
+                disabled={availability === CONSTANTS.MEETING_IN_PROGRESS}
                 variant="contained"
-                color="success"
+                color={
+                    availability === CONSTANTS.MEETING_WILL_FOLLOW
+                        ? "warning"
+                        : availability === CONSTANTS.MEETING_IN_PROGRESS
+                        ? "error"
+                        : "success"
+                }
                 sx={{ textTransform: "none" }}
                 onClick={() => {
                     handleQuickBookButton();
