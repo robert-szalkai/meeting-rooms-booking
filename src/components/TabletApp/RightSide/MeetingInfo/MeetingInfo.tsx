@@ -63,8 +63,6 @@ const MeetingInfo = ({ setSelectedCardId }: iMeetingInfo) => {
     }, []);
 
     useEffect(() => {
-        console.log("param: ", meetid);
-
         setSelectedCardId(meetid as string);
     }, [meetid]);
 
@@ -82,7 +80,6 @@ const MeetingInfo = ({ setSelectedCardId }: iMeetingInfo) => {
         if (meetid) {
             const response = await getMeetingById(meetid);
             setMeetingData(response);
-            console.log("duhfiuehdwifue", response);
         }
     };
 
@@ -183,20 +180,6 @@ const MeetingInfo = ({ setSelectedCardId }: iMeetingInfo) => {
             </Grid>
         </Grid>
     ) : (
-        // <Grid
-        //     height={"100%"}
-        //     padding={70}
-        //     container
-        //     // direction={"row"}
-        //     spacing={1}
-        // >
-        // <Stack sx={{ width: "100%" }}>
-        //     <Alert severity="error">
-        //         Meeting not found, please select a meeting from one of the
-        //         cards displayed on the left.
-        //     </Alert>
-        // </Stack>
-        //</Grid>
         <Error />
     );
 };
