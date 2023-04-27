@@ -7,6 +7,7 @@ import {
 import { useParams } from "react-router-dom";
 import axios, { AxiosResponse } from "axios";
 import dayjs, { Dayjs } from "dayjs";
+import Error from "./NotFoundPage/NotFoundPage";
 
 interface participantsID {
     participants: {
@@ -182,20 +183,21 @@ const MeetingInfo = ({ setSelectedCardId }: iMeetingInfo) => {
             </Grid>
         </Grid>
     ) : (
-        <Grid
-            height={"100%"}
-            padding={70}
-            container
-            direction={"row"}
-            spacing={1}
-        >
-            <Stack sx={{ width: "100%" }}>
-                <Alert severity="error">
-                    Meeting not found, please select a meeting from one of the
-                    cards displayed on the left.
-                </Alert>
-            </Stack>
-        </Grid>
+        // <Grid
+        //     height={"100%"}
+        //     padding={70}
+        //     container
+        //     // direction={"row"}
+        //     spacing={1}
+        // >
+        // <Stack sx={{ width: "100%" }}>
+        //     <Alert severity="error">
+        //         Meeting not found, please select a meeting from one of the
+        //         cards displayed on the left.
+        //     </Alert>
+        // </Stack>
+        //</Grid>
+        <Error />
     );
 };
 
