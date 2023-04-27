@@ -1,15 +1,17 @@
-import React, { FunctionComponent } from "react";
+import React, { FunctionComponent, useState } from "react";
 import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid } from "recharts";
 import IconButton from "@mui/material/IconButton";
 import Box from "@mui/material/Box";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Link } from "react-router-dom";
-import data from "/Users/SCP/Workshop/meeting-rooms-booking/src/Charts.json";
+import data from "../../Charts.json";
+import { getMeetingsData } from "../../api/getRequests";
 interface iChart {
     data: { name: string; uv: number }[];
 }
 
-const Chart = ({ data }: iChart) => {
+const Chart = ({ data }: any) => {
+    console.log(data);
     return (
         <Box sx={{ display: "flex", flexDirection: "column" }}>
             <Box sx={{ display: "flex", alignItems: "center", mt: 1, ml: 1 }}>
@@ -33,20 +35,49 @@ const Chart = ({ data }: iChart) => {
                     <XAxis dataKey="name" />
                     <YAxis />
                     <Bar
-                        dataKey="uv"
+                        dataKey="value"
                         fill="#8884d8"
                         label={{ position: "top" }}
-                    >
-                        {data.map((_, index) => (
-                            <Cell key={`cell-${index}`} />
-                        ))}
-                    </Bar>
+                    ></Bar>
                 </BarChart>
             </Box>
         </Box>
     );
 };
 const AllCharts = () => {
+    const [meetings, setMeetings] = useState([]);
+    const [meetingsRoom, setMeetingsRoom] = useState({});
+    const b = async () => {
+        await getMeetingsData().then((res) => {
+            res.data.meetings.forEach((meeting) => {
+                let exists = false;
+                let index = 0;
+                let tempIndex = 0;
+                meetings.forEach((val) => {
+                    if (val.name === meeting.name) {
+                        index = tempIndex;
+                        exists = true;
+                    }
+                    tempIndex++;
+                });
+                if (!exists) {
+                    let temp = meetings;
+                    temp.push({ name: meeting.name, value: 1 });
+                    setMeetings(temp);
+                } else {
+                    console.log(meeting.name)
+                    let temp = meetings;
+                    temp[index].value = temp[index].value + 1;
+                    setMeetings(temp);
+                }
+            });
+            console.log(meetings);
+            setMeetingsRoom(meetings);
+        });
+    };
+
+    if(meetings.length == 0)b();
+
     return (
         <Box sx={{ display: "flex", flexDirection: "column" }}>
             <Box sx={{ display: "flex", alignItems: "center", mt: 1, ml: 1 }}>
@@ -58,15 +89,7 @@ const AllCharts = () => {
                 <h1>All Charts</h1>
                 <div>
                     <h2>Rooms</h2>
-                    <Chart data={data.roomData} />
-                </div>
-                <div>
-                    <h2>Weeks</h2>
-                    <Chart data={data.weeksData} />
-                </div>
-                <div>
-                    <h2>Months</h2>
-                    <Chart data={data.monthData} />
+                    <Chart data={meetingsRoom} />
                 </div>
             </div>
         </Box>
@@ -74,4 +97,3 @@ const AllCharts = () => {
 };
 
 export default AllCharts;
-
