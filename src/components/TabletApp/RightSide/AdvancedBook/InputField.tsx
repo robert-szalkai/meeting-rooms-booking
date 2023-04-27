@@ -17,13 +17,13 @@ const InputField = ({
             <InputLabel>{inputLabelText}</InputLabel>
             <TextField
                 error={fieldTextValid === ""}
-                helperText={
-                    multilineSelect
-                        ? ""
-                        : fieldTextValid === ""
-                        ? "Provide meeting name"
-                        : ""
-                }
+                // helperText={
+                //     multilineSelect
+                //         ? ""
+                //         : fieldTextValid === ""
+                //         ? "Provide meeting name"
+                //         : ""
+                // }
                 placeholder={placeholderText}
                 variant="filled"
                 size="small"

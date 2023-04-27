@@ -131,11 +131,11 @@ const DateSelector: FC<DateSelectorProps> = ({
                         hiddenLabel
                         fullWidth
                         error={fieldTextValid.startValid === ""}
-                        helperText={
-                            fieldTextValid.startValid === ""
-                                ? "Provide start time"
-                                : ""
-                        }
+                        // helperText={
+                        //     fieldTextValid.startValid === ""
+                        //         ? "Provide start time"
+                        //         : ""
+                        // }
                         sx={{ minWidth: 110 }}
                         InputProps={{ disableUnderline: true }}
                         SelectProps={{
@@ -171,11 +171,11 @@ const DateSelector: FC<DateSelectorProps> = ({
                                 : formValidationEndSetter(true, "isEndValid");
                         }}
                         error={fieldTextValid.endValid === ""}
-                        helperText={
-                            fieldTextValid.endValid === ""
-                                ? "Provide end time"
-                                : ""
-                        }
+                        // helperText={
+                        //     fieldTextValid.endValid === ""
+                        //         ? "Provide end time"
+                        //         : ""
+                        // }
                         fullWidth
                         hiddenLabel
                         sx={{ minWidth: 110 }}
