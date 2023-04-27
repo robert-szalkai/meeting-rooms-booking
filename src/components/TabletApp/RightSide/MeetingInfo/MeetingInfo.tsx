@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Grid, Typography, Box, Avatar } from "@mui/material";
-import {
-    getMeetingsData,
-    getParticipantsIdName,
-} from "../../../../api/getRequests";
+import { getMeetingsData } from "../../../../api/MeetingApi";
+import { getParticipantsIdName } from "../../../../api/ParticipantAPI";
 import { useParams } from "react-router-dom";
 import axios, { AxiosResponse } from "axios";
 import dayjs, { Dayjs } from "dayjs";
