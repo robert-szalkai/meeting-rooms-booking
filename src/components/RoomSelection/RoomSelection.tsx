@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Container, Box, Typography, Card, Divider } from "@mui/material";
 import RoomSelectionCards from "./RoomSelectionCards";
 import { iRoomCards } from "../../interfaces/interfaces";
-import { getAllRooms } from "../../api/getRequests";
+import { getAllRooms } from "../../api/RoomAPI";
 import COLORS from "../../constants/CustomColors";
 export const RoomSelection = () => {
     const [roomSelectionData, setRoomSelection] = useState<iRoomCards[]>();
@@ -77,47 +77,69 @@ export const RoomSelection = () => {
                         alignItems: "flex-start",
                     }}
                 >
-                   
-                    <Box sx={{ width: "100%", display: "flex", gap: "2px" ,alignItems:"center",justifyContent:"space-evenly",}}>
+                    <Box
+                        sx={{
+                            width: "100%",
+                            display: "flex",
+                            gap: "2px",
+                            alignItems: "center",
+                            justifyContent: "space-evenly",
+                        }}
+                    >
                         <Box
                             sx={{
-                                
-                                backgroundColor:COLORS.SUCCESS,
+                                backgroundColor: COLORS.SUCCESS,
                                 clipPath: "circle(15.0% at 50% 54%)",
-                                height:"80px",
-                                width:"50px"
+                                height: "80px",
+                                width: "50px",
                             }}
                         />
-                        <Box sx={{width:"200px"}}>
-                        <Typography variant='h6'>Room free</Typography>
+                        <Box sx={{ width: "200px" }}>
+                            <Typography variant="h6">Room free</Typography>
                         </Box>
                     </Box>
-                    <Box sx={{ width: "100%", display: "flex" ,alignItems:"center",justifyContent:"space-evenly"}}>
+                    <Box
+                        sx={{
+                            width: "100%",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "space-evenly",
+                        }}
+                    >
                         <Box
                             sx={{
-                             
-                                backgroundColor:COLORS.WARNING,
+                                backgroundColor: COLORS.WARNING,
                                 clipPath: "circle(15.0% at 50% 54%)",
-                                height:"80px",
-                                width:"50px"
+                                height: "80px",
+                                width: "50px",
                             }}
                         />
-                          <Box sx={{width:"200px"}}>
-                        <Typography variant='h6'>Meeting incoming</Typography>
+                        <Box sx={{ width: "200px" }}>
+                            <Typography variant="h6">
+                                Meeting incoming
+                            </Typography>
                         </Box>
                     </Box>
-                    <Box sx={{ width: "100%", display: "flex",alignItems:"center",justifyContent:"space-evenly"}}>
+                    <Box
+                        sx={{
+                            width: "100%",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "space-evenly",
+                        }}
+                    >
                         <Box
                             sx={{
-                               
-                                backgroundColor:COLORS.ERROR,
+                                backgroundColor: COLORS.ERROR,
                                 clipPath: "circle(15.0% at 50% 54%)",
-                                height:"80px",
-                                width:"50px"
+                                height: "80px",
+                                width: "50px",
                             }}
                         />
-                        <Box sx={{width:"200px"}}>
-                        <Typography variant='h6'>Ongoing meeting</Typography>
+                        <Box sx={{ width: "200px" }}>
+                            <Typography variant="h6">
+                                Ongoing meeting
+                            </Typography>
                         </Box>
                     </Box>
                 </Box>

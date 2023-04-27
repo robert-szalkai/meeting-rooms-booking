@@ -9,7 +9,7 @@ import "./UpcomingCardsScrollCSS.css";
 import QuickBookGlobal from "./QuickBookGlobal/QuickBookGlobal";
 import AdvancedBookGlobal from "./AdvancedBookGlobal/AdvancedBookGlobal";
 import Clock from "./Clock/Clock";
-import { getParticipantsIdName } from "../../../api/getRequests";
+import { getParticipantsIdName } from "../../../api/ParticipantAPI";
 import CONSTANTS from "../../../constants/Constants";
 
 interface iLeftSide {

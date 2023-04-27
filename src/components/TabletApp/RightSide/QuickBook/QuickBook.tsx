@@ -15,7 +15,7 @@ import {
     getParticipants,
     getParticipant,
 } from "../../../../api/ParticipantAPI";
-import { getMeetings } from "../../../../api/MeetingApi";
+import { getMeetings } from "../../../../api/MeetingAPI";
 import { spawnToast } from "../../../../utils/Toast";
 
 interface INITIALOWNER {

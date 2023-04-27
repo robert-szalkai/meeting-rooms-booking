@@ -7,7 +7,7 @@ import { useParams } from "react-router-dom";
 import DateSelector from "./DateSelector";
 import Participants from "./Participants";
 import InputField from "./InputField";
-import { getMeetings, addMeeting } from "../../../../api/MeetingApi";
+import { getMeetings, addMeeting } from "../../../../api/MeetingAPI";
 import { getParticipants } from "../../../../api/ParticipantAPI";
 import { spawnToast } from "../../../../utils/Toast";
 import {

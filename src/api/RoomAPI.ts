@@ -1,7 +1,12 @@
 import axios from "axios";
+import { iRoomCards } from "../interfaces/interfaces";
 
 const getRooms = async () => {
     return await axios.get("http://localhost:3001/rooms");
+};
+
+const getAllRooms = async (): Promise<iRoomCards[]> => {
+    return (await axios.get(`http://localhost:3001/rooms/`)).data;
 };
 
 const getRoomById = async (id: number) => {
@@ -39,4 +44,11 @@ const updateRoomData = async (
     });
 };
 
-export { deleteRooms, addRoom, updateRoomData, getRooms, getRoomById };
+export {
+    deleteRooms,
+    addRoom,
+    updateRoomData,
+    getRooms,
+    getRoomById,
+    getAllRooms,
+};

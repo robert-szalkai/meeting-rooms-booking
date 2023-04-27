@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Grid, Typography, Box, Avatar } from "@mui/material";
-import { getMeetingsData } from "../../../../api/MeetingApi";
+import { getMeetingsData } from "../../../../api/MeetingAPI";
 import { getParticipantsIdName } from "../../../../api/ParticipantAPI";
 import { useParams } from "react-router-dom";
 import axios, { AxiosResponse } from "axios";

@@ -8,7 +8,7 @@ import AdvancedBook from "./RightSide/AdvancedBook/AdvancedBook";
 import MeetingInfo from "./RightSide/MeetingInfo/MeetingInfo";
 import Menu from "./RightSide/Menu/Menu";
 import CONSTANTS from "../../constants/Constants";
-import { getMeetings, getMeetingsData } from "../../api/MeetingApi";
+import { getMeetings, getMeetingsData } from "../../api/MeetingAPI";
 import COLORS from "../../constants/CustomColors";
 
 interface iLeftSide {
