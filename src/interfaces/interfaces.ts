@@ -14,8 +14,9 @@ export interface MeetingRoomsData {
     lastBooked: string;
     capacity: number;
     meetings:{
-        start_time:string;
-        end_time:string;
+        startDate:string;
+        endDate:string;
+        
     }[]
 }
 export interface Participant {

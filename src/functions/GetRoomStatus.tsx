@@ -2,7 +2,7 @@ import CONSTANTS from "../constants/Constants";
 import dayjs from "dayjs";
 import { Meeting } from "../interfaces/interfaces";
 
-const getRoomStatus = async (allMeetings: Meeting[]) => {
+const getRoomStatus =  (allMeetings: Meeting[]) => {
     let inMeetingRightNow = false;
     let willFollow = false;
 
