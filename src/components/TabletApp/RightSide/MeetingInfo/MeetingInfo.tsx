@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Grid, Typography, Box, Avatar } from "@mui/material";
-import { getMeetingsData } from "../../../../api/MeetingAPI";
-import { getParticipantsIdName } from "../../../../api/ParticipantAPI";
+import { getMeetingsData } from "../../../../api/meetings";
+import { getParticipantsIdName } from "../../../../api/participants";
 import { useParams } from "react-router-dom";
 import axios, { AxiosResponse } from "axios";
 import dayjs, { Dayjs } from "dayjs";

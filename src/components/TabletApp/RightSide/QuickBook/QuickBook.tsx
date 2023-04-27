@@ -11,11 +11,8 @@ import {
 } from "@mui/material";
 import EditCalendarIcon from "@mui/icons-material/EditCalendar";
 
-import {
-    getParticipants,
-    getParticipant,
-} from "../../../../api/ParticipantAPI";
-import { getMeetings } from "../../../../api/MeetingAPI";
+import { getParticipants, getParticipant } from "../../../../api/participants";
+import { getMeetings } from "../../../../api/meetings";
 import { spawnToast } from "../../../../utils/Toast";
 
 interface INITIALOWNER {

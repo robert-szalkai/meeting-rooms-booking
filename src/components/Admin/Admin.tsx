@@ -10,7 +10,7 @@ import {
     updateRoomData,
     getRooms,
     getRoomById,
-} from "../../api/RoomAPI";
+} from "../../api/rooms";
 
 interface iCard {
     title: string;

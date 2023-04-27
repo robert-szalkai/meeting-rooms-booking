@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Container, Box, Typography, Card, Divider } from "@mui/material";
 import RoomSelectionCards from "./RoomSelectionCards";
 import { iRoomCards } from "../../interfaces/interfaces";
-import { getAllRooms } from "../../api/RoomAPI";
+import { getAllRooms } from "../../api/rooms";
 import COLORS from "../../constants/CustomColors";
 export const RoomSelection = () => {
     const [roomSelectionData, setRoomSelection] = useState<iRoomCards[]>();
