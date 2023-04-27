@@ -10,7 +10,7 @@ import Menu from "./RightSide/Menu/Menu";
 import CONSTANTS from "../../constants/Constants";
 import { getMeetings, getMeetingsData } from "../../api/getRequests";
 import COLORS from "../../constants/CustomColors";
-import getRoomStatus from "../../functions/getRoomStatus";
+import getRoomStatus from "../../functions/GetRoomStatus";
 
 interface iLeftSide {
     name: string | undefined;
