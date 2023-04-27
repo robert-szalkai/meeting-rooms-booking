@@ -36,12 +36,13 @@ const Menu = ({
     return (
         <Box
             sx={{
-                height: "100%",
+                height: "100vh",
                 width: "100%",
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
                 paddingTop: "20%",
+                overflow:"auto"
             }}
         >
             {" "}
