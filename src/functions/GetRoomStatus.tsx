@@ -1,9 +1,8 @@
 import CONSTANTS from "../constants/Constants";
 import dayjs from "dayjs";
-import { getMeetings } from "../api/getRequests";
+import { Meeting } from "../interfaces/interfaces";
 
-const getRoomStatus = async () => {
-    const allMeetings = await getMeetings();
+const getRoomStatus = async (allMeetings: Meeting[]) => {
     let inMeetingRightNow = false;
     let willFollow = false;
 

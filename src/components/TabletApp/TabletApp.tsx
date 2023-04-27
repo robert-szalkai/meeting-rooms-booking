@@ -8,7 +8,7 @@ import AdvancedBook from "./RightSide/AdvancedBook/AdvancedBook";
 import MeetingInfo from "./RightSide/MeetingInfo/MeetingInfo";
 import Menu from "./RightSide/Menu/Menu";
 import CONSTANTS from "../../constants/Constants";
-import { getMeetingsData } from "../../api/getRequests";
+import { getMeetings, getMeetingsData } from "../../api/getRequests";
 import COLORS from "../../constants/CustomColors";
 import getRoomStatus from "../../functions/getRoomStatus";
 
@@ -63,7 +63,8 @@ const TabletApp = () => {
 
     useEffect(() => {
         const setRoomStatus = async () => {
-            const roomStatus = await getRoomStatus();
+            const allMeetings = await getMeetings();
+            const roomStatus = await getRoomStatus(allMeetings);
             setAvailability(roomStatus);
         };
         setRoomStatus();
