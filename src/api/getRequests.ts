@@ -1,7 +1,5 @@
-import axios from "axios";
-
-import { iRoomCards } from "../interfaces/interfaces";
-import { Participant, Meeting } from "../interfaces/interfaces";
+import axios, { AxiosResponse } from "axios";
+import { iRoomCards,MeetingRoomsData,Participant, Meeting } from "../interfaces/interfaces";
 
 
 const getParticipantsIdName = async () => {
@@ -23,12 +21,12 @@ const getParticipant = async (
 
 };
 
-const getRooms = async () => {
-    return await axios.get("http://localhost:3001/rooms");
+const getRooms = async ():Promise<AxiosResponse<MeetingRoomsData[]>> => {
+  return await axios.get("http://localhost:3001/rooms");
 };
 
-const getRoomById = async (id: number) => {
-    return await axios.get(`http://localhost:3001/meetingRooms/${id}`);
+const getRoomById = async (id: number):Promise<AxiosResponse<MeetingRoomsData>> => {
+    return await axios.get(`http://localhost:3001/rooms/${id}`);
 };
 const getMeetingsData = async()=>{
     return await axios.get("http://localhost:3001/roomdata")

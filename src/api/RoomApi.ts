@@ -5,12 +5,12 @@ const deleteRooms = async (id: number) => {
 };
 
 const addRoom = async (
-    name: string | undefined,
+    title: string | undefined,
     description: string | undefined,
     capacity: string | undefined
 ) => {
     return await axios.post("http://localhost:3001/rooms", {
-        name: name,
+        title: title,
         description: description,
         lastBooked: "",
         capacity: capacity,
@@ -18,13 +18,13 @@ const addRoom = async (
 };
 
 const updateRoomData = async (
-    name: string | undefined,
+    title: string | undefined,
     description: string | undefined,
     capacity: string | undefined,
     id: number | undefined
 ) => {
     return await axios.put(`http://localhost:3001/rooms/${id}`, {
-        name: name,
+        title: title,
         description: description,
         lastBooked: "",
         capacity: capacity,
