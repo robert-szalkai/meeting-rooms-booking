@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Box, Typography, Button, Grid } from "@mui/material";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import dayjs, { Dayjs } from "dayjs";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import DateSelector from "./DateSelector";
 import Participants from "./Participants";
@@ -35,6 +35,7 @@ const AdvancedBook = () => {
     >([]);
     const [meetingOwner, setMeetingOwner] = useState<Participant[]>([]);
     const [bookedMeetings, setBookedMeetings] = useState<Meeting[]>([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         getParticipants().then((res) => {
@@ -55,6 +56,10 @@ const AdvancedBook = () => {
 
     const handleEndTime = (end_time: Dayjs) => {
         setEndTime(end_time.toString());
+    };
+
+    const handleClickCancel = () => {
+        navigate("../menu");
     };
 
     const handleValid = (propertyValue: boolean, key: string) => {
@@ -209,6 +214,7 @@ const AdvancedBook = () => {
                             paddingBottom={2}
                         >
                             <Button
+                                onClick={handleClickCancel}
                                 variant="contained"
                                 color="success"
                                 sx={{ maxWidth: 140 }}

@@ -24,13 +24,13 @@ const Menu = ({
 
     const RoomStatusMessage = [
         "currently available.",
-        "Going to be in use soon",
-        "Ocupied",
+        "going to be in use soon.",
+        "ocupied.",
     ];
     const subText = [
         "Feel free to book a meeting.",
-        "Maybe you have enough time for a quick meeting",
-        "A meeting is already in progress, please wait",
+        "Maybe you have enough time for a quick meeting.",
+        "A meeting is already in progress, please wait.",
     ];
 
     return (

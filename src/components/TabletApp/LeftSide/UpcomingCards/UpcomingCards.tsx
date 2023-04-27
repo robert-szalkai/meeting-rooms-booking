@@ -39,7 +39,6 @@ const UpcomingCards = ({
             setSurplus(persons.length - 6);
         }
         setJoiners(getInitilas());
-        console.log("top g", selectedCardId);
     }, []);
     const mapJoiners = () => {
         return joiners?.map(
@@ -50,7 +49,6 @@ const UpcomingCards = ({
 
     const navigate = useNavigate();
     const handleCardOnClick = () => {
-        console.log(id);
         navigate(`meetinginfo/${id}`);
     };
 

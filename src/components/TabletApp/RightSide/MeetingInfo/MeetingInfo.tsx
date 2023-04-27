@@ -62,8 +62,6 @@ const MeetingInfo = ({ setSelectedCardId }: iMeetingInfo) => {
     }, []);
 
     useEffect(() => {
-        console.log("param: ", meetid);
-
         setSelectedCardId(meetid as string);
     }, [meetid]);
 
@@ -81,7 +79,6 @@ const MeetingInfo = ({ setSelectedCardId }: iMeetingInfo) => {
         if (meetid) {
             const response = await getMeetingById(meetid);
             setMeetingData(response);
-            console.log("duhfiuehdwifue", response);
         }
     };
 
