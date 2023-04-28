@@ -39,7 +39,9 @@ export const MeetingRoomForm = ({
 
     useEffect(() => {
         setAreAllFieldsCompleted(
-            meetinRoomName != "" && meetingRomDes != "" && meetinfRoomCap != ""
+            meetinRoomName !== "" &&
+                meetingRomDes !== "" &&
+                meetinfRoomCap !== ""
         );
     }, [meetinRoomName, meetingRomDes, meetinfRoomCap]);
 
