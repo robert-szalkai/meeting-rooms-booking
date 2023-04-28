@@ -1,4 +1,4 @@
-import { Box, Card, Grid, Typography } from "@mui/material";
+import { Card, Grid, Typography } from "@mui/material";
 import React from "react";
 
 import COLORS from "../../../../../constants/CustomColors";

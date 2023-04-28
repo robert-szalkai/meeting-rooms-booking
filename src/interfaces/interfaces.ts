@@ -1,5 +1,9 @@
 import { Dayjs } from "dayjs";
 
+export interface iHeader {
+    handleClickForm: () => void;
+}
+
 export interface iMenu {
     roomId: string;
     roomName: string;
@@ -43,6 +47,29 @@ export interface iMeetingInfo {
     setSelectedCardId: (meetid: string) => void;
 }
 
+export interface iMeetigroomForm {
+    handleSubmit: (
+        Name: string | undefined,
+        Description: string | undefined,
+        Capacity: string | undefined,
+        id?: number
+    ) => Promise<void>;
+    text: String;
+    edit: boolean;
+    editData?: iCard;
+    onClose: () => void;
+}
+
+export interface iCard {
+    handleEdit: (id: number) => Promise<void>;
+    title: String;
+    id: number;
+    description: String;
+    lastBooked: String;
+    capacity: number;
+    handleDelete: (id: number) => void;
+}
+
 export interface iUpcomingCards {
     id: string;
     start: string;
@@ -62,6 +89,8 @@ export interface MeetingRoomsData {
         startDate: string;
         endDate: string;
     }[];
+    handleEdit: () => Promise<void>;
+    handleDelete: () => void;
 }
 export interface Participant {
     name: string;

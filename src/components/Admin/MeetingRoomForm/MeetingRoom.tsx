@@ -6,29 +6,10 @@ import {
     Button,
     TextField,
     FormHelperText,
-    InputLabel,
 } from "@mui/material";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
-import InputAdornment from "@mui/material/InputAdornment";
-interface iCard {
-    title: string;
-    id: number;
-    description: string;
-    lastBooked: string;
-    capacity: number;
-}
-interface iMeetigroomForm {
-    handleSubmit: (
-        Name: string | undefined,
-        Description: string | undefined,
-        Capacity: string | undefined,
-        id?: number
-    ) => Promise<void>;
-    text: String;
-    edit: boolean;
-    editData?: iCard;
-    onClose: () => void;
-}
+import { iMeetigroomForm } from "../../../interfaces/interfaces";
+
 const handleChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     setFunction: React.Dispatch<React.SetStateAction<string | undefined>>
@@ -50,8 +31,8 @@ export const MeetingRoomForm = ({
         useState<boolean>(false);
     useEffect(() => {
         if (edit === true) {
-            setName(editData?.title);
-            setDescription(editData?.description);
+            setName(editData?.title.toString());
+            setDescription(editData?.description.toString());
             setCapacity(editData?.capacity.toString());
         }
     }, []);
