@@ -85,6 +85,7 @@ const DateSelector: FC<DateSelectorProps> = ({
                 <Box flexGrow={1}>
                     <InputLabel>Day*</InputLabel>
                     <DatePicker
+                        minDate={dayjs()}
                         format="DD/MM/YYYY"
                         onChange={(event: any) => {
                             event.toString() === ""
