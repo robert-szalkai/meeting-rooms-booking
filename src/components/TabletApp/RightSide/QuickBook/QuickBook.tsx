@@ -163,11 +163,10 @@ const QuickBook = ({
                 disabled={availability === CONSTANTS.MEETING_IN_PROGRESS}
                 variant="contained"
                 color={
-                    availability === CONSTANTS.MEETING_WILL_FOLLOW
-                        ? "warning"
-                        : availability === CONSTANTS.MEETING_IN_PROGRESS
-                        ? "error"
-                        : "success"
+                    CONSTANTS.BUTTON_COLOR[availability] as
+                        | "success"
+                        | "warning"
+                        | "error"
                 }
                 sx={{ textTransform: "none" }}
                 onClick={() => {

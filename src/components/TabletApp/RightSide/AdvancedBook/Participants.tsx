@@ -64,11 +64,6 @@ const Participants: FC<ParticipantsProps> = ({
                             error={
                                 fieldTextValid.meetingOwnerValid.length === 0
                             }
-                            // helperText={
-                            //     fieldTextValid.meetingOwnerValid.length === 0
-                            //         ? "Provide a meeting owner"
-                            //         : ""
-                            // }
                             placeholder="An employee from doctari group"
                             InputProps={{
                                 ...params.InputProps,
