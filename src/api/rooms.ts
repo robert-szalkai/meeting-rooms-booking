@@ -1,8 +1,9 @@
 import axios from "axios";
-import { iRoomCards } from "../interfaces/interfaces";
+import { MeetingRoomsData, iRoomCards } from "../interfaces/interfaces";
 
-const getRooms = async () => {
-    return await axios.get("http://localhost:3001/rooms");
+const getRooms = async (): Promise<MeetingRoomsData[]> => {
+    const result = await axios.get("http://localhost:3001/rooms");
+    return result.data;
 };
 
 const getAllRooms = async (): Promise<iRoomCards[]> => {

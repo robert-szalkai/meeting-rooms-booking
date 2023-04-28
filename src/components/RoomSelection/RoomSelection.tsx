@@ -14,7 +14,7 @@ export const RoomSelection = () => {
     const getData = async () => {
         try {
             const result = await getRooms();
-            setRoomSelection(result.data);
+            setRoomSelection(result);
         } catch (error) {
             console.log(error);
         }

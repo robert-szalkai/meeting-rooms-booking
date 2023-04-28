@@ -65,7 +65,7 @@ const Admin = () => {
     };
     const getDataContent = async () => {
         const result = await getRooms();
-        setDataContent(result.data);
+        setDataContent(result);
     };
     const handleDelete = async (id: number) => {
         const result = await deleteRooms(id);
