@@ -14,16 +14,18 @@ import EditCalendarIcon from "@mui/icons-material/EditCalendar";
 import { getParticipants, getParticipant } from "../../../../api/participants";
 import { getMeetings } from "../../../../api/meetings";
 import { spawnToast } from "../../../../utils/Toast";
-import { INITIALOWNER } from "../../../../interfaces/interfaces";
+import CONSTANTS from "../../../../constants/Constants";
 
 interface iQuickBook {
     isDurationOpen?: boolean;
     handleQuickBookDone: () => void;
+    availability: number;
 }
 
 const QuickBook = ({
     isDurationOpen = false,
     handleQuickBookDone,
+    availability,
 }: iQuickBook) => {
     const [timeButtonsVisible, setTimeButtonsVisible] =
         useState<boolean>(isDurationOpen);
@@ -153,8 +155,14 @@ const QuickBook = ({
             gap={3}
         >
             <Button
+                disabled={availability === CONSTANTS.MEETING_IN_PROGRESS}
                 variant="contained"
-                color="success"
+                color={
+                    CONSTANTS.BUTTON_COLOR[availability] as
+                        | "success"
+                        | "warning"
+                        | "error"
+                }
                 sx={{ textTransform: "none" }}
                 onClick={() => {
                     handleQuickBookButton();

@@ -1,9 +1,11 @@
-import { Button, Box, Typography, Skeleton } from "@mui/material";
-import React from "react";
+import { Button, Box, Typography, Skeleton, colors } from "@mui/material";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 
 import QuickBook from "../QuickBook/QuickBook";
+import CONSTANTS from "../../../../constants/Constants";
+import COLORS from "../../../../constants/CustomColors";
 
 interface iMenu {
     roomId: string;
@@ -11,6 +13,7 @@ interface iMenu {
     roomStatus: number;
     handleQuickBookDone: () => void;
     isDurationOpen?: boolean;
+    availability: number;
 }
 
 const Menu = ({
@@ -19,6 +22,7 @@ const Menu = ({
     roomStatus,
     handleQuickBookDone,
     isDurationOpen = false,
+    availability,
 }: iMenu) => {
     const advancedBookLink = `/rooms/${roomId}/form`;
 
@@ -77,7 +81,12 @@ const Menu = ({
             <Link to={advancedBookLink} style={{ textDecoration: "none" }}>
                 <Button
                     variant="contained"
-                    color="success"
+                    color={
+                        CONSTANTS.BUTTON_COLOR[availability] as
+                            | "success"
+                            | "warning"
+                            | "error"
+                    }
                     sx={{ textTransform: "none", marginBottom: 3 }}
                 >
                     <CalendarMonthIcon />
@@ -85,6 +94,7 @@ const Menu = ({
                 </Button>
             </Link>
             <QuickBook
+                availability={availability}
                 isDurationOpen={isDurationOpen}
                 handleQuickBookDone={handleQuickBookDone}
             />
