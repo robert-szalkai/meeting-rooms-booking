@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
-import {  Box, Typography, Card } from "@mui/material";
+import { Box, Typography, Card } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+
 import COLORS from "../../constants/CustomColors";
 import { iRoomCards } from "../../interfaces/interfaces";
-import { useNavigate } from "react-router-dom";
+
 export const RoomSelectionCards = ({
     availability,
     description,
@@ -10,7 +12,11 @@ export const RoomSelectionCards = ({
     name,
     capacity,
 }: iRoomCards) => {
-    const colors={"free":COLORS.SUCCESS,"booked":COLORS.ERROR,"coming":COLORS.WARNING}
+    const colors = {
+        free: COLORS.SUCCESS,
+        booked: COLORS.ERROR,
+        coming: COLORS.WARNING,
+    };
     const navigate = useNavigate();
     const [color, setColor] = useState<string>();
     const handleClick = (id: number) => {

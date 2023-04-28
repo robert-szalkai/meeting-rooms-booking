@@ -4,14 +4,7 @@ import { Link } from "react-router-dom";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 
 import QuickBook from "../QuickBook/QuickBook";
-
-interface iMenu {
-    roomId: string;
-    roomName: string;
-    roomStatus: number;
-    handleQuickBookDone: () => void;
-    isDurationOpen?: boolean;
-}
+import { iMenu } from "../../../../interfaces/interfaces";
 
 const Menu = ({
     roomId,
@@ -42,7 +35,7 @@ const Menu = ({
                 flexDirection: "column",
                 alignItems: "center",
                 paddingTop: "20%",
-                overflow:"auto"
+                overflow: "auto",
             }}
         >
             {" "}
