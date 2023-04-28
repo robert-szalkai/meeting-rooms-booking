@@ -9,8 +9,9 @@ import "./UpcomingCardsScrollCSS.css";
 import QuickBookGlobal from "./QuickBookGlobal/QuickBookGlobal";
 import AdvancedBookGlobal from "./AdvancedBookGlobal/AdvancedBookGlobal";
 import Clock from "./Clock/Clock";
-import { getParticipantsIdName } from "../../../api/getRequests";
+import { getParticipantsIdName } from "../../../api/participants";
 import CONSTANTS from "../../../constants/Constants";
+import { participantsID } from "../../../interfaces/interfaces";
 
 interface iLeftSide {
     name: string | undefined;
@@ -24,12 +25,6 @@ interface iLeftSide {
     availability: number;
     selectedCardId: string;
     onClickQuickBookGlobal: () => void;
-}
-interface participantsID {
-    participants: {
-        id: string;
-        name: string;
-    }[];
 }
 
 const LeftSide = ({
@@ -58,9 +53,7 @@ const LeftSide = ({
 
     const getParticipantsData = async () => {
         const response = await getParticipantsIdName();
-        if (response.status === 200) {
-            setParticipantsData(response.data);
-        }
+        setParticipantsData(response);
     };
     useEffect(() => {
         getParticipantsData();

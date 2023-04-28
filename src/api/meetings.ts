@@ -1,5 +1,6 @@
 import axios from "axios";
 import { Dayjs } from "dayjs";
+import { Meeting } from "../interfaces/interfaces";
 
 const addMeeting = async (
     Name: string | undefined,
@@ -17,4 +18,13 @@ const addMeeting = async (
     });
 };
 
-export { addMeeting };
+const getMeetingsData = async () => {
+    return await axios.get("http://localhost:3001/roomdata");
+};
+
+const getMeetings = async (): Promise<Meeting[]> => {
+    const result = await axios.get("http://localhost:3001/meetings");
+    return result.data;
+};
+
+export { addMeeting, getMeetings, getMeetingsData };
