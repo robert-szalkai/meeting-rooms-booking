@@ -11,6 +11,7 @@ import AdvancedBookGlobal from "./AdvancedBookGlobal/AdvancedBookGlobal";
 import Clock from "./Clock/Clock";
 import { getParticipantsIdName } from "../../../api/participants";
 import CONSTANTS from "../../../constants/Constants";
+import { participantsID } from "../../../interfaces/interfaces";
 
 interface iLeftSide {
     name: string | undefined;
@@ -24,12 +25,6 @@ interface iLeftSide {
     availability: number;
     selectedCardId: string;
     onClickQuickBookGlobal: () => void;
-}
-interface participantsID {
-    participants: {
-        id: string;
-        name: string;
-    }[];
 }
 
 const LeftSide = ({
@@ -57,9 +52,10 @@ const LeftSide = ({
     const [participantsData, setParticipantsData] = useState<participantsID>();
 
     const getParticipantsData = async () => {
-        const response = await getParticipantsIdName();
-        if (response.status === 200) {
-            setParticipantsData(response.data);
+        let status = 0;
+        const response = await getParticipantsIdName(status);
+        if (status === 200) {
+            setParticipantsData(response);
         }
     };
     useEffect(() => {
@@ -85,7 +81,6 @@ const LeftSide = ({
         );
     };
 
-    // const formattedDate: string = currDate.toLocaleDateString("en-US", options);
     const [time, setTime] = useState(hoursMin);
     const displayCards = () => {
         return meetings

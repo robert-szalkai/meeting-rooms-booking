@@ -14,11 +14,8 @@ import EditCalendarIcon from "@mui/icons-material/EditCalendar";
 import { getParticipants, getParticipant } from "../../../../api/participants";
 import { getMeetings } from "../../../../api/meetings";
 import { spawnToast } from "../../../../utils/Toast";
+import { INITIALOWNER } from "../../../../interfaces/interfaces";
 
-interface INITIALOWNER {
-    name: string;
-    id: number;
-}
 interface iQuickBook {
     isDurationOpen?: boolean;
     handleQuickBookDone: () => void;

@@ -1,17 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Grid, Typography, Box, Avatar } from "@mui/material";
-import { getMeetingsData } from "../../../../api/meetings";
-import { getParticipantsIdName } from "../../../../api/participants";
-import { useParams } from "react-router-dom";
 import axios, { AxiosResponse } from "axios";
 import dayjs, { Dayjs } from "dayjs";
+import { useParams } from "react-router-dom";
 
-interface participantsID {
-    participants: {
-        id: string;
-        name: string;
-    }[];
-}
+import { getMeetingsData } from "../../../../api/meetings";
+import { getParticipantsIdName } from "../../../../api/participants";
+import { participantsID } from "../../../../interfaces/interfaces";
 
 interface iMeetingData {
     name: string;
@@ -45,9 +40,10 @@ const MeetingInfo = ({ setSelectedCardId }: iMeetingInfo) => {
     };
 
     const getParticipantsData = async () => {
-        const response = await getParticipantsIdName();
-        if (response.status === 200) {
-            setParticipantsData(response.data);
+        let status = 0;
+        const response = await getParticipantsIdName(status);
+        if (status === 200) {
+            setParticipantsData(response);
         }
     };
 
