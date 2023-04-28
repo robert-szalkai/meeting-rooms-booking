@@ -138,7 +138,9 @@ const MeetingInfo = ({ setSelectedCardId }: iMeetingInfo) => {
             <Grid item xs={12}>
                 <Grid container direction={"row"}>
                     <Grid item xs={3}>
-                        <Typography variant="h5">Participants</Typography>
+                        <Typography variant="h5" fontFamily={"IBM Plex Sans"} fontWeight={"600"}>
+                            Participants
+                        </Typography>
                     </Grid>
                 </Grid>
             </Grid>
