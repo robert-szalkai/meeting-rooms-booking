@@ -32,7 +32,7 @@ const MainRouter = () => {
                 <Route path="selection" element={<RoomSelection />} />
 
                 {/* Redirect to RoomSelection page for any other route */}
-                {/* <Route path="*" element={<Navigate to="/selection" />} /> */}
+                <Route path="*" element={<Navigate to="/selection" />} />
             </Routes>
         </BrowserRouter>
     );

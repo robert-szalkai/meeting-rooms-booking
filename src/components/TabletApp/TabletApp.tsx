@@ -8,9 +8,9 @@ import AdvancedBook from "./RightSide/AdvancedBook/AdvancedBook";
 import MeetingInfo from "./RightSide/MeetingInfo/MeetingInfo";
 import Menu from "./RightSide/Menu/Menu";
 import CONSTANTS from "../../constants/Constants";
-import { getMeetings, getMeetingsData } from "../../api/getRequests";
+import { getMeetings, getMeetingsData } from "../../api/meetings";
 import COLORS from "../../constants/CustomColors";
-import getRoomStatus from "../../functions/getRoomStatus";
+import getRoomStatus from "../../functions/GetRoomStatus";
 
 interface iLeftSide {
     name: string | undefined;
@@ -121,7 +121,7 @@ const TabletApp = () => {
                     >
                         <Routes>
                             <Route
-                                path="/menu"
+                                path="/:menu"
                                 element={
                                     <Menu
                                         roomId={id ? id : ""}

@@ -5,6 +5,7 @@ import SIZE from "../../../../constants/CustomSize";
 import { useNavigate } from "react-router";
 import COLORS from "../../../../constants/CustomColors";
 import { StringDecoder } from "string_decoder";
+import { useLocation } from "react-router-dom";
 interface iUpcomingCards {
     id: string;
     start: string;
@@ -34,6 +35,7 @@ const UpcomingCards = ({
 
     const [joiners, setJoiners] = useState<(string | undefined)[]>();
     const [surplus, setSurplus] = useState<number>();
+    const location = useLocation();
     useEffect(() => {
         if (persons.length > 6) {
             setSurplus(persons.length - 6);
@@ -56,7 +58,11 @@ const UpcomingCards = ({
         <Card
             onClick={handleCardOnClick}
             sx={{
-                border: selectedCardId === id ? "4px solid purple" : "none",
+                border:
+                    selectedCardId === id &&
+                    location.pathname.includes(`/meetinginfo/${selectedCardId}`)
+                        ? "4px solid purple"
+                        : "none",
                 height: SIZE.HEIGT_CARD,
                 borderRadius: SIZE.BORDER_RADIUS_CARD,
                 width: SIZE.WIDTH_CARD,

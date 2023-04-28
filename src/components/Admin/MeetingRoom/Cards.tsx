@@ -17,7 +17,7 @@ export const Cards = ({
     description,
     lastBooked,
     handleDelete,
-    handleEdit,
+    handleEdit
 }: iCard) => {
     return (
         <Card

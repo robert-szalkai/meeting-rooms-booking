@@ -7,8 +7,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import DateSelector from "./DateSelector";
 import Participants from "./Participants";
 import InputField from "./InputField";
-import { getMeetings, getParticipants } from "../../../../api/getRequests";
-import { addMeeting } from "../../../../api/MeetingApi";
+import { getMeetings, addMeeting } from "../../../../api/meetings";
+import { getParticipants } from "../../../../api/participants";
 import { spawnToast } from "../../../../utils/Toast";
 import {
     FormValidity,
