@@ -15,6 +15,7 @@ import { getParticipants, getParticipant } from "../../../../api/participants";
 import { getMeetings } from "../../../../api/meetings";
 import { spawnToast } from "../../../../utils/Toast";
 import CONSTANTS from "../../../../constants/Constants";
+import { INITIALOWNER } from "../../../../interfaces/interfaces";
 
 interface iQuickBook {
     isDurationOpen?: boolean;
