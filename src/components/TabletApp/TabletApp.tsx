@@ -10,6 +10,7 @@ import Menu from "./RightSide/Menu/Menu";
 import CONSTANTS from "../../constants/Constants";
 import { getMeetings, getMeetingsData } from "../../api/meetings";
 import COLORS from "../../constants/CustomColors";
+import getRoomStatus from "../../functions/GetRoomStatus";
 
 interface iLeftSide {
     name: string | undefined;
@@ -61,46 +62,12 @@ const TabletApp = () => {
     }, []);
 
     useEffect(() => {
-        const isMeetingRightNow = async () => {
+        const setRoomStatus = async () => {
             const allMeetings = await getMeetings();
-            let inMeetingRightNow = false;
-            let willFollow = false;
-
-            Object.values(allMeetings).forEach((meeting) => {
-                const diffInMinutesStartTime = dayjs(meeting.startDate).diff(
-                    dayjs(),
-                    "minute",
-                    true
-                );
-
-                const diffInMinutesEndTime = dayjs(meeting.endDate).diff(
-                    dayjs(),
-                    "minute",
-                    true
-                );
-
-                if (diffInMinutesStartTime < 0 && diffInMinutesEndTime > 0) {
-                    inMeetingRightNow = true;
-                }
-
-                if (
-                    diffInMinutesStartTime > 0 &&
-                    diffInMinutesStartTime <= CONSTANTS.MAX_QUICKBOOK_DURATION
-                ) {
-                    willFollow = true;
-                }
-            });
-            if (inMeetingRightNow) {
-                setAvailability(CONSTANTS.MEETING_IN_PROGRESS);
-                return;
-            }
-            if (willFollow) {
-                setAvailability(CONSTANTS.MEETING_WILL_FOLLOW);
-                return;
-            }
-            setAvailability(CONSTANTS.ROOM_AVAILABLE);
+            const roomStatus = await getRoomStatus(allMeetings);
+            setAvailability(roomStatus);
         };
-        isMeetingRightNow();
+        setRoomStatus();
 
         const interval = setInterval(() => {
             setTime(Date.now());
@@ -154,7 +121,7 @@ const TabletApp = () => {
                     >
                         <Routes>
                             <Route
-                                path="/menu"
+                                path="/:menu"
                                 element={
                                     <Menu
                                         roomId={id ? id : ""}

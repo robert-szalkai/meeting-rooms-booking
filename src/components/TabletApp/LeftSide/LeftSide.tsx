@@ -60,7 +60,6 @@ const LeftSide = ({
     };
     useEffect(() => {
         getParticipantsData();
-        console.log("rares rupe", selectedCardId);
     }, []);
     useEffect(() => {
         if (

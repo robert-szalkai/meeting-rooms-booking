@@ -11,6 +11,7 @@ import {
     getRooms,
     getRoomById,
 } from "../../api/rooms";
+import { MeetingRoomsData } from "../../interfaces/interfaces";
 
 interface iCard {
     title: string;
@@ -24,10 +25,10 @@ const Admin = () => {
     const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
     const [deleteRoomId, setDeleteRoomId] = useState<number | null>(null);
     const [deleteRoomTitle, setDeleteRoomTitle] = useState<string>("");
-    const [datacontent, setDataContent] = useState<iCard[]>();
+    const [datacontent, setDataContent] = useState<MeetingRoomsData[]>();
     const [loaded, setLoaded] = useState(false);
     const [showEditModal, setEditModal] = useState<boolean>(false);
-    const [editDataEvent, setEditData] = useState<iCard>();
+    const [editDataEvent, setEditData] = useState<MeetingRoomsData>();
 
     const handleSubmitForm = async (
         Name: string | undefined,
