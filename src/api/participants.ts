@@ -2,11 +2,9 @@ import axios from "axios";
 
 import { Participant, participantsID } from "../interfaces/interfaces";
 
-const getParticipantsIdName = async (
-    status: number
-): Promise<participantsID> => {
+const getParticipantsIdName = async (): Promise<participantsID> => {
     const result = await axios.get("http://localhost:3002/participantsData");
-    status = result.status;
+    //status = result.status;
     return result.data;
 };
 

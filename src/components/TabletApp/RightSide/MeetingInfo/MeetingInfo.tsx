@@ -41,11 +41,8 @@ const MeetingInfo = ({ setSelectedCardId }: iMeetingInfo) => {
     };
 
     const getParticipantsData = async () => {
-        let status = 0;
-        const response = await getParticipantsIdName(status);
-        if (status === 200) {
-            setParticipantsData(response);
-        }
+        const response = await getParticipantsIdName();
+        setParticipantsData(response);
     };
 
     useEffect(() => {
