@@ -84,7 +84,6 @@ const LeftSide = ({
         );
     };
 
-    // const formattedDate: string = currDate.toLocaleDateString("en-US", options);
     const [time, setTime] = useState(hoursMin);
     const displayCards = () => {
         return meetings

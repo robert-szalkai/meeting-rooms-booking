@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Grid, Typography, Box, Avatar } from "@mui/material";
+import { Grid, Typography, Box, Avatar, Alert, Stack } from "@mui/material";
 import {
     getMeetingsData,
     getParticipantsIdName,
@@ -7,6 +7,7 @@ import {
 import { useParams } from "react-router-dom";
 import axios, { AxiosResponse } from "axios";
 import dayjs, { Dayjs } from "dayjs";
+import Error from "./NotFoundPage/NotFoundPage";
 
 interface participantsID {
     participants: {
@@ -18,8 +19,8 @@ interface participantsID {
 interface iMeetingData {
     name: string;
     id: string;
-    start_time: string;
-    end_time: string;
+    startTime: string;
+    endTime: string;
     participants_id: string[] | undefined;
     description: string;
 }
@@ -137,8 +138,8 @@ const MeetingInfo = ({ setSelectedCardId }: iMeetingInfo) => {
                         <Typography variant="h4">{meetingData.name}</Typography>
                         <Typography variant="h4">
                             Today,
-                            {dayjs(meetingData.start_time).format("HH:MM")}-
-                            {dayjs(meetingData.end_time).format("HH:MM")}
+                            {dayjs(meetingData.startTime).format("HH:MM")}-
+                            {dayjs(meetingData.endTime).format("HH:MM")}
                         </Typography>
                     </Grid>
                 </Grid>
@@ -179,7 +180,7 @@ const MeetingInfo = ({ setSelectedCardId }: iMeetingInfo) => {
             </Grid>
         </Grid>
     ) : (
-        <Typography variant="h4">Meeting not found...</Typography>
+        <Error />
     );
 };
 
