@@ -1,6 +1,13 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { Card, Typography, Box, Avatar } from "@mui/material";
+import {
+    Card,
+    Typography,
+    Box,
+    Avatar,
+    AvatarGroup,
+    Grid,
+} from "@mui/material";
 import SIZE from "../../../../constants/CustomSize";
 import { useNavigate } from "react-router";
 import COLORS from "../../../../constants/CustomColors";
@@ -45,7 +52,11 @@ const UpcomingCards = ({
     const mapJoiners = () => {
         return joiners?.map(
             (e, index) =>
-                index <= 5 && <Avatar sx={{ bgcolor: "purple" }}>{e}</Avatar>
+                index <= 5 && (
+                    <Avatar sx={{ bgcolor: "purple", width: 28, height: 28 }}>
+                        {e}
+                    </Avatar>
+                )
         );
     };
 
@@ -82,14 +93,14 @@ const UpcomingCards = ({
                 },
             }}
         >
-            <Box sx={{ marginLeft: "15px" }}>
+            <Grid sx={{ marginLeft: "15px" }}>
                 <Typography noWrap variant="h6">
                     {meetingName}
                 </Typography>
                 <Typography variant="h5">
                     Today, {start} - {end}
                 </Typography>
-            </Box>
+            </Grid>
             <Box
                 sx={{
                     width: "100%",
@@ -97,11 +108,12 @@ const UpcomingCards = ({
                     marginTop: "auto",
                     marginLeft: "15px",
                     display: "flex",
-                   // gap: "-10px",
                 }}
             >
-                {joiners && mapJoiners()}
-                {surplus && <Avatar>+{surplus}</Avatar>}
+                <AvatarGroup max={6}>
+                    {joiners && mapJoiners()}
+                    {surplus && <Avatar>+{surplus}</Avatar>}
+                </AvatarGroup>
             </Box>
         </Card>
     );
