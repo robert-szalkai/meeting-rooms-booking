@@ -82,18 +82,22 @@ const UpcomingCards = ({
                 },
             }}
         >
-            <Typography noWrap variant="h6">
-                {meetingName}
-            </Typography>
-            <Typography variant="h5">
-                Today, {start} - {end}
-            </Typography>
+            <Box sx={{ marginLeft: "15px" }}>
+                <Typography noWrap variant="h6">
+                    {meetingName}
+                </Typography>
+                <Typography variant="h5">
+                    Today, {start} - {end}
+                </Typography>
+            </Box>
             <Box
                 sx={{
                     width: "100%",
+                    height: "34px",
                     marginTop: "auto",
+                    marginLeft: "15px",
                     display: "flex",
-                    gap: "-10px",
+                   // gap: "-10px",
                 }}
             >
                 {joiners && mapJoiners()}
