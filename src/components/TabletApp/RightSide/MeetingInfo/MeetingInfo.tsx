@@ -105,7 +105,7 @@ const MeetingInfo = ({ setSelectedCardId }: iMeetingInfo) => {
                         alignItems: "center",
                     }}
                 >
-                    <Avatar>{person}</Avatar>
+                    <Avatar sx={{ backgroundColor: "purple" }}>{person}</Avatar>
                     <Typography variant="body1">
                         {personsById?.[index]}
                     </Typography>
@@ -116,35 +116,31 @@ const MeetingInfo = ({ setSelectedCardId }: iMeetingInfo) => {
 
     return meetingData ? (
         <Grid
-            height={"100%"}
-            padding={1}
+            height={"100vh"}
+            padding={2}
             container
             direction={"row"}
             spacing={1}
+            marginLeft={8}
+            marginTop={3}
         >
             <Grid item xs={12}>
-                <Grid container direction={"row"} spacing={5}>
+                <Grid container direction={"row"} spacing={0}>
                     <Grid item xs={12}></Grid>
                     <Grid item xs={12}>
                         <Typography variant="h4">{meetingData.name}</Typography>
-                        <Typography variant="h4">
-                            Today,
-                            {dayjs(meetingData.startTime).format("HH:MM")}-
+                        <Typography variant="h6">
+                            Today,{" "}
+                            {dayjs(meetingData.startTime).format("HH:MM")} -{" "}
                             {dayjs(meetingData.endTime).format("HH:MM")}
                         </Typography>
                     </Grid>
                 </Grid>
             </Grid>
             <Grid item xs={12}>
-                <Grid container direction={"row"}>
+                <Grid container direction={"row"} marginTop={-10}>
                     <Grid item xs={3}>
-                        <Typography
-                            variant="h5"
-                            fontFamily={"IBM Plex Sans"}
-                            fontWeight={"600"}
-                        >
-                            Participants
-                        </Typography>
+                        <Typography variant="h5">Participants</Typography>
                     </Grid>
                 </Grid>
             </Grid>
@@ -154,7 +150,9 @@ const MeetingInfo = ({ setSelectedCardId }: iMeetingInfo) => {
                     flexWrap={"wrap"}
                     container
                     direction={"row"}
-                    spacing={2.3}
+                    spacing={2}
+                    marginTop={-20}
+                    marginLeft={-2.8}
                 >
                     {mapersons()}
                 </Grid>
