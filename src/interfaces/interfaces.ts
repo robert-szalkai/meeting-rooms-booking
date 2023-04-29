@@ -1,18 +1,41 @@
 import { Dayjs } from "dayjs";
 
-export  interface iRoomCards{
-    name:string,
-    availability:"free"| "booked"|"coming";
-    description:string;
-    capacity:number;
-    id:number;
+export interface iRoomCards {
+    name: string;
+    availability: "free" | "booked" | "coming";
+    description: string;
+    capacity: number;
+    id: number;
 }
-
+export interface MeetingRoomsData {
+    title: string;
+    id: number;
+    description: string;
+    lastBooked: string;
+    capacity: number;
+    meetings:{
+        startDate:string;
+        endDate:string;
+        
+    }[]
+}
 export interface Participant {
     name: string;
     id: number;
     available: boolean;
     image: string;
+}
+
+export interface participantsID {
+    participants: {
+        id: string;
+        name: string;
+    }[];
+}
+
+export interface INITIALOWNER {
+    name: string;
+    id: number;
 }
 
 export interface Meeting {

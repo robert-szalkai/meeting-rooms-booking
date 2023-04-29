@@ -4,8 +4,8 @@
     "meetings":[
         {"name": "Focus Room 1",
            "id":"1",
-           "start_time": "2023-04-13T08:10:18.386Z",
-           "end_time": "2023-04-13T10:10:18.386Z",
+           "start_time": "2023-04-26T08:10:18.386Z",
+           "end_time": "2023-04-26T18:10:18.386Z",
            "participants_id":[1,5],
            "description":"Here we go for some fun"
         },
@@ -45,26 +45,52 @@
          }
 
     ]
-   }
+   },
+   "meetings":[
+      {  
+         "meetingName": "Focus Room 1",
+         "id":"1",
+         "startDate": "2023-04-28T10:20:18.386Z",
+         "endDate": "2023-04-28T18:35:18.386Z",
+         "participants":[1,5],
+         "description":"Here we go for some fun"
+      },
 
 
+      {  
+         "meetingName": "Focus Room 2",
+          "id":"2",
+          "startDate": "2023-04-13T09:10:18.386Z",
+          "endDate": "2023-04-13T12:10:18.386Z",
+          "participants":[1, 2, 3, 5 ],
+          "description":"Nothing to see here"
 
-   
+       },
+       {
+          "meetingName": "Focus Room 3",
+          "id":"3",
+          "startDate": "2023-04-13T06:10:18.386Z",
+          "endDate": "2023-04-13T08:10:18.386Z",
+          "participants":[1,2,3],
+          "description":"Hello there"
+       },
+       { 
+         "meetingName": "Focus Room 4",
+          "id":"4",
+          "startDate": "2023-04-13T08:10:18.386Z",
+          "endDate": "2023-04-13T11:11:18.386Z",
+          "participants_id":[1,2],
+          "description":"Forbidden for people under 30 years old"
+       },
+       {
+         "meetingName": "Focus Room 5",
+          "id":"5",
+          "startDate": "2023-04-26T18:10:18.386Z",
+          "endDate": "2023-04-26T18:10:18.386Z",
+          "participants_id":[1,2,4, 3],
+          "description":"Exit"
+       }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  ]
 }
 

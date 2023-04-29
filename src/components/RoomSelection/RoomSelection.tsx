@@ -1,25 +1,44 @@
 import React, { useState, useEffect } from "react";
 import { Container, Box, Typography, Card, Divider } from "@mui/material";
+
 import RoomSelectionCards from "./RoomSelectionCards";
-import { iRoomCards } from "../../interfaces/interfaces";
-import { getAllRooms } from "../../api/getRequests";
+import { Meeting, iRoomCards } from "../../interfaces/interfaces";
+import { getAllRooms, getRooms } from "../../api/rooms";
 import COLORS from "../../constants/CustomColors";
+import { MeetingRoomsData } from "../../interfaces/interfaces";
+import getRoomStatus from "../../functions/GetRoomStatus";
+
 export const RoomSelection = () => {
-    const [roomSelectionData, setRoomSelection] = useState<iRoomCards[]>();
-    const getRooms = async () => {
+    const [roomSelectionData, setRoomSelection] =
+        useState<MeetingRoomsData[]>();
+    const getData = async () => {
         try {
-            const data = await getAllRooms();
-            setRoomSelection(data);
+            const result = await getRooms();
+            setRoomSelection(result);
         } catch (error) {
             console.log(error);
         }
     };
+    const RoomsStatus = () => {
+        const status = roomSelectionData?.flatMap((e) => {
+            switch (getRoomStatus(e.meetings as unknown as Meeting[])) {
+                case 0:
+                    return ["free"];
+                case 1:
+                    return ["coming"];
+                case 2:
+                    return ["booked"];
+            }
+        });
+        return status as NonNullable<typeof status>;
+    };
     const mapElements = () => {
-        return roomSelectionData?.map((e) => (
+        const status = RoomsStatus();
+        return roomSelectionData?.map((e, index) => (
             <RoomSelectionCards
-                name={e.name}
+                name={e.title}
                 key={e.id}
-                availability={e.availability}
+                availability={status[index] as "free" | "coming" | "booked"}
                 capacity={e.capacity}
                 description={e.description}
                 id={e.id}
@@ -27,7 +46,7 @@ export const RoomSelection = () => {
         ));
     };
     useEffect(() => {
-        getRooms();
+        getData();
     }, []);
     return (
         <Box>
@@ -77,47 +96,69 @@ export const RoomSelection = () => {
                         alignItems: "flex-start",
                     }}
                 >
-                   
-                    <Box sx={{ width: "100%", display: "flex", gap: "2px" ,alignItems:"center",justifyContent:"space-evenly",}}>
+                    <Box
+                        sx={{
+                            width: "100%",
+                            display: "flex",
+                            gap: "2px",
+                            alignItems: "center",
+                            justifyContent: "space-evenly",
+                        }}
+                    >
                         <Box
                             sx={{
-                                
-                                backgroundColor:COLORS.SUCCESS,
+                                backgroundColor: COLORS.SUCCESS,
                                 clipPath: "circle(15.0% at 50% 54%)",
-                                height:"80px",
-                                width:"50px"
+                                height: "80px",
+                                width: "50px",
                             }}
                         />
-                        <Box sx={{width:"200px"}}>
-                        <Typography variant='h6'>Room free</Typography>
+                        <Box sx={{ width: "200px" }}>
+                            <Typography variant="h6">Room free</Typography>
                         </Box>
                     </Box>
-                    <Box sx={{ width: "100%", display: "flex" ,alignItems:"center",justifyContent:"space-evenly"}}>
+                    <Box
+                        sx={{
+                            width: "100%",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "space-evenly",
+                        }}
+                    >
                         <Box
                             sx={{
-                             
-                                backgroundColor:COLORS.WARNING,
+                                backgroundColor: COLORS.WARNING,
                                 clipPath: "circle(15.0% at 50% 54%)",
-                                height:"80px",
-                                width:"50px"
+                                height: "80px",
+                                width: "50px",
                             }}
                         />
-                          <Box sx={{width:"200px"}}>
-                        <Typography variant='h6'>Meeting incoming</Typography>
+                        <Box sx={{ width: "200px" }}>
+                            <Typography variant="h6">
+                                Meeting incoming
+                            </Typography>
                         </Box>
                     </Box>
-                    <Box sx={{ width: "100%", display: "flex",alignItems:"center",justifyContent:"space-evenly"}}>
+                    <Box
+                        sx={{
+                            width: "100%",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "space-evenly",
+                        }}
+                    >
                         <Box
                             sx={{
-                               
-                                backgroundColor:COLORS.ERROR,
+                                backgroundColor: COLORS.ERROR,
                                 clipPath: "circle(15.0% at 50% 54%)",
-                                height:"80px",
-                                width:"50px"
+                                height: "80px",
+                                width: "50px",
                             }}
                         />
-                        <Box sx={{width:"200px"}}>
-                        <Typography variant='h6'>Ongoing meeting</Typography>
+                        <Box sx={{ width: "200px" }}>
+                            <Typography variant="h6">
+                                Ongoing meeting
+                            </Typography>
                         </Box>
                     </Box>
                 </Box>
