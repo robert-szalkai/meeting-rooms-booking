@@ -188,8 +188,8 @@ const QuickBook = ({
                             display: "flex",
                             flexDirection: "column",
                             mt: 4,
-                            ml: 8,
-                            mr: 8,
+                            ml: "5%",
+                            mr: "5%",
                         }}
                     >
                         <Typography sx={{ fontWeight: "bold", mb: 2 }}>
@@ -201,7 +201,7 @@ const QuickBook = ({
                                 justifyContent: "space-between",
                                 alignItems: "center",
                                 width: "100%",
-                                gap: "16px",
+                                gap: "32px",
                             }}
                         >
                             <Button
