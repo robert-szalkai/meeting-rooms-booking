@@ -14,7 +14,7 @@ const InputField = ({
 }: InputFieldProps) => {
     return (
         <Box>
-            <InputLabel>{inputLabelText}</InputLabel>
+            <InputLabel sx={{ mb: 1, mt: 1 }}>{inputLabelText}</InputLabel>
             <TextField
                 error={fieldTextValid === ""}
                 placeholder={placeholderText}
@@ -24,7 +24,7 @@ const InputField = ({
                 fullWidth
                 InputProps={{ disableUnderline: true }}
                 multiline={multilineSelect}
-                rows={multilineSelect ? 4 : 0}
+                rows={multilineSelect ? 3 : 0}
                 onChange={(event) => {
                     event.target.value === ""
                         ? formValidationSetter(false, "isNameValid")
