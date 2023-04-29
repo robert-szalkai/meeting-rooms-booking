@@ -105,7 +105,15 @@ const MeetingInfo = ({ setSelectedCardId }: iMeetingInfo) => {
                         alignItems: "center",
                     }}
                 >
-                    <Avatar sx={{ backgroundColor: "purple" }}>{person}</Avatar>
+                    <Avatar
+                        sx={{
+                            backgroundColor: "purple",
+                            height: 35,
+                            width: 35,
+                        }}
+                    >
+                        {person}
+                    </Avatar>
                     <Typography variant="body1">
                         {personsById?.[index]}
                     </Typography>
@@ -159,14 +167,14 @@ const MeetingInfo = ({ setSelectedCardId }: iMeetingInfo) => {
             </Grid>
             <Grid item xs={12}>
                 <Grid container direction={"row"}>
-                    <Grid item xs={3}>
+                    <Grid item xs={3} marginTop={-10} marginLeft={1}>
                         <Typography variant="h5">Description</Typography>
                     </Grid>
                 </Grid>
             </Grid>
             <Grid item xs={12}>
-                <Grid padding={0.5} container direction={"row"}>
-                    <Grid item xs={12}>
+                <Grid padding={0.5} container direction={"row"} marginTop={-20}>
+                    <Grid item xs={12} marginLeft={1}>
                         <Typography variant="subtitle1">
                             {meetingData.description}
                         </Typography>

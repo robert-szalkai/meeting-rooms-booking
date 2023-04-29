@@ -28,6 +28,31 @@
                 "id":5,
                 "name":"William Willis"
 
+            },
+            {
+                "id":6,
+                "name":"Jay Jonson"
+
+            },
+            {
+                "id":7,
+                "name":"Luke Campbell"
+
+            },
+            {
+                "id":8,
+                "name":"Gervonta Davis"
+
+            },
+            {
+                "id":9,
+                "name":"Floyd Mayweather"
+
+            },
+            {
+                "id":10,
+                "name":"Richard Manson"
+
             }
         ]
     }
