@@ -1,11 +1,16 @@
-import React from "react";
-import { Box, Grid, Typography } from "@mui/material";
+import React, { useState, useEffect } from "react";
+import { Box, Grid } from "@mui/material";
 
 import doctarigroupImage from "../../assets/images/doctarigorup.png";
 import doctarigroupLogo from "../../assets/images/DoctariLogo.png";
 import LoginForm from "./LoginForm";
+import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
+    const [userName, setUserName] = useState<string>("");
+    const [password, setPassword] = useState<string>("");
+    const [userType, setUserType] = useState<string>("");
+
     return (
         <Box>
             <Box
@@ -29,24 +34,15 @@ const LoginPage = () => {
                     }}
                 />
             </Box>
-            <Box>
+            <Box sx={{ display: "flex", justifyContent: "center" }}>
                 <Grid>
                     <Grid item>
-                        <Box
-                            component="img"
-                            sx={{
-                                display: "flex",
-                                width: "100%",
-                                height: "100vh",
-                                position: "absolute",
-                                zIndex: "-1000",
-                                justifyContent: "center",
-                            }}
-                            src={doctarigroupImage}
+                        <LoginForm
+                            username={userName}
+                            password={password}
+                            handleUsername={setUserName}
+                            handlePassword={setPassword}
                         />
-                    </Grid>
-                    <Grid item>
-                        <LoginForm />
                     </Grid>
                 </Grid>
             </Box>
