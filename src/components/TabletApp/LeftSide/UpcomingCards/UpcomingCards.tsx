@@ -93,7 +93,7 @@ const UpcomingCards = ({
                     width: "100%",
                     marginTop: "auto",
                     display: "flex",
-                    gap: "2px",
+                    gap: "-10px",
                 }}
             >
                 {joiners && mapJoiners()}
