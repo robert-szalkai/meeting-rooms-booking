@@ -1,5 +1,5 @@
 const COLORS = {
-    SUCCESS: "#40A368",
+    SUCCESS: "#008435",
     WARNING: "#BCA900",
     ERROR: "#DD6764",
     ADMINCOLOR: "#7A7CFF",
@@ -9,7 +9,8 @@ const COLORS = {
     YELLOW: "#BCA900",
     WHITE: "#FFFFFF",
     BLACK: "#1E3C52",
-    GRAY: "#808080"
+    GRAY: "#808080",
+    FONTCOLOR:"#1E3C52"
 };
 
 export default COLORS
