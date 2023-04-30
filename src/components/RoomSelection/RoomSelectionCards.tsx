@@ -10,7 +10,7 @@ export const RoomSelectionCards = ({
     name,
     capacity,
 }: iRoomCards) => {
-    const colors={"free":COLORS.SUCCESS,"booked":COLORS.ERROR,"coming":COLORS.WARNING}
+    const colors={0:COLORS.SUCCESS,1:COLORS.WARNING,2:COLORS.ERROR}
     const navigate = useNavigate();
     const [color, setColor] = useState<string>();
     const handleClick = (id: number) => {

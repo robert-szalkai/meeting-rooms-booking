@@ -16,24 +16,12 @@ export const RoomSelection = () => {
             console.log(error);
         }
     };
-    const RoomsStatus=()=>{
-        const status=roomSelectionData?.flatMap((e)=>{
-            switch(getRoomStatus(e.meetings as unknown as Meeting[])){
-                case 0: return ['free'];
-                case 1: return ['coming'];
-                case 2: return ['booked'];
-            }
-                
-        });
-        return status as NonNullable<typeof status>
-    }
     const mapElements = () => {
-        const status=RoomsStatus();
         return roomSelectionData?.map((e,index) => (
             <RoomSelectionCards
                 name={e.title}
                 key={e.id}
-                availability={status[index] as "free" | "coming" | "booked" }
+                availability={getRoomStatus(e.meetings as unknown as Meeting[]) as 0|1|2}
                 capacity={e.capacity}
                 description={e.description}
                 id={e.id}

@@ -2,7 +2,7 @@ import { Dayjs } from "dayjs";
 
 export  interface iRoomCards{
     name:string,
-    availability:"free"| "booked"|"coming";
+    availability:0|1|2;
     description:string;
     capacity:number;
     id:number;

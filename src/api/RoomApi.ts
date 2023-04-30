@@ -23,7 +23,7 @@ const updateRoomData = async (
     capacity: string | undefined,
     id: number | undefined
 ) => {
-    return await axios.put(`http://localhost:3001/rooms/${id}`, {
+    return await axios.patch(`http://localhost:3001/rooms/${id}`, {
         title: title,
         description: description,
         lastBooked: "",
