@@ -10,6 +10,9 @@ import COLORS from "../../constants/CustomColors";
 import weekOfYear from "dayjs/plugin/weekOfYear";
 import weekYear from "dayjs/plugin/weekYear";
 import Chart from "./Chart";
+import MenuItem from "@mui/material/MenuItem";
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+import { Typography } from "@mui/material";
 dayjs.extend(weekOfYear);
 dayjs.extend(weekYear);
 
@@ -48,21 +51,18 @@ const ChartPage = () => {
     const [meetingsRoom, setMeetingsRoom] = useState([{ name: "", value: 0 }]);
     const [meetingsMonth, setMeetingsMonth] = useState(monthsArray);
     const [meetingsDay, setMeetingsDay] = useState(daysArray);
-    const handleWeekChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const handleWeekChange = (event: SelectChangeEvent) => {
         setSelectedWeek(parseInt(event.target.value));
-        setMeetingsDay(daysArray);
-        console.log(event.target.value);
     };
 
-    const handleYearChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        setSelectedYear(dayjs(event.target.value).year());
-        console.log(meetingsMonth);
-        setMeetingsMonth(monthsArray);
+    const handleYearChange = (event: SelectChangeEvent) => {
+        setSelectedYear(dayjs(event.target.value.toString()).year());
     };
-    const handleMonthChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const handleMonthChange = (event: SelectChangeEvent) => {
         setSelectedMonth(event.target.value);
         setMeetingsMonth(monthsArray);
     };
+
     const dropDownYear = () => {
         const years = [];
         const startYear = 2019;
@@ -71,24 +71,25 @@ const ChartPage = () => {
             years.push(year);
         }
         return (
-            <select value={selectedYear} onChange={handleYearChange}>
+            <Select value={selectedYear.toString()} 
+            onChange={handleYearChange}>
                 {years.map((year) => (
-                    <option key={year} value={year}>
+                    <MenuItem key={year} value={year}>
                         {year}
-                    </option>
+                    </MenuItem>
                 ))}
-            </select>
+            </Select>
         );
     };
     const dropDownMonth = () => {
         return (
-            <select value={selectedMonth} onChange={handleMonthChange}>
+            <Select value={selectedMonth} onChange={handleMonthChange}>
                 {monthsArray.map((month) => (
-                    <option key={month.name} value={month.name}>
+                    <MenuItem key={month.name} value={month.name}>
                         {month.name}
-                    </option>
+                    </MenuItem>
                 ))}
-            </select>
+            </Select>
         );
     };
     const dropDownWeek = () => {
@@ -97,13 +98,13 @@ const ChartPage = () => {
             weeks.push(week);
         }
         return (
-            <select value={selectedWeek} onChange={handleWeekChange}>
+            <Select value={selectedWeek.toString()} onChange={handleWeekChange}>
                 {weeks.map((week) => (
-                    <option key={week} value={week}>
+                    <MenuItem key={week} value={week}>
                         {week}
-                    </option>
+                    </MenuItem>
                 ))}
-            </select>
+            </Select>
         );
     };
     const getRoomsFromJson = async () => {
@@ -218,7 +219,7 @@ const ChartPage = () => {
                 {dropDownMonth()}
                 {dropDownWeek()}
             </Box>
-            <div
+            <Box
                 style={{
                     display: "grid",
                     gridTemplateColumns: "1fr 1fr",
@@ -226,16 +227,17 @@ const ChartPage = () => {
                     gridAutoRows: "50%",
                 }}
             >
-                <div>
-                    <h2>Rooms</h2>
+                
+                <Box>
+                    <Typography variant="h4">Rooms</Typography>
                     <Chart data={meetingsRoom} />
-                </div>
-                <div>
-                    <h2>Weeks</h2>
+                </Box>
+                <Box>
+                    <Typography variant="h4">Weeks</Typography>
                     <Chart data={meetingsDay} />
-                </div>
-                <div style={{ gridColumn: "1 / 3" }}>
-                    <h2>Months</h2>
+                </Box>
+                <Box style={{ gridColumn: "1 / 3" }}>
+                    <Typography variant="h4">Months</Typography>
                     <BarChart
                         width={1430}
                         height={300}
@@ -256,8 +258,8 @@ const ChartPage = () => {
                             label={{ position: "top" }}
                         />
                     </BarChart>
-                </div>
-            </div>
+                </Box>
+            </Box>
         </Box>
     );
 };
