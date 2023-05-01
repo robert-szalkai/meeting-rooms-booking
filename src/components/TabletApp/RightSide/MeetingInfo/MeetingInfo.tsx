@@ -129,8 +129,9 @@ const MeetingInfo = ({ setSelectedCardId }: iMeetingInfo) => {
             container
             direction={"row"}
             spacing={1}
-            marginLeft={8}
+            paddingLeft={6}
             marginTop={3}
+            overflow={"none"}
         >
             <Grid item xs={12}>
                 <Grid container direction={"row"} spacing={0}>
