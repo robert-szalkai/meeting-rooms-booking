@@ -1,25 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { Grid, Typography, Box, Avatar } from "@mui/material";
-import {
-    getMeetingsData,
-    getParticipantsIdName,
-} from "../../../../api/getRequests";
-import { useParams } from "react-router-dom";
+import { Grid, Typography, Box, Avatar, Alert, Stack } from "@mui/material";
 import axios, { AxiosResponse } from "axios";
 import dayjs, { Dayjs } from "dayjs";
+import { useParams } from "react-router-dom";
 
-interface participantsID {
-    participants: {
-        id: string;
-        name: string;
-    }[];
-}
+import { getMeetingsData } from "../../../../api/meetings";
+import { getParticipantsIdName } from "../../../../api/participants";
+import { participantsID } from "../../../../interfaces/interfaces";
+import Error from "./NotFoundPage/NotFoundPage";
 
 interface iMeetingData {
     name: string;
     id: string;
-    start_time: string;
-    end_time: string;
+    startTime: string;
+    endTime: string;
     participants_id: string[] | undefined;
     description: string;
 }
@@ -48,9 +42,7 @@ const MeetingInfo = ({ setSelectedCardId }: iMeetingInfo) => {
 
     const getParticipantsData = async () => {
         const response = await getParticipantsIdName();
-        if (response.status === 200) {
-            setParticipantsData(response.data);
-        }
+        setParticipantsData(response);
     };
 
     useEffect(() => {
@@ -62,8 +54,6 @@ const MeetingInfo = ({ setSelectedCardId }: iMeetingInfo) => {
     }, []);
 
     useEffect(() => {
-        console.log("param: ", meetid);
-
         setSelectedCardId(meetid as string);
     }, [meetid]);
 
@@ -81,7 +71,6 @@ const MeetingInfo = ({ setSelectedCardId }: iMeetingInfo) => {
         if (meetid) {
             const response = await getMeetingById(meetid);
             setMeetingData(response);
-            console.log("duhfiuehdwifue", response);
         }
     };
 
@@ -140,8 +129,8 @@ const MeetingInfo = ({ setSelectedCardId }: iMeetingInfo) => {
                         <Typography variant="h4">{meetingData.name}</Typography>
                         <Typography variant="h4">
                             Today,
-                            {dayjs(meetingData.start_time).format("HH:MM")}-
-                            {dayjs(meetingData.end_time).format("HH:MM")}
+                            {dayjs(meetingData.startTime).format("HH:MM")}-
+                            {dayjs(meetingData.endTime).format("HH:MM")}
                         </Typography>
                     </Grid>
                 </Grid>
@@ -182,7 +171,7 @@ const MeetingInfo = ({ setSelectedCardId }: iMeetingInfo) => {
             </Grid>
         </Grid>
     ) : (
-        <Typography variant="h4">Meeting not found...</Typography>
+        <Error />
     );
 };
 

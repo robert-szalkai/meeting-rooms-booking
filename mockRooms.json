@@ -1,34 +1,166 @@
 {
-  "rooms": [
-    {
-      "id": "3",
-      "title": "Breakout Room",
-      "description": "This small room is perfect for quick meetings or phone calls.",
-      "lastBooked": "2023-04-06T11:30",
-      "capacity": "3"
-    },
-    {
-      "title": "fvrefver",
-      "description": "erfcrcfse",
-      "lastBooked": "",
-      "capacity": "22",
-      "id": "IRnDNK-"
-    },
-    
-    {
-      "title": "Testare",
-      "description": "Aici testam tot",
-      "lastBooked": "",
-      "capacity": "12",
-      "id": "cIRUZjZ"
-    },
-    {
-      "title": "cscs",
-      "description": "xsxs",
-      "lastBooked": "",
-      "capacity": "1",
-      "id": "pSd1vsU"
-    }
-  ]
+    "rooms": [
+        {
+            "title": "sdadassss",
+            "description": "This small room is perfect for quick meetings or phone calls.",
+            "lastBooked": "",
+            "capacity": "3",
+            "id": "3",
+            "meetings": [
+                {
+                    "id": 1,
+                    "room_id": 1,
+                    "owner": 1,
+                    "participants_id": [1, 2, 3],
+                    "startDate": "2023-04-27T10:11:18.386Z",
+                    "endDate": "2023-04-27T10:20:18.386Z",
+                    "duration": 15
+                },
+                {
+                    "id": 2,
+                    "room_id": 1,
+                    "owner": 3,
+                    "participants_id": [1, 3, 4],
+                    "startDate": "2023-04-27T10:11:18.386Z",
+                    "endDate": "2023-04-27T10:20:18.386Z",
+                    "duration": 30
+                }
+            ]
+        },
+        {
+            "title": "RoomNa",
+            "description": "erfcrcfse",
+            "lastBooked": "",
+            "capacity": "22",
+            "id": "2",
+            "meetings": [
+                {
+                    "id": 1,
+                    "room_id": 1,
+                    "owner": 1,
+                    "participants_id": [1, 2, 3],
+                    "startDate": "2023-04-27T10:11:18.386Z",
+                    "endDate": "2023-04-27T12:20:18.386Z",
+                    "duration": 15
+                },
+                {
+                    "id": 2,
+                    "room_id": 1,
+                    "owner": 3,
+                    "participants_id": [1, 3, 4],
+                    "startDate": "2023-04-24T11:11:18.386Z",
+                    "endDate": "2023-04-24T13:20:18.386Z",
+                    "duration": 30
+                }
+            ]
+        },
+        {
+            "title": "Testare",
+            "description": "Aici testam tot",
+            "lastBooked": "",
+            "capacity": "12",
+            "id": "1",
+            "meetings": [
+                {
+                    "id": 1,
+                    "room_id": 1,
+                    "owner": 1,
+                    "participants_id": [1, 2, 3],
+                    "startDate": "2023-04-27T10:11:18.386Z",
+                    "endDate": "2023-04-27T12:20:18.386Z",
+                    "duration": 15
+                },
+                {
+                    "id": 2,
+                    "room_id": 1,
+                    "owner": 3,
+                    "participants_id": [1, 3, 4],
+                    "startDate": "2023-04-24T11:11:18.386Z",
+                    "endDate": "2023-04-24T13:20:18.386Z",
+                    "duration": 30
+                }
+            ]
+        },
+        {
+            "title": "cscs",
+            "description": "xsxs",
+            "lastBooked": "",
+            "capacity": "1",
+            "id": "4",
+            "meetings": [
+                {
+                    "id": 1,
+                    "room_id": 1,
+                    "owner": 1,
+                    "participants_id": [1, 2, 3],
+                    "startDate": "2023-04-27T10:11:18.386Z",
+                    "endDate": "2023-04-27T12:20:18.386Z",
+                    "duration": 15
+                },
+                {
+                    "id": 2,
+                    "room_id": 1,
+                    "owner": 3,
+                    "participants_id": [1, 3, 4],
+                    "startDate": "2023-04-24T11:11:18.386Z",
+                    "endDate": "2023-04-24T13:20:18.386Z",
+                    "duration": 30
+                }
+            ]
+        },
+        {
+            "title": "Room",
+            "description": "1",
+            "lastBooked": "",
+            "capacity": "12",
+            "id": "5",
+            "meetings": [
+                {
+                    "id": 1,
+                    "room_id": 1,
+                    "owner": 1,
+                    "participants_id": [1, 2, 3],
+                    "startDate": "2023-04-27T10:11:18.386Z",
+                    "endDate": "2023-04-27T12:11:18.386Z",
+                    "duration": 15
+                },
+                {
+                    "id": 2,
+                    "room_id": 1,
+                    "owner": 3,
+                    "participants_id": [1, 3, 4],
+                    "startDate": "2023-04-24T11:11:18.386Z",
+                    "endDate": "2023-04-24T13:11:18.386Z",
+                    "duration": 30
+                }
+            ]
+        },
+        {
+            "title": "Room1`",
+            "description": "jdsjas",
+            "lastBooked": "",
+            "capacity": "10",
+            "id": "ZfrwrLC",
+            "meetings": [
+                {
+                    "id": 1,
+                    "room_id": 1,
+                    "owner": 1,
+                    "participants_id": [1, 2, 3],
+                    "startDate": "2023-04-27T10:11:18.386Z",
+                    "endDate": "2023-04-27T12:20:18.386Z",
+                    "duration": 15
+                },
+                {
+                    "id": 2,
+                    "room_id": 1,
+                    "owner": 3,
+                    "participants_id": [1, 3, 4],
+                    "startDate": "2023-04-24T11:11:18.386Z",
+                    "endDate": "2023-04-24T13:20:18.386Z",
+                    "duration": 30
+                }
+            ]
+        }
+    ]
 }
-

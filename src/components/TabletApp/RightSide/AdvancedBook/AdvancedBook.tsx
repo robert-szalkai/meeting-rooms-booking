@@ -2,21 +2,26 @@ import React, { useState, useEffect } from "react";
 import { Box, Typography, Button, Grid } from "@mui/material";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import dayjs, { Dayjs } from "dayjs";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import DateSelector from "./DateSelector";
 import Participants from "./Participants";
 import InputField from "./InputField";
-import { getMeetings, getParticipants } from "../../../../api/getRequests";
-import { addMeeting } from "../../../../api/MeetingApi";
+import { getMeetings, addMeeting } from "../../../../api/meetings";
+import { getParticipants } from "../../../../api/participants";
 import { spawnToast } from "../../../../utils/Toast";
 import {
     FormValidity,
     Meeting,
     Participant,
 } from "../../../../interfaces/interfaces";
+import CONSTANTS from "../../../../constants/Constants";
 
-const AdvancedBook = () => {
+interface iAdvancedBook {
+    availability: number;
+}
+
+const AdvancedBook = ({ availability }: iAdvancedBook) => {
     const [validForm, setValidForm] = useState<FormValidity>({
         isNameValid: false,
         isDateValid: false,
@@ -35,6 +40,7 @@ const AdvancedBook = () => {
     >([]);
     const [meetingOwner, setMeetingOwner] = useState<Participant[]>([]);
     const [bookedMeetings, setBookedMeetings] = useState<Meeting[]>([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         getParticipants().then((res) => {
@@ -55,6 +61,10 @@ const AdvancedBook = () => {
 
     const handleEndTime = (end_time: Dayjs) => {
         setEndTime(end_time.toString());
+    };
+
+    const handleClickCancel = () => {
+        navigate("../menu");
     };
 
     const handleValid = (propertyValue: boolean, key: string) => {
@@ -209,8 +219,9 @@ const AdvancedBook = () => {
                             paddingBottom={2}
                         >
                             <Button
-                                variant="contained"
-                                color="success"
+                                onClick={handleClickCancel}
+                                variant="outlined"
+                                color="inherit"
                                 sx={{ maxWidth: 140 }}
                             >
                                 Cancel
@@ -219,7 +230,12 @@ const AdvancedBook = () => {
                                 sx={{ maxWidth: 140 }}
                                 type="submit"
                                 variant="contained"
-                                color="success"
+                                color={
+                                    CONSTANTS.BUTTON_COLOR[availability] as
+                                        | "success"
+                                        | "warning"
+                                        | "error"
+                                }
                                 disabled={checkFormValid(validForm)}
                             >
                                 <CalendarMonthIcon fontSize="small" />

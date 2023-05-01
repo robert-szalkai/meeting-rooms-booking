@@ -1,11 +1,18 @@
 import React, { useEffect, useState } from "react";
 import Header from "./Header/Header";
-import { Container, Modal, Grid, Typography } from "@mui/material";
+import { Container, Modal, Grid } from "@mui/material";
 import Cards from "./MeetingRoom/Cards";
 import MeetingRoomForm from "./MeetingRoomForm/MeetingRoom";
 import DeleteConfirmationModal from "./DeleteConfirmationModal/DeleteConfirmationModal";
-import { deleteRooms, addRoom, updateRoomData } from "../../api/RoomApi";
-import {getRooms, getRoomById} from "../../api/getRequests"
+import {
+    deleteRooms,
+    addRoom,
+    updateRoomData,
+    getRooms,
+    getRoomById,
+} from "../../api/rooms";
+import { MeetingRoomsData } from "../../interfaces/interfaces";
+
 interface iCard {
     title: string;
     id: number;
@@ -14,15 +21,14 @@ interface iCard {
     capacity: number;
 }
 const Admin = () => {
-    
     const [showModal, setShowModal] = useState<boolean>(false);
     const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
     const [deleteRoomId, setDeleteRoomId] = useState<number | null>(null);
     const [deleteRoomTitle, setDeleteRoomTitle] = useState<string>("");
-    const [datacontent, setDataContent] = useState<iCard[]>();
+    const [datacontent, setDataContent] = useState<MeetingRoomsData[]>();
     const [loaded, setLoaded] = useState(false);
     const [showEditModal, setEditModal] = useState<boolean>(false);
-    const [editDataEvent, setEditData] = useState<iCard>();
+    const [editDataEvent, setEditData] = useState<MeetingRoomsData>();
 
     const handleSubmitForm = async (
         Name: string | undefined,
@@ -59,7 +65,7 @@ const Admin = () => {
     };
     const getDataContent = async () => {
         const result = await getRooms();
-        setDataContent(result.data);
+        setDataContent(result);
     };
     const handleDelete = async (id: number) => {
         const result = await deleteRooms(id);
@@ -176,9 +182,7 @@ const Admin = () => {
                 container
             >
                 {datacontent && displayCards()}
-               
             </Grid>
-
         </Container>
     );
 };
