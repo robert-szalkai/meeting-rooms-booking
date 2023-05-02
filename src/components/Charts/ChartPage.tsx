@@ -4,7 +4,7 @@ import IconButton from "@mui/material/IconButton";
 import Box from "@mui/material/Box";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Link } from "react-router-dom";
-import { getMeetingsData } from "../../api/getRequests";
+import { getMeetingsData } from "../../api/meetings";
 import dayjs from "dayjs";
 import COLORS from "../../constants/CustomColors";
 import weekOfYear from "dayjs/plugin/weekOfYear";
