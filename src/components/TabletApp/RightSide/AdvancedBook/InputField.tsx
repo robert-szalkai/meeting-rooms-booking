@@ -22,9 +22,9 @@ const InputField = ({
                 size="small"
                 hiddenLabel
                 fullWidth
-                InputProps={{ disableUnderline: true }}
+                InputProps={{ disableUnderline: true, sx: { paddingTop: 0 } }}
                 multiline={multilineSelect}
-                rows={multilineSelect ? 3 : 0}
+                rows={multilineSelect ? 4 : 0}
                 onChange={(event) => {
                     event.target.value === ""
                         ? formValidationSetter(false, "isNameValid")
