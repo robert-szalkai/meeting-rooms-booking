@@ -11,7 +11,7 @@ import weekOfYear from "dayjs/plugin/weekOfYear";
 import weekYear from "dayjs/plugin/weekYear";
 import Chart from "./Chart";
 import MenuItem from "@mui/material/MenuItem";
-import Select, { SelectChangeEvent } from '@mui/material/Select';
+import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { Typography } from "@mui/material";
 dayjs.extend(weekOfYear);
 dayjs.extend(weekYear);
@@ -71,8 +71,7 @@ const ChartPage = () => {
             years.push(year);
         }
         return (
-            <Select value={selectedYear.toString()} 
-            onChange={handleYearChange}>
+            <Select value={selectedYear.toString()} onChange={handleYearChange}>
                 {years.map((year) => (
                     <MenuItem key={year} value={year}>
                         {year}
@@ -227,7 +226,6 @@ const ChartPage = () => {
                     gridAutoRows: "50%",
                 }}
             >
-                
                 <Box>
                     <Typography variant="h4">Rooms</Typography>
                     <Chart data={meetingsRoom} />

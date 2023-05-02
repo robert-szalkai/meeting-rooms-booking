@@ -13,8 +13,6 @@ const MainRouter = () => {
                 <Route path="charts" element={<ChartPage />} />
                 <Route path="rooms/:id*" element={<TabletApp />} />
                 <Route path="selection" element={<RoomSelection />} />
-
-            
             </Routes>
         </BrowserRouter>
     );
