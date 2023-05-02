@@ -191,3 +191,21 @@ export interface userInfo{
     password:string;
     userType:string;
 }
+
+export interface ConfirmationModalProps {
+    open: boolean;
+    onClose: () => void;
+    onSubmit: () => void;
+};
+
+export interface ModalProps {
+    openModal: boolean;
+    handleClose: (values: any) => void;
+}
+
+export interface Login {
+    username: string;
+    password: string;
+    handleUsername: (variables: string) => void;
+    handlePassword: (variables: string) => void;
+}

@@ -3,12 +3,7 @@ import React from "react";
 
 import "../DeleteConfirmationModal/DeleteConfirmationModal.css";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
-
-type ConfirmationModalProps = {
-    open: boolean;
-    onClose: () => void;
-    onSubmit: () => void;
-};
+import { ConfirmationModalProps } from "../../../interfaces/interfaces";
 
 const LogoutConfirmationModal = ({
     open,

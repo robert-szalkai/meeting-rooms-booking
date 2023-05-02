@@ -1,6 +1,7 @@
 import React, { FC } from "react";
 import { Box, Typography, Modal, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { ModalProps } from "../../interfaces/interfaces";
 
 const modalStyle = {
     position: "absolute" as "absolute",
@@ -13,11 +14,6 @@ const modalStyle = {
     boxShadow: 24,
     p: 4,
 };
-
-interface ModalProps {
-    openModal: boolean;
-    handleClose: (values: any) => void;
-}
 
 const LogOutModal: FC<ModalProps> = ({ openModal, handleClose }) => {
     const navigate = useNavigate();

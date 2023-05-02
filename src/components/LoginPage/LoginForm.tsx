@@ -12,13 +12,7 @@ import { useNavigate } from "react-router-dom";
 import { spawnToast } from "../../utils/Toast";
 import { getUsers } from "../../api/users";
 import { userInfo } from "../../interfaces/interfaces";
-
-interface Login {
-    username: string;
-    password: string;
-    handleUsername: (variables: string) => void;
-    handlePassword: (variables: string) => void;
-}
+import { Login } from "../../interfaces/interfaces";
 
 const LoginForm: FC<Login> = ({
     username,
@@ -28,7 +22,7 @@ const LoginForm: FC<Login> = ({
 }) => {
     const navigate = useNavigate();
     const [users, setUsers] = useState<userInfo[]>();
-    const getUserss = async () => {
+    const getUsersAccounts = async () => {
         try {
             const result = await getUsers();
             setUsers(result);
@@ -38,7 +32,7 @@ const LoginForm: FC<Login> = ({
     };
 
     useEffect(() => {
-        getUserss();
+        getUsersAccounts();
     }, []);
 
     useEffect(() => {
