@@ -8,6 +8,7 @@ import { getMeetingsData } from "../../../../api/meetings";
 import { getParticipantsIdName } from "../../../../api/participants";
 import { participantsID } from "../../../../interfaces/interfaces";
 import Error from "./NotFoundPage/NotFoundPage";
+import COLORS from "../../../../constants/CustomColors";
 
 interface iMeetingData {
     name: string;
@@ -107,7 +108,7 @@ const MeetingInfo = ({ setSelectedCardId }: iMeetingInfo) => {
                 >
                     <Avatar
                         sx={{
-                            backgroundColor: "purple",
+                            backgroundColor: COLORS.PURPLE,
                             height: 35,
                             width: 35,
                         }}

@@ -41,7 +41,7 @@ const UpcomingCards = ({
     };
 
     const [joiners, setJoiners] = useState<(string | undefined)[]>();
-    const [surplus, setSurplus] = useState<number>();
+    const [surplus, setSurplus] = useState<number>(0);
     const location = useLocation();
     useEffect(() => {
         if (persons.length > 6) {
@@ -53,7 +53,7 @@ const UpcomingCards = ({
         return joiners?.map(
             (e, index) =>
                 index <= 5 && (
-                    <Avatar sx={{ bgcolor: "purple", width: 28, height: 28 }}>
+                    <Avatar sx={{ bgcolor: COLORS.PURPLE, width: 28, height: 28 }}>
                         <Typography fontSize={11}>{e}</Typography>
                     </Avatar>
                 )
@@ -110,9 +110,13 @@ const UpcomingCards = ({
                     display: "flex",
                 }}
             >
-                <AvatarGroup max={6}>
+                <AvatarGroup max={8}>
                     {joiners && mapJoiners()}
-                    {surplus && <Avatar>+{surplus}</Avatar>}
+                    {surplus && (
+                        <Avatar sx={{ bgcolor: COLORS.GRAY, width: 28, height: 28 }}>
+                            +{surplus}
+                        </Avatar>
+                    )}
                 </AvatarGroup>
             </Box>
         </Card>
