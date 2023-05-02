@@ -112,7 +112,7 @@ const MeetingInfo = ({ setSelectedCardId }: iMeetingInfo) => {
                             width: 35,
                         }}
                     >
-                        {person}
+                        <Typography fontSize={17}>{person}</Typography>
                     </Avatar>
                     <Typography variant="body1">
                         {personsById?.[index]}

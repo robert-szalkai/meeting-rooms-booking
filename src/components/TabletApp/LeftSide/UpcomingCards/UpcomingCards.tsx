@@ -54,7 +54,7 @@ const UpcomingCards = ({
             (e, index) =>
                 index <= 5 && (
                     <Avatar sx={{ bgcolor: "purple", width: 28, height: 28 }}>
-                        {e}
+                        <Typography fontSize={11}>{e}</Typography>
                     </Avatar>
                 )
         );
