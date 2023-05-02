@@ -2,9 +2,7 @@ import axios from "axios";
 import { Meeting } from "../interfaces/interfaces";
 
 const addMeeting = async (meeting: Meeting) => {
-    return await axios.post("http://localhost:3001/meetings", {
-        meeting,
-    });
+    return await axios.post("http://localhost:3001/meetings", meeting);
 };
 
 const getMeetingsData = async () => {
