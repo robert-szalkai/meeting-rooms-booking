@@ -5,6 +5,7 @@ import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 
 import QuickBook from "../QuickBook/QuickBook";
 import { iMenu } from "../../../../interfaces/interfaces";
+import CONSTANTS from "../../../../constants/Constants";
 
 const Menu = ({
     roomId,
@@ -71,7 +72,12 @@ const Menu = ({
             <Link to={advancedBookLink} style={{ textDecoration: "none" }}>
                 <Button
                     variant="contained"
-                    color="success"
+                    color={
+                        CONSTANTS.BUTTON_COLOR[availability] as
+                            | "success"
+                            | "warning"
+                            | "error"
+                    }
                     sx={{ textTransform: "none", marginBottom: 3 }}
                 >
                     <CalendarMonthIcon />
@@ -79,6 +85,7 @@ const Menu = ({
                 </Button>
             </Link>
             <QuickBook
+                availability={availability}
                 isDurationOpen={isDurationOpen}
                 handleQuickBookDone={handleQuickBookDone}
             />

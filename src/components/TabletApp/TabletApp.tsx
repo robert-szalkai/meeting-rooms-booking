@@ -120,10 +120,16 @@ const TabletApp = () => {
                                             handleQuickBookDone
                                         }
                                         isDurationOpen={isDurationOpen}
+                                        availability={availability}
                                     />
                                 }
                             />
-                            <Route path="/form" element={<AdvancedBook />} />
+                            <Route
+                                path="/form"
+                                element={
+                                    <AdvancedBook availability={availability} />
+                                }
+                            />
                             <Route
                                 path="/meetinginfo/:meetid"
                                 element={
