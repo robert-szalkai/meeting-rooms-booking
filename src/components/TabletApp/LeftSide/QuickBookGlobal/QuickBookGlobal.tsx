@@ -4,10 +4,7 @@ import { Box, Button, Typography } from "@mui/material";
 import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
 
 import COLORS from "../../../../constants/CustomColors";
-
-interface iQuickBookGlobal {
-    onClickQuickBookGlobal: () => void;
-}
+import { iQuickBookGlobal } from "../../../../interfaces/interfaces";
 
 const QuickBookGlobal = ({ onClickQuickBookGlobal }: iQuickBookGlobal) => {
     const navigate = useNavigate();

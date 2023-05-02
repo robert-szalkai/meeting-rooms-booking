@@ -1,7 +1,6 @@
-import { Box, Card, Grid, Typography } from "@mui/material";
-import { grey } from "@mui/material/colors";
+import { Card, Grid, Typography } from "@mui/material";
 import React from "react";
-import CONSTANTS from "../../../../../constants/Constants";
+
 import COLORS from "../../../../../constants/CustomColors";
 
 export default function Error() {

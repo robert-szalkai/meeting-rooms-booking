@@ -1,26 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { Grid, Typography, Box, Avatar, Alert, Stack } from "@mui/material";
-import axios, { AxiosResponse } from "axios";
-import dayjs, { Dayjs } from "dayjs";
+import axios from "axios";
+import dayjs from "dayjs";
 import { useParams } from "react-router-dom";
 
-import { getMeetingsData } from "../../../../api/meetings";
 import { getParticipantsIdName } from "../../../../api/participants";
-import { participantsID } from "../../../../interfaces/interfaces";
+import {
+    iMeetingData,
+    iMeetingInfo,
+    participantsID,
+} from "../../../../interfaces/interfaces";
 import Error from "./NotFoundPage/NotFoundPage";
-
-interface iMeetingData {
-    name: string;
-    id: string;
-    startTime: string;
-    endTime: string;
-    participants_id: string[] | undefined;
-    description: string;
-}
-
-interface iMeetingInfo {
-    setSelectedCardId: (meetid: string) => void;
-}
 
 const MeetingInfo = ({ setSelectedCardId }: iMeetingInfo) => {
     const [participantsData, setParticipantsData] = useState<participantsID>();

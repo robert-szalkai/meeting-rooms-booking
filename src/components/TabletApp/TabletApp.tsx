@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Route, Routes, useParams } from "react-router-dom";
-import { Box, Grid, IconButton } from "@mui/material";
+import { Navigate, Route, Routes, useParams } from "react-router-dom";
+import { Box, Grid } from "@mui/material";
+import { IconButton } from "@mui/material";
 import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
 
 import LeftSide from "./LeftSide/LeftSide";
@@ -12,17 +13,7 @@ import { getMeetings, getMeetingsData } from "../../api/meetings";
 import COLORS from "../../constants/CustomColors";
 import getRoomStatus from "../../functions/GetRoomStatus";
 import LogOutModal from "./LogOutModal";
-
-interface iLeftSide {
-    name: string | undefined;
-    meetings: {
-        name: string;
-        id: string;
-        start_time: string;
-        end_time: string;
-        participants_id: [];
-    }[];
-}
+import { iLeftSide } from "../../interfaces/interfaces";
 
 const TabletApp = () => {
     const colorStates = [COLORS.GREEN, COLORS.YELLOW, COLORS.RED];
