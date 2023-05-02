@@ -80,6 +80,10 @@ export interface iUpcomingCards {
     selectedCardId?: string;
 }
 
+export interface iAdvancedBook {
+    availability: number;
+}
+
 export interface MeetingRoomsData {
     title: string;
     id: number;

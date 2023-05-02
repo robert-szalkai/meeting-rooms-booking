@@ -1,20 +1,9 @@
 import axios from "axios";
-import { Dayjs } from "dayjs";
 import { Meeting } from "../interfaces/interfaces";
 
-const addMeeting = async (
-    Name: string | undefined,
-    Description: string | undefined,
-    StartDate: Dayjs,
-    EndDate: Dayjs,
-    Participants: number[] | undefined
-) => {
+const addMeeting = async (meeting: Meeting) => {
     return await axios.post("http://localhost:3001/meetings", {
-        meeting_name: Name,
-        meeting_description: Description,
-        startDate: StartDate,
-        endDate: EndDate,
-        participants: Participants,
+        meeting,
     });
 };
 
