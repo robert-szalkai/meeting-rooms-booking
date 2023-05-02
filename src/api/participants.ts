@@ -4,7 +4,6 @@ import { Participant, participantsID } from "../interfaces/interfaces";
 
 const getParticipantsIdName = async (): Promise<participantsID> => {
     const result = await axios.get("http://localhost:3002/participantsData");
-    //status = result.status;
     return result.data;
 };
 
