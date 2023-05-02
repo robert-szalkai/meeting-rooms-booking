@@ -10,6 +10,7 @@ export interface iMenu {
     roomStatus: number;
     handleQuickBookDone: () => void;
     isDurationOpen?: boolean;
+    availability: number;
 }
 
 export interface iLeftSide {

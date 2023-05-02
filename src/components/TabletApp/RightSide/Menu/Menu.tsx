@@ -12,6 +12,7 @@ const Menu = ({
     roomStatus,
     handleQuickBookDone,
     isDurationOpen = false,
+    availability,
 }: iMenu) => {
     const advancedBookLink = `/rooms/${roomId}/form`;
 
