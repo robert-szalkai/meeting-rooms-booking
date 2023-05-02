@@ -29,11 +29,12 @@ export const MeetingRoomForm = ({
     const [meetinfRoomCap, setCapacity] = useState<string | undefined>("");
     const [areAllFieldsCompleted, setAreAllFieldsCompleted] =
         useState<boolean>(false);
+
     useEffect(() => {
-        if (edit === true) {
-            setName(editData?.title.toString());
-            setDescription(editData?.description.toString());
-            setCapacity(editData?.capacity.toString());
+        if (edit && editData) {
+            setName(editData.title);
+            setDescription(editData.description);
+            setCapacity(editData.capacity?.toString());
         }
     }, []);
 

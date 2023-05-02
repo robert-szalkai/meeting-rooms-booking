@@ -57,17 +57,21 @@ export interface iMeetigroomForm {
     ) => Promise<void>;
     text: String;
     edit: boolean;
-    editData?: iCard;
+    editData?: editData;
     onClose: () => void;
 }
+type editData = Pick<
+    MeetingRoomsData,
+    "description" | "title" | "capacity" | "id"
+>;
 
 export interface iCard {
     handleEdit: (id: number) => Promise<void>;
-    title: String;
-    id: number;
-    description: String;
-    lastBooked: String;
-    capacity: number;
+    title: string | undefined;
+    id: number | undefined;
+    description: string | undefined;
+    lastBooked: string | undefined;
+    capacity: number | undefined;
     handleDelete: (id: number) => void;
 }
 
@@ -85,17 +89,17 @@ export interface iAdvancedBook {
 }
 
 export interface MeetingRoomsData {
-    title: string;
-    id: number;
-    description: string;
-    lastBooked: string;
-    capacity: number;
-    meetings: {
+    title: string | undefined;
+    description: string | undefined;
+    capacity: number | undefined;
+    id?: number;
+    lastBooked?: string;
+    meetings?: {
         startDate: string;
         endDate: string;
     }[];
-    handleEdit: () => Promise<void>;
-    handleDelete: () => void;
+    handleEdit?: () => Promise<void>;
+    handleDelete?: () => void;
 }
 export interface Participant {
     name: string;
