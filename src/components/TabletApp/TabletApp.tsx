@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Navigate, Route, Routes, useParams } from "react-router-dom";
-import { Box, Grid } from "@mui/material";
-import dayjs from "dayjs";
+import { Route, Routes, useParams } from "react-router-dom";
+import { Box, Grid, IconButton } from "@mui/material";
+import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
 
 import LeftSide from "./LeftSide/LeftSide";
 import AdvancedBook from "./RightSide/AdvancedBook/AdvancedBook";
@@ -11,6 +11,7 @@ import CONSTANTS from "../../constants/Constants";
 import { getMeetings, getMeetingsData } from "../../api/meetings";
 import COLORS from "../../constants/CustomColors";
 import getRoomStatus from "../../functions/GetRoomStatus";
+import LogOutModal from "./LogOutModal";
 
 interface iLeftSide {
     name: string | undefined;
@@ -39,6 +40,11 @@ const TabletApp = () => {
     const [quickBookDone, setQuickBookDone] = useState<boolean>(false);
     const [isDurationOpen, setIsDurationOpen] = useState<boolean>(false);
 
+    const [logoutModalOpen, setLogoutModalOpen] = useState<boolean>(false);
+
+    const handleClose = () => {
+        setLogoutModalOpen(false);
+    };
     const onClickQuickBookGlobal = () => {
         setIsDurationOpen(true);
     };
@@ -98,8 +104,14 @@ const TabletApp = () => {
             </Grid>
             <Grid item xs={7}>
                 <Box
+                    display={"flex"}
+                    justifyContent={"flex-end"}
+                    paddingTop={2}
+                    paddingRight={2}
+                ></Box>
+                <Box
                     sx={{
-                        paddingTop: 10,
+                        paddingTop: 5,
                         height: "100vh",
                         boxSizing: "border-box",
                     }}
@@ -119,6 +131,17 @@ const TabletApp = () => {
                             boxSizing: "border-box",
                         }}
                     >
+                        <Box marginLeft="auto" sx={{ paddingRight: 2 }}>
+                            <IconButton
+                                onClick={() => setLogoutModalOpen(true)}
+                            >
+                                <LogoutRoundedIcon sx={{ color: "black" }} />
+                            </IconButton>
+                            <LogOutModal
+                                openModal={logoutModalOpen}
+                                handleClose={handleClose}
+                            />
+                        </Box>
                         <Routes>
                             <Route
                                 path="/:menu"
@@ -150,10 +173,6 @@ const TabletApp = () => {
                                         }
                                     />
                                 }
-                            />
-                            <Route
-                                path="*"
-                                element={<Navigate to="/selection" />}
                             />
                         </Routes>
                     </Box>

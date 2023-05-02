@@ -106,3 +106,9 @@ export interface dateSelectorValid {
     startValid: string;
     endValid: string;
 }
+
+export interface userInfo{
+    username:string;
+    password:string;
+    userType:string;
+}

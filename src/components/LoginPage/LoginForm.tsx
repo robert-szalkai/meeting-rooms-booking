@@ -7,9 +7,11 @@ import {
     TextField,
     Typography,
 } from "@mui/material";
-import { useNavigate, Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import { spawnToast } from "../../utils/Toast";
+import { getUsers } from "../../api/users";
+import { userInfo } from "../../interfaces/interfaces";
 
 interface Login {
     username: string;
@@ -18,17 +20,6 @@ interface Login {
     handlePassword: (variables: string) => void;
 }
 
-interface User {
-    username: string;
-    password: string;
-    type: string;
-}
-
-const users: User[] = [
-    { username: "admin", password: "admin", type: "admin" },
-    { username: "user", password: "user", type: "user" },
-];
-
 const LoginForm: FC<Login> = ({
     username,
     password,
@@ -36,18 +27,31 @@ const LoginForm: FC<Login> = ({
     handlePassword,
 }) => {
     const navigate = useNavigate();
-    const [authenticated, setAuthenticated] = useState(
-        localStorage.getItem("authenticated")
-    );
+    const [users, setUsers] = useState<userInfo[]>();
+    const getUserss = async () => {
+        try {
+            const result = await getUsers();
+            setUsers(result);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    useEffect(() => {
+        getUserss();
+    }, []);
 
     useEffect(() => {
         localStorage.setItem("authenticated", "false");
         localStorage.setItem("user_type", "none");
-    }, [authenticated]);
+    }, []);
 
     const handleSubmit = (e: any) => {
         e.preventDefault();
-        const account = users.find((user) => user.username === username);
+        console.log(users);
+        const account = users?.find(
+            (user: userInfo) => user.username === username
+        );
         if (account && account.password === password) {
             spawnToast({
                 title: "Connected succesfully",
@@ -55,13 +59,25 @@ const LoginForm: FC<Login> = ({
                 toastType: "success",
             });
             localStorage.setItem("authenticated", "true");
-            localStorage.setItem("user_type", account.type);
+            localStorage.setItem("user_type", account.userType);
         } else {
             spawnToast({
                 title: "Coult not connect",
                 message: "Wrong username or password",
                 toastType: "error",
             });
+        }
+        if (
+            account?.userType === "user" &&
+            localStorage.getItem("authenticated") === "true"
+        ) {
+            navigate("/selection");
+        }
+        if (
+            account?.userType === "admin" &&
+            localStorage.getItem("authenticated") === "true"
+        ) {
+            navigate("/admin");
         }
     };
 

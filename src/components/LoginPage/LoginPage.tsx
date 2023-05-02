@@ -1,15 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Box, Grid } from "@mui/material";
 
 import doctarigroupImage from "../../assets/images/doctarigorup.png";
 import doctarigroupLogo from "../../assets/images/DoctariLogo.png";
 import LoginForm from "./LoginForm";
-import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
     const [userName, setUserName] = useState<string>("");
     const [password, setPassword] = useState<string>("");
-    const [userType, setUserType] = useState<string>("");
 
     return (
         <Box>
