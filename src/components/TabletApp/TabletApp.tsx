@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Navigate, Route, Routes, useParams } from "react-router-dom";
 import { Box, Grid } from "@mui/material";
-import dayjs from "dayjs";
 
 import LeftSide from "./LeftSide/LeftSide";
 import AdvancedBook from "./RightSide/AdvancedBook/AdvancedBook";
@@ -11,17 +10,7 @@ import CONSTANTS from "../../constants/Constants";
 import { getMeetings, getMeetingsData } from "../../api/meetings";
 import COLORS from "../../constants/CustomColors";
 import getRoomStatus from "../../functions/GetRoomStatus";
-
-interface iLeftSide {
-    name: string | undefined;
-    meetings: {
-        name: string;
-        id: string;
-        start_time: string;
-        end_time: string;
-        participants_id: [];
-    }[];
-}
+import { iLeftSide } from "../../interfaces/interfaces";
 
 const TabletApp = () => {
     const colorStates = [COLORS.GREEN, COLORS.YELLOW, COLORS.RED];
@@ -131,10 +120,16 @@ const TabletApp = () => {
                                             handleQuickBookDone
                                         }
                                         isDurationOpen={isDurationOpen}
+                                        availability={availability}
                                     />
                                 }
                             />
-                            <Route path="/form" element={<AdvancedBook />} />
+                            <Route
+                                path="/form"
+                                element={
+                                    <AdvancedBook availability={availability} />
+                                }
+                            />
                             <Route
                                 path="/meetinginfo/:meetid"
                                 element={

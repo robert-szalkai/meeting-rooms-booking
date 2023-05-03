@@ -50,8 +50,8 @@
       {  
          "meetingName": "Focus Room 1",
          "id":"1",
-         "startDate": "2023-04-27T09:50:18.386Z",
-         "endDate": "2023-04-27T18:35:18.386Z",
+         "startDate": "2023-04-28T10:20:18.386Z",
+         "endDate": "2023-04-28T18:35:18.386Z",
          "participants":[1,5],
          "description":"Here we go for some fun"
       },

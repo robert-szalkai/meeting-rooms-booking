@@ -10,17 +10,11 @@ import {
 } from "@mui/material";
 import SIZE from "../../../../constants/CustomSize";
 import { useNavigate } from "react-router";
-import COLORS from "../../../../constants/CustomColors";
-import { StringDecoder } from "string_decoder";
 import { useLocation } from "react-router-dom";
-interface iUpcomingCards {
-    id: string;
-    start: string;
-    end: string;
-    persons: (string | undefined)[];
-    meetingName: string;
-    selectedCardId?: string;
-}
+
+import { iUpcomingCards } from "../../../../interfaces/interfaces";
+import COLORS from "../../../../constants/CustomColors";
+
 const UpcomingCards = ({
     id,
     start,

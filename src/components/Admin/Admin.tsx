@@ -13,13 +13,6 @@ import {
 } from "../../api/rooms";
 import { MeetingRoomsData } from "../../interfaces/interfaces";
 
-interface iCard {
-    title: string;
-    id: number;
-    description: string;
-    lastBooked: string;
-    capacity: number;
-}
 const Admin = () => {
     const [showModal, setShowModal] = useState<boolean>(false);
     const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
@@ -100,6 +93,7 @@ const Admin = () => {
                     id={e.id}
                     description={e.description}
                     lastBooked={e.lastBooked}
+                    capacity={e.capacity}
                 ></Cards>
             </Grid>
         ));

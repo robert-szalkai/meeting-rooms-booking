@@ -11,21 +11,7 @@ import AdvancedBookGlobal from "./AdvancedBookGlobal/AdvancedBookGlobal";
 import Clock from "./Clock/Clock";
 import { getParticipantsIdName } from "../../../api/participants";
 import CONSTANTS from "../../../constants/Constants";
-import { participantsID } from "../../../interfaces/interfaces";
-
-interface iLeftSide {
-    name: string | undefined;
-    meetings: {
-        name: string;
-        id: string;
-        start_time: string;
-        end_time: string;
-        participants_id: [];
-    }[];
-    availability: number;
-    selectedCardId: string;
-    onClickQuickBookGlobal: () => void;
-}
+import { iLeftSide, participantsID } from "../../../interfaces/interfaces";
 
 const LeftSide = ({
     name,

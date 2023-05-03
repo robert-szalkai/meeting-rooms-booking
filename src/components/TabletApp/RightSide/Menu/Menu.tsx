@@ -4,14 +4,8 @@ import { Link } from "react-router-dom";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 
 import QuickBook from "../QuickBook/QuickBook";
-
-interface iMenu {
-    roomId: string;
-    roomName: string;
-    roomStatus: number;
-    handleQuickBookDone: () => void;
-    isDurationOpen?: boolean;
-}
+import { iMenu } from "../../../../interfaces/interfaces";
+import CONSTANTS from "../../../../constants/Constants";
 
 const Menu = ({
     roomId,
@@ -19,6 +13,7 @@ const Menu = ({
     roomStatus,
     handleQuickBookDone,
     isDurationOpen = false,
+    availability,
 }: iMenu) => {
     const advancedBookLink = `/rooms/${roomId}/form`;
 
@@ -42,7 +37,7 @@ const Menu = ({
                 flexDirection: "column",
                 alignItems: "center",
                 paddingTop: "20%",
-                overflow:"auto"
+                overflow: "auto",
             }}
         >
             {" "}
@@ -77,7 +72,12 @@ const Menu = ({
             <Link to={advancedBookLink} style={{ textDecoration: "none" }}>
                 <Button
                     variant="contained"
-                    color="success"
+                    color={
+                        CONSTANTS.BUTTON_COLOR[availability] as
+                            | "success"
+                            | "warning"
+                            | "error"
+                    }
                     sx={{ textTransform: "none", marginBottom: 3 }}
                 >
                     <CalendarMonthIcon />
@@ -85,6 +85,7 @@ const Menu = ({
                 </Button>
             </Link>
             <QuickBook
+                availability={availability}
                 isDurationOpen={isDurationOpen}
                 handleQuickBookDone={handleQuickBookDone}
             />
