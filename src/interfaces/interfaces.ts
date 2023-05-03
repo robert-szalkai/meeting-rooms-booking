@@ -28,11 +28,11 @@ export interface iLeftSide {
 }
 
 export interface iRoomCards {
-    name: string;
+    name: string | undefined;
     availability: "free" | "booked" | "coming";
-    description: string;
-    capacity: number;
-    id: number;
+    description: string | undefined;
+    capacity: number | undefined;
+    id: number | undefined;
 }
 
 export interface iMeetingData {
@@ -92,7 +92,7 @@ export interface MeetingRoomsData {
     title: string | undefined;
     description: string | undefined;
     capacity: number | undefined;
-    id?: number;
+    id?: number | undefined;
     lastBooked?: string;
     meetings?: {
         startDate: string;
