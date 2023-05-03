@@ -133,9 +133,11 @@ const LeftSide = ({
                         flexDirection="column"
                         justifyContent="center"
                         alignItems="flex-start"
+                        marginTop={16}
+                        marginLeft={-20}
                     >
                         {name ? (
-                            <Typography variant="h3">{name}</Typography>
+                            <Typography variant="h4">{name}</Typography>
                         ) : (
                             <Skeleton
                                 variant="rectangular"
@@ -146,7 +148,7 @@ const LeftSide = ({
 
                         <Clock />
 
-                        <Typography variant="h3">{formattedDate}</Typography>
+                        <Typography variant="h4">{formattedDate}</Typography>
                     </Box>
                 </Box>
                 <Box
