@@ -28,11 +28,11 @@ export interface iLeftSide {
 }
 
 export interface iRoomCards {
-    name: string;
+    name: string | undefined;
     availability: "free" | "booked" | "coming";
-    description: string;
-    capacity: number;
-    id: number;
+    description: string | undefined;
+    capacity: number | undefined;
+    id: number | undefined;
 }
 
 export interface iMeetingData {
@@ -57,17 +57,21 @@ export interface iMeetigroomForm {
     ) => Promise<void>;
     text: String;
     edit: boolean;
-    editData?: iCard;
+    editData?: editData;
     onClose: () => void;
 }
+type editData = Pick<
+    MeetingRoomsData,
+    "description" | "title" | "capacity" | "id"
+>;
 
 export interface iCard {
     handleEdit: (id: number) => Promise<void>;
-    title: String;
-    id: number;
-    description: String;
-    lastBooked: String;
-    capacity: number;
+    title: string | undefined;
+    id: number | undefined;
+    description: string | undefined;
+    lastBooked: string | undefined;
+    capacity: number | undefined;
     handleDelete: (id: number) => void;
 }
 
@@ -80,18 +84,22 @@ export interface iUpcomingCards {
     selectedCardId?: string;
 }
 
+export interface iAdvancedBook {
+    availability: number;
+}
+
 export interface MeetingRoomsData {
-    title: string;
-    id: number;
-    description: string;
-    lastBooked: string;
-    capacity: number;
-    meetings: {
+    title: string | undefined;
+    description: string | undefined;
+    capacity: number | undefined;
+    id?: number | undefined;
+    lastBooked?: string;
+    meetings?: {
         startDate: string;
         endDate: string;
     }[];
-    handleEdit: () => Promise<void>;
-    handleDelete: () => void;
+    handleEdit?: () => Promise<void>;
+    handleDelete?: () => void;
 }
 export interface Participant {
     name: string;

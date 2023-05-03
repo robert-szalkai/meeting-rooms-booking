@@ -28,7 +28,7 @@ export const RoomSelectionCards = ({
     return (
         <Card
             onClick={() => {
-                handleClick(id);
+                if (id) handleClick(id);
             }}
             sx={{
                 height: "200px",
@@ -79,7 +79,7 @@ export const RoomSelectionCards = ({
                 >
                     <Typography paddingLeft={2} variant="subtitle1">
                         Description:{" "}
-                        {description.length > 68
+                        {description && description.length > 68
                             ? description.slice(0, 68) + "..."
                             : description}
                     </Typography>
