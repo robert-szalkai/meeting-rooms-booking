@@ -23,7 +23,7 @@ const Participants: FC<ParticipantsProps> = ({
     return (
         <Box>
             <Box>
-                <InputLabel>Meeting owner*</InputLabel>
+                <InputLabel sx={{ mb: 1, mt: 1 }}>Meeting owner*</InputLabel>
                 <Autocomplete
                     id="size-small-filled"
                     size="small"
@@ -64,7 +64,7 @@ const Participants: FC<ParticipantsProps> = ({
                             error={
                                 fieldTextValid.meetingOwnerValid.length === 0
                             }
-                            placeholder="An employee from doctari group"
+                            placeholder="An employee from Doctari Group"
                             InputProps={{
                                 ...params.InputProps,
                                 disableUnderline: true,
@@ -74,7 +74,7 @@ const Participants: FC<ParticipantsProps> = ({
                 />
             </Box>
             <Box paddingTop={2}>
-                <InputLabel>Participants</InputLabel>
+                <InputLabel sx={{ mb: 1, mt: 1 }}>Participants</InputLabel>
                 <Autocomplete
                     multiple
                     limitTags={3}
@@ -109,7 +109,7 @@ const Participants: FC<ParticipantsProps> = ({
                             {...params}
                             variant="filled"
                             hiddenLabel
-                            placeholder="Provide participants names"
+                            placeholder="Search Participants by name"
                             size="small"
                             InputProps={{
                                 ...params.InputProps,

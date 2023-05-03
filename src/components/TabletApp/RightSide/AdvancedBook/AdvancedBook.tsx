@@ -150,8 +150,8 @@ const AdvancedBook = ({ availability }: iAdvancedBook) => {
                 rowGap={1}
                 boxSizing="border-box"
                 data-testid="advancedbook-container"
-                paddingLeft={2}
-                paddingRight={5}
+                paddingLeft={3}
+                paddingRight={7}
                 paddingTop={2}
             >
                 <Grid item xs={12}>
@@ -162,7 +162,7 @@ const AdvancedBook = ({ availability }: iAdvancedBook) => {
                 <Grid item xs={12}>
                     <InputField
                         inputLabelText="Meeting Name*"
-                        placeholderText="Provide meeting name"
+                        placeholderText="Provide meeting name. Ex. Meet new people"
                         handleMeetingName={setMeetingName}
                         handleMeetingDescription={setMeetingDescription}
                         fieldTextValid={meetingName}
@@ -172,7 +172,7 @@ const AdvancedBook = ({ availability }: iAdvancedBook) => {
                 <Grid item xs={12}>
                     <InputField
                         inputLabelText="Meeting Description"
-                        placeholderText="Provide meeting description"
+                        placeholderText="Please provide a description of the meeting."
                         multilineSelect
                         handleMeetingName={setMeetingName}
                         handleMeetingDescription={setMeetingDescription}
