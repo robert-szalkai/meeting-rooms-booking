@@ -6,29 +6,10 @@ import {
     Button,
     TextField,
     FormHelperText,
-    InputLabel,
 } from "@mui/material";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
-import InputAdornment from "@mui/material/InputAdornment";
-interface iCard {
-    title: string;
-    id: number;
-    description: string;
-    lastBooked: string;
-    capacity: number;
-}
-interface iMeetigroomForm {
-    handleSubmit: (
-        Name: string | undefined,
-        Description: string | undefined,
-        Capacity: string | undefined,
-        id?: number
-    ) => Promise<void>;
-    text: String;
-    edit: boolean;
-    editData?: iCard;
-    onClose: () => void;
-}
+import { iMeetigroomForm } from "../../../interfaces/interfaces";
+
 const handleChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     setFunction: React.Dispatch<React.SetStateAction<string | undefined>>
@@ -43,24 +24,27 @@ export const MeetingRoomForm = ({
     editData,
     onClose,
 }: iMeetigroomForm) => {
-    const [meetinRoomName, setName] = useState<string | undefined>("");
-    const [meetingRomDes, setDescription] = useState<string | undefined>("");
-    const [meetinfRoomCap, setCapacity] = useState<string | undefined>("");
+    const [meetingRoomName, setName] = useState<string>();
+    const [meetingRomDes, setDescription] = useState<string>();
+    const [meetingRoomCap, setCapacity] = useState<string>();
     const [areAllFieldsCompleted, setAreAllFieldsCompleted] =
         useState<boolean>(false);
+
     useEffect(() => {
-        if (edit === true) {
-            setName(editData?.title);
-            setDescription(editData?.description);
-            setCapacity(editData?.capacity.toString());
+        if (edit && editData) {
+            setName(editData.title);
+            setDescription(editData.description);
+            setCapacity(editData.capacity?.toString());
         }
     }, []);
 
     useEffect(() => {
         setAreAllFieldsCompleted(
-            meetinRoomName != "" && meetingRomDes != "" && meetinfRoomCap != ""
+            meetingRoomName !== "" &&
+                meetingRomDes !== "" &&
+                meetingRoomCap !== ""
         );
-    }, [meetinRoomName, meetingRomDes, meetinfRoomCap]);
+    }, [meetingRoomName, meetingRomDes, meetingRoomCap]);
 
     return (
         <Box sx={{ width: "702px", height: "493px" }}>
@@ -103,15 +87,15 @@ export const MeetingRoomForm = ({
                     onSubmit={(e) => {
                         e.preventDefault();
                         handleSubmit(
-                            meetinRoomName,
+                            meetingRoomName,
                             meetingRomDes,
-                            meetinfRoomCap,
+                            meetingRoomCap,
                             editData?.id
                         );
                     }}
                 >
                     <TextField
-                        value={meetinRoomName}
+                        value={meetingRoomName}
                         onChange={(e) => {
                             handleChange(e, setName);
                         }}
@@ -140,7 +124,7 @@ export const MeetingRoomForm = ({
                         InputProps={{
                             inputProps: { min: 1 },
                         }}
-                        value={meetinfRoomCap}
+                        value={meetingRoomCap}
                         onChange={(e) => {
                             handleChange(e, setCapacity);
                         }}

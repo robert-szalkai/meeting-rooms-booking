@@ -87,6 +87,7 @@ const DateSelector: FC<DateSelectorProps> = ({
                     <DatePicker
                         minDate={dayjs()}
                         format="DD/MM/YYYY"
+                        defaultValue={dayjs()}
                         onChange={(event: any) => {
                             event.toString() === ""
                                 ? formValidationDateSetter(false, "isDateValid")

@@ -1,8 +1,8 @@
-import { Box, IconButton, Modal, Typography } from "@mui/material";
+import { Box, IconButton, Modal } from "@mui/material";
 import React from "react";
-import "./DeleteConfirmationModal.css";
-import { text } from "stream/consumers";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
+
+import "./DeleteConfirmationModal.css";
 
 type ConfirmationModalProps = {
     open: boolean;
@@ -11,7 +11,7 @@ type ConfirmationModalProps = {
     roomTitle: string;
 };
 
- const DeleteConfirmationModal = ({
+const DeleteConfirmationModal = ({
     open,
     onClose,
     onSubmit,
@@ -48,4 +48,4 @@ type ConfirmationModalProps = {
         </Modal>
     );
 };
-export default DeleteConfirmationModal
+export default DeleteConfirmationModal;

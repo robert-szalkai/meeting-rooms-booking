@@ -1,23 +1,105 @@
 import { Dayjs } from "dayjs";
 
-export interface iRoomCards {
-    name: string;
-    availability: "free" | "booked" | "coming";
-    description: string;
-    capacity: number;
-    id: number;
+export interface iHeader {
+    handleClickForm: () => void;
 }
-export interface MeetingRoomsData {
-    title: string;
-    id: number;
+
+export interface iMenu {
+    roomId: string;
+    roomName: string;
+    roomStatus: number;
+    handleQuickBookDone: () => void;
+    isDurationOpen?: boolean;
+    availability: number;
+}
+
+export interface iLeftSide {
+    name: string | undefined;
+    meetings: {
+        name: string;
+        id: string;
+        start_time: string;
+        end_time: string;
+        participants_id: [];
+    }[];
+    availability: number;
+    selectedCardId: string;
+    onClickQuickBookGlobal: () => void;
+}
+
+export interface iRoomCards {
+    name: string | undefined;
+    availability: "free" | "booked" | "coming";
+    description: string | undefined;
+    capacity: number | undefined;
+    id: number | undefined;
+}
+
+export interface iMeetingData {
+    name: string;
+    id: string;
+    startTime: string;
+    endTime: string;
+    participants_id: string[] | undefined;
     description: string;
-    lastBooked: string;
-    capacity: number;
-    meetings:{
-        startDate:string;
-        endDate:string;
-        
-    }[]
+}
+
+export interface iMeetingInfo {
+    setSelectedCardId: (meetid: string) => void;
+}
+
+export interface iMeetigroomForm {
+    handleSubmit: (
+        Name: string | undefined,
+        Description: string | undefined,
+        Capacity: string | undefined,
+        id?: number
+    ) => Promise<void>;
+    text: String;
+    edit: boolean;
+    editData?: editData;
+    onClose: () => void;
+}
+type editData = Pick<
+    MeetingRoomsData,
+    "description" | "title" | "capacity" | "id"
+>;
+
+export interface iCard {
+    handleEdit: (id: number) => Promise<void>;
+    title: string | undefined;
+    id: number | undefined;
+    description: string | undefined;
+    lastBooked: string | undefined;
+    capacity: number | undefined;
+    handleDelete: (id: number) => void;
+}
+
+export interface iUpcomingCards {
+    id: string;
+    start: string;
+    end: string;
+    persons: (string | undefined)[];
+    meetingName: string;
+    selectedCardId?: string;
+}
+
+export interface iAdvancedBook {
+    availability: number;
+}
+
+export interface MeetingRoomsData {
+    title: string | undefined;
+    description: string | undefined;
+    capacity: number | undefined;
+    id?: number | undefined;
+    lastBooked?: string;
+    meetings?: {
+        startDate: string;
+        endDate: string;
+    }[];
+    handleEdit?: () => Promise<void>;
+    handleDelete?: () => void;
 }
 export interface Participant {
     name: string;
@@ -105,4 +187,8 @@ export interface dateSelectorValid {
     dateValid: string;
     startValid: string;
     endValid: string;
+}
+
+export interface iQuickBookGlobal {
+    onClickQuickBookGlobal: () => void;
 }

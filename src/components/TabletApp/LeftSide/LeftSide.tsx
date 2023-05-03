@@ -11,21 +11,7 @@ import AdvancedBookGlobal from "./AdvancedBookGlobal/AdvancedBookGlobal";
 import Clock from "./Clock/Clock";
 import { getParticipantsIdName } from "../../../api/participants";
 import CONSTANTS from "../../../constants/Constants";
-import { participantsID } from "../../../interfaces/interfaces";
-
-interface iLeftSide {
-    name: string | undefined;
-    meetings: {
-        name: string;
-        id: string;
-        start_time: string;
-        end_time: string;
-        participants_id: [];
-    }[];
-    availability: number;
-    selectedCardId: string;
-    onClickQuickBookGlobal: () => void;
-}
+import { iLeftSide, participantsID } from "../../../interfaces/interfaces";
 
 const LeftSide = ({
     name,
@@ -147,9 +133,11 @@ const LeftSide = ({
                         flexDirection="column"
                         justifyContent="center"
                         alignItems="flex-start"
+                        marginTop={16}
+                        marginLeft={-20}
                     >
                         {name ? (
-                            <Typography variant="h3">{name}</Typography>
+                            <Typography variant="h4">{name}</Typography>
                         ) : (
                             <Skeleton
                                 variant="rectangular"
@@ -160,7 +148,7 @@ const LeftSide = ({
 
                         <Clock />
 
-                        <Typography variant="h3">{formattedDate}</Typography>
+                        <Typography variant="h4">{formattedDate}</Typography>
                     </Box>
                 </Box>
                 <Box

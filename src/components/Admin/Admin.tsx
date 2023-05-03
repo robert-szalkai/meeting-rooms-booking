@@ -13,13 +13,6 @@ import {
 } from "../../api/rooms";
 import { MeetingRoomsData } from "../../interfaces/interfaces";
 
-interface iCard {
-    title: string;
-    id: number;
-    description: string;
-    lastBooked: string;
-    capacity: number;
-}
 const Admin = () => {
     const [showModal, setShowModal] = useState<boolean>(false);
     const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
@@ -35,7 +28,11 @@ const Admin = () => {
         Description: string | undefined,
         Capacity: string | undefined
     ) => {
-        const result = await addRoom(Name, Description, Capacity);
+        const result = await addRoom({
+            title: Name,
+            description: Description,
+            capacity: Number(Capacity),
+        });
         if (result.status === 201) {
             setLoaded(true);
             handleClose(setShowModal);
@@ -47,7 +44,12 @@ const Admin = () => {
         Capacity: string | undefined,
         id?: number
     ) => {
-        const result = await updateRoomData(Name, Description, Capacity, id);
+        const result = await updateRoomData({
+            title: Name,
+            description: Description,
+            capacity: Number(Capacity),
+            id: id,
+        });
         if (result.status === 200) {
             setLoaded(true);
             handleClose(setEditModal);
@@ -100,6 +102,7 @@ const Admin = () => {
                     id={e.id}
                     description={e.description}
                     lastBooked={e.lastBooked}
+                    capacity={e.capacity}
                 ></Cards>
             </Grid>
         ));

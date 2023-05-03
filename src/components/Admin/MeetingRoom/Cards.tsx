@@ -3,21 +3,16 @@ import { Card, Typography, Box } from "@mui/material";
 import BorderColorIcon from "@mui/icons-material/BorderColor";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import { IconButton } from "@mui/material";
-interface iCard {
-    handleEdit: (id: number) => Promise<void>;
-    title: String;
-    id: number;
-    description: String;
-    lastBooked: String;
-    handleDelete: (id: number) => void;
-}
+
+import { iCard } from "../../../interfaces/interfaces";
+
 export const Cards = ({
     title,
     id,
     description,
     lastBooked,
     handleDelete,
-    handleEdit
+    handleEdit,
 }: iCard) => {
     return (
         <Card
@@ -50,7 +45,7 @@ export const Cards = ({
                 <Box sx={{ marginLeft: "auto" }}>
                     <IconButton
                         onClick={() => {
-                            handleEdit(id);
+                            if (id) handleEdit(id);
                         }}
                     >
                         <BorderColorIcon fontSize="large" />
@@ -58,7 +53,7 @@ export const Cards = ({
 
                     <IconButton
                         onClick={() => {
-                            handleDelete(id);
+                            if (id) handleDelete(id);
                         }}
                     >
                         <DeleteOutlineIcon

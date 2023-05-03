@@ -1,20 +1,11 @@
-import { Button, Box, Typography, Skeleton, colors } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import { Button, Box, Typography, Skeleton } from "@mui/material";
+import React from "react";
 import { Link } from "react-router-dom";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 
 import QuickBook from "../QuickBook/QuickBook";
+import { iMenu } from "../../../../interfaces/interfaces";
 import CONSTANTS from "../../../../constants/Constants";
-import COLORS from "../../../../constants/CustomColors";
-
-interface iMenu {
-    roomId: string;
-    roomName: string;
-    roomStatus: number;
-    handleQuickBookDone: () => void;
-    isDurationOpen?: boolean;
-    availability: number;
-}
 
 const Menu = ({
     roomId,
@@ -48,6 +39,7 @@ const Menu = ({
                 paddingTop: "20%",
                 overflow: "auto",
                 paddingRight: "32px",
+
             }}
         >
             {" "}

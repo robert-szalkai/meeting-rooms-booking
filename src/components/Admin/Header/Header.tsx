@@ -4,9 +4,8 @@ import AddIcon from "@mui/icons-material/Add";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { IconButton } from "@mui/material";
 
-interface iHeader {
-    handleClickForm: () => void;
-}
+import { iHeader } from "../../../interfaces/interfaces";
+
 const Header = ({ handleClickForm }: iHeader) => {
     return (
         <Box

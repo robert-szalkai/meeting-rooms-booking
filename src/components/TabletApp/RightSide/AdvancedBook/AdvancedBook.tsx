@@ -16,10 +16,7 @@ import {
     Participant,
 } from "../../../../interfaces/interfaces";
 import CONSTANTS from "../../../../constants/Constants";
-
-interface iAdvancedBook {
-    availability: number;
-}
+import { iAdvancedBook } from "../../../../interfaces/interfaces";
 
 const AdvancedBook = ({ availability }: iAdvancedBook) => {
     const [validForm, setValidForm] = useState<FormValidity>({
@@ -86,30 +83,34 @@ const AdvancedBook = ({ availability }: iAdvancedBook) => {
         date: Dayjs,
         start: string,
         end: string,
-        participants: Participant[]
+        participants: Participant[],
+        id: number
     ) => {
         const dateObj = dayjs(date);
-        const startDate = dayjs(start);
-        const endDate = dayjs(end);
+        const startTime = dayjs(start);
+        const endTime = dayjs(end);
         const meetingStartDate = dateObj
-            .set("hour", startDate.get("hour"))
-            .set("minute", startDate.get("minute"));
+            .set("hour", startTime.get("hour"))
+            .set("minute", startTime.get("minute"))
+            .toString();
 
         const meetingEndDate = dateObj
-            .set("hour", endDate.get("hour"))
-            .set("minute", endDate.get("minute"));
+            .set("hour", endTime.get("hour"))
+            .set("minute", endTime.get("minute"))
+            .toString();
 
         const participants_id = participants.map((participant) => {
             return participant.id;
         });
         try {
-            addMeeting(
-                name,
-                description,
-                meetingStartDate,
-                meetingEndDate,
-                participants_id
-            );
+            addMeeting({
+                meetingName: name,
+                meetingDescription: description,
+                startDate: meetingStartDate,
+                endDate: meetingEndDate,
+                participants: participants_id,
+                id: id,
+            });
             spawnToast({
                 title: "You have succeded",
                 message: "Your booking was made",
@@ -125,6 +126,8 @@ const AdvancedBook = ({ availability }: iAdvancedBook) => {
     };
 
     const { meetid } = useParams<string>();
+    const id = Number(meetid);
+
     console.log("param meetid: ", meetid);
     return (
         <form
@@ -135,7 +138,8 @@ const AdvancedBook = ({ availability }: iAdvancedBook) => {
                     dateSelectorDate,
                     startTime,
                     endTime,
-                    meetingOwner.concat(meetingParticipants)
+                    meetingOwner.concat(meetingParticipants),
+                    id
                 )
             }
         >
