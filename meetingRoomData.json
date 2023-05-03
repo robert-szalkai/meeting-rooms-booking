@@ -2,16 +2,23 @@
     "roomdata": {
         "name": "Focus Room",
 
-        "meetings": [
-            {
-                "name": "Focus Room 1",
-                "id": "1",
-                "start_time": "2023-04-26T08:10:18.386Z",
-                "end_time": "2023-04-26T18:10:18.386Z",
-                "participants_id": [1, 5, 2, 3, 4, 6, 7, 8, 9, 10, 11],
-                "description": "Here we go for some fun"
-            },
 
+    "meetings":[
+        {"name": "Focus Room 1",
+           "id":"1",
+           "start_time": "2023-04-26T08:10:18.386Z",
+           "end_time": "2023-04-26T18:10:18.386Z",
+           "participants_id":[1,5,2,3,4,6,7,8,9,10,11],
+           "description":"Here we go for some fun"
+        },
+
+
+        {"name": "Focus Room 2",
+            "id":"2",
+            "start_time": "2023-04-13T09:10:18.386Z",
+            "end_time": "2023-04-13T12:10:18.386Z",
+            "participants_id":[1, 2, 3, 5 ],
+            "description":"Nothing to see here"
             {
                 "name": "Focus Room 2",
                 "id": "2",

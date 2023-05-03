@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Grid, Typography, Box, Avatar, Alert, Stack } from "@mui/material";
-import axios from "axios";
-import dayjs from "dayjs";
+import { Grid, Typography, Box, Avatar } from "@mui/material";
+import axios, { AxiosResponse } from "axios";
+import dayjs, { Dayjs } from "dayjs";
 import { useParams } from "react-router-dom";
 
 import { getParticipantsIdName } from "../../../../api/participants";
@@ -11,6 +11,7 @@ import {
     participantsID,
 } from "../../../../interfaces/interfaces";
 import Error from "./NotFoundPage/NotFoundPage";
+import COLORS from "../../../../constants/CustomColors";
 
 const MeetingInfo = ({ setSelectedCardId }: iMeetingInfo) => {
     const [participantsData, setParticipantsData] = useState<participantsID>();
@@ -95,7 +96,15 @@ const MeetingInfo = ({ setSelectedCardId }: iMeetingInfo) => {
                         alignItems: "center",
                     }}
                 >
-                    <Avatar>{person}</Avatar>
+                    <Avatar
+                        sx={{
+                            backgroundColor: COLORS.PURPLE,
+                            height: 35,
+                            width: 35,
+                        }}
+                    >
+                        <Typography fontSize={17}>{person}</Typography>
+                    </Avatar>
                     <Typography variant="body1">
                         {personsById?.[index]}
                     </Typography>
@@ -106,27 +115,30 @@ const MeetingInfo = ({ setSelectedCardId }: iMeetingInfo) => {
 
     return meetingData ? (
         <Grid
-            height={"100%"}
-            padding={1}
+            height={"100vh"}
+            padding={2}
             container
             direction={"row"}
             spacing={1}
+            paddingLeft={6}
+            marginTop={3}
+            overflow={"none"}
         >
             <Grid item xs={12}>
-                <Grid container direction={"row"} spacing={5}>
+                <Grid container direction={"row"} spacing={0}>
                     <Grid item xs={12}></Grid>
                     <Grid item xs={12}>
                         <Typography variant="h4">{meetingData.name}</Typography>
-                        <Typography variant="h4">
-                            Today,
-                            {dayjs(meetingData.startTime).format("HH:MM")}-
+                        <Typography variant="h6">
+                            Today,{" "}
+                            {dayjs(meetingData.startTime).format("HH:MM")} -{" "}
                             {dayjs(meetingData.endTime).format("HH:MM")}
                         </Typography>
                     </Grid>
                 </Grid>
             </Grid>
             <Grid item xs={12}>
-                <Grid container direction={"row"}>
+                <Grid container direction={"row"} marginTop={-10}>
                     <Grid item xs={3}>
                         <Typography variant="h5">Participants</Typography>
                     </Grid>
@@ -138,21 +150,23 @@ const MeetingInfo = ({ setSelectedCardId }: iMeetingInfo) => {
                     flexWrap={"wrap"}
                     container
                     direction={"row"}
-                    spacing={2.3}
+                    spacing={2}
+                    marginTop={-20}
+                    marginLeft={-2.8}
                 >
                     {mapersons()}
                 </Grid>
             </Grid>
             <Grid item xs={12}>
                 <Grid container direction={"row"}>
-                    <Grid item xs={3}>
+                    <Grid item xs={3} marginTop={-10} marginLeft={1}>
                         <Typography variant="h5">Description</Typography>
                     </Grid>
                 </Grid>
             </Grid>
             <Grid item xs={12}>
-                <Grid padding={0.5} container direction={"row"}>
-                    <Grid item xs={12}>
+                <Grid padding={0.5} container direction={"row"} marginTop={-20}>
+                    <Grid item xs={12} marginLeft={1}>
                         <Typography variant="subtitle1">
                             {meetingData.description}
                         </Typography>
