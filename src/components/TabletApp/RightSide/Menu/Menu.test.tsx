@@ -10,6 +10,7 @@ describe("Menu", () => {
         roomStatus: 0,
         handleQuickBookDone: jest.fn(),
         isDurationOpen: false,
+        availability: 1
     };
 
     it("should render with the correct room name and status message", () => {
