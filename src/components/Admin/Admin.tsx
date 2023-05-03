@@ -85,7 +85,7 @@ const Admin = () => {
     };
     const displayCards = () => {
         return datacontent?.map((e) => (
-            <Grid key={e.id} item xs={12} md={6} lg={6}>
+            <Grid  key={e.id} item xs={12} md={6} lg={6}>
                 <Cards
                     handleEdit={handleEditOnClick}
                     handleDelete={handleDeleteOnClick}
@@ -115,6 +115,7 @@ const Admin = () => {
                 }}
             />
             <Modal
+                data-testid="newroommodal"
                 sx={{
                     width: "100%",
                     height: "100%",
