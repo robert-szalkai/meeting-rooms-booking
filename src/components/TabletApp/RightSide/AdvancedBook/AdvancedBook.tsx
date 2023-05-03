@@ -24,7 +24,7 @@ const AdvancedBook = ({ availability }: iAdvancedBook) => {
         isDateValid: false,
         isStartValid: false,
         isEndValid: false,
-        isOwnerValid: true,
+        isOwnerValid: false,
     });
     const [meetingName, setMeetingName] = useState<string>("");
     const [meetingDescription, setMeetingDescription] = useState<string>("");
@@ -35,9 +35,7 @@ const AdvancedBook = ({ availability }: iAdvancedBook) => {
     const [meetingParticipants, setMeetingParticipants] = useState<
         Participant[]
     >([]);
-    const [meetingOwner, setMeetingOwner] = useState<Participant[]>([
-        { name: "akex", id: 45, available: true, image: "" },
-    ]);
+    const [meetingOwner, setMeetingOwner] = useState<Participant[]>([]);
     const [bookedMeetings, setBookedMeetings] = useState<Meeting[]>([]);
     const navigate = useNavigate();
 
