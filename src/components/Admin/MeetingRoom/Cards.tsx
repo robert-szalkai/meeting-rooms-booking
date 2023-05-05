@@ -45,7 +45,7 @@ export const Cards = ({
                 <Box sx={{ marginLeft: "auto" }}>
                     <IconButton
                         onClick={() => {
-                            handleEdit(id);
+                            if (id) handleEdit(id);
                         }}
                     >
                         <BorderColorIcon fontSize="large" />
@@ -53,7 +53,7 @@ export const Cards = ({
 
                     <IconButton
                         onClick={() => {
-                            handleDelete(id);
+                            if (id) handleDelete(id);
                         }}
                     >
                         <DeleteOutlineIcon

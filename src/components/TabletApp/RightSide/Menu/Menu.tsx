@@ -38,6 +38,8 @@ const Menu = ({
                 alignItems: "center",
                 paddingTop: "20%",
                 overflow: "auto",
+                paddingRight: "32px",
+
             }}
         >
             {" "}
@@ -51,10 +53,10 @@ const Menu = ({
             >
                 {roomName ? (
                     <Box>
-                        <Typography variant="h4">
+                        <Typography variant="h4" align="center">
                             {roomName} is {RoomStatusMessage[roomStatus]}
                         </Typography>
-                        <Typography variant="h6">
+                        <Typography variant="h6" align="center">
                             {subText[roomStatus]}
                         </Typography>
                     </Box>

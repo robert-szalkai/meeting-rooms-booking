@@ -1,11 +1,18 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { Card, Typography, Box, Avatar } from "@mui/material";
+import {
+    Card,
+    Typography,
+    Box,
+    Avatar,
+    AvatarGroup,
+    Grid,
+} from "@mui/material";
+import SIZE from "../../../../constants/CustomSize";
 import { useNavigate } from "react-router";
 import { useLocation } from "react-router-dom";
 
 import { iUpcomingCards } from "../../../../interfaces/interfaces";
-import SIZE from "../../../../constants/CustomSize";
 import COLORS from "../../../../constants/CustomColors";
 
 const UpcomingCards = ({
@@ -28,7 +35,7 @@ const UpcomingCards = ({
     };
 
     const [joiners, setJoiners] = useState<(string | undefined)[]>();
-    const [surplus, setSurplus] = useState<number>();
+    const [surplus, setSurplus] = useState<number>(0);
     const location = useLocation();
     useEffect(() => {
         if (persons.length > 6) {
@@ -39,7 +46,11 @@ const UpcomingCards = ({
     const mapJoiners = () => {
         return joiners?.map(
             (e, index) =>
-                index <= 5 && <Avatar sx={{ bgcolor: "purple" }}>{e}</Avatar>
+                index <= 5 && (
+                    <Avatar sx={{ bgcolor: COLORS.PURPLE, width: 28, height: 28 }}>
+                        <Typography fontSize={11}>{e}</Typography>
+                    </Avatar>
+                )
         );
     };
 
@@ -76,22 +87,31 @@ const UpcomingCards = ({
                 },
             }}
         >
-            <Typography noWrap variant="h6">
-                {meetingName}
-            </Typography>
-            <Typography variant="h5">
-                Today, {start} - {end}
-            </Typography>
+            <Grid sx={{ marginLeft: "15px" }}>
+                <Typography noWrap variant="h6">
+                    {meetingName}
+                </Typography>
+                <Typography variant="h5">
+                    Today, {start} - {end}
+                </Typography>
+            </Grid>
             <Box
                 sx={{
                     width: "100%",
+                    height: "34px",
                     marginTop: "auto",
+                    marginLeft: "15px",
                     display: "flex",
-                    gap: "2px",
                 }}
             >
-                {joiners && mapJoiners()}
-                {surplus && <Avatar>+{surplus}</Avatar>}
+                <AvatarGroup max={8}>
+                    {joiners && mapJoiners()}
+                    {surplus && (
+                        <Avatar sx={{ bgcolor: COLORS.GRAY, width: 28, height: 28 }}>
+                            +{surplus}
+                        </Avatar>
+                    )}
+                </AvatarGroup>
             </Box>
         </Card>
     );
