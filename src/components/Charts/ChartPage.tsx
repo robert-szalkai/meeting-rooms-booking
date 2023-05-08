@@ -9,103 +9,28 @@ import dayjs from "dayjs";
 import COLORS from "../../constants/CustomColors";
 import weekOfYear from "dayjs/plugin/weekOfYear";
 import weekYear from "dayjs/plugin/weekYear";
+import localData from "dayjs/plugin/localeData";
 import Chart from "./Chart";
-import MenuItem from "@mui/material/MenuItem";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { Typography } from "@mui/material";
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+
 dayjs.extend(weekOfYear);
 dayjs.extend(weekYear);
+dayjs.extend(localData);
 
 let fillColor = COLORS.ADMINCOLOR;
 
 const ChartPage = () => {
-    const months = [
-        "January",
-        "February",
-        "March",
-        "April",
-        "May",
-        "June",
-        "July",
-        "August",
-        "September",
-        "October",
-        "November",
-        "December",
-    ];
-
-    const monthsArray = months.map((month) => ({ name: month, value: 0 }));
-    const daysOfWeek = [
-        "Sunday",
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday",
-        "Saturday",
-    ];
-    const daysArray = daysOfWeek.map((day) => ({ name: day, value: 0 }));
-    const [selectedYear, setSelectedYear] = useState(dayjs().year());
-    const [selectedMonth, setSelectedMonth] = useState(dayjs().format("MMMM"));
-    const [selectedWeek, setSelectedWeek] = useState(1);
+    const monthsArray = dayjs.months().map((month) => ({ name: month, value: 0 }));
+    const daysArray = dayjs.weekdays().map((day) => ({ name: day, value: 0 }));
+    const [selectedDate, setSelectedDate] = useState(dayjs())
     const [meetingsRoom, setMeetingsRoom] = useState([{ name: "", value: 0 }]);
     const [meetingsMonth, setMeetingsMonth] = useState(monthsArray);
     const [meetingsDay, setMeetingsDay] = useState(daysArray);
-    const handleWeekChange = (event: SelectChangeEvent) => {
-        setSelectedWeek(parseInt(event.target.value));
-    };
 
-    const handleYearChange = (event: SelectChangeEvent) => {
-        setSelectedYear(dayjs(event.target.value.toString()).year());
-    };
-    const handleMonthChange = (event: SelectChangeEvent) => {
-        setSelectedMonth(event.target.value);
-        setMeetingsMonth(monthsArray);
-    };
-
-    const dropDownYear = () => {
-        const years = [];
-        const startYear = 2019;
-        const endYear = dayjs().year();
-        for (let year = startYear; year <= endYear; year++) {
-            years.push(year);
-        }
-        return (
-            <Select value={selectedYear.toString()} onChange={handleYearChange}>
-                {years.map((year) => (
-                    <MenuItem key={year} value={year}>
-                        {year}
-                    </MenuItem>
-                ))}
-            </Select>
-        );
-    };
-    const dropDownMonth = () => {
-        return (
-            <Select value={selectedMonth} onChange={handleMonthChange}>
-                {monthsArray.map((month) => (
-                    <MenuItem key={month.name} value={month.name}>
-                        {month.name}
-                    </MenuItem>
-                ))}
-            </Select>
-        );
-    };
-    const dropDownWeek = () => {
-        const weeks = [];
-        for (let week = 1; week <= 4; week++) {
-            weeks.push(week);
-        }
-        return (
-            <Select value={selectedWeek.toString()} onChange={handleWeekChange}>
-                {weeks.map((week) => (
-                    <MenuItem key={week} value={week}>
-                        {week}
-                    </MenuItem>
-                ))}
-            </Select>
-        );
-    };
+    
     const getRoomsFromJson = async () => {
         await getMeetingsData().then((res) => {
             const meetingsFromRes = res.data.meetings;
@@ -145,7 +70,7 @@ const ChartPage = () => {
                                 dayjs(meetingFromRes.start_time).format(
                                     "MMMM"
                                 ) &&
-                            selectedYear ===
+                            selectedDate.year() ===
                                 dayjs(meetingFromRes.start_time).year()
                         )
                             tempVar.value += 1;
@@ -179,15 +104,14 @@ const ChartPage = () => {
                                 dayjs(meetingFromRes.start_time).format(
                                     "dddd"
                                 ) &&
-                            selectedWeek ===
-                                Math.ceil(
-                                    dayjs(meetingFromRes.start_time).date() / 7
-                                ) &&
-                            selectedMonth ===
+                            selectedDate.week() ===
+                                    dayjs(meetingFromRes.start_time).week()
+                                &&
+                            selectedDate.format("MMMM")===
                                 dayjs(meetingFromRes.start_time).format(
                                     "MMMM"
                                 ) &&
-                            selectedYear ===
+                            selectedDate.year() ===
                                 dayjs(meetingFromRes.start_time).year()
                         )
                             tempVar.value += 1;
@@ -207,16 +131,15 @@ const ChartPage = () => {
         getMonthsFromJson();
         getDaysOfTheWeekFromJson();
         getRoomsFromJson();
-    }, [selectedYear, selectedWeek, selectedMonth]);
+    }, [selectedDate]);
     return (
+        <LocalizationProvider  dateAdapter={AdapterDayjs}>
         <Box sx={{ display: "flex", flexDirection: "column" }}>
             <Box sx={{ display: "flex", alignItems: "center", mt: 1, ml: 1 }}>
                 <IconButton component={Link} to="/selection">
                     <ArrowBackIcon />
                 </IconButton>
-                {dropDownYear()}
-                {dropDownMonth()}
-                {dropDownWeek()}
+                <DatePicker value={selectedDate} onChange={(event:any) => {setSelectedDate(dayjs(event))}}/>
             </Box>
             <Box
                 style={{
@@ -259,6 +182,7 @@ const ChartPage = () => {
                 </Box>
             </Box>
         </Box>
+        </LocalizationProvider>
     );
 };
 
