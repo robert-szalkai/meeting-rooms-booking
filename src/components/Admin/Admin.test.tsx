@@ -8,7 +8,6 @@ test("test-open-modal", async () => {
     fireEvent.click(openform);
     expect(screen.getByTestId("newroommodal")).toBeVisible();
 });
-
 test("test-delete", async () => {
     render(<Admin />);
     await waitFor(() => {
