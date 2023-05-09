@@ -81,11 +81,13 @@ const DateSelector: FC<DateSelectorProps> = ({
 
     return (
         <LocalizationProvider size="small" dateAdapter={AdapterDayjs}>
-            <Box display="flex" justifyContent={"space-between"} gap={2}>
+            <Box display="flex" justifyContent={"space-between"} gap={3}>
                 <Box flexGrow={1}>
-                    <InputLabel>Day*</InputLabel>
+                    <InputLabel sx={{ mb: 1, mt: 1 }}>Day*</InputLabel>
                     <DatePicker
+                        minDate={dayjs()}
                         format="DD/MM/YYYY"
+                        defaultValue={dayjs()}
                         onChange={(event: any) => {
                             event.toString() === ""
                                 ? formValidationDateSetter(false, "isDateValid")
@@ -112,7 +114,7 @@ const DateSelector: FC<DateSelectorProps> = ({
                     />
                 </Box>
                 <Box flexGrow={1}>
-                    <InputLabel>Start*</InputLabel>
+                    <InputLabel sx={{ mb: 1, mt: 1 }}>Start*</InputLabel>
                     <TextField
                         select
                         variant="filled"
@@ -155,7 +157,7 @@ const DateSelector: FC<DateSelectorProps> = ({
                     </TextField>
                 </Box>
                 <Box flexGrow={1}>
-                    <InputLabel>End*</InputLabel>
+                    <InputLabel sx={{ mb: 1, mt: 1 }}>End*</InputLabel>
                     <TextField
                         select
                         variant="filled"

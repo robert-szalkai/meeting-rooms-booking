@@ -46,7 +46,7 @@ export const Cards = ({
                 <Box data-testid="editbtn" sx={{ marginLeft: "auto" }}>
                     <IconButton
                         onClick={() => {
-                            handleEdit(id);
+                            if (id) handleEdit(id);
                         }}
                     >
 
@@ -56,7 +56,7 @@ export const Cards = ({
                     <IconButton
                         data-testid={"delbtn"+id}
                         onClick={() => {
-                            handleDelete(id);
+                            if (id) handleDelete(id);
                         }}
                     >
                         <DeleteOutlineIcon

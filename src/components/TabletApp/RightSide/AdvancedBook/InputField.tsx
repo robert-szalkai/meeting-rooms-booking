@@ -14,7 +14,7 @@ const InputField = ({
 }: InputFieldProps) => {
     return (
         <Box>
-            <InputLabel>{inputLabelText}</InputLabel>
+            <InputLabel sx={{ mb: 1, mt: 1 }}>{inputLabelText}</InputLabel>
             <TextField
                 error={fieldTextValid === ""}
                 placeholder={placeholderText}
@@ -22,7 +22,7 @@ const InputField = ({
                 size="small"
                 hiddenLabel
                 fullWidth
-                InputProps={{ disableUnderline: true }}
+                InputProps={{ disableUnderline: true, sx: { paddingTop: 0 } }}
                 multiline={multilineSelect}
                 rows={multilineSelect ? 4 : 0}
                 onChange={(event) => {

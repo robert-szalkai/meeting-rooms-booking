@@ -40,7 +40,12 @@ const Admin = () => {
         Capacity: string | undefined,
         id?: number
     ) => {
-        const result = await updateRoomData(Name, Description, Capacity, id);
+        const result = await updateRoomData({
+            title: Name,
+            description: Description,
+            capacity: Number(Capacity),
+            id: id,
+        });
         if (result.status === 200) {
             setLoading(true);
             handleClose(setEditModal);

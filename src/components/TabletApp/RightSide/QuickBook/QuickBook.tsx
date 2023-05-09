@@ -186,73 +186,76 @@ const QuickBook = ({
                     <Box
                         sx={{
                             display: "flex",
-                            width: "100%",
-                            justifyContent: "flex-start",
+                            flexDirection: "column",
+                            mt: 4,
+                            ml: "5%",
+                            mr: "5%",
                         }}
                     >
-                        <Typography
-                            sx={{ fontWeight: "bold", marginRight: "auto" }}
-                        >
+                        <Typography sx={{ fontWeight: "bold", mb: 2 }}>
                             Select meeting duration
                         </Typography>
-                    </Box>
-
-                    <Box
-                        sx={{
-                            display: "flex",
-                            justifyContent: "space-evenly",
-                            alignItems: "center",
-                            width: "100%",
-                        }}
-                    >
-                        <Button
-                            onClick={() => {
-                                handleClickTime();
-                                setTimeVal(15);
+                        <Box
+                            sx={{
+                                display: "flex",
+                                justifyContent: "space-between",
+                                alignItems: "center",
+                                width: "100%",
+                                gap: "32px",
                             }}
-                            variant="outlined"
-                            color="success"
-                            disabled={handleDisable(15)}
                         >
-                            15 Min
-                        </Button>
+                            <Button
+                                onClick={() => {
+                                    handleClickTime();
+                                    setTimeVal(15);
+                                }}
+                                variant="outlined"
+                                color="success"
+                                disabled={handleDisable(15)}
+                                sx={{ flexGrow: 1 }}
+                            >
+                                15 Min
+                            </Button>
 
-                        <Button
-                            onClick={() => {
-                                handleClickTime();
-                                setTimeVal(20);
-                            }}
-                            variant="outlined"
-                            color="success"
-                            disabled={handleDisable(20)}
-                        >
-                            20 Min
-                        </Button>
+                            <Button
+                                onClick={() => {
+                                    handleClickTime();
+                                    setTimeVal(20);
+                                }}
+                                variant="outlined"
+                                color="success"
+                                disabled={handleDisable(20)}
+                                sx={{ flexGrow: 1 }}
+                            >
+                                20 Min
+                            </Button>
 
-                        <Button
-                            onClick={() => {
-                                handleClickTime();
-                                setTimeVal(30);
-                            }}
-                            variant="outlined"
-                            color="success"
-                            disabled={handleDisable(30)}
-                            value={30}
-                        >
-                            30 Min
-                        </Button>
+                            <Button
+                                onClick={() => {
+                                    handleClickTime();
+                                    setTimeVal(30);
+                                }}
+                                variant="outlined"
+                                color="success"
+                                disabled={handleDisable(30)}
+                                sx={{ flexGrow: 1 }}
+                            >
+                                30 Min
+                            </Button>
 
-                        <Button
-                            onClick={() => {
-                                handleClickTime();
-                                setTimeVal(40);
-                            }}
-                            variant="outlined"
-                            color="success"
-                            disabled={handleDisable(40)}
-                        >
-                            40 Min
-                        </Button>
+                            <Button
+                                onClick={() => {
+                                    handleClickTime();
+                                    setTimeVal(40);
+                                }}
+                                variant="outlined"
+                                color="success"
+                                disabled={handleDisable(40)}
+                                sx={{ flexGrow: 1 }}
+                            >
+                                40 Min
+                            </Button>
+                        </Box>
                     </Box>
 
                     {openQuickButtonMenu ? (
