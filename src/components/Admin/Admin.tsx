@@ -19,7 +19,7 @@ const Admin = () => {
     const [deleteRoomId, setDeleteRoomId] = useState<number | null>(null);
     const [deleteRoomTitle, setDeleteRoomTitle] = useState<string>("");
     const [datacontent, setDataContent] = useState<MeetingRoomsData[]>();
-    const [loaded, setLoaded] = useState(false);
+    const [loading, setLoading] = useState(false);
     const [showEditModal, setEditModal] = useState<boolean>(false);
     const [editDataEvent, setEditData] = useState<MeetingRoomsData>();
 
@@ -28,13 +28,9 @@ const Admin = () => {
         Description: string | undefined,
         Capacity: string | undefined
     ) => {
-        const result = await addRoom({
-            title: Name,
-            description: Description,
-            capacity: Number(Capacity),
-        });
-        if (result.status === 201) {
-            setLoaded(true);
+        const result = await addRoom(Name, Description, Capacity);
+        if (result.status === 200) {
+            setLoading(true);
             handleClose(setShowModal);
         }
     };
@@ -51,7 +47,7 @@ const Admin = () => {
             id: id,
         });
         if (result.status === 200) {
-            setLoaded(true);
+            setLoading(true);
             handleClose(setEditModal);
         }
     };
@@ -72,7 +68,7 @@ const Admin = () => {
     const handleDelete = async (id: number) => {
         const result = await deleteRooms(id);
         if (result.status === 200) {
-            setLoaded(true);
+            setLoading(true);
             setShowDeleteModal(false);
         }
     };
@@ -85,16 +81,20 @@ const Admin = () => {
     };
 
     const handleDeleteOnClick = async (id: number) => {
-        const result = await getRoomById(id);
-        if (result.status === 200) {
-            setDeleteRoomTitle(result.data.title);
-            setDeleteRoomId(result.data.id);
+      const filteredata=datacontent?.filter((e)=>{
+        return e.id==id ;
+      })
+            if(filteredata){
+            setDeleteRoomTitle(filteredata[0].title );
+            setDeleteRoomId(filteredata[0].id);
             setShowDeleteModal(true);
         }
+
+        
     };
     const displayCards = () => {
         return datacontent?.map((e) => (
-            <Grid key={e.id} item xs={12} md={6} lg={6}>
+            <Grid  key={e.id} item xs={12} md={6} lg={6}>
                 <Cards
                     handleEdit={handleEditOnClick}
                     handleDelete={handleDeleteOnClick}
@@ -111,11 +111,11 @@ const Admin = () => {
         getDataContent();
     }, []);
     useEffect(() => {
-        if (loaded !== false) {
+        if (loading !== false) {
             getDataContent();
-            setLoaded(false);
+            setLoading(false);
         }
-    }, [loaded]);
+    }, [loading]);
     return (
         <Container maxWidth="xl" sx={{ paddingTop: "50px" }}>
             <Header
@@ -124,6 +124,7 @@ const Admin = () => {
                 }}
             />
             <Modal
+                data-testid="newroommodal"
                 sx={{
                     width: "100%",
                     height: "100%",

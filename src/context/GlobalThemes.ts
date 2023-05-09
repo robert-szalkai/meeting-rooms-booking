@@ -2,7 +2,24 @@ import { createTheme } from "@mui/material/styles";
 import COLORS from "../constants/CustomColors"
 import SIZE from "../constants/CustomSize";
 const GlobalTheme = createTheme({
+    typography:{
+        fontFamily: "Overpass Mono 700",
+        button:{
+            textTransform: "none"
+        }
+    },
     components: {
+        MuiCssBaseline:{
+           styleOverrides:{
+            "@font-face":{
+                fontFamily:"Overpass Mono 700",
+                src:"https://fonts.cdnfonts.com/css/overpass-mono"
+            },
+            body:{
+              color:COLORS.FONTCOLOR
+            }
+           }
+        },
         MuiButton: {
             defaultProps:{
                 disableRipple:true
