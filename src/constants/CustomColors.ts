@@ -10,8 +10,8 @@ const COLORS = {
     WHITE: "#FFFFFF",
     BLACK: "#1E3C52",
     GRAY: "#808080",
-    FONTCOLOR:"#1E3C52"
-    PURPLE: "#800080"
+    FONTCOLOR: "#1E3C52",
+    PURPLE: "#800080",
 };
 
-export default COLORS
+export default COLORS;
