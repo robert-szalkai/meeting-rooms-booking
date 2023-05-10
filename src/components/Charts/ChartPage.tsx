@@ -11,9 +11,8 @@ import weekOfYear from "dayjs/plugin/weekOfYear";
 import localeDate from "dayjs/plugin/localeData";
 import objectSupport from "dayjs/plugin/objectSupport";
 import weekYear from "dayjs/plugin/weekYear";
+import localData from "dayjs/plugin/localeData";
 import Chart from "./Chart";
-import MenuItem from "@mui/material/MenuItem";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { Typography } from "@mui/material";
 
 dayjs.extend(weekOfYear);
@@ -213,6 +212,7 @@ const ChartPage = () => {
         getRoomsFromJson();
     }, [selectedDate]);
     return (
+        <LocalizationProvider  dateAdapter={AdapterDayjs}>
         <Box sx={{ display: "flex", flexDirection: "column" }}>
             <Box sx={{ display: "flex", alignItems: "center", mt: 1, ml: 1 }}>
                 <IconButton component={Link} to="/selection">
@@ -264,6 +264,7 @@ const ChartPage = () => {
                 </Box>
             </Box>
         </Box>
+        </LocalizationProvider>
     );
 };
 
