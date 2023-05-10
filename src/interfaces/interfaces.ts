@@ -1,12 +1,13 @@
-import { Dayjs } from "dayjs";export interface iHeader {
+import { Dayjs } from "dayjs";
+export interface iHeader {
     handleClickForm: () => void;
 }
-export  interface iRoomCards{
-    name:string,
-    availability:0|1|2;
-    description:string;
-    capacity:number;
-    id:number;
+export interface iRoomCards {
+    name: string | undefined;
+    availability: 0 | 1 | 2;
+    description: string | undefined;
+    capacity: number | undefined;
+    id: number | undefined;
 }
 
 export interface iMenu {
@@ -30,14 +31,6 @@ export interface iLeftSide {
     availability: number;
     selectedCardId: string;
     onClickQuickBookGlobal: () => void;
-}
-
-export interface iRoomCards {
-    name: string;
-    availability:0| 1 | 2;
-    description: string;
-    capacity: number;
-    id: number;
 }
 
 export interface iMeetingData {
@@ -96,7 +89,7 @@ export interface iAdvancedBook {
 export interface MeetingRoomsData {
     title: string | undefined;
     description: string | undefined;
-    capacity: number | undefined;
+    capacity: string | undefined;
     id?: number | undefined;
     lastBooked?: string;
     meetings?: {
