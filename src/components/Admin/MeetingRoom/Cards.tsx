@@ -16,6 +16,7 @@ export const Cards = ({
 }: iCard) => {
     return (
         <Card
+            data-testid={'cards'+id}
             key={id}
             sx={{
                 maxWidth: "821px",
@@ -42,16 +43,18 @@ export const Cards = ({
                 <Typography variant="subtitle1">
                     Latest book at {lastBooked}
                 </Typography>
-                <Box sx={{ marginLeft: "auto" }}>
+                <Box data-testid="editbtn" sx={{ marginLeft: "auto" }}>
                     <IconButton
                         onClick={() => {
                             if (id) handleEdit(id);
                         }}
                     >
+
                         <BorderColorIcon fontSize="large" />
                     </IconButton>
 
                     <IconButton
+                        data-testid={"delbtn"+id}
                         onClick={() => {
                             if (id) handleDelete(id);
                         }}

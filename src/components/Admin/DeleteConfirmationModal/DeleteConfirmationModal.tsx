@@ -18,7 +18,7 @@ const DeleteConfirmationModal = ({
     roomTitle,
 }: ConfirmationModalProps) => {
     return (
-        <Modal open={open} onClose={onClose}>
+        <Modal data-testid='deletemodal' open={open} onClose={onClose}>
             <Box className="confirmation-modal">
                 <Box
                     sx={{
@@ -40,7 +40,7 @@ const DeleteConfirmationModal = ({
                     <button className="cancel" onClick={onClose}>
                         Cancel
                     </button>
-                    <button className="submit" onClick={onSubmit}>
+                    <button data-testid='deleteelement' className="submit" onClick={onSubmit}>
                         Submit
                     </button>
                 </Box>

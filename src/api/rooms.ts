@@ -11,7 +11,7 @@ const getAllRooms = async (): Promise<iRoomCards[]> => {
 };
 
 const getRoomById = async (id: number) => {
-    return await axios.get(`http://localhost:3001/meetingRooms/${id}`);
+    return await axios.get(`http://localhost:3001/rooms/${id}`);
 };
 
 const deleteRooms = async (id: number) => {
@@ -21,6 +21,7 @@ const deleteRooms = async (id: number) => {
 const addRoom = async (room: MeetingRoomsData) => {
     return await axios.post("http://localhost:3001/rooms", room);
 };
+
 
 const updateRoomData = async (room: MeetingRoomsData) => {
     return await axios.put(`http://localhost:3001/rooms/${room.id}`, room);
