@@ -29,7 +29,7 @@ const Admin = () => {
         Capacity: string | undefined
     ) => {
         const result = await addRoom(Name, Description, Capacity);
-        if (result.status === 201) {
+        if (result.status === 200) {
             setLoaded(true);
             handleClose(setShowModal);
         }

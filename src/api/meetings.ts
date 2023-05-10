@@ -19,7 +19,8 @@ const addMeeting = async (
 };
 
 const getMeetingsData = async () => {
-    return await axios.get("http://localhost:3001/roomdata");
+     //return await axios.get("http://localhost:3001/roomdata");
+    return await axios.get("http://localhost:3001/meetingRoomData");
 };
 
 const getMeetings = async (): Promise<Meeting[]> => {
