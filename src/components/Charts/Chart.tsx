@@ -18,7 +18,7 @@ const Chart = ({ data }: any) => {
                     }}
                 >
                     <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="name" />
+                    <XAxis dataKey="displayName" />
                     <YAxis />
                     <Bar
                         dataKey="value"

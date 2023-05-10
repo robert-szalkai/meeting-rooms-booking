@@ -14,6 +14,9 @@ import weekYear from "dayjs/plugin/weekYear";
 import localData from "dayjs/plugin/localeData";
 import Chart from "./Chart";
 import { Typography } from "@mui/material";
+import {Select, MenuItem} from "@mui/material";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
 dayjs.extend(weekOfYear);
 dayjs.extend(weekYear);
@@ -23,14 +26,14 @@ dayjs.extend(objectSupport);
 const ChartPage = () => {
     const monthsArray = dayjs
         .months()
-        .map((month) => ({ name: month, value: 0 }));
-    const daysArray = dayjs.weekdays().map((day) => ({ name: day, value: 0 }));
+        .map((month) => ({ name: month,displayName:month, value: 0 }));
+    const daysArray = dayjs.weekdays().map((day) => ({ name:day,displayName:`${day.slice(0,3)}`,value: 0 }));
     const [selectedDate, setSelectedDate] = useState(dayjs());
-    const [meetingsRoom, setMeetingsRoom] = useState([{ name: "", value: 0 }]);
+    const [meetingsRoom, setMeetingsRoom] = useState([{ name: "",displayName:"", value: 0 }]);
     const [meetingsMonth, setMeetingsMonth] = useState(monthsArray);
     const [meetingsDay, setMeetingsDay] = useState(daysArray);
     const [selectedWeek, setSelectedWeek] = useState(1);
-    const handleWeekChange = (event: SelectChangeEvent) => {
+    const handleWeekChange = (event: any) => {
         setSelectedWeek(parseInt(event.target.value));
         setSelectedDate(
             dayjs({
@@ -41,7 +44,13 @@ const ChartPage = () => {
         );
     };
 
-    const handleYearChange = (event: SelectChangeEvent) => {
+    const showInterval = () =>{
+
+        return ( <Typography variant="h6" >{dayjs(selectedDate).format("DD MMM")}-{dayjs(selectedDate).add(7,"d").format("DD MMM")}</Typography> )
+
+    }
+
+    const handleYearChange = (event: any) => {
         setSelectedDate(
             dayjs({
                 year: event.target.value,
@@ -51,7 +60,7 @@ const ChartPage = () => {
         );
         console.log(selectedDate);
     };
-    const handleMonthChange = (event: SelectChangeEvent) => {
+    const handleMonthChange = (event: any) => {
         setSelectedDate(
             dayjs({
                 year: selectedDate.year(),
@@ -113,7 +122,7 @@ const ChartPage = () => {
     const getRoomsFromJson = async () => {
         await getMeetingsData().then((res) => {
             const meetingsFromRes = res.data.meetings;
-            let temp: { name: string; value: number }[] = [];
+            let temp: { name: string;displayName: string, value: number }[] = [];
             for (const meetingFromRes of meetingsFromRes) {
                 if (
                     temp.some((meeting) => meeting.name === meetingFromRes.name)
@@ -123,7 +132,7 @@ const ChartPage = () => {
                             tempVar.value += 1;
                     }
                 } else {
-                    temp.push({ name: meetingFromRes.name, value: 1 });
+                    temp.push({ name: meetingFromRes.name,displayName: meetingFromRes.name, value: 1 });
                 }
             }
             setMeetingsRoom(temp);
@@ -134,7 +143,7 @@ const ChartPage = () => {
         await getMeetingsData().then((res) => {
             const meetingsFromRes = res.data.meetings;
 
-            let temp: { name: string; value: number }[] = monthsArray;
+            let temp: { name: string;displayName:string, value: number }[] = monthsArray;
             for (const meetingFromRes of meetingsFromRes) {
                 if (
                     temp.some(
@@ -157,6 +166,7 @@ const ChartPage = () => {
                 } else {
                     temp.push({
                         name: dayjs(meetingFromRes.start_time).format("MMMM"),
+                        displayName: dayjs(meetingFromRes.start_time).format("MMMM"),
                         value: 1,
                     });
                 }
@@ -168,7 +178,7 @@ const ChartPage = () => {
     const getDaysOfTheWeekFromJson = async () => {
         await getMeetingsData().then((res) => {
             const meetingsFromRes = res.data.meetings;
-            let temp: { name: string; value: number }[] = daysArray;
+            let temp: { name: string; displayName : string, value: number }[] = daysArray;
             for (const meetingFromRes of meetingsFromRes) {
                 if (
                     temp.some(
@@ -193,11 +203,13 @@ const ChartPage = () => {
                                 dayjs(meetingFromRes.start_time).year()
                         ) {
                             tempVar.value += 1;
+                            tempVar.displayName = dayjs(meetingFromRes.start_time).format("dd (DD-MMM)")
                         }
                     }
                 } else {
                     temp.push({
                         name: dayjs(meetingFromRes.start_time).format("dddd"),
+                        displayName : dayjs(meetingFromRes.start_time).format("dd"),
                         value: 1,
                     });
                 }
@@ -221,7 +233,7 @@ const ChartPage = () => {
                 {dropDownYear()}
                 {dropDownMonth()}
                 {dropDownWeek()}
-                Place holder for interval
+                {showInterval()}
             </Box>
             <Box
                 style={{
