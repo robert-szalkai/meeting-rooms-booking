@@ -2,8 +2,6 @@ import React from "react";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid } from "recharts";
 import Box from "@mui/material/Box";
 import COLORS from "../../constants/CustomColors";
-let fillColor = COLORS.ADMINCOLOR;
-
 const Chart = ({ data }: any) => {
     return (
         <Box sx={{ display: "flex", flexDirection: "column" }}>
@@ -24,7 +22,7 @@ const Chart = ({ data }: any) => {
                     <YAxis />
                     <Bar
                         dataKey="value"
-                        fill={fillColor}
+                        fill={COLORS.ADMINCOLOR}
                         label={{ position: "top" }}
                     ></Bar>
                 </BarChart>
