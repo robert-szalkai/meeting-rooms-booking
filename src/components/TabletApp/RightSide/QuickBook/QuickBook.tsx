@@ -54,7 +54,7 @@ const QuickBook = ({
             } catch (error) {
                 spawnToast({
                     title: "Something went wrong",
-                    message: "Your booking has not been made",
+                    message: "Could not get list of possible owners!",
                     toastType: "error",
                 });
                 console.log(error);
@@ -72,7 +72,7 @@ const QuickBook = ({
             } catch (error) {
                 spawnToast({
                     title: "Something went wrong",
-                    message: "Your booking has not been made",
+                    message: "Could not get list of meetings for today!",
                     toastType: "error",
                 });
                 console.log(error);
@@ -128,8 +128,7 @@ const QuickBook = ({
                 message: "Your booking was made",
                 toastType: "success",
             });
-            //From here the code should take you to the red/Meeting in Progress Screen
-            //and not allow you to make anymore quick bookings
+
             handleQuickBookDone();
         } catch (error) {
             spawnToast({
