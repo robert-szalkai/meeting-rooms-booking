@@ -15,13 +15,7 @@ import { getParticipants, getParticipant } from "../../../../api/participants";
 import { getMeetings } from "../../../../api/meetings";
 import { spawnToast } from "../../../../utils/Toast";
 import CONSTANTS from "../../../../constants/Constants";
-import { INITIALOWNER } from "../../../../interfaces/interfaces";
-
-interface iQuickBook {
-    isDurationOpen?: boolean;
-    handleQuickBookDone: () => void;
-    availability: number;
-}
+import { INITIALOWNER, iQuickBook } from "../../../../interfaces/interfaces";
 
 const QuickBook = ({
     isDurationOpen = false,
@@ -42,7 +36,7 @@ const QuickBook = ({
     useEffect(() => {
         const fetchData = async () => {
             let tempOwners: string[] = [];
-            let meetings_start_time: number[] = [];
+            let meetingsStartTime: number[] = [];
 
             try {
                 const owners_response = await getParticipants();
@@ -61,10 +55,10 @@ const QuickBook = ({
             }
 
             try {
-                const meetings_response = await getMeetings();
-                Object.values(meetings_response).forEach((value: any) => {
+                const meetingsResponse = await getMeetings();
+                Object.values(meetingsResponse).forEach((value: any) => {
                     if (dayjs(value.start_time).isSame(dayjs(), "day")) {
-                        meetings_start_time.push(
+                        meetingsStartTime.push(
                             dayjs(value.start_time).diff(dayjs(), "minute")
                         );
                     }
@@ -78,11 +72,11 @@ const QuickBook = ({
                 console.log(error);
             }
 
-            meetings_start_time.sort((a, b) =>
+            meetingsStartTime.sort((a, b) =>
                 dayjs(a).isAfter(dayjs(b)) ? -1 : 1
             );
 
-            setClosestMeet(meetings_start_time[0]);
+            setClosestMeet(meetingsStartTime[0]);
         };
         fetchData();
     }, []);
@@ -113,7 +107,7 @@ const QuickBook = ({
 
     const handleCreateMeeting = async () => {
         let now = dayjs();
-        let end_time = now.add(timeVal, "minute");
+        let endTime = now.add(timeVal, "minute");
 
         try {
             await axios.post("http://localhost:3001/meetings", {
@@ -121,7 +115,7 @@ const QuickBook = ({
                 owner_id: owner?.id,
                 participants_id: [],
                 start_time: now,
-                end_time: end_time,
+                end_time: endTime,
             });
             spawnToast({
                 title: "You have succeded",

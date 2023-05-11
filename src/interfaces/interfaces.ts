@@ -1,7 +1,19 @@
 import { Dayjs } from "dayjs";
+
 export interface iHeader {
     handleClickForm: () => void;
 }
+
+export interface iQuickBook {
+    isDurationOpen?: boolean;
+    handleQuickBookDone: () => void;
+    availability: number;
+}
+
+export interface iQuickBookGlobal {
+    onClickQuickBookGlobal: () => void;
+}
+
 export interface iRoomCards {
     name: string | undefined;
     availability: 0 | 1 | 2;
@@ -185,8 +197,4 @@ export interface dateSelectorValid {
     dateValid: string;
     startValid: string;
     endValid: string;
-}
-
-export interface iQuickBookGlobal {
-    onClickQuickBookGlobal: () => void;
 }
