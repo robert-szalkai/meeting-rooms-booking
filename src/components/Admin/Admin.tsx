@@ -19,8 +19,12 @@ const Admin = () => {
     const [showModal, setShowModal] = useState<boolean>(false);
     const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
     const [showLogoutModal, setShowLogoutModal] = useState<boolean>(false);
-    const [deleteRoomId, setDeleteRoomId] = useState<number | null>(null);
-    const [deleteRoomTitle, setDeleteRoomTitle] = useState<string>("");
+    const [deleteRoomId, setDeleteRoomId] = useState<number | null | undefined>(
+        null
+    );
+    const [deleteRoomTitle, setDeleteRoomTitle] = useState<string | undefined>(
+        ""
+    );
     const [datacontent, setDataContent] = useState<MeetingRoomsData[]>();
     const [loading, setLoading] = useState(false);
     const [showEditModal, setEditModal] = useState<boolean>(false);
@@ -31,7 +35,11 @@ const Admin = () => {
         Description: string | undefined,
         Capacity: string | undefined
     ) => {
-        const result = await addRoom(Name, Description, Capacity);
+        const result = await addRoom({
+            title: Name,
+            description: Description,
+            capacity: Capacity,
+        });
         if (result.status === 200) {
             setLoading(true);
             handleClose(setShowModal);
@@ -46,7 +54,7 @@ const Admin = () => {
         const result = await updateRoomData({
             title: Name,
             description: Description,
-            capacity: Number(Capacity),
+            capacity: Capacity,
             id: id,
         });
         if (result.status === 200) {
@@ -85,20 +93,18 @@ const Admin = () => {
     };
 
     const handleDeleteOnClick = async (id: number) => {
-      const filteredata=datacontent?.filter((e)=>{
-        return e.id==id ;
-      })
-            if(filteredata){
-            setDeleteRoomTitle(filteredata[0].title );
+        const filteredata = datacontent?.filter((e) => {
+            return e.id === id;
+        });
+        if (filteredata) {
+            setDeleteRoomTitle(filteredata[0].title);
             setDeleteRoomId(filteredata[0].id);
             setShowDeleteModal(true);
         }
-
-        
     };
     const displayCards = () => {
         return datacontent?.map((e) => (
-            <Grid  key={e.id} item xs={12} md={6} lg={6}>
+            <Grid key={e.id} item xs={12} md={6} lg={6}>
                 <Cards
                     handleEdit={handleEditOnClick}
                     handleDelete={handleDeleteOnClick}
@@ -106,7 +112,7 @@ const Admin = () => {
                     id={e.id}
                     description={e.description}
                     lastBooked={e.lastBooked}
-                    capacity={e.capacity}
+                    capacity={Number(e.capacity)}
                 ></Cards>
             </Grid>
         ));
@@ -179,9 +185,7 @@ const Admin = () => {
                 onClose={() => {
                     handleClose(setShowDeleteModal);
                 }}
-                onSubmit={() =>
-                    deleteRoomId !== null && handleDelete(deleteRoomId)
-                }
+                onSubmit={() => deleteRoomId && handleDelete(deleteRoomId)}
                 roomTitle={deleteRoomTitle}
             />
             <LogoutConfirmationModal

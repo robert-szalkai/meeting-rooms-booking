@@ -20,12 +20,17 @@ export const RoomSelection = () => {
         }
     };
     const mapElements = () => {
-        return roomSelectionData?.map((e,index) => (
+        return roomSelectionData?.map((e, index) => (
             <RoomSelectionCards
                 name={e.title}
                 key={e.id}
-                availability={getRoomStatus(e.meetings as unknown as Meeting[]) as 0|1|2}
-                capacity={e.capacity}
+                availability={
+                    getRoomStatus(e.meetings as unknown as Meeting[]) as
+                        | 0
+                        | 1
+                        | 2
+                }
+                capacity={Number(e.capacity)}
                 description={e.description}
                 id={e.id}
             />
