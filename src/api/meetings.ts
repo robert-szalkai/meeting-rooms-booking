@@ -10,7 +10,7 @@ const getMeetingsData = async () => {
 };
 
 const getMeetings = async (): Promise<Meeting[]> => {
-    const result = await axios.get("http://localhost:3001/meetings");
+    const result = await axios.get("http://localhost:3001/roomdata");
     return result.data;
 };
 
