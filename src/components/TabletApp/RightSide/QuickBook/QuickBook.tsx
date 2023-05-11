@@ -14,7 +14,7 @@ import EditCalendarIcon from "@mui/icons-material/EditCalendar";
 import { getParticipants, getParticipant } from "../../../../api/participants";
 import { getMeetings } from "../../../../api/meetings";
 import { spawnToast } from "../../../../utils/Toast";
-import CONSTANTS from "../../../../constants/Constants";
+import CONSTANTS from "../../../../constants/constants";
 import { INITIALOWNER, iQuickBook } from "../../../../interfaces/interfaces";
 
 const QuickBook = ({

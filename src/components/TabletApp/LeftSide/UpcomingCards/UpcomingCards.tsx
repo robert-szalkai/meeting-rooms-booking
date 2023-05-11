@@ -8,12 +8,12 @@ import {
     AvatarGroup,
     Grid,
 } from "@mui/material";
-import SIZE from "../../../../constants/CustomSize";
+import SIZE from "../../../../constants/customSize";
 import { useNavigate } from "react-router";
 import { useLocation } from "react-router-dom";
 
 import { iUpcomingCards } from "../../../../interfaces/interfaces";
-import COLORS from "../../../../constants/CustomColors";
+import COLORS from "../../../../constants/customColors";
 
 const UpcomingCards = ({
     id,
@@ -47,7 +47,9 @@ const UpcomingCards = ({
         return joiners?.map(
             (e, index) =>
                 index <= 5 && (
-                    <Avatar sx={{ bgcolor: COLORS.PURPLE, width: 28, height: 28 }}>
+                    <Avatar
+                        sx={{ bgcolor: COLORS.PURPLE, width: 28, height: 28 }}
+                    >
                         <Typography fontSize={11}>{e}</Typography>
                     </Avatar>
                 )
@@ -107,7 +109,9 @@ const UpcomingCards = ({
                 <AvatarGroup max={8}>
                     {joiners && mapJoiners()}
                     {surplus && (
-                        <Avatar sx={{ bgcolor: COLORS.GRAY, width: 28, height: 28 }}>
+                        <Avatar
+                            sx={{ bgcolor: COLORS.GRAY, width: 28, height: 28 }}
+                        >
                             +{surplus}
                         </Avatar>
                     )}

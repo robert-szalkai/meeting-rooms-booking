@@ -6,9 +6,9 @@ import LeftSide from "./LeftSide/LeftSide";
 import AdvancedBook from "./RightSide/AdvancedBook/AdvancedBook";
 import MeetingInfo from "./RightSide/MeetingInfo/MeetingInfo";
 import Menu from "./RightSide/Menu/Menu";
-import CONSTANTS from "../../constants/Constants";
+import CONSTANTS from "../../constants/constants";
 import { getMeetings, getMeetingsData } from "../../api/meetings";
-import COLORS from "../../constants/CustomColors";
+import COLORS from "../../constants/customColors";
 import getRoomStatus from "../../functions/GetRoomStatus";
 import { iLeftSide } from "../../interfaces/interfaces";
 

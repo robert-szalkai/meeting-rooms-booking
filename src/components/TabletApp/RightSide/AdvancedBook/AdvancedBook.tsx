@@ -15,7 +15,7 @@ import {
     Meeting,
     Participant,
 } from "../../../../interfaces/interfaces";
-import CONSTANTS from "../../../../constants/Constants";
+import CONSTANTS from "../../../../constants/constants";
 import { iAdvancedBook } from "../../../../interfaces/interfaces";
 
 const AdvancedBook = ({ availability }: iAdvancedBook) => {

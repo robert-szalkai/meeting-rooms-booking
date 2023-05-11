@@ -1,28 +1,28 @@
 import { createTheme } from "@mui/material/styles";
-import COLORS from "../constants/CustomColors"
-import SIZE from "../constants/CustomSize";
+import COLORS from "../constants/customColors";
+import SIZE from "../constants/customSize";
 const GlobalTheme = createTheme({
-    typography:{
+    typography: {
         fontFamily: "Overpass Mono 700",
-        button:{
-            textTransform: "none"
-        }
+        button: {
+            textTransform: "none",
+        },
     },
     components: {
-        MuiCssBaseline:{
-           styleOverrides:{
-            "@font-face":{
-                fontFamily:"Overpass Mono 700",
-                src:"https://fonts.cdnfonts.com/css/overpass-mono"
+        MuiCssBaseline: {
+            styleOverrides: {
+                "@font-face": {
+                    fontFamily: "Overpass Mono 700",
+                    src: "https://fonts.cdnfonts.com/css/overpass-mono",
+                },
+                body: {
+                    color: COLORS.FONTCOLOR,
+                },
             },
-            body:{
-              color:COLORS.FONTCOLOR
-            }
-           }
         },
         MuiButton: {
-            defaultProps:{
-                disableRipple:true
+            defaultProps: {
+                disableRipple: true,
             },
             variants: [
                 {
@@ -33,11 +33,11 @@ const GlobalTheme = createTheme({
                         width: SIZE.WIDTH_TABLE_BUTTON,
                         color: COLORS.SUCCESS,
                         borderColor: COLORS.SUCCESS,
-                        ":hover":{
-                            filter:"brightness(85%)",
-                            backgroundColor:COLORS.SUCCESS,
-                            color:"white"
-                         }
+                        ":hover": {
+                            filter: "brightness(85%)",
+                            backgroundColor: COLORS.SUCCESS,
+                            color: "white",
+                        },
                     },
                 },
                 {
@@ -48,40 +48,39 @@ const GlobalTheme = createTheme({
                         width: SIZE.WIDTH_TABLE_BUTTON,
                         color: COLORS.WARNING,
                         borderColor: COLORS.WARNING,
-                        ":hover":{
-                            filter:"brightness(85%)",
-                            backgroundColor:COLORS.WARNING,
-                            color:"white"
-                         }
+                        ":hover": {
+                            filter: "brightness(85%)",
+                            backgroundColor: COLORS.WARNING,
+                            color: "white",
+                        },
                     },
-                    
                 },
                 {
                     // yellow rounded button with green boredr
                     props: { variant: "contained", color: "warning" },
                     style: {
-                        height:SIZE.HEIGHT_ROUNDED_TABLE_BUTTON,
+                        height: SIZE.HEIGHT_ROUNDED_TABLE_BUTTON,
                         width: SIZE.WIDTH_ROUNDED_TABLE_BUTTON,
                         backgroundColor: COLORS.WARNING,
                         borderRadius: "20px",
-                        ":hover":{
-                            filter:"brightness(85%)",
-                            backgroundColor:COLORS.WARNING
-                         }
+                        ":hover": {
+                            filter: "brightness(85%)",
+                            backgroundColor: COLORS.WARNING,
+                        },
                     },
                 },
                 {
                     // red rounded button with green boredr
                     props: { variant: "contained", color: "error" },
                     style: {
-                        height:SIZE.HEIGHT_ROUNDED_TABLE_BUTTON,
+                        height: SIZE.HEIGHT_ROUNDED_TABLE_BUTTON,
                         width: SIZE.WIDTH_ROUNDED_TABLE_BUTTON,
-                        backgroundColor:COLORS.ERROR,
+                        backgroundColor: COLORS.ERROR,
                         borderRadius: "20px",
-                        ":hover":{
-                            filter:"brightness(85%)",
-                            backgroundColor:COLORS.ERROR
-                         }
+                        ":hover": {
+                            filter: "brightness(85%)",
+                            backgroundColor: COLORS.ERROR,
+                        },
                     },
                 },
 
@@ -89,14 +88,14 @@ const GlobalTheme = createTheme({
                     // green rounded button with green boredr
                     props: { variant: "contained", color: "success" },
                     style: {
-                        height:SIZE.HEIGHT_ROUNDED_TABLE_BUTTON,
+                        height: SIZE.HEIGHT_ROUNDED_TABLE_BUTTON,
                         width: SIZE.WIDTH_ROUNDED_TABLE_BUTTON,
                         backgroundColor: COLORS.SUCCESS,
                         borderRadius: "20px",
-                        ":hover":{
-                            filter:"brightness(85%)",
-                            backgroundColor:COLORS.SUCCESS
-                         }
+                        ":hover": {
+                            filter: "brightness(85%)",
+                            backgroundColor: COLORS.SUCCESS,
+                        },
                     },
                 },
                 {
@@ -108,23 +107,22 @@ const GlobalTheme = createTheme({
                         backgroundColor: COLORS.NOTAVAIBLE,
                         borderColor: COLORS.NOTAVAIBLE,
                         color: "white",
-                        
                     },
                 },
                 {
                     // white rounded button with black boreder
                     props: { variant: "outlined", color: "inherit" },
                     style: {
-                        height:SIZE.HEIGHT_ROUNDED_TABLE_BUTTON,
+                        height: SIZE.HEIGHT_ROUNDED_TABLE_BUTTON,
                         width: SIZE.WIDTH_ROUNDED_TABLE_BUTTON,
                         borderColor: "#3A5568",
                         borderRadius: "20px",
-                        backgroundColor:"white",
+                        backgroundColor: "white",
                         color: "black",
-                        ":hover":{
-                           filter:"brightness(85%)",
-                           backgroundColor:"white"
-                        }
+                        ":hover": {
+                            filter: "brightness(85%)",
+                            backgroundColor: "white",
+                        },
                     },
                 },
             ],
@@ -137,13 +135,12 @@ const GlobalTheme = createTheme({
                     }),
                     ...(ownerState.variant === "contained" && {
                         height: SIZE.HEIGHT_ADMIN_BUTTON,
-                        backgroundColor:COLORS.ADMINCOLOR
+                        backgroundColor: COLORS.ADMINCOLOR,
                     }),
                 }),
             },
         },
     },
 });
-
 
 export default GlobalTheme;
