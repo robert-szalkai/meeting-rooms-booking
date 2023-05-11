@@ -54,7 +54,7 @@ const QuickBook = ({
             } catch (error) {
                 spawnToast({
                     title: "Something went wrong",
-                    message: "Your booking has not been made",
+                    message: "Couldn't get Parti",
                     toastType: "error",
                 });
                 console.log(error);
@@ -72,7 +72,7 @@ const QuickBook = ({
             } catch (error) {
                 spawnToast({
                     title: "Something went wrong",
-                    message: "Your booking has not been made",
+                    message: "Could not get meetings",
                     toastType: "error",
                 });
                 console.log(error);
