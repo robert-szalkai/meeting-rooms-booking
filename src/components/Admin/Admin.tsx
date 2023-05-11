@@ -126,6 +126,12 @@ const Admin = () => {
             setLoading(false);
         }
     }, [loading]);
+
+    const deleteAuthTokens = () => {
+        localStorage.removeItem("user_type");
+        localStorage.removeItem("authenticated");
+    };
+
     return (
         <Container maxWidth="xl" sx={{ paddingTop: "50px" }}>
             <Header
@@ -191,9 +197,12 @@ const Admin = () => {
             <LogoutConfirmationModal
                 open={showLogoutModal}
                 onClose={() => {
-                    handleClose(setShowLogoutModal);
+                    setShowLogoutModal(false);
                 }}
-                onSubmit={() => navigate("/login")}
+                onSubmit={() => {
+                    deleteAuthTokens();
+                    navigate("/login");
+                }}
             />
             <Grid
                 flexWrap="wrap"

@@ -1,18 +1,18 @@
 import axios from "axios";
-import { userInfo } from "../interfaces/interfaces";
+import { UserInfo } from "../interfaces/interfaces";
 
-const getUsers = async (): Promise<userInfo[]> => {
+const getUsers = async (): Promise<UserInfo[]> => {
     const result = await axios.get("http://localhost:3001/users");
     return result.data;
 };
 
-const getUser = async (
+const getSingleUser = async (
     username: string,
-): Promise<userInfo> => {
+): Promise<UserInfo> => {
     const result = await axios.get(
         `http://localhost:3001/participants?name=${username}`
     );
     return result.data[0];
 };
 
-export {getUser, getUsers}
+export {getSingleUser, getUsers}

@@ -17,7 +17,6 @@ const LogoutConfirmationModal = ({
                     sx={{
                         display: "flex",
                         justifyContent: "space-between",
-                        //alignItems: "left",
                         width: "100%",
                     }}
                 >

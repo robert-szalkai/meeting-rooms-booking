@@ -17,6 +17,12 @@ const modalStyle = {
 
 const LogOutModal: FC<ModalProps> = ({ openModal, handleClose }) => {
     const navigate = useNavigate();
+
+    const deleteAuthTokens = () => {
+        localStorage.removeItem("user_type");
+        localStorage.removeItem("authenticated");
+    };
+
     return (
         <Box>
             <Modal open={openModal} onClose={handleClose}>
@@ -40,6 +46,7 @@ const LogOutModal: FC<ModalProps> = ({ openModal, handleClose }) => {
                     >
                         <Button
                             onClick={() => {
+                                deleteAuthTokens();
                                 navigate("/login");
                             }}
                             sx={{ marginTop: 5, maxWidth: "40%" }}

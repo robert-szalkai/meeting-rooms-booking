@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom";
 
 import { spawnToast } from "../../utils/Toast";
 import { getUsers } from "../../api/users";
-import { userInfo } from "../../interfaces/interfaces";
+import { UserInfo } from "../../interfaces/interfaces";
 import { Login } from "../../interfaces/interfaces";
 
 const LoginForm: FC<Login> = ({
@@ -21,7 +21,7 @@ const LoginForm: FC<Login> = ({
     handlePassword,
 }) => {
     const navigate = useNavigate();
-    const [users, setUsers] = useState<userInfo[]>();
+    const [users, setUsers] = useState<UserInfo[]>();
     const getUsersAccounts = async () => {
         try {
             const result = await getUsers();
@@ -35,16 +35,10 @@ const LoginForm: FC<Login> = ({
         getUsersAccounts();
     }, []);
 
-    useEffect(() => {
-        localStorage.setItem("authenticated", "false");
-        localStorage.setItem("user_type", "none");
-    }, []);
-
     const handleSubmit = (e: any) => {
         e.preventDefault();
-        console.log(users);
         const account = users?.find(
-            (user: userInfo) => user.username === username
+            (user: UserInfo) => user.username === username
         );
         if (account && account.password === password) {
             spawnToast({
@@ -52,7 +46,7 @@ const LoginForm: FC<Login> = ({
                 message: "",
                 toastType: "success",
             });
-            localStorage.setItem("authenticated", "true");
+            localStorage.setItem("authenticated", "authenticated");
             localStorage.setItem("user_type", account.userType);
         } else {
             spawnToast({
@@ -63,13 +57,13 @@ const LoginForm: FC<Login> = ({
         }
         if (
             account?.userType === "user" &&
-            localStorage.getItem("authenticated") === "true"
+            localStorage.getItem("authenticated") === "authenticated"
         ) {
             navigate("/selection");
         }
         if (
             account?.userType === "admin" &&
-            localStorage.getItem("authenticated") === "true"
+            localStorage.getItem("authenticated") === "authenticated"
         ) {
             navigate("/admin");
         }

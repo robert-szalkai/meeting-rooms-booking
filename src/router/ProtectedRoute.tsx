@@ -4,14 +4,21 @@ import { Navigate } from "react-router-dom";
 const ProtectedRoute = ({
     typeOfUser,
     redirectPath,
+    auth,
     children,
 }: {
-    typeOfUser: string;
+    typeOfUser: string | null;
     redirectPath: string;
+    auth: string | null;
     children: JSX.Element;
 }) => {
     const userType = localStorage.getItem("user_type");
-    return typeOfUser === userType ? children : <Navigate to={redirectPath} />;
+    const authenticated = localStorage.getItem("authenticated");
+    return typeOfUser === userType && authenticated === auth ? (
+        children
+    ) : (
+        <Navigate to={redirectPath} />
+    );
 };
 
 export default ProtectedRoute;

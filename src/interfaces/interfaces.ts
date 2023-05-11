@@ -192,7 +192,7 @@ export interface iQuickBookGlobal {
     onClickQuickBookGlobal: () => void;
 }
 
-export interface userInfo{
+export interface UserInfo{
     username:string;
     password:string;
     userType:string;
