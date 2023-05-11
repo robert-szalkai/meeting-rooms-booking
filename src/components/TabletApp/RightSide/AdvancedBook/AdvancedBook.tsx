@@ -40,12 +40,31 @@ const AdvancedBook = ({ availability }: iAdvancedBook) => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        getParticipants().then((res) => {
-            setAllEmployees(res);
-        });
-        getMeetings().then((res) => {
-            setBookedMeetings(res);
-        });
+        try {
+            getParticipants().then((res) => {
+                setAllEmployees(res);
+            });
+        } catch (error) {
+            spawnToast({
+                title: "Something went wrong",
+                message: "Could not get list of participants!",
+                toastType: "error",
+            });
+            console.log(error);
+        }
+
+        try {
+            getMeetings().then((res) => {
+                setBookedMeetings(res);
+            });
+        } catch (error) {
+            spawnToast({
+                title: "Something went wrong",
+                message: "Could not get list of meetings!",
+                toastType: "error",
+            });
+            console.log(error);
+        }
     }, []);
 
     const handleMeetingDate = (meetingDate: Dayjs) => {
