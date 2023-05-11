@@ -71,12 +71,12 @@ const AdvancedBook = ({ availability }: iAdvancedBook) => {
         setDateSelectorDate(meetingDate);
     };
 
-    const handleStartTime = (start_time: Dayjs) => {
-        setStartTime(start_time.toString());
+    const handleStartTime = (startTime: Dayjs) => {
+        setStartTime(startTime.toString());
     };
 
-    const handleEndTime = (end_time: Dayjs) => {
-        setEndTime(end_time.toString());
+    const handleEndTime = (endTime: Dayjs) => {
+        setEndTime(endTime.toString());
     };
 
     const handleClickCancel = () => {
@@ -112,22 +112,21 @@ const AdvancedBook = ({ availability }: iAdvancedBook) => {
             .set("hour", startTime.get("hour"))
             .set("minute", startTime.get("minute"))
             .toString();
-
         const meetingEndDate = dateObj
             .set("hour", endTime.get("hour"))
             .set("minute", endTime.get("minute"))
             .toString();
-
-        const participants_id = participants.map((participant) => {
+        const participantsID = participants.map((participant) => {
             return participant.id;
         });
+
         try {
             addMeeting({
                 meetingName: name,
                 meetingDescription: description,
                 startDate: meetingStartDate,
                 endDate: meetingEndDate,
-                participants: participants_id,
+                participants: participantsID,
                 id: id,
             });
             spawnToast({
@@ -144,10 +143,10 @@ const AdvancedBook = ({ availability }: iAdvancedBook) => {
         }
     };
 
-    const { meetid } = useParams<string>();
-    const id = Number(meetid);
+    const { meetID } = useParams<string>();
+    const id = Number(meetID);
 
-    console.log("param meetid: ", meetid);
+    console.log("param meetid: ", meetID);
     return (
         <form
             onSubmit={() =>
