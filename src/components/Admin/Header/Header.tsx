@@ -6,7 +6,7 @@ import { IconButton } from "@mui/material";
 
 import { iHeader } from "../../../interfaces/interfaces";
 
-const Header = ({ handleClickForm }: iHeader) => {
+const Header = ({ handleClickForm, handleLogoutModal }: iHeader) => {
     return (
         <Box
             sx={{
@@ -39,7 +39,14 @@ const Header = ({ handleClickForm }: iHeader) => {
             >
                 <AddIcon fontSize="large" />
             </IconButton>
-            <LogoutIcon fontSize="large" sx={{ marginLeft: "auto" }} />
+            <IconButton
+                sx={{ marginLeft: "auto" }}
+                onClick={() => {
+                    handleLogoutModal();
+                }}
+            >
+                <LogoutIcon fontSize="large" />
+            </IconButton>
         </Box>
     );
 };
