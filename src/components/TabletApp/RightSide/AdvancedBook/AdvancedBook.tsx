@@ -7,7 +7,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import DateSelector from "./DateSelector";
 import Participants from "./Participants";
 import InputField from "./InputField";
-import { getMeetings, addMeeting } from "../../../../api/meetings";
+import { getMeetingsByRoomId, addMeeting } from "../../../../api/meetings";
 import { getParticipants } from "../../../../api/participants";
 import { spawnToast } from "../../../../utils/Toast";
 import {
@@ -38,13 +38,24 @@ const AdvancedBook = ({ availability }: iAdvancedBook) => {
     const [meetingOwner, setMeetingOwner] = useState<Participant[]>([]);
     const [bookedMeetings, setBookedMeetings] = useState<Meeting[]>([]);
     const navigate = useNavigate();
-
+    const roomId = window.location.pathname.split("/")[2];
     useEffect(() => {
         getParticipants().then((res) => {
             setAllEmployees(res);
         });
-        getMeetings().then((res) => {
-            setBookedMeetings(res);
+        getMeetingsByRoomId(Number.parseInt(roomId)).then((res) => {
+            const meetings = res.map((re) => {
+                return {
+                    name: re.name,
+                    description: re.description,
+                    startTime: re.startTime,
+                    endTime: re.endTime,
+                    participants: re.participants,
+                    roomId: re.roomId,
+                };
+            });
+            console.log(meetings);
+            setBookedMeetings(meetings);
         });
     }, []);
 
@@ -103,13 +114,14 @@ const AdvancedBook = ({ availability }: iAdvancedBook) => {
             return participant.id;
         });
         try {
+            alert(typeof roomId);
             addMeeting({
-                meetingName: name,
-                meetingDescription: description,
-                startDate: meetingStartDate,
-                endDate: meetingEndDate,
+                name: name,
+                description: description,
+                startTime: meetingStartDate,
+                endTime: meetingEndDate,
                 participants: participants_id,
-                id: id,
+                roomId: Number.parseInt(roomId),
             });
             spawnToast({
                 title: "You have succeded",

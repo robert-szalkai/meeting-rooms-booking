@@ -2,18 +2,18 @@ import CONSTANTS from "../constants/Constants";
 import dayjs from "dayjs";
 import { Meeting } from "../interfaces/interfaces";
 
-const getRoomStatus =  (allMeetings: Meeting[]) => {
+const getRoomStatus = (allMeetings: Meeting[]) => {
     let inMeetingRightNow = false;
     let willFollow = false;
 
     allMeetings.forEach((meeting) => {
-        const diffInMinutesStartTime = dayjs(meeting.startDate).diff(
+        const diffInMinutesStartTime = dayjs(meeting.startTime).diff(
             dayjs(),
             "minute",
             true
         );
 
-        const diffInMinutesEndTime = dayjs(meeting.endDate).diff(
+        const diffInMinutesEndTime = dayjs(meeting.endTime).diff(
             dayjs(),
             "minute",
             true

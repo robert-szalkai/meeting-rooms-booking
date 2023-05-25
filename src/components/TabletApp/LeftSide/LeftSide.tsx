@@ -70,8 +70,8 @@ const LeftSide = ({
             .map((e) => (
                 <UpcomingCards
                     id={e.id}
-                    start={Dayjs(e.start_time).format("HH:MM")}
-                    end={Dayjs(e.end_time).format("HH:MM")}
+                    start={Dayjs(e.startTime).format("HH:MM")}
+                    end={Dayjs(e.endTime).format("HH:MM")}
                     persons={getNames(e.participants_id)}
                     meetingName={e.name}
                     selectedCardId={selectedCardId}

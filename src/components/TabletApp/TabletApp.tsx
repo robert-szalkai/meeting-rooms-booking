@@ -9,11 +9,16 @@ import AdvancedBook from "./RightSide/AdvancedBook/AdvancedBook";
 import MeetingInfo from "./RightSide/MeetingInfo/MeetingInfo";
 import Menu from "./RightSide/Menu/Menu";
 import CONSTANTS from "../../constants/Constants";
-import { getMeetings, getMeetingsData } from "../../api/meetings";
+import {
+    getMeetings,
+    getMeetingsByRoomId,
+    getMeetingsData,
+} from "../../api/meetings";
 import COLORS from "../../constants/CustomColors";
 import getRoomStatus from "../../functions/GetRoomStatus";
 import LogOutModal from "./LogOutModal";
 import { iLeftSide } from "../../interfaces/interfaces";
+import { getRoomById } from "../../api/rooms";
 
 const TabletApp = () => {
     const colorStates = [COLORS.GREEN, COLORS.YELLOW, COLORS.RED];
@@ -32,6 +37,7 @@ const TabletApp = () => {
     const [isDurationOpen, setIsDurationOpen] = useState<boolean>(false);
 
     const [logoutModalOpen, setLogoutModalOpen] = useState<boolean>(false);
+    const roomId = window.location.pathname.split("/")[2];
 
     const handleClose = () => {
         setLogoutModalOpen(false);
@@ -49,18 +55,23 @@ const TabletApp = () => {
     };
 
     const meetData = async () => {
-        const response = await getMeetingsData();
+        const room = await getRoomById(Number.parseInt(roomId));
+        const response = await getMeetingsData(Number.parseInt(roomId));
         if (response.status === 200) {
             setMeetingsData(response.data);
         }
+        setRoomName(room.data.name);
     };
+
     useEffect(() => {
         meetData();
     }, []);
 
     useEffect(() => {
         const setRoomStatus = async () => {
-            const allMeetings = await getMeetings();
+            const allMeetings = await getMeetingsByRoomId(
+                Number.parseInt(roomId)
+            );
             const roomStatus = await getRoomStatus(allMeetings);
             setAvailability(roomStatus);
         };
@@ -86,7 +97,7 @@ const TabletApp = () => {
                 {meetingsData && (
                     <LeftSide
                         meetings={meetingsData?.meetings}
-                        name={meetingsData?.name}
+                        name={roomName}
                         availability={availability}
                         selectedCardId={selectedCardId as string}
                         onClickQuickBookGlobal={onClickQuickBookGlobal}

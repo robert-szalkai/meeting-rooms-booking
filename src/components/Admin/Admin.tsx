@@ -36,7 +36,7 @@ const Admin = () => {
         Capacity: string | undefined
     ) => {
         const result = await addRoom({
-            title: Name,
+            name: Name,
             description: Description,
             capacity: Capacity,
         });
@@ -52,7 +52,7 @@ const Admin = () => {
         id?: number
     ) => {
         const result = await updateRoomData({
-            title: Name,
+            name: Name,
             description: Description,
             capacity: Capacity,
             id: id,
@@ -97,7 +97,7 @@ const Admin = () => {
             return e.id === id;
         });
         if (filteredata) {
-            setDeleteRoomTitle(filteredata[0].title);
+            setDeleteRoomTitle(filteredata[0].name);
             setDeleteRoomId(filteredata[0].id);
             setShowDeleteModal(true);
         }
@@ -108,7 +108,7 @@ const Admin = () => {
                 <Cards
                     handleEdit={handleEditOnClick}
                     handleDelete={handleDeleteOnClick}
-                    title={e.title}
+                    title={e.name}
                     id={e.id}
                     description={e.description}
                     lastBooked={e.lastBooked}

@@ -2,30 +2,34 @@ import axios from "axios";
 import { MeetingRoomsData, iRoomCards } from "../interfaces/interfaces";
 
 const getRooms = async (): Promise<MeetingRoomsData[]> => {
-    const result = await axios.get("http://localhost:3001/rooms");
+    const result = await axios.get("http://localhost:5000/rooms");
     return result.data;
 };
 
 const getAllRooms = async (): Promise<iRoomCards[]> => {
-    return (await axios.get(`http://localhost:3001/rooms/`)).data;
+    return (await axios.get(`http://localhost:5000/rooms`)).data;
 };
 
 const getRoomById = async (id: number) => {
-    return await axios.get(`http://localhost:3001/rooms/${id}`);
+    return await axios.get(`http://localhost:5000/rooms/byid/${id}`);
 };
 
 const deleteRooms = async (id: number) => {
-    return await axios.delete(`http://localhost:3001/rooms/${id}`);
+    return await axios.delete(`http://localhost:5000/rooms/${id}`);
 };
 
 const addRoom = async (room: MeetingRoomsData) => {
-    return await axios.post("http://localhost:3001/rooms", room);
+    return await axios.post("http://localhost:5000/rooms", room);
 };
 
 
 const updateRoomData = async (room: MeetingRoomsData) => {
-    return await axios.put(`http://localhost:3001/rooms/${room.id}`, room);
+    return await axios.put(`http://localhost:5000/rooms/${room.id}`, room);
 };
+
+const getRoomsAndMeetings = async()=>{
+    return (await axios.get("http://localhost:5000/rooms/meetings")).data;
+}
 
 export {
     deleteRooms,
@@ -34,4 +38,5 @@ export {
     getRooms,
     getRoomById,
     getAllRooms,
+    getRoomsAndMeetings
 };

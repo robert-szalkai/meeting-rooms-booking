@@ -52,15 +52,15 @@ const DateSelector: FC<DateSelectorProps> = ({
     const setHoursDisabled = () => {
         const meetings = bookedMeetings;
         const meetingDates = meetings.map((value: MeetingDate) => {
-            return { startDate: value.startDate, endDate: value.endDate };
+            return { startTime: value.startTime, endTime: value.endTime };
         });
         let newHourList = generateDates();
         newHourList.forEach((selectedHour) => {
             meetingDates.forEach((meetingDate: MeetingDate) => {
                 if (
-                    (selectedHour.val.isAfter(meetingDate.startDate) &&
-                        selectedHour.val.isBefore(meetingDate.endDate)) ||
-                    selectedHour.val.isSame(meetingDate.startDate, "minute")
+                    (selectedHour.val.isAfter(meetingDate.startTime) &&
+                        selectedHour.val.isBefore(meetingDate.endTime)) ||
+                    selectedHour.val.isSame(meetingDate.startTime, "minute")
                 ) {
                     selectedHour.isdisabled = true;
                 }

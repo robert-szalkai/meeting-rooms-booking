@@ -38,7 +38,7 @@ const QuickBook = ({
     const [timeVal, setTimeVal] = useState<number>(0);
     const [closestMeet, setClosestMeet] = useState<number>(0);
     const [submitButton, setSubmitButton] = useState<boolean>(false);
-
+    const roomId = window.location.pathname.split("/")[2];
     useEffect(() => {
         const fetchData = async () => {
             let tempOwners: string[] = [];
@@ -116,12 +116,13 @@ const QuickBook = ({
         let end_time = now.add(timeVal, "minute");
 
         try {
-            await axios.post("http://localhost:3001/meetings", {
-                room_id: 1,
-                owner_id: owner?.id,
-                participants_id: [],
-                start_time: now,
-                end_time: end_time,
+            await axios.post("http://localhost:5000/meetings", {
+                name: "QuickBook",
+                description: "",
+                startTime: now,
+                endTime: end_time,
+                participants_id: [owner.id],
+                roomId: Number.parseInt(roomId),
             });
             spawnToast({
                 title: "You have succeded",

@@ -5,7 +5,7 @@ export interface iHeader {
 }
 export interface iRoomCards {
     name: string | undefined;
-    availability: 0 | 1 | 2;
+    availability?: 0 | 1 | 2;
     description: string | undefined;
     capacity: number | undefined;
     id: number | undefined;
@@ -25,8 +25,8 @@ export interface iLeftSide {
     meetings: {
         name: string;
         id: string;
-        start_time: string;
-        end_time: string;
+        startTime: string;
+        endTime: string;
         participants_id: [];
     }[];
     availability: number;
@@ -61,7 +61,7 @@ export interface iMeetigroomForm {
 }
 type editData = Pick<
     MeetingRoomsData,
-    "description" | "title" | "capacity" | "id"
+    "description" | "name" | "capacity" | "id"
 >;
 
 export interface iCard {
@@ -88,7 +88,7 @@ export interface iAdvancedBook {
 }
 
 export interface MeetingRoomsData {
-    title: string | undefined;
+    name: string | undefined;
     description: string | undefined;
     capacity: string | undefined;
     id?: number | undefined;
@@ -120,12 +120,12 @@ export interface INITIALOWNER {
 }
 
 export interface Meeting {
-    meetingName: string;
-    meetingDescription: string;
-    startDate: string;
-    endDate: string;
+    name?: string;
+    description?: string;
+    startTime: string;
+    endTime: string;
     participants: number[];
-    id: number;
+    roomId: number;
 }
 
 export interface FormValidity {
@@ -178,8 +178,8 @@ export interface SelectHour {
 }
 
 export interface MeetingDate {
-    startDate: Dayjs;
-    endDate: Dayjs;
+    startTime: Dayjs;
+    endTime: Dayjs;
 }
 
 export interface dateSelectorValid {

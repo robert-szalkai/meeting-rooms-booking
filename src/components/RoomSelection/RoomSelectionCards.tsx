@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 import COLORS from "../../constants/CustomColors";
 import { iRoomCards } from "../../interfaces/interfaces";
+import { type } from "os";
 
 export const RoomSelectionCards = ({
     availability,
@@ -12,14 +13,16 @@ export const RoomSelectionCards = ({
     name,
     capacity,
 }: iRoomCards) => {
-    const colors={0:COLORS.SUCCESS,1:COLORS.WARNING,2:COLORS.ERROR}
+    const colors = { 0: COLORS.SUCCESS, 1: COLORS.WARNING, 2: COLORS.ERROR };
     const navigate = useNavigate();
     const [color, setColor] = useState<string>();
     const handleClick = (id: number) => {
         navigate(`/rooms/${id}`);
     };
     useEffect(() => {
-        setColor(colors[availability]);
+        if (typeof availability !== "undefined") {
+            setColor(colors[availability]);
+        }
     });
     return (
         <Card

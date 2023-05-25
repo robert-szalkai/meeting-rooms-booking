@@ -3,7 +3,7 @@ import { Container, Box, Typography } from "@mui/material";
 
 import RoomSelectionCards from "./RoomSelectionCards";
 import { Meeting } from "../../interfaces/interfaces";
-import { getRooms } from "../../api/rooms";
+import { getRooms, getRoomsAndMeetings } from "../../api/rooms";
 import COLORS from "../../constants/CustomColors";
 import { MeetingRoomsData } from "../../interfaces/interfaces";
 import getRoomStatus from "../../functions/GetRoomStatus";
@@ -13,7 +13,7 @@ export const RoomSelection = () => {
         useState<MeetingRoomsData[]>();
     const getData = async () => {
         try {
-            const result = await getRooms();
+            const result = await getRoomsAndMeetings();
             setRoomSelection(result);
         } catch (error) {
             console.log(error);
@@ -22,7 +22,7 @@ export const RoomSelection = () => {
     const mapElements = () => {
         return roomSelectionData?.map((e, index) => (
             <RoomSelectionCards
-                name={e.title}
+                name={e.name}
                 key={e.id}
                 availability={
                     getRoomStatus(e.meetings as unknown as Meeting[]) as
