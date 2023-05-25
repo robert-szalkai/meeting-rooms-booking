@@ -21,11 +21,10 @@ import { getRoomById } from "../../api/rooms";
 
 const TabletApp = () => {
     const colorStates = [COLORS.GREEN, COLORS.YELLOW, COLORS.RED];
-    const [meetingsData, setMeetingsData] = useState<iLeftSide>();
-
+    const [meetingsData, setMeetingsData] = useState<Meeting[]>();
+    
     const [roomName, setRoomName] = useState("");
     const { id } = useParams();
-
     const [selectedCardId, setSelectedCardId] = useState<string>();
 
     const [availability, setAvailability] = useState<number>(
@@ -55,7 +54,6 @@ const TabletApp = () => {
 
     const meetData = async () => {
         const room = await getRoomById(Number.parseInt(roomId));
-        console.log(room.data);
         if (room.status === 200) {
             setMeetingsData(room.data.meetings);
         }
@@ -81,7 +79,9 @@ const TabletApp = () => {
 
         return () => clearInterval(interval);
     }, [time, quickBookDone]);
-
+  useEffect(()=>{
+    console.log(meetingsData);
+  },[meetingsData]);
     return (
         <Grid
             sx={{
@@ -94,7 +94,7 @@ const TabletApp = () => {
             <Grid item xs={5}>
                 {meetingsData && (
                     <LeftSide
-                        meetings={meetingsData?.meetings}
+                        meetings={meetingsData}
                         name={roomName}
                         availability={availability}
                         selectedCardId={selectedCardId as string}

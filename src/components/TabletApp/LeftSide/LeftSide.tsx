@@ -35,15 +35,15 @@ const LeftSide = ({
     };
     const colorStates = ["#008435", "#BCA900", "#DD6764"];
 
-    const [participantsData, setParticipantsData] = useState<participantsID>();
+    // const [participantsData, setParticipantsData] = useState<participantsID>();
 
-    const getParticipantsData = async () => {
-        const response = await getParticipantsIdName();
-        setParticipantsData(response);
-    };
-    useEffect(() => {
-        getParticipantsData();
-    }, []);
+    // const getParticipantsData = async () => {
+    //     const response = await getParticipantsIdName();
+    //     setParticipantsData(response);
+    // };
+    // useEffect(() => {
+    //     getParticipantsData();
+    // }, []);
     useEffect(() => {
         if (
             availability === CONSTANTS.MEETING_IN_PROGRESS ||
@@ -54,15 +54,9 @@ const LeftSide = ({
         }
         setShowQuickBookButton(true);
     }, [availability, location]);
-
-    const getNames = (ids: string[]) => {
-        return (
-            participantsData?.participants
-                .filter((participants) => ids.includes(participants.id))
-                .map((value) => value.name) || []
-        );
-    };
-
+    useEffect(()=>{
+        console.log(meetings);
+    },[]);
     const [time, setTime] = useState(hoursMin);
     const displayCards = () => {
         console.log(meetings);
@@ -73,7 +67,7 @@ const LeftSide = ({
                     id={e.id}
                     start={Dayjs(e.startTime).format("HH:MM")}
                     end={Dayjs(e.endTime).format("HH:MM")}
-                    persons={getNames(e.participants_id)}
+                    persons={e.participants}
                     meetingName={e.name}
                     selectedCardId={selectedCardId}
                 />
@@ -175,7 +169,7 @@ const LeftSide = ({
                         }}
                         sx={styles.root}
                     >
-                        <Box> {participantsData && displayCards()}</Box>
+                        <Box>{meetings&& displayCards()}</Box>
                     </Paper>
 
                     {cardsToShow < meetings?.length && (

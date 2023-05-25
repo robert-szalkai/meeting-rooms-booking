@@ -27,7 +27,7 @@ export interface iLeftSide {
         id: string;
         startTime: string;
         endTime: string;
-        participants_id: [];
+        participants: string[];
     }[];
     availability: number;
     selectedCardId: string;
@@ -120,12 +120,12 @@ export interface INITIALOWNER {
 }
 
 export interface Meeting {
-    name?: string;
+    name: string;
+    id: string;
     description?: string;
     startTime: string;
     endTime: string;
-    participants: number[];
-    roomId: number;
+    participants: string[];
 }
 
 export interface FormValidity {
@@ -192,17 +192,17 @@ export interface iQuickBookGlobal {
     onClickQuickBookGlobal: () => void;
 }
 
-export interface UserInfo{
-    username:string;
-    password:string;
-    userType:string;
+export interface UserInfo {
+    username: string;
+    password: string;
+    userType: string;
 }
 
 export interface ConfirmationModalProps {
     open: boolean;
     onClose: () => void;
     onSubmit: () => void;
-};
+}
 
 export interface ModalProps {
     openModal: boolean;
