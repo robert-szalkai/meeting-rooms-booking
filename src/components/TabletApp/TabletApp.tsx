@@ -24,7 +24,7 @@ const TabletApp = () => {
     const colorStates = [COLORS.GREEN, COLORS.YELLOW, COLORS.RED];
     const [meetingsData, setMeetingsData] = useState<iLeftSide>();
 
-    const [roomName, setRoomName] = useState("Focus Room");
+    const [roomName, setRoomName] = useState("");
     const { id } = useParams();
 
     const [selectedCardId, setSelectedCardId] = useState<string>();
