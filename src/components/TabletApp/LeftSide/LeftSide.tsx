@@ -65,6 +65,7 @@ const LeftSide = ({
 
     const [time, setTime] = useState(hoursMin);
     const displayCards = () => {
+        console.log(meetings);
         return meetings
             ?.slice(0, cardsToShow)
             .map((e) => (

@@ -3,7 +3,6 @@ import { Navigate, Route, Routes, useParams } from "react-router-dom";
 import { Box, Grid } from "@mui/material";
 import { IconButton } from "@mui/material";
 import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
-
 import LeftSide from "./LeftSide/LeftSide";
 import AdvancedBook from "./RightSide/AdvancedBook/AdvancedBook";
 import MeetingInfo from "./RightSide/MeetingInfo/MeetingInfo";
@@ -17,7 +16,7 @@ import {
 import COLORS from "../../constants/CustomColors";
 import getRoomStatus from "../../functions/GetRoomStatus";
 import LogOutModal from "./LogOutModal";
-import { iLeftSide } from "../../interfaces/interfaces";
+import { Meeting, iLeftSide } from "../../interfaces/interfaces";
 import { getRoomById } from "../../api/rooms";
 
 const TabletApp = () => {
@@ -56,9 +55,9 @@ const TabletApp = () => {
 
     const meetData = async () => {
         const room = await getRoomById(Number.parseInt(roomId));
-        const response = await getMeetingsData(Number.parseInt(roomId));
-        if (response.status === 200) {
-            setMeetingsData(response.data);
+        console.log(room.data);
+        if (room.status === 200) {
+            setMeetingsData(room.data.meetings);
         }
         setRoomName(room.data.name);
     };
@@ -71,12 +70,11 @@ const TabletApp = () => {
         const setRoomStatus = async () => {
             const allMeetings = await getMeetingsByRoomId(
                 Number.parseInt(roomId)
-            );
-            const roomStatus = await getRoomStatus(allMeetings);
+            )
+            const roomStatus = getRoomStatus(allMeetings);
             setAvailability(roomStatus);
         };
         setRoomStatus();
-
         const interval = setInterval(() => {
             setTime(Date.now());
         }, CONSTANTS.INTERVAL_BACKGROUND_RESET);
