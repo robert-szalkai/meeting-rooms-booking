@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import dayjs from "dayjs";
@@ -15,7 +15,7 @@ import { getParticipants, getParticipant } from "../../../../api/participants";
 import { getMeetings } from "../../../../api/meetings";
 import { spawnToast } from "../../../../utils/Toast";
 import CONSTANTS from "../../../../constants/constants";
-import { INITIALOWNER, iQuickBook } from "../../../../interfaces/interfaces";
+import { Participant, iQuickBook } from "../../../../interfaces/interfaces";
 
 const QuickBook = ({
     isDurationOpen = false,
@@ -26,7 +26,13 @@ const QuickBook = ({
         useState<boolean>(isDurationOpen);
     const [openQuickButtonMenu, setOpenQuickButtonMenu] =
         useState<boolean>(false);
-    const [owner, setOwner] = useState<INITIALOWNER>({ name: "", id: 0 });
+    const [owner, setOwner] = useState<Participant>({
+        displayName: "",
+        givenName: "",
+        mail: "",
+        surname: "",
+        id: "",
+    });
     const [possibleOwners, setPossibleOwners] = useState<string[]>([""]);
     const [autoComplete, setAutoComplete] = useState<boolean>(false);
     const [timeVal, setTimeVal] = useState<number>(0);
@@ -35,15 +41,14 @@ const QuickBook = ({
 
     useEffect(() => {
         const fetchData = async () => {
-            let tempOwners: string[] = [];
             let meetingsStartTime: number[] = [];
+            let tempOwners: string[] = [];
 
             try {
                 const owners_response = await getParticipants();
                 Object.values(owners_response).forEach((value: any) =>
-                    tempOwners.push(value.name)
+                    tempOwners.push(value.displayName)
                 );
-                console.log(tempOwners);
                 setPossibleOwners(tempOwners);
             } catch (error) {
                 spawnToast({
@@ -85,20 +90,32 @@ const QuickBook = ({
         return closestMeet > val ? true : false;
     };
 
-    const handleQuickBookButton = () => {
+    const handleQuickBookButton = async () => {
         setTimeButtonsVisible(!timeButtonsVisible);
         if (timeButtonsVisible) setOpenQuickButtonMenu(false);
     };
 
     const handleClickTime = () => {
         if (!openQuickButtonMenu) setOpenQuickButtonMenu(true);
-        setOwner({ name: "", id: 0 });
+        setOwner({
+            displayName: "",
+            id: "0",
+            givenName: "",
+            mail: "",
+            surname: "",
+        });
     };
 
     const handleChange = async (e: string) => {
         try {
             const result = await getParticipant(e);
-            setOwner({ name: result.name, id: result.id });
+            setOwner({
+                displayName: result.displayName,
+                id: result.id.toString(),
+                givenName: result.givenName,
+                mail: result.mail,
+                surname: result.surname,
+            });
             setSubmitButton(true);
         } catch (error) {
             console.log(error);
@@ -109,31 +126,32 @@ const QuickBook = ({
         let now = dayjs();
         let endTime = now.add(timeVal, "minute");
 
-        try {
-            await axios.post("http://localhost:3001/meetings", {
-                room_id: 1,
-                owner_id: owner?.id,
-                participants_id: [],
-                start_time: now,
-                end_time: endTime,
-            });
-            spawnToast({
-                title: "You have succeded",
-                message: "Your booking was made",
-                toastType: "success",
-            });
+        // try {
+        //     await axios.post("http://localhost:3001/meetings", {
+        //         room_id: 1,
+        //         owner_id: owner?.id,
+        //         participants_id: [],
+        //         start_time: now,
+        //         end_time: endTime,
+        //     });
+        //     spawnToast({
+        //         title: "You have succeded",
+        //         message: "Your booking was made",
+        //         toastType: "success",
+        //     });
 
-            handleQuickBookDone();
-        } catch (error) {
-            spawnToast({
-                title: "Something went wrong",
-                message: "Your booking has not been made",
-                toastType: "error",
-            });
-            console.log(error);
-        }
+        //     handleQuickBookDone();
+        // } catch (error) {
+        //     spawnToast({
+        //         title: "Something went wrong",
+        //         message: "Your booking has not been made",
+        //         toastType: "error",
+        //     });
+        //     console.log(error);
+        // }
 
-        handleQuickBookButton();
+        // handleQuickBookButton();
+        console.log(owner);
     };
 
     return (
@@ -264,7 +282,9 @@ const QuickBook = ({
                                             if (!autoComplete)
                                                 setAutoComplete(true);
                                         }
-                                        handleChange(value);
+                                    }}
+                                    onChange={(e, value) => {
+                                        if (value) handleChange(value);
                                     }}
                                     onClose={() => setAutoComplete(false)}
                                     disablePortal
@@ -272,7 +292,9 @@ const QuickBook = ({
                                     options={possibleOwners}
                                     sx={{ width: 300 }}
                                     value={
-                                        owner === undefined ? "" : owner.name
+                                        owner === undefined
+                                            ? ""
+                                            : owner.displayName
                                     }
                                     renderInput={(params) => (
                                         <TextField {...params} label="Owner" />

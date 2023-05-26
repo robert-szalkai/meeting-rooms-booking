@@ -113,10 +113,11 @@ export interface MeetingRoomsData {
     handleDelete?: () => void;
 }
 export interface Participant {
-    name: string;
-    id: number;
-    available: boolean;
-    image: string;
+    displayName: string;
+    givenName: string;
+    mail: string;
+    surname: string;
+    id: string;
 }
 
 export interface participantsID {
@@ -200,22 +201,21 @@ export interface dateSelectorValid {
     endValid: string;
 }
 
-
 export interface iQuickBookGlobal {
     onClickQuickBookGlobal: () => void;
 }
 
-export interface UserInfo{
-    username:string;
-    password:string;
-    userType:string;
+export interface UserInfo {
+    username: string;
+    password: string;
+    userType: string;
 }
 
 export interface ConfirmationModalProps {
     open: boolean;
     onClose: () => void;
     onSubmit: () => void;
-};
+}
 
 export interface ModalProps {
     openModal: boolean;

@@ -8,17 +8,18 @@ const getParticipantsIdName = async (): Promise<participantsID> => {
 };
 
 const getParticipants = async (): Promise<Participant[]> => {
-    const result = await axios.get("http://localhost:3002/participantsData");
-    return result.data;
+    const result = await axios.get(
+        "http://localhost:4000/msgraph/participants/RO"
+    );
+    console.log("sunt in api", result.data);
+    return result.data.value;
 };
 
-const getParticipant = async (
-    _name: string
-): Promise<{ name: string; id: number }> => {
+const getParticipant = async (_name: string): Promise<Participant> => {
     const result = await axios.get(
-        `http://localhost:3001/participants?name=${_name}`
+        `http://localhost:4000/msgraph/participant/${_name}`
     );
-    return result.data[0];
+    return result.data.value[0];
 };
 
 export { getParticipantsIdName, getParticipants, getParticipant };
