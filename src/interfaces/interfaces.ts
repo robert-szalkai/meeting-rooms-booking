@@ -128,6 +128,15 @@ export interface Meeting {
     participants: string[];
 }
 
+export interface MeetingAdvancedBook{
+    name: string;
+    roomId: number;
+    description?: string;
+    startTime: string;
+    endTime: string;
+    participants: string[];
+}
+
 export interface FormValidity {
     isNameValid: boolean;
     isDateValid: boolean;

@@ -33,7 +33,7 @@ const AdvancedBook = ({ availability }: iAdvancedBook) => {
     const [endTime, setEndTime] = useState<string>("");
     const [allEmployees, setAllEmployees] = useState<Participant[]>([]);
     const [meetingParticipants, setMeetingParticipants] = useState<
-        string[]
+        Participant[]
     >([]);
     const [meetingOwner, setMeetingOwner] = useState<Participant[]>([]);
     const [bookedMeetings, setBookedMeetings] = useState<Meeting[]>([]);
@@ -54,7 +54,6 @@ const AdvancedBook = ({ availability }: iAdvancedBook) => {
                     id: re.id,
                 };
             });
-            console.log(meetings);
             setBookedMeetings(meetings);
         });
     }, []);
@@ -111,10 +110,9 @@ const AdvancedBook = ({ availability }: iAdvancedBook) => {
             .toString();
 
         const participants_id = participants.map((participant) => {
-            return participant.id;
+            return participant.name;
         });
         try {
-            alert(typeof roomId);
             addMeeting({
                 name: name,
                 description: description,

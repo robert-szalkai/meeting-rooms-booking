@@ -1,7 +1,7 @@
 import axios from "axios";
-import { Meeting } from "../interfaces/interfaces";
+import { Meeting, MeetingAdvancedBook } from "../interfaces/interfaces";
 
-const addMeeting = async (meeting: Meeting) => {
+const addMeeting = async (meeting: Meeting|MeetingAdvancedBook) => {
     return await axios.post("http://localhost:5000/meetings", meeting);
 };
 

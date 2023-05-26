@@ -54,9 +54,9 @@ const LeftSide = ({
         }
         setShowQuickBookButton(true);
     }, [availability, location]);
-    useEffect(()=>{
+    useEffect(() => {
         console.log(meetings);
-    },[]);
+    }, []);
     const [time, setTime] = useState(hoursMin);
     const displayCards = () => {
         console.log(meetings);
@@ -169,7 +169,7 @@ const LeftSide = ({
                         }}
                         sx={styles.root}
                     >
-                        <Box>{meetings&& displayCards()}</Box>
+                        <Box>{meetings && displayCards()}</Box>
                     </Paper>
 
                     {cardsToShow < meetings?.length && (

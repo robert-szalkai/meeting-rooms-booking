@@ -12,7 +12,7 @@ import {
 import EditCalendarIcon from "@mui/icons-material/EditCalendar";
 
 import { getParticipants, getParticipant } from "../../../../api/participants";
-import { getMeetings } from "../../../../api/meetings";
+import { getMeetings, getMeetingsByRoomId } from "../../../../api/meetings";
 import { spawnToast } from "../../../../utils/Toast";
 import CONSTANTS from "../../../../constants/Constants";
 import { INITIALOWNER } from "../../../../interfaces/interfaces";
@@ -61,7 +61,9 @@ const QuickBook = ({
             }
 
             try {
-                const meetings_response = await getMeetings();
+                const meetings_response = await getMeetingsByRoomId(
+                    Number.parseInt(roomId)
+                );
                 Object.values(meetings_response).forEach((value: any) => {
                     if (dayjs(value.start_time).isSame(dayjs(), "day")) {
                         meetings_start_time.push(
@@ -118,11 +120,11 @@ const QuickBook = ({
         try {
             await axios.post("http://localhost:5000/meetings", {
                 name: "QuickBook",
-                description: "",
+                description: "quickbook",
                 startTime: now,
                 endTime: end_time,
                 participants_id: [owner.id],
-                roomId: Number.parseInt(roomId),
+                roomId: roomId,
             });
             spawnToast({
                 title: "You have succeded",
@@ -133,11 +135,11 @@ const QuickBook = ({
             //and not allow you to make anymore quick bookings
             handleQuickBookDone();
         } catch (error) {
-            spawnToast({
-                title: "Something went wrong",
-                message: "Your booking has not been made",
-                toastType: "error",
-            });
+            // spawnToast({
+            //     title: "Something went wrong",
+            //     message: "Your booking has not been made",
+            //     toastType: "error",
+            // });
             console.log(error);
         }
 
