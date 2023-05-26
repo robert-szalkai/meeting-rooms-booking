@@ -4,6 +4,7 @@ import { Container, Modal, Grid } from "@mui/material";
 import Cards from "./MeetingRoom/Cards";
 import MeetingRoomForm from "./MeetingRoomForm/MeetingRoom";
 import DeleteConfirmationModal from "./DeleteConfirmationModal/DeleteConfirmationModal";
+import LogoutConfirmationModal from "./LogOutModal/LogOutModal";
 import {
     deleteRooms,
     addRoom,
@@ -12,10 +13,12 @@ import {
     getRoomById,
 } from "../../api/rooms";
 import { MeetingRoomsData } from "../../interfaces/interfaces";
+import { useNavigate } from "react-router-dom";
 
 const Admin = () => {
     const [showModal, setShowModal] = useState<boolean>(false);
     const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
+    const [showLogoutModal, setShowLogoutModal] = useState<boolean>(false);
     const [deleteRoomId, setDeleteRoomId] = useState<number | null | undefined>(
         null
     );
@@ -26,7 +29,7 @@ const Admin = () => {
     const [loading, setLoading] = useState(false);
     const [showEditModal, setEditModal] = useState<boolean>(false);
     const [editDataEvent, setEditData] = useState<MeetingRoomsData>();
-
+    const navigate = useNavigate();
     const handleSubmitForm = async (
         Name: string | undefined,
         Description: string | undefined,
@@ -64,6 +67,7 @@ const Admin = () => {
     ) => {
         setFunction(true);
     };
+
     const handleClose = (
         setFunction: React.Dispatch<React.SetStateAction<boolean>>
     ) => {
@@ -122,12 +126,19 @@ const Admin = () => {
             setLoading(false);
         }
     }, [loading]);
+
+    const deleteAuthTokens = () => {
+        localStorage.removeItem("user_type");
+        localStorage.removeItem("authenticated");
+    };
+
     return (
         <Container maxWidth="xl" sx={{ paddingTop: "50px" }}>
             <Header
                 handleClickForm={() => {
                     handleClickForm(setShowModal);
                 }}
+                handleLogoutModal={() => handleClickForm(setShowLogoutModal)}
             />
             <Modal
                 data-testid="newroommodal"
@@ -182,6 +193,16 @@ const Admin = () => {
                 }}
                 onSubmit={() => deleteRoomId && handleDelete(deleteRoomId)}
                 roomTitle={deleteRoomTitle}
+            />
+            <LogoutConfirmationModal
+                open={showLogoutModal}
+                onClose={() => {
+                    setShowLogoutModal(false);
+                }}
+                onSubmit={() => {
+                    deleteAuthTokens();
+                    navigate("/login");
+                }}
             />
             <Grid
                 flexWrap="wrap"

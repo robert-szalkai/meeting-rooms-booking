@@ -2,6 +2,7 @@ import { Dayjs } from "dayjs";
 
 export interface iHeader {
     handleClickForm: () => void;
+    handleLogoutModal: () => void;
 }
 
 export interface iQuickBook {
@@ -197,4 +198,33 @@ export interface dateSelectorValid {
     dateValid: string;
     startValid: string;
     endValid: string;
+}
+
+
+export interface iQuickBookGlobal {
+    onClickQuickBookGlobal: () => void;
+}
+
+export interface UserInfo{
+    username:string;
+    password:string;
+    userType:string;
+}
+
+export interface ConfirmationModalProps {
+    open: boolean;
+    onClose: () => void;
+    onSubmit: () => void;
+};
+
+export interface ModalProps {
+    openModal: boolean;
+    handleClose: (values: any) => void;
+}
+
+export interface Login {
+    username: string;
+    password: string;
+    handleUsername: (variables: string) => void;
+    handlePassword: (variables: string) => void;
 }
