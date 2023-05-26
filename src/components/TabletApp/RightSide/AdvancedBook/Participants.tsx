@@ -31,7 +31,7 @@ const Participants: FC<ParticipantsProps> = ({
                     filterSelectedOptions
                     onInputChange={(event, value) => {
                         const result = allEmployees.filter(
-                            (person) => person.name === value
+                            (person) => person.displayName === value
                         );
                         handleMeetingOwner(result);
                         value === ""
@@ -45,12 +45,12 @@ const Participants: FC<ParticipantsProps> = ({
                             return false;
                         }
                     }}
-                    getOptionLabel={(participant) => participant.name}
+                    getOptionLabel={(participant) => participant.displayName}
                     renderTags={(value, getTagProps) =>
                         value.map((option, index) => (
                             <Chip
                                 variant="outlined"
-                                label={option.name}
+                                label={option.displayName}
                                 size="small"
                                 {...getTagProps({ index })}
                             />
@@ -87,18 +87,18 @@ const Participants: FC<ParticipantsProps> = ({
                     getOptionDisabled={(option) => {
                         if (
                             meetingOwner.length !== 0 &&
-                            meetingOwner[0].name === option.name
+                            meetingOwner[0].displayName === option.displayName
                         ) {
                             return true;
                         }
                         return false;
                     }}
-                    getOptionLabel={(participant) => participant.name}
+                    getOptionLabel={(participant) => participant.displayName}
                     renderTags={(value, getTagProps) =>
                         value.map((option, index) => (
                             <Chip
                                 variant="outlined"
-                                label={option.name}
+                                label={option.displayName}
                                 size="small"
                                 {...getTagProps({ index })}
                             />
@@ -122,15 +122,18 @@ const Participants: FC<ParticipantsProps> = ({
                     <AvatarGroup max={6}>
                         {meetingOwner.map((owner) => {
                             return (
-                                <Avatar src={owner.image}>
-                                    {owner.name.replace(/[^A-Z]/g, "")}
+                                <Avatar>
+                                    {owner.displayName.replace(/[^A-Z]/g, "")}
                                 </Avatar>
                             );
                         })}
                         {meetingParticipants.map((participant) => {
                             return (
-                                <Avatar src={participant.image}>
-                                    {participant.name.replace(/[^A-Z]/g, "")}
+                                <Avatar>
+                                    {participant.displayName.replace(
+                                        /[^A-Z]/g,
+                                        ""
+                                    )}
                                 </Avatar>
                             );
                         })}

@@ -127,17 +127,12 @@ export interface participantsID {
     }[];
 }
 
-export interface INITIALOWNER {
-    name: string;
-    id: number;
-}
-
 export interface Meeting {
     meetingName: string;
     meetingDescription: string;
     startDate: string;
     endDate: string;
-    participants: number[];
+    participants: string[];
     id: number;
 }
 
