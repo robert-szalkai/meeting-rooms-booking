@@ -1,6 +1,6 @@
-import React, { useRef } from "react";
-import { useState, useEffect } from "react";
+import React from "react";
 import axios from "axios";
+import { useState, useEffect } from "react";
 import dayjs from "dayjs";
 import {
     Box,
@@ -126,32 +126,31 @@ const QuickBook = ({
         let now = dayjs();
         let endTime = now.add(timeVal, "minute");
 
-        // try {
-        //     await axios.post("http://localhost:3001/meetings", {
-        //         room_id: 1,
-        //         owner_id: owner?.id,
-        //         participants_id: [],
-        //         start_time: now,
-        //         end_time: endTime,
-        //     });
-        //     spawnToast({
-        //         title: "You have succeded",
-        //         message: "Your booking was made",
-        //         toastType: "success",
-        //     });
+        try {
+            await axios.post("http://localhost:3001/meetings", {
+                room_id: 1,
+                owner_id: owner?.id,
+                participants_id: [],
+                start_time: now,
+                end_time: endTime,
+            });
+            spawnToast({
+                title: "You have succeded",
+                message: "Your booking was made",
+                toastType: "success",
+            });
 
-        //     handleQuickBookDone();
-        // } catch (error) {
-        //     spawnToast({
-        //         title: "Something went wrong",
-        //         message: "Your booking has not been made",
-        //         toastType: "error",
-        //     });
-        //     console.log(error);
-        // }
+            handleQuickBookDone();
+        } catch (error) {
+            spawnToast({
+                title: "Something went wrong",
+                message: "Your booking has not been made",
+                toastType: "error",
+            });
+            console.log(error);
+        }
 
-        // handleQuickBookButton();
-        console.log(owner);
+        handleQuickBookButton();
     };
 
     return (

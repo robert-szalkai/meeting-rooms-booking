@@ -11,7 +11,6 @@ const getParticipants = async (): Promise<Participant[]> => {
     const result = await axios.get(
         "http://localhost:4000/msgraph/participants/RO"
     );
-    console.log("sunt in api", result.data);
     return result.data.value;
 };
 
