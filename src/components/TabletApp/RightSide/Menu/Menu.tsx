@@ -5,7 +5,7 @@ import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 
 import QuickBook from "../QuickBook/QuickBook";
 import { iMenu } from "../../../../interfaces/interfaces";
-import CONSTANTS from "../../../../constants/Constants";
+import CONSTANTS from "../../../../constants/constants";
 
 const Menu = ({
     roomId,
@@ -39,7 +39,6 @@ const Menu = ({
                 paddingTop: "20%",
                 overflow: "auto",
                 paddingRight: "32px",
-
             }}
         >
             {" "}

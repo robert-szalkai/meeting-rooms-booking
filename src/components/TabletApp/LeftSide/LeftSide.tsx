@@ -10,7 +10,7 @@ import QuickBookGlobal from "./QuickBookGlobal/QuickBookGlobal";
 import AdvancedBookGlobal from "./AdvancedBookGlobal/AdvancedBookGlobal";
 import Clock from "./Clock/Clock";
 import { getParticipantsIdName } from "../../../api/participants";
-import CONSTANTS from "../../../constants/Constants";
+import CONSTANTS from "../../../constants/constants";
 import { iLeftSide, participantsID } from "../../../interfaces/interfaces";
 
 const LeftSide = ({

@@ -8,7 +8,7 @@ const getParticipantsIdName = async (): Promise<participantsID> => {
 };
 
 const getParticipants = async (): Promise<Participant[]> => {
-    const result = await axios.get("http://localhost:3001/participants");
+    const result = await axios.get("http://localhost:3002/participantsData");
     return result.data;
 };
 

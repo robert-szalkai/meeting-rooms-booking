@@ -1,8 +1,8 @@
-import CONSTANTS from "../constants/Constants";
+import CONSTANTS from "../constants/constants";
 import dayjs from "dayjs";
 import { Meeting } from "../interfaces/interfaces";
 
-const getRoomStatus =  (allMeetings: Meeting[]) => {
+const getRoomStatus = (allMeetings: Meeting[]) => {
     let inMeetingRightNow = false;
     let willFollow = false;
 

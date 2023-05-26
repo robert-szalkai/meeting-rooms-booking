@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Box, Typography, Card } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
-import COLORS from "../../constants/CustomColors";
+import COLORS from "../../constants/customColors";
 import { iRoomCards } from "../../interfaces/interfaces";
 
 export const RoomSelectionCards = ({
@@ -12,7 +12,7 @@ export const RoomSelectionCards = ({
     name,
     capacity,
 }: iRoomCards) => {
-    const colors={0:COLORS.SUCCESS,1:COLORS.WARNING,2:COLORS.ERROR}
+    const colors = { 0: COLORS.SUCCESS, 1: COLORS.WARNING, 2: COLORS.ERROR };
     const navigate = useNavigate();
     const [color, setColor] = useState<string>();
     const handleClick = (id: number) => {

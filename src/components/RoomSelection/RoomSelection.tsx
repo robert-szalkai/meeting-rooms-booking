@@ -4,7 +4,7 @@ import { Container, Box, Typography } from "@mui/material";
 import RoomSelectionCards from "./RoomSelectionCards";
 import { Meeting } from "../../interfaces/interfaces";
 import { getRooms } from "../../api/rooms";
-import COLORS from "../../constants/CustomColors";
+import COLORS from "../../constants/customColors";
 import { MeetingRoomsData } from "../../interfaces/interfaces";
 import getRoomStatus from "../../functions/GetRoomStatus";
 
