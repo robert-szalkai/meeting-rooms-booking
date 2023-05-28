@@ -5,7 +5,7 @@ import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 
 import QuickBook from "../QuickBook/QuickBook";
 import { iMenu } from "../../../../interfaces/interfaces";
-import CONSTANTS from "../../../../constants/constants";
+import CONSTANTS from "../../../../constants/Constants";
 
 const Menu = ({
     roomId,

@@ -11,7 +11,7 @@ import {
     participantsID,
 } from "../../../../interfaces/interfaces";
 import Error from "./NotFoundPage/NotFoundPage";
-import COLORS from "../../../../constants/customColors";
+import COLORS from "../../../../constants/CustomColors";
 
 const MeetingInfo = ({ setSelectedCardId }: iMeetingInfo) => {
     const [participantsData, setParticipantsData] = useState<participantsID>();

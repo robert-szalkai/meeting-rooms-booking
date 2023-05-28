@@ -4,7 +4,7 @@ import { Container, Box, Typography } from "@mui/material";
 import RoomSelectionCards from "./RoomSelectionCards";
 import { Meeting } from "../../interfaces/interfaces";
 import { getRooms } from "../../api/rooms";
-import COLORS from "../../constants/customColors";
+import COLORS from "../../constants/CustomColors";
 import { MeetingRoomsData } from "../../interfaces/interfaces";
 import getRoomStatus from "../../functions/GetRoomStatus";
 
@@ -19,10 +19,12 @@ export const RoomSelection = () => {
             console.log(error);
         }
     };
+    //6cc07a05-bcbc-4965-a447-fa9e734a4112
     const mapElements = () => {
+        console.log(roomSelectionData)
         return roomSelectionData?.map((e, index) => (
             <RoomSelectionCards
-                name={e.title}
+                name={e.displayName}
                 key={e.id}
                 availability={
                     getRoomStatus(e.meetings as unknown as Meeting[]) as

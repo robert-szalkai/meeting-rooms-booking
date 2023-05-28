@@ -9,12 +9,11 @@ import "./UpcomingCardsScrollCSS.css";
 import QuickBookGlobal from "./QuickBookGlobal/QuickBookGlobal";
 import AdvancedBookGlobal from "./AdvancedBookGlobal/AdvancedBookGlobal";
 import Clock from "./Clock/Clock";
-import { getParticipantsIdName } from "../../../api/participants";
-import CONSTANTS from "../../../constants/constants";
-import { iLeftSide, participantsID } from "../../../interfaces/interfaces";
-
+import {getParticipants, getParticipantsIdName} from "../../../api/participants";
+import CONSTANTS from "../../../constants/Constants";
+import {iLeftSide, Participant, participantsID} from "../../../interfaces/interfaces";
 const LeftSide = ({
-    name,
+    displayName,
     meetings,
     availability,
     selectedCardId,
@@ -35,10 +34,10 @@ const LeftSide = ({
     };
     const colorStates = ["#008435", "#BCA900", "#DD6764"];
 
-    const [participantsData, setParticipantsData] = useState<participantsID>();
+    const [participantsData, setParticipantsData] = useState<Participant[]>();
 
     const getParticipantsData = async () => {
-        const response = await getParticipantsIdName();
+        const response = await getParticipants();
         setParticipantsData(response);
     };
     useEffect(() => {
@@ -55,25 +54,25 @@ const LeftSide = ({
         setShowQuickBookButton(true);
     }, [availability, location]);
 
-    const getNames = (ids: string[]) => {
-        return (
-            participantsData?.participants
-                .filter((participants) => ids.includes(participants.id))
-                .map((value) => value.name) || []
-        );
+    const getNames = (participants: {emailAddress:{name:string,address:string}}[]) => {
+        let names: string[] = [];
+        for(const participant of participants){
+            names.push(participant.emailAddress.name)
+        }
+        return names;
     };
 
-    const [time, setTime] = useState(hoursMin);
     const displayCards = () => {
+        console.log("MEEETINGS:",meetings)
         return meetings
             ?.slice(0, cardsToShow)
             .map((e) => (
                 <UpcomingCards
                     id={e.id}
-                    start={Dayjs(e.start_time).format("HH:MM")}
-                    end={Dayjs(e.end_time).format("HH:MM")}
-                    persons={getNames(e.participants_id)}
-                    meetingName={e.name}
+                    start={Dayjs(e.start.dateTime).format("HH:mm")}
+                    end={Dayjs(e.end.dateTime).format("HH:mm")}
+                    persons={getNames(e.attendees)}
+                    meetingName={e.subject}
                     selectedCardId={selectedCardId}
                 />
             ));
@@ -136,8 +135,8 @@ const LeftSide = ({
                         marginTop={16}
                         marginLeft={-20}
                     >
-                        {name ? (
-                            <Typography variant="h4">{name}</Typography>
+                        {displayName ? (
+                            <Typography variant="h4">{displayName}</Typography>
                         ) : (
                             <Skeleton
                                 variant="rectangular"

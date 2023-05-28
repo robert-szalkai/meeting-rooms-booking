@@ -15,9 +15,9 @@ import {
     Meeting,
     Participant,
 } from "../../../../interfaces/interfaces";
-import CONSTANTS from "../../../../constants/constants";
+import CONSTANTS from "../../../../constants/Constants";
 import { iAdvancedBook } from "../../../../interfaces/interfaces";
-
+import Cookies from "universal-cookie";
 const AdvancedBook = ({ availability }: iAdvancedBook) => {
     const [validForm, setValidForm] = useState<FormValidity>({
         isNameValid: false,
@@ -39,6 +39,7 @@ const AdvancedBook = ({ availability }: iAdvancedBook) => {
     const [bookedMeetings, setBookedMeetings] = useState<Meeting[]>([]);
     const navigate = useNavigate();
 
+    const cookies = new Cookies();
     useEffect(() => {
         try {
             getParticipants().then((res) => {
@@ -54,8 +55,8 @@ const AdvancedBook = ({ availability }: iAdvancedBook) => {
         }
 
         try {
-            getMeetings().then((res) => {
-                setBookedMeetings(res);
+            getMeetings(cookies.get("roomId")).then((res) => {
+                setBookedMeetings(res.data);
             });
         } catch (error) {
             spawnToast({
@@ -122,12 +123,12 @@ const AdvancedBook = ({ availability }: iAdvancedBook) => {
 
         try {
             addMeeting({
-                meetingName: name,
+                subject: name,
                 meetingDescription: description,
-                startDate: meetingStartDate,
-                endDate: meetingEndDate,
-                participants: participantsID,
-                id: id,
+                start: {dateTime: meetingStartDate},
+                end: {dateTime: meetingEndDate},
+                attendees: [{emailAddress:{name:"",address:""}}],
+                id: id.toString(),
             });
             spawnToast({
                 title: "You have succeded",

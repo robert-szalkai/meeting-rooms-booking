@@ -32,7 +32,7 @@ export const MeetingRoomForm = ({
 
     useEffect(() => {
         if (edit && editData) {
-            setName(editData.title);
+            setName(editData.displayName);
             setDescription(editData.description);
             setCapacity(editData.capacity?.toString());
         }

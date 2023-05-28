@@ -8,12 +8,12 @@ import {
     AvatarGroup,
     Grid,
 } from "@mui/material";
-import SIZE from "../../../../constants/customSize";
+import SIZE from "../../../../constants/CustomSize";
 import { useNavigate } from "react-router";
 import { useLocation } from "react-router-dom";
 
 import { iUpcomingCards } from "../../../../interfaces/interfaces";
-import COLORS from "../../../../constants/customColors";
+import COLORS from "../../../../constants/CustomColors";
 
 const UpcomingCards = ({
     id,

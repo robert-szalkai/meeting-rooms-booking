@@ -2,7 +2,7 @@ import { Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import dayjs from "dayjs";
 
-import CONSTANTS from "../../../../constants/constants";
+import CONSTANTS from "../../../../constants/Constants";
 
 const Clock = () => {
     const [time, setTime] = useState(dayjs().format(CONSTANTS.TIME_NOW));

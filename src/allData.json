@@ -1,4 +1,27 @@
 {
+  "users": [
+
+    {
+
+      "username": "user",
+
+      "password": "user",
+
+      "userType": "user"
+
+    },
+
+    {
+
+      "username": "admin",
+
+      "password": "admin",
+
+      "userType": "admin"
+
+    }
+
+  ],
     "meetings": [
       {
         "id": 1,

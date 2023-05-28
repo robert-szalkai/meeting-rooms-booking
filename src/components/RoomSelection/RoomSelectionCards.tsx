@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import { Box, Typography, Card } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
-import COLORS from "../../constants/customColors";
+import COLORS from "../../constants/CustomColors";
 import { iRoomCards } from "../../interfaces/interfaces";
-
+import Cookies from "universal-cookie";
 export const RoomSelectionCards = ({
     availability,
     description,
@@ -12,11 +12,13 @@ export const RoomSelectionCards = ({
     name,
     capacity,
 }: iRoomCards) => {
+    const cookies = new Cookies();
     const colors = { 0: COLORS.SUCCESS, 1: COLORS.WARNING, 2: COLORS.ERROR };
     const navigate = useNavigate();
     const [color, setColor] = useState<string>();
     const handleClick = (id: number) => {
-        navigate(`/rooms/${id}`);
+        cookies.set('roomId', id.toString());
+        navigate(`/rooms/${id}/menu`);
     };
     useEffect(() => {
         setColor(colors[availability]);

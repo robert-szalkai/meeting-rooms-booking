@@ -25,6 +25,7 @@ const LoginForm: FC<Login> = ({
     const getUsersAccounts = async () => {
         try {
             const result = await getUsers();
+            console.log(result)
             setUsers(result);
         } catch (error) {
             console.log(error);

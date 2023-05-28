@@ -33,14 +33,8 @@ export interface iMenu {
 }
 
 export interface iLeftSide {
-    name: string | undefined;
-    meetings: {
-        name: string;
-        id: string;
-        start_time: string;
-        end_time: string;
-        participants_id: [];
-    }[];
+    displayName: string | undefined;
+    meetings: Meeting[];
     availability: number;
     selectedCardId: string;
     onClickQuickBookGlobal: () => void;
@@ -73,7 +67,7 @@ export interface iMeetigroomForm {
 }
 type editData = Pick<
     MeetingRoomsData,
-    "description" | "title" | "capacity" | "id"
+    "description" | "displayName" | "capacity" | "id"
 >;
 
 export interface iCard {
@@ -100,7 +94,7 @@ export interface iAdvancedBook {
 }
 
 export interface MeetingRoomsData {
-    title: string | undefined;
+    displayName: string | undefined;
     description: string | undefined;
     capacity: string | undefined;
     id?: number | undefined;
@@ -113,10 +107,11 @@ export interface MeetingRoomsData {
     handleDelete?: () => void;
 }
 export interface Participant {
-    name: string;
-    id: number;
-    available: boolean;
-    image: string;
+    displayName: string;
+    givenName: string;
+    mail: string;
+    surname: string;
+    id: string;
 }
 
 export interface participantsID {
@@ -132,12 +127,12 @@ export interface INITIALOWNER {
 }
 
 export interface Meeting {
-    meetingName: string;
+    subject: string;
     meetingDescription: string;
-    startDate: string;
-    endDate: string;
-    participants: number[];
-    id: number;
+    start: { dateTime: string };
+    end: { dateTime: string };
+    attendees: {emailAddress:{name:string,address:string}}[];
+    id: string;
 }
 
 export interface FormValidity {

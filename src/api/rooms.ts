@@ -2,7 +2,7 @@ import axios from "axios";
 import { MeetingRoomsData, iRoomCards } from "../interfaces/interfaces";
 
 const getRooms = async (): Promise<MeetingRoomsData[]> => {
-    const result = await axios.get("http://localhost:3001/rooms");
+    const result = await axios.get("http://localhost:4000/msgraph/meetingrooms/TM");
     return result.data;
 };
 

@@ -5,13 +5,12 @@ const addMeeting = async (meeting: Meeting) => {
     return await axios.post("http://localhost:3001/meetings", meeting);
 };
 
-const getMeetingsData = async () => {
-    return await axios.get("http://localhost:3001/roomdata");
+const getMeetingsData = async (meetingRoomId : string) => {
+    return await axios.get(`http://localhost:4000/msgraph/meetingroom/${meetingRoomId}`);
 };
 
-const getMeetings = async (): Promise<Meeting[]> => {
-    const result = await axios.get("http://localhost:3001/roomdata");
-    return result.data;
+const getMeetings = async (meetingRoomId : string) => {
+    return await axios.get(`http://localhost:4000/msgraph/events/${meetingRoomId}`);
 };
 
 export { addMeeting, getMeetings, getMeetingsData };
