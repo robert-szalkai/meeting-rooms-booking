@@ -1,24 +1,25 @@
-import React, { useState, useEffect } from "react";
-import { Box, Typography, Button, Grid } from "@mui/material";
+import React, {useState, useEffect} from "react";
+import {Box, Typography, Button, Grid} from "@mui/material";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
-import dayjs, { Dayjs } from "dayjs";
-import { useNavigate, useParams } from "react-router-dom";
+import dayjs, {Dayjs} from "dayjs";
+import {useNavigate, useParams} from "react-router-dom";
 
 import DateSelector from "./DateSelector";
 import Participants from "./Participants";
 import InputField from "./InputField";
-import { getMeetings, addMeeting } from "../../../../api/meetings";
-import { getParticipants } from "../../../../api/participants";
-import { spawnToast } from "../../../../utils/Toast";
+import {getMeetings, addMeeting} from "../../../../api/meetings";
+import {getParticipants} from "../../../../api/participants";
+import {spawnToast} from "../../../../utils/Toast";
 import {
     FormValidity,
     Meeting,
     Participant,
 } from "../../../../interfaces/interfaces";
 import CONSTANTS from "../../../../constants/Constants";
-import { iAdvancedBook } from "../../../../interfaces/interfaces";
+import {iAdvancedBook} from "../../../../interfaces/interfaces";
 import Cookies from "universal-cookie";
-const AdvancedBook = ({ availability }: iAdvancedBook) => {
+
+const AdvancedBook = ({availability}: iAdvancedBook) => {
     const [validForm, setValidForm] = useState<FormValidity>({
         isNameValid: false,
         isDateValid: false,
@@ -85,7 +86,7 @@ const AdvancedBook = ({ availability }: iAdvancedBook) => {
     };
 
     const handleValid = (propertyValue: boolean, key: string) => {
-        setValidForm({ ...validForm, [key]: propertyValue });
+        setValidForm({...validForm, [key]: propertyValue});
     };
 
     const checkFormValid = (validForm: FormValidity) => {
@@ -117,18 +118,20 @@ const AdvancedBook = ({ availability }: iAdvancedBook) => {
             .set("hour", endTime.get("hour"))
             .set("minute", endTime.get("minute"))
             .toString();
-        const participantsID = participants.map((participant) => {
-            return participant.id;
-        });
+        // @ts-ignore
+        let attendess: [{ emailAddress: { name: string, address: string } }] = [];
+        participants.forEach((participant) => {
+            attendess.push({emailAddress: {name: participant.displayName, address: participant.mail}})
+        })
 
         try {
             addMeeting({
                 subject: name,
-                meetingDescription: description,
-                start: {dateTime: meetingStartDate},
-                end: {dateTime: meetingEndDate},
-                attendees: [{emailAddress:{name:"",address:""}}],
-                id: id.toString(),
+                body: {contentType: "HTML", content: description},
+                start: {dateTime: meetingStartDate, timeZone: "UTC"},
+                end: {dateTime: meetingEndDate, timeZone: "UTC"},
+                attendees: attendess,
+                id: cookies.get("roomId"),
             });
             spawnToast({
                 title: "You have succeded",
@@ -144,7 +147,11 @@ const AdvancedBook = ({ availability }: iAdvancedBook) => {
         }
     };
 
-    const { meetID } = useParams<string>();
+    const test = () => {
+        console.log("ASDASD")
+    }
+
+    const {meetID} = useParams<string>();
     const id = Number(meetID);
 
     console.log("param meetid: ", meetID);
@@ -245,13 +252,14 @@ const AdvancedBook = ({ availability }: iAdvancedBook) => {
                                 onClick={handleClickCancel}
                                 variant="outlined"
                                 color="inherit"
-                                sx={{ maxWidth: 140 }}
+                                sx={{maxWidth: 140}}
                             >
                                 Cancel
                             </Button>
                             <Button
-                                sx={{ maxWidth: 140 }}
+                                sx={{maxWidth: 140}}
                                 type="submit"
+                                onClick={test}
                                 variant="contained"
                                 color={
                                     CONSTANTS.BUTTON_COLOR[availability] as
@@ -261,7 +269,7 @@ const AdvancedBook = ({ availability }: iAdvancedBook) => {
                                 }
                                 disabled={checkFormValid(validForm)}
                             >
-                                <CalendarMonthIcon fontSize="small" />
+                                <CalendarMonthIcon fontSize="small"/>
                                 Book
                             </Button>
                         </Box>

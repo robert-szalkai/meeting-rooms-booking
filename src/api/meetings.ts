@@ -2,7 +2,9 @@ import axios from "axios";
 import { Meeting } from "../interfaces/interfaces";
 
 const addMeeting = async (meeting: Meeting) => {
-    return await axios.post("http://localhost:3001/meetings", meeting);
+    console.log(meeting);
+    alert("ASDASD")
+    return await axios.post("http://localhost:4000/msgraph/events", meeting);
 };
 
 const getMeetingsData = async (meetingRoomId : string) => {

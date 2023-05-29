@@ -128,6 +128,14 @@ const QuickBook = ({
         let endTime = now.add(timeVal, "minute");
 
         try {
+            console.log({
+                id: cookies.get("roomId"),
+                    attendees: [{"emailAddress": {"name": owner?.displayName, "address": `${owner?.displayName.toLowerCase().replace(" ",".")}@doctarigroup.com`}}],
+                start: {"dateTime":now, "timeZone":"UTC"},
+                end: {"dateTime":endTime, "timeZone":"UTC"},
+                body:{"contentType":"HTML", content:""},
+                subject:"Hai acas",
+            })
             await axios.post("http://localhost:4000/msgraph/events", {
                 id: cookies.get("roomId"),
                 attendees: [{"emailAddress": {"name": owner?.displayName, "address": `${owner?.displayName.toLowerCase().replace(" ",".")}@doctarigroup.com`}}],

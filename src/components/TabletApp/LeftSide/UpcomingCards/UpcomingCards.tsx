@@ -14,7 +14,7 @@ import { useLocation } from "react-router-dom";
 
 import { iUpcomingCards } from "../../../../interfaces/interfaces";
 import COLORS from "../../../../constants/CustomColors";
-
+import Cookies from "universal-cookie";
 const UpcomingCards = ({
     id,
     start,
@@ -23,6 +23,7 @@ const UpcomingCards = ({
     meetingName,
     selectedCardId,
 }: iUpcomingCards) => {
+    const cookies = new Cookies();
     const getInitilas = () => {
         const filteredata = persons.map((e) => {
             return e
@@ -58,6 +59,7 @@ const UpcomingCards = ({
 
     const navigate = useNavigate();
     const handleCardOnClick = () => {
+        cookies.set("meetId", id);
         navigate(`meetinginfo/${id}`);
     };
 

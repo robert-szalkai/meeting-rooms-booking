@@ -12,22 +12,23 @@ import {
 } from "../../../../interfaces/interfaces";
 import Error from "./NotFoundPage/NotFoundPage";
 import COLORS from "../../../../constants/CustomColors";
+import Cookies from "universal-cookie";
 
 const MeetingInfo = ({ setSelectedCardId }: iMeetingInfo) => {
+    const cookies = new Cookies();
+    const meetid = cookies.get("meetId");
     const [participantsData, setParticipantsData] = useState<participantsID>();
     const [meetingParticipants, setMeetingParticipants] = useState<
         string[] | undefined
     >([]);
 
     const [meetingData, setMeetingData] = useState<iMeetingData>();
-    const { meetid } = useParams<string>();
-    const [meetId, setMeetId] = useState<string>();
 
     const getMeetingById = async (meetid: string): Promise<iMeetingData> => {
         const result = await axios.get(
-            `http://localhost:3003/meetingInfo/${meetid}`
+            `http://localhost:4000/msgraph/meetingroom/${cookies.get("roomId")}/event/${meetid}`
         );
-
+        console.log(result)
         return result.data;
     };
 
@@ -43,20 +44,28 @@ const MeetingInfo = ({ setSelectedCardId }: iMeetingInfo) => {
 
         _getParticipants();
     }, []);
+    useEffect(() => {
+        const _getMeetingData = async () => {
+            getMeetingData();
+        };
+
+        _getMeetingData();
+    }, [meetid]);
 
     useEffect(() => {
         setSelectedCardId(meetid as string);
     }, [meetid]);
 
-    const getNames = (ids: string[] | undefined) => {
-        return (
-            participantsData?.participants
-                .filter((participants) => ids?.includes(participants.id))
-                .map((value) => value.name) || []
-        );
+    const getNames = (participants: { emailAddress: { name: string; address: string } }[] | undefined) => {
+        let names: string[] = [];
+        if(participants!== undefined)
+        for(const participant of participants){
+            names.push(participant.emailAddress.name)
+        }
+        return names;
     };
 
-    const personsById = getNames(meetingData?.participants_id);
+    const personsById = getNames(meetingData?.attendees);
 
     const getMeetingData = async () => {
         if (meetid) {
@@ -65,13 +74,6 @@ const MeetingInfo = ({ setSelectedCardId }: iMeetingInfo) => {
         }
     };
 
-    useEffect(() => {
-        const _getMeetingData = async () => {
-            getMeetingData();
-        };
-
-        _getMeetingData();
-    }, [meetid]);
 
     const getInitilas = () => {
         const filteredata = personsById.map((e) => {
@@ -128,7 +130,7 @@ const MeetingInfo = ({ setSelectedCardId }: iMeetingInfo) => {
                 <Grid container direction={"row"} spacing={0}>
                     <Grid item xs={12}></Grid>
                     <Grid item xs={12}>
-                        <Typography variant="h4">{meetingData.name}</Typography>
+                        <Typography variant="h4">{meetingData.subject}</Typography>
                         <Typography variant="h6">
                             Today,{" "}
                             {dayjs(meetingData.startTime).format("HH:MM")} -{" "}
@@ -167,9 +169,7 @@ const MeetingInfo = ({ setSelectedCardId }: iMeetingInfo) => {
             <Grid item xs={12}>
                 <Grid padding={0.5} container direction={"row"} marginTop={-20}>
                     <Grid item xs={12} marginLeft={1}>
-                        <Typography variant="subtitle1">
-                            {meetingData.description}
-                        </Typography>
+                        <div dangerouslySetInnerHTML={{ __html: meetingData.body.content }} />
                     </Grid>
                 </Grid>
             </Grid>

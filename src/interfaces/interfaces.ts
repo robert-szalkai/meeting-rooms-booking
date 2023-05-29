@@ -41,12 +41,12 @@ export interface iLeftSide {
 }
 
 export interface iMeetingData {
-    name: string;
+    subject: string;
     id: string;
     startTime: string;
     endTime: string;
-    participants_id: string[] | undefined;
-    description: string;
+    attendees: { emailAddress:{name:string, address:string} }[];
+    body: {contentType:string, content:string};
 }
 
 export interface iMeetingInfo {
@@ -128,9 +128,9 @@ export interface INITIALOWNER {
 
 export interface Meeting {
     subject: string;
-    meetingDescription: string;
-    start: { dateTime: string };
-    end: { dateTime: string };
+    body: {contentType: string, content:string};
+    start: { dateTime: string, timeZone:string };
+    end: { dateTime: string,timeZone:string };
     attendees: {emailAddress:{name:string,address:string}}[];
     id: string;
 }

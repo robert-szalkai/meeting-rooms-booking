@@ -63,7 +63,6 @@ const LeftSide = ({
     };
 
     const displayCards = () => {
-        console.log("MEEETINGS:",meetings)
         return meetings
             ?.slice(0, cardsToShow)
             .map((e) => (
