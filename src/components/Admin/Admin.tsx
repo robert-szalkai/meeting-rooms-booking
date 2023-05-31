@@ -19,7 +19,7 @@ const Admin = () => {
     const [showModal, setShowModal] = useState<boolean>(false);
     const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
     const [showLogoutModal, setShowLogoutModal] = useState<boolean>(false);
-    const [deleteRoomId, setDeleteRoomId] = useState<number | null | undefined>(
+    const [deleteRoomId, setDeleteRoomId] = useState<string | null | undefined>(
         null
     );
     const [deleteRoomTitle, setDeleteRoomTitle] = useState<string | undefined>(
@@ -49,7 +49,7 @@ const Admin = () => {
         Name: string | undefined,
         Description: string | undefined,
         Capacity: string | undefined,
-        id?: number
+        id?: string | undefined
     ) => {
         const result = await updateRoomData({
             displayName: Name,
@@ -77,14 +77,14 @@ const Admin = () => {
         const result = await getRooms();
         setDataContent(result);
     };
-    const handleDelete = async (id: number) => {
+    const handleDelete = async (id: string) => {
         const result = await deleteRooms(id);
         if (result.status === 200) {
             setLoading(true);
             setShowDeleteModal(false);
         }
     };
-    const handleEditOnClick = async (id: number) => {
+    const handleEditOnClick = async (id: string) => {
         const result = await getRoomById(id);
         if (result.status === 200) {
             setEditData(result.data);
@@ -92,7 +92,7 @@ const Admin = () => {
         }
     };
 
-    const handleDeleteOnClick = async (id: number) => {
+    const handleDeleteOnClick = async (id: string) => {
         const filteredata = datacontent?.filter((e) => {
             return e.id === id;
         });

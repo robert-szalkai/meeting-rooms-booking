@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
-import { Typography, Button, Box, Skeleton, Paper } from "@mui/material";
+import React, {useEffect, useState} from "react";
+import {useLocation} from "react-router-dom";
+import {Typography, Button, Box, Skeleton, Paper} from "@mui/material";
 import dayjs from "dayjs";
 import Dayjs from "dayjs";
 
@@ -9,30 +9,21 @@ import "./UpcomingCardsScrollCSS.css";
 import QuickBookGlobal from "./QuickBookGlobal/QuickBookGlobal";
 import AdvancedBookGlobal from "./AdvancedBookGlobal/AdvancedBookGlobal";
 import Clock from "./Clock/Clock";
-import {getParticipants, getParticipantsIdName} from "../../../api/participants";
+import {getParticipants } from "../../../api/participants";
 import CONSTANTS from "../../../constants/Constants";
-import {iLeftSide, Participant, participantsID} from "../../../interfaces/interfaces";
+import {iLeftSide, Participant} from "../../../interfaces/interfaces";
+
 const LeftSide = ({
-    displayName,
-    meetings,
-    availability,
-    selectedCardId,
-    onClickQuickBookGlobal,
-}: iLeftSide) => {
-    let currDate = new Date();
-    let hoursMin;
+                      displayName,
+                      meetings,
+                      availability,
+                      selectedCardId,
+                      onClickQuickBookGlobal,
+                  }: iLeftSide) => {
     const formattedDate = dayjs().format(CONSTANTS.TODAY);
 
     const [showQuickBookButton, setShowQuickBookButton] = useState(true);
     const location = useLocation();
-    const { meetid } = useParams<string>();
-
-    const options: Intl.DateTimeFormatOptions = {
-        day: "numeric",
-        month: "short",
-        year: "numeric",
-    };
-    const colorStates = ["#008435", "#BCA900", "#DD6764"];
 
     const [participantsData, setParticipantsData] = useState<Participant[]>();
 
@@ -54,9 +45,9 @@ const LeftSide = ({
         setShowQuickBookButton(true);
     }, [availability, location]);
 
-    const getNames = (participants: {emailAddress:{name:string,address:string}}[]) => {
+    const getNames = (participants: { emailAddress: { name: string, address: string } }[]) => {
         let names: string[] = [];
-        for(const participant of participants){
+        for (const participant of participants) {
             names.push(participant.emailAddress.name)
         }
         return names;
@@ -68,8 +59,8 @@ const LeftSide = ({
             .map((e) => (
                 <UpcomingCards
                     id={e.id}
-                    start={Dayjs(e.start.dateTime).format("HH:mm")}
-                    end={Dayjs(e.end.dateTime).format("HH:mm")}
+                    startDate={Dayjs(e.start.dateTime).format("HH:mm")}
+                    endDate={Dayjs(e.end.dateTime).format("HH:mm")}
                     persons={getNames(e.attendees)}
                     meetingName={e.subject}
                     selectedCardId={selectedCardId}
@@ -132,7 +123,6 @@ const LeftSide = ({
                         justifyContent="center"
                         alignItems="flex-start"
                         marginTop={16}
-                        marginLeft={-20}
                     >
                         {displayName ? (
                             <Typography variant="h4">{displayName}</Typography>
@@ -144,7 +134,7 @@ const LeftSide = ({
                             />
                         )}
 
-                        <Clock />
+                        <Clock/>
 
                         <Typography variant="h4">{formattedDate}</Typography>
                     </Box>
@@ -179,17 +169,17 @@ const LeftSide = ({
                         <Button
                             variant="outlined"
                             color="inherit"
-                            sx={{ color: "black" }}
-                            onClick={() => setCardsToShow((num) => num + 2)}
+                            sx={{color: "black"}}
+                            onClick={() => setCardsToShow( cardsToShow + 2)}
                         >
                             Show More
                         </Button>
                     )}
-                    {cardsToShow >= meetings?.length && (
+                    {(cardsToShow >= meetings?.length && meetings?.length > 2) && (
                         <Button
                             variant="outlined"
                             color="inherit"
-                            onClick={() => setCardsToShow((num) => 2)}
+                            onClick={() => setCardsToShow(() => 2)}
                         >
                             Show Less
                         </Button>
@@ -200,7 +190,7 @@ const LeftSide = ({
                         onClickQuickBookGlobal={onClickQuickBookGlobal}
                     />
                 ) : availability === CONSTANTS.MEETING_IN_PROGRESS ? (
-                    <AdvancedBookGlobal />
+                    <AdvancedBookGlobal/>
                 ) : null}
             </Box>
         </Box>

@@ -20,7 +20,7 @@ export interface iRoomCards {
     availability: 0 | 1 | 2;
     description: string | undefined;
     capacity: number | undefined;
-    id: number | undefined;
+    id: string | undefined;
 }
 
 export interface iMenu {
@@ -43,8 +43,8 @@ export interface iLeftSide {
 export interface iMeetingData {
     subject: string;
     id: string;
-    startTime: string;
-    endTime: string;
+    start: { dateTime: string, timeZone: string };
+    end: { dateTime: string, timeZone: string };
     attendees: { emailAddress:{name:string, address:string} }[];
     body: {contentType:string, content:string};
 }
@@ -58,7 +58,7 @@ export interface iMeetigroomForm {
         Name: string | undefined,
         Description: string | undefined,
         Capacity: string | undefined,
-        id?: number
+        id?: string
     ) => Promise<void>;
     text: String;
     edit: boolean;
@@ -71,19 +71,19 @@ type editData = Pick<
 >;
 
 export interface iCard {
-    handleEdit: (id: number) => Promise<void>;
+    handleEdit: (id: string) => Promise<void>;
     title: string | undefined;
-    id: number | undefined;
+    id: string | undefined;
     description: string | undefined;
     lastBooked: string | undefined;
     capacity: number | undefined;
-    handleDelete: (id: number) => void;
+    handleDelete: (id: string) => void;
 }
 
 export interface iUpcomingCards {
     id: string;
-    start: string;
-    end: string;
+    startDate: string;
+    endDate: string;
     persons: (string | undefined)[];
     meetingName: string;
     selectedCardId?: string;
@@ -97,12 +97,9 @@ export interface MeetingRoomsData {
     displayName: string | undefined;
     description: string | undefined;
     capacity: string | undefined;
-    id?: number | undefined;
+    id?: string;
     lastBooked?: string;
-    meetings?: {
-        startDate: string;
-        endDate: string;
-    }[];
+    meetings?: iMeetingData[];
     handleEdit?: () => Promise<void>;
     handleDelete?: () => void;
 }
@@ -137,7 +134,6 @@ export interface Meeting {
 
 export interface FormValidity {
     isNameValid: boolean;
-    isDateValid: boolean;
     isStartValid: boolean;
     isEndValid: boolean;
     isOwnerValid: boolean;

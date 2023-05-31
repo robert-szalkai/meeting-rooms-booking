@@ -9,14 +9,14 @@ const getParticipantsIdName = async (): Promise<participantsID> => {
 
 const getParticipants = async (): Promise<Participant[]> => {
     const result = await axios.get(
-        "http://localhost:4000/msgraph/participants/RO"
+        "http://10.152.20.113:4000/msgraph/participants/RO"
     );
     return result.data.value;
 };
 
 const getParticipant = async (_name: string): Promise<Participant> => {
     const result = await axios.get(
-        `http://localhost:4000/msgraph/participant/${_name}`
+        `http://10.152.20.113:4000/msgraph/participant/${_name}`
     );
     return result.data.value[0];
 };

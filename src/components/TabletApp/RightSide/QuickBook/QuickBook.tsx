@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useMemo} from "react";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import dayjs from "dayjs";
@@ -33,12 +33,12 @@ const QuickBook = ({
         surname: "",
         id: "",
     });
-    const cookies = new Cookies();
     const [possibleOwners, setPossibleOwners] = useState<string[]>([""]);
     const [autoComplete, setAutoComplete] = useState<boolean>(false);
     const [timeVal, setTimeVal] = useState<number>(0);
     const [closestMeet, setClosestMeet] = useState<number>(0);
     const [submitButton, setSubmitButton] = useState<boolean>(false);
+    const roomId : string = useMemo(()=>{return new Cookies().get("roomId")},[possibleOwners]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -61,11 +61,11 @@ const QuickBook = ({
             }
 
             try {
-                const meetingsResponse = await getMeetings(cookies.get("roomId"));
-                Object.values(meetingsResponse).forEach((value: any) => {
-                    if (dayjs(value.start_time).isSame(dayjs(), "day")) {
+                const meetingsResponse = await getMeetings(roomId);
+                meetingsResponse.data.forEach((value: any) => {
+                    if (dayjs(value.start.dateTime).isSame(dayjs(), "day")) {
                         meetingsStartTime.push(
-                            dayjs(value.start_time).diff(dayjs(), "minute")
+                            dayjs(value.start.dateTime).diff(dayjs(), "minute")
                         );
                     }
                 });
@@ -85,10 +85,10 @@ const QuickBook = ({
             setClosestMeet(meetingsStartTime[0]);
         };
         fetchData();
-    }, []);
+    },[]);
 
     const handleDisable = (val: number) => {
-        return closestMeet > val ? true : false;
+        return closestMeet < val;
     };
 
     const handleQuickBookButton = async () => {
@@ -124,25 +124,18 @@ const QuickBook = ({
     };
 
     const handleCreateMeeting = async () => {
-        let now = dayjs();
-        let endTime = now.add(timeVal, "minute");
-
+        let now : dayjs.Dayjs | string = dayjs();
+        let endTime : dayjs.Dayjs | string = now.add(timeVal, "minute");
+        now = dayjs(now).format();
+        endTime = dayjs(endTime).format();
         try {
-            console.log({
-                id: cookies.get("roomId"),
-                    attendees: [{"emailAddress": {"name": owner?.displayName, "address": `${owner?.displayName.toLowerCase().replace(" ",".")}@doctarigroup.com`}}],
-                start: {"dateTime":now, "timeZone":"UTC"},
-                end: {"dateTime":endTime, "timeZone":"UTC"},
-                body:{"contentType":"HTML", content:""},
-                subject:"Hai acas",
-            })
-            await axios.post("http://localhost:4000/msgraph/events", {
-                id: cookies.get("roomId"),
+            await axios.post("http://10.152.20.113:4000/msgraph/events", {
+                id: roomId,
                 attendees: [{"emailAddress": {"name": owner?.displayName, "address": `${owner?.displayName.toLowerCase().replace(" ",".")}@doctarigroup.com`}}],
                 start: {"dateTime":now, "timeZone":"UTC"},
                 end: {"dateTime":endTime, "timeZone":"UTC"},
-                body:{"contentType":"HTML", content:""},
-                subject:"Hai acas",
+                body:{"contentType":"HTML", content:`This is a quick meeting made by ${owner?.displayName}.`},
+                subject:`A quick meeting made by ${owner?.displayName}`,
             });
             spawnToast({
                 title: "You have succeded",
@@ -159,7 +152,7 @@ const QuickBook = ({
             });
             console.log(error);
         }
-
+        window.location.reload()
         handleQuickBookButton();
     };
 

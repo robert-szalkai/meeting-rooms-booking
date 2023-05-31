@@ -17,8 +17,8 @@ import COLORS from "../../../../constants/CustomColors";
 import Cookies from "universal-cookie";
 const UpcomingCards = ({
     id,
-    start,
-    end,
+    startDate,
+    endDate,
     persons,
     meetingName,
     selectedCardId,
@@ -96,7 +96,7 @@ const UpcomingCards = ({
                     {meetingName}
                 </Typography>
                 <Typography variant="h5">
-                    Today, {start} - {end}
+                    Today, {startDate} - {endDate}
                 </Typography>
             </Grid>
             <Box

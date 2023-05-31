@@ -12,9 +12,10 @@ import CONSTANTS from "../../constants/Constants";
 import { getMeetings, getMeetingsData } from "../../api/meetings";
 import COLORS from "../../constants/CustomColors";
 import getRoomStatus from "../../functions/GetRoomStatus";
-import LogOutModal from "./LogOutModal";
+import ChangeRoomModal from "./ChangeRoomModal";
 import {iLeftSide, Meeting} from "../../interfaces/interfaces";
 import Cookies from 'universal-cookie';
+import Logo from "../../assets/images/DoctariLogo.png"
 const TabletApp = () => {
     const cookies = new Cookies();
     const colorStates = [COLORS.GREEN, COLORS.YELLOW, COLORS.RED];
@@ -74,9 +75,10 @@ const TabletApp = () => {
         }, CONSTANTS.INTERVAL_BACKGROUND_RESET);
 
         return () => clearInterval(interval);
-    }, [time, quickBookDone]);
+    }, []);
 
     return (
+
         <Grid
             sx={{
                 backgroundColor: colorStates[availability],
@@ -85,8 +87,13 @@ const TabletApp = () => {
             flexDirection="row"
             container
         >
+
             <Grid item xs={5}>
-                {meetingsData && (
+                <Box
+                    component="img"
+                    sx={{ height: "50px", position:"absolute", marginTop:"10px", marginLeft:"10px" }}
+                    src={Logo}
+                ></Box>  {meetingsData && (
                     <LeftSide
                         meetings={meetings}
                         displayName={meetingsData?.displayName}
@@ -131,7 +138,7 @@ const TabletApp = () => {
                             >
                                 <LogoutRoundedIcon sx={{ color: "black" }} />
                             </IconButton>
-                            <LogOutModal
+                            <ChangeRoomModal
                                 openModal={logoutModalOpen}
                                 handleClose={handleClose}
                             />

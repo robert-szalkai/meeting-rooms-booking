@@ -1,7 +1,8 @@
-import React, { FC } from "react";
-import { Box, Typography, Modal, Button } from "@mui/material";
-import { useNavigate } from "react-router-dom";
-import { ModalProps } from "../../interfaces/interfaces";
+import React, {FC} from "react";
+import {Box, Typography, Modal, Button} from "@mui/material";
+import {useNavigate} from "react-router-dom";
+import {ModalProps} from "../../interfaces/interfaces";
+import CustomColors from "../../constants/CustomColors";
 
 const modalStyle = {
     position: "absolute" as "absolute",
@@ -15,13 +16,8 @@ const modalStyle = {
     p: 4,
 };
 
-const LogOutModal: FC<ModalProps> = ({ openModal, handleClose }) => {
+const ChangeRoomModal: FC<ModalProps> = ({openModal, handleClose}) => {
     const navigate = useNavigate();
-
-    const deleteAuthTokens = () => {
-        localStorage.removeItem("user_type");
-        localStorage.removeItem("authenticated");
-    };
 
     return (
         <Box>
@@ -32,28 +28,36 @@ const LogOutModal: FC<ModalProps> = ({ openModal, handleClose }) => {
                         variant="h6"
                         component="h2"
                     >
-                        Log Out
+                        Change Room
                     </Typography>
-                    <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                        Are you sure you want to log out?
+                    <Typography id="modal-modal-description" sx={{mt: 2}}>
+                        Are you sure you want to change the room?
                     </Typography>
                     <Box
                         sx={{
                             display: "flex",
                             justifyContent: "flex-end",
+                            gap: "10%",
                             paddingRight: 5,
                         }}
                     >
                         <Button
                             onClick={() => {
-                                deleteAuthTokens();
-                                navigate("/login");
+                                navigate("/selection");
                             }}
-                            sx={{ marginTop: 5, maxWidth: "40%" }}
+                            sx={{marginTop: 5, maxWidth: "40%",color:CustomColors.WHITE, background: CustomColors.ADMINCOLOR}}
                             variant="outlined"
                             color="inherit"
                         >
-                            Log Out
+                            Yes
+                        </Button>
+                        <Button
+                            onClick={handleClose}
+                            sx={{marginTop: 5, maxWidth: "40%"}}
+                            variant="outlined"
+                            color="inherit"
+                        >
+                            No
                         </Button>
                     </Box>
                 </Box>
@@ -62,4 +66,4 @@ const LogOutModal: FC<ModalProps> = ({ openModal, handleClose }) => {
     );
 };
 
-export default LogOutModal;
+export default ChangeRoomModal;

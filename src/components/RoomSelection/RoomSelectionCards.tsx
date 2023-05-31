@@ -16,21 +16,26 @@ export const RoomSelectionCards = ({
     const colors = { 0: COLORS.SUCCESS, 1: COLORS.WARNING, 2: COLORS.ERROR };
     const navigate = useNavigate();
     const [color, setColor] = useState<string>();
-    const handleClick = (id: number) => {
+    const handleClick = (id: string) => {
         cookies.set('roomId', id.toString());
         navigate(`/rooms/${id}/menu`);
     };
     useEffect(() => {
         setColor(colors[availability]);
     });
+    const RoomStatusMessage = [
+        "Ready for booking",
+        "Meeting starting soon",
+        "Meeting in session",
+    ];
     return (
         <Card
             onClick={() => {
                 if (id) handleClick(id);
             }}
             sx={{
-                height: "200px",
-                width: "400px",
+                height: "140px",
+                width: "300px",
                 borderRadius: "10px",
                 boxShadow:
                     " rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
@@ -48,7 +53,7 @@ export const RoomSelectionCards = ({
                     alignItems: "center",
                 }}
             >
-                <Typography variant="h4" sx={{ color: "white" }}>
+                <Typography variant="h6" sx={{ color: "white" }}>
                     {name}
                 </Typography>
             </Box>
@@ -60,28 +65,23 @@ export const RoomSelectionCards = ({
                     display: "flex",
                     justifyContent: "center",
                     alignItems: "center",
+                }}>
+                <Typography>
+                    {RoomStatusMessage[availability]}
+                </Typography>
+            </Box>
+
+            <Box
+                sx={{
+                    width: "100%",
+                    height: "100px",
+                    display: "flex",
+                    marginTop: "-30%",
+                    justifyContent: "center",
+                    alignItems: "center",
                     flexDirection: "column",
                 }}
             >
-                <Box sx={{ width: "100%", height: "30px" }}>
-                    <Typography paddingLeft={2} variant="subtitle1">
-                        Capacity: {capacity}
-                    </Typography>
-                </Box>
-                <Box
-                    sx={{
-                        width: "100%",
-                        maxHeight: "50px",
-                        overflow: "hidden",
-                    }}
-                >
-                    <Typography paddingLeft={2} variant="subtitle1">
-                        Description:{" "}
-                        {description && description.length > 68
-                            ? description.slice(0, 68) + "..."
-                            : description}
-                    </Typography>
-                </Box>
             </Box>
             <Box
                 sx={{

@@ -22,7 +22,6 @@ import Cookies from "universal-cookie";
 const AdvancedBook = ({availability}: iAdvancedBook) => {
     const [validForm, setValidForm] = useState<FormValidity>({
         isNameValid: false,
-        isDateValid: false,
         isStartValid: false,
         isEndValid: false,
         isOwnerValid: false,
@@ -259,7 +258,6 @@ const AdvancedBook = ({availability}: iAdvancedBook) => {
                             <Button
                                 sx={{maxWidth: 140}}
                                 type="submit"
-                                onClick={test}
                                 variant="contained"
                                 color={
                                     CONSTANTS.BUTTON_COLOR[availability] as
