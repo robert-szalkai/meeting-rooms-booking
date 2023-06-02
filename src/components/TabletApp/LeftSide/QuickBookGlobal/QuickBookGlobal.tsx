@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Box, Button, Typography } from "@mui/material";
 import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
 
-import COLORS from "../../../../constants/customColors";
+import COLORS from "../../../../constants/CustomColors";
 import { iQuickBookGlobal } from "../../../../interfaces/interfaces";
 
 const QuickBookGlobal = ({ onClickQuickBookGlobal }: iQuickBookGlobal) => {

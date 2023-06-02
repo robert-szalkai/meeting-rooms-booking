@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
-import { Typography, Button, Box, Skeleton, Paper } from "@mui/material";
+import React, {useEffect, useState} from "react";
+import {useLocation} from "react-router-dom";
+import {Typography, Button, Box, Skeleton, Paper} from "@mui/material";
 import dayjs from "dayjs";
 import Dayjs from "dayjs";
 
@@ -9,36 +9,26 @@ import "./UpcomingCardsScrollCSS.css";
 import QuickBookGlobal from "./QuickBookGlobal/QuickBookGlobal";
 import AdvancedBookGlobal from "./AdvancedBookGlobal/AdvancedBookGlobal";
 import Clock from "./Clock/Clock";
-import { getParticipantsIdName } from "../../../api/participants";
-import CONSTANTS from "../../../constants/constants";
-import { iLeftSide, participantsID } from "../../../interfaces/interfaces";
+import {getParticipants } from "../../../api/participants";
+import CONSTANTS from "../../../constants/Constants";
+import {iLeftSide, Participant} from "../../../interfaces/interfaces";
 
 const LeftSide = ({
-    name,
-    meetings,
-    availability,
-    selectedCardId,
-    onClickQuickBookGlobal,
-}: iLeftSide) => {
-    let currDate = new Date();
-    let hoursMin;
+                      displayName,
+                      meetings,
+                      availability,
+                      selectedCardId,
+                      onClickQuickBookGlobal,
+                  }: iLeftSide) => {
     const formattedDate = dayjs().format(CONSTANTS.TODAY);
 
     const [showQuickBookButton, setShowQuickBookButton] = useState(true);
     const location = useLocation();
-    const { meetid } = useParams<string>();
 
-    const options: Intl.DateTimeFormatOptions = {
-        day: "numeric",
-        month: "short",
-        year: "numeric",
-    };
-    const colorStates = ["#008435", "#BCA900", "#DD6764"];
-
-    const [participantsData, setParticipantsData] = useState<participantsID>();
+    const [participantsData, setParticipantsData] = useState<Participant[]>();
 
     const getParticipantsData = async () => {
-        const response = await getParticipantsIdName();
+        const response = await getParticipants();
         setParticipantsData(response);
     };
     useEffect(() => {
@@ -55,25 +45,24 @@ const LeftSide = ({
         setShowQuickBookButton(true);
     }, [availability, location]);
 
-    const getNames = (ids: string[]) => {
-        return (
-            participantsData?.participants
-                .filter((participants) => ids.includes(participants.id))
-                .map((value) => value.name) || []
-        );
+    const getNames = (participants: { emailAddress: { name: string, address: string } }[]) => {
+        let names: string[] = [];
+        for (const participant of participants) {
+            names.push(participant.emailAddress.name)
+        }
+        return names;
     };
 
-    const [time, setTime] = useState(hoursMin);
     const displayCards = () => {
         return meetings
             ?.slice(0, cardsToShow)
             .map((e) => (
                 <UpcomingCards
                     id={e.id}
-                    start={Dayjs(e.start_time).format("HH:MM")}
-                    end={Dayjs(e.end_time).format("HH:MM")}
-                    persons={getNames(e.participants_id)}
-                    meetingName={e.name}
+                    startDate={Dayjs(e.start.dateTime).format("HH:mm")}
+                    endDate={Dayjs(e.end.dateTime).format("HH:mm")}
+                    persons={getNames(e.attendees)}
+                    meetingName={e.subject}
                     selectedCardId={selectedCardId}
                 />
             ));
@@ -134,10 +123,9 @@ const LeftSide = ({
                         justifyContent="center"
                         alignItems="flex-start"
                         marginTop={16}
-                        marginLeft={-20}
                     >
-                        {name ? (
-                            <Typography variant="h4">{name}</Typography>
+                        {displayName ? (
+                            <Typography variant="h4">{displayName}</Typography>
                         ) : (
                             <Skeleton
                                 variant="rectangular"
@@ -146,7 +134,7 @@ const LeftSide = ({
                             />
                         )}
 
-                        <Clock />
+                        <Clock/>
 
                         <Typography variant="h4">{formattedDate}</Typography>
                     </Box>
@@ -181,17 +169,17 @@ const LeftSide = ({
                         <Button
                             variant="outlined"
                             color="inherit"
-                            sx={{ color: "black" }}
-                            onClick={() => setCardsToShow((num) => num + 2)}
+                            sx={{color: "black"}}
+                            onClick={() => setCardsToShow( cardsToShow + 2)}
                         >
                             Show More
                         </Button>
                     )}
-                    {cardsToShow >= meetings?.length && (
+                    {(cardsToShow >= meetings?.length && meetings?.length > 2) && (
                         <Button
                             variant="outlined"
                             color="inherit"
-                            onClick={() => setCardsToShow((num) => 2)}
+                            onClick={() => setCardsToShow(() => 2)}
                         >
                             Show Less
                         </Button>
@@ -202,7 +190,7 @@ const LeftSide = ({
                         onClickQuickBookGlobal={onClickQuickBookGlobal}
                     />
                 ) : availability === CONSTANTS.MEETING_IN_PROGRESS ? (
-                    <AdvancedBookGlobal />
+                    <AdvancedBookGlobal/>
                 ) : null}
             </Box>
         </Box>

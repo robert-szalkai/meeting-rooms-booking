@@ -1,6 +1,6 @@
-import React from "react";
-import { useState, useEffect } from "react";
+import React, {useMemo} from "react";
 import axios from "axios";
+import { useState, useEffect } from "react";
 import dayjs from "dayjs";
 import {
     Box,
@@ -14,36 +14,42 @@ import EditCalendarIcon from "@mui/icons-material/EditCalendar";
 import { getParticipants, getParticipant } from "../../../../api/participants";
 import { getMeetings } from "../../../../api/meetings";
 import { spawnToast } from "../../../../utils/Toast";
-import CONSTANTS from "../../../../constants/constants";
-import { INITIALOWNER, iQuickBook } from "../../../../interfaces/interfaces";
-
+import CONSTANTS from "../../../../constants/Constants";
+import { Participant, iQuickBook } from "../../../../interfaces/interfaces";
+import Cookies from 'universal-cookie';
 const QuickBook = ({
-    isDurationOpen = false,
-    handleQuickBookDone,
-    availability,
-}: iQuickBook) => {
+                       isDurationOpen = false,
+                       handleQuickBookDone,
+                       availability,
+                   }: iQuickBook) => {
     const [timeButtonsVisible, setTimeButtonsVisible] =
         useState<boolean>(isDurationOpen);
     const [openQuickButtonMenu, setOpenQuickButtonMenu] =
         useState<boolean>(false);
-    const [owner, setOwner] = useState<INITIALOWNER>({ name: "", id: 0 });
+    const [owner, setOwner] = useState<Participant>({
+        displayName: "",
+        givenName: "",
+        mail: "",
+        surname: "",
+        id: "",
+    });
     const [possibleOwners, setPossibleOwners] = useState<string[]>([""]);
     const [autoComplete, setAutoComplete] = useState<boolean>(false);
     const [timeVal, setTimeVal] = useState<number>(0);
     const [closestMeet, setClosestMeet] = useState<number>(0);
     const [submitButton, setSubmitButton] = useState<boolean>(false);
+    const roomId : string = useMemo(()=>{return new Cookies().get("roomId")},[possibleOwners]);
 
     useEffect(() => {
         const fetchData = async () => {
-            let tempOwners: string[] = [];
             let meetingsStartTime: number[] = [];
+            let tempOwners: string[] = [];
 
             try {
                 const owners_response = await getParticipants();
                 Object.values(owners_response).forEach((value: any) =>
-                    tempOwners.push(value.name)
+                    tempOwners.push(value.displayName)
                 );
-                console.log(tempOwners);
                 setPossibleOwners(tempOwners);
             } catch (error) {
                 spawnToast({
@@ -55,11 +61,11 @@ const QuickBook = ({
             }
 
             try {
-                const meetingsResponse = await getMeetings();
-                Object.values(meetingsResponse).forEach((value: any) => {
-                    if (dayjs(value.start_time).isSame(dayjs(), "day")) {
+                const meetingsResponse = await getMeetings(roomId);
+                meetingsResponse.data.forEach((value: any) => {
+                    if (dayjs(value.start.dateTime).isSame(dayjs(), "day")) {
                         meetingsStartTime.push(
-                            dayjs(value.start_time).diff(dayjs(), "minute")
+                            dayjs(value.start.dateTime).diff(dayjs(), "minute")
                         );
                     }
                 });
@@ -79,26 +85,38 @@ const QuickBook = ({
             setClosestMeet(meetingsStartTime[0]);
         };
         fetchData();
-    }, []);
+    },[]);
 
     const handleDisable = (val: number) => {
-        return closestMeet > val ? true : false;
+        return closestMeet < val;
     };
 
-    const handleQuickBookButton = () => {
+    const handleQuickBookButton = async () => {
         setTimeButtonsVisible(!timeButtonsVisible);
         if (timeButtonsVisible) setOpenQuickButtonMenu(false);
     };
 
     const handleClickTime = () => {
         if (!openQuickButtonMenu) setOpenQuickButtonMenu(true);
-        setOwner({ name: "", id: 0 });
+        setOwner({
+            displayName: "",
+            id: "0",
+            givenName: "",
+            mail: "",
+            surname: "",
+        });
     };
 
     const handleChange = async (e: string) => {
         try {
             const result = await getParticipant(e);
-            setOwner({ name: result.name, id: result.id });
+            setOwner({
+                displayName: result.displayName,
+                id: result.id.toString(),
+                givenName: result.givenName,
+                mail: result.mail,
+                surname: result.surname,
+            });
             setSubmitButton(true);
         } catch (error) {
             console.log(error);
@@ -106,16 +124,18 @@ const QuickBook = ({
     };
 
     const handleCreateMeeting = async () => {
-        let now = dayjs();
-        let endTime = now.add(timeVal, "minute");
-
+        let now : dayjs.Dayjs | string = dayjs();
+        let endTime : dayjs.Dayjs | string = now.add(timeVal, "minute");
+        now = dayjs(now).format();
+        endTime = dayjs(endTime).format();
         try {
-            await axios.post("http://localhost:3001/meetings", {
-                room_id: 1,
-                owner_id: owner?.id,
-                participants_id: [],
-                start_time: now,
-                end_time: endTime,
+            await axios.post("http://10.152.20.113:4000/msgraph/events", {
+                id: roomId,
+                attendees: [{"emailAddress": {"name": owner?.displayName, "address": `${owner?.displayName.toLowerCase().replace(" ",".")}@doctarigroup.com`}}],
+                start: {"dateTime":now, "timeZone":"UTC"},
+                end: {"dateTime":endTime, "timeZone":"UTC"},
+                body:{"contentType":"HTML", content:`This is a quick meeting made by ${owner?.displayName}.`},
+                subject:`A quick meeting made by ${owner?.displayName}`,
             });
             spawnToast({
                 title: "You have succeded",
@@ -132,7 +152,7 @@ const QuickBook = ({
             });
             console.log(error);
         }
-
+        window.location.reload()
         handleQuickBookButton();
     };
 
@@ -264,7 +284,9 @@ const QuickBook = ({
                                             if (!autoComplete)
                                                 setAutoComplete(true);
                                         }
-                                        handleChange(value);
+                                    }}
+                                    onChange={(e, value) => {
+                                        if (value) handleChange(value);
                                     }}
                                     onClose={() => setAutoComplete(false)}
                                     disablePortal
@@ -272,7 +294,9 @@ const QuickBook = ({
                                     options={possibleOwners}
                                     sx={{ width: 300 }}
                                     value={
-                                        owner === undefined ? "" : owner.name
+                                        owner === undefined
+                                            ? ""
+                                            : owner.displayName
                                     }
                                     renderInput={(params) => (
                                         <TextField {...params} label="Owner" />

@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { Container, Box, Typography } from "@mui/material";
+import {Container, Box, Typography, Skeleton} from "@mui/material";
 
 import RoomSelectionCards from "./RoomSelectionCards";
 import { Meeting } from "../../interfaces/interfaces";
 import { getRooms } from "../../api/rooms";
-import COLORS from "../../constants/customColors";
+import COLORS from "../../constants/CustomColors";
 import { MeetingRoomsData } from "../../interfaces/interfaces";
 import getRoomStatus from "../../functions/GetRoomStatus";
+import {getMeetings} from "../../api/meetings";
+import dayjs from "dayjs";
 
 export const RoomSelection = () => {
     const [roomSelectionData, setRoomSelection] =
@@ -14,7 +16,19 @@ export const RoomSelection = () => {
     const getData = async () => {
         try {
             const result = await getRooms();
-            setRoomSelection(result);
+            for(let room of result) {
+                if (room.id != undefined) {
+                    const roomMeetings = await getMeetings(room.id);
+                    const fixedMeetings: any[] = [];
+                    roomMeetings.data.forEach((meeting: any) => {
+                        meeting.start.dateTime = dayjs(meeting.start.dateTime).format();
+                        meeting.end.dateTime = dayjs(meeting.end.dateTime).format();
+                        fixedMeetings.push(meeting)
+                    })
+                    room.meetings = fixedMeetings;
+                }
+            }
+            setRoomSelection(result)
         } catch (error) {
             console.log(error);
         }
@@ -22,7 +36,7 @@ export const RoomSelection = () => {
     const mapElements = () => {
         return roomSelectionData?.map((e, index) => (
             <RoomSelectionCards
-                name={e.title}
+                name={e.displayName}
                 key={e.id}
                 availability={
                     getRoomStatus(e.meetings as unknown as Meeting[]) as
@@ -75,7 +89,16 @@ export const RoomSelection = () => {
                         gap: "30px",
                     }}
                 >
-                    {roomSelectionData && mapElements()}
+                    {roomSelectionData ? mapElements() : (
+                        <Box>
+                        <Skeleton
+                        sx={{ marginBottom: "30px" }}
+                    variant="rectangular"
+                    width={500}
+                />
+                <Skeleton variant="rectangular" width={300} height={300} />
+        </Box>
+    )}
                 </Box>
                 <Box
                     sx={{

@@ -8,21 +8,22 @@ import {
     AvatarGroup,
     Grid,
 } from "@mui/material";
-import SIZE from "../../../../constants/customSize";
+import SIZE from "../../../../constants/CustomSize";
 import { useNavigate } from "react-router";
 import { useLocation } from "react-router-dom";
 
 import { iUpcomingCards } from "../../../../interfaces/interfaces";
-import COLORS from "../../../../constants/customColors";
-
+import COLORS from "../../../../constants/CustomColors";
+import Cookies from "universal-cookie";
 const UpcomingCards = ({
     id,
-    start,
-    end,
+    startDate,
+    endDate,
     persons,
     meetingName,
     selectedCardId,
 }: iUpcomingCards) => {
+    const cookies = new Cookies();
     const getInitilas = () => {
         const filteredata = persons.map((e) => {
             return e
@@ -58,6 +59,7 @@ const UpcomingCards = ({
 
     const navigate = useNavigate();
     const handleCardOnClick = () => {
+        cookies.set("meetId", id);
         navigate(`meetinginfo/${id}`);
     };
 
@@ -94,7 +96,7 @@ const UpcomingCards = ({
                     {meetingName}
                 </Typography>
                 <Typography variant="h5">
-                    Today, {start} - {end}
+                    Today, {startDate} - {endDate}
                 </Typography>
             </Grid>
             <Box

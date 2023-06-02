@@ -1,6 +1,6 @@
 import { createTheme } from "@mui/material/styles";
-import COLORS from "../constants/customColors";
-import SIZE from "../constants/customSize";
+import COLORS from "../constants/CustomColors";
+import SIZE from "../constants/CustomSize";
 const GlobalTheme = createTheme({
     typography: {
         fontFamily: "Overpass Mono 700",

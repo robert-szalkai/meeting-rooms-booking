@@ -5,7 +5,7 @@ import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 
 import QuickBook from "../QuickBook/QuickBook";
 import { iMenu } from "../../../../interfaces/interfaces";
-import CONSTANTS from "../../../../constants/constants";
+import CONSTANTS from "../../../../constants/Constants";
 
 const Menu = ({
     roomId,
@@ -36,7 +36,6 @@ const Menu = ({
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
-                paddingTop: "20%",
                 overflow: "auto",
                 paddingRight: "32px",
             }}
@@ -52,7 +51,7 @@ const Menu = ({
             >
                 {roomName ? (
                     <Box>
-                        <Typography variant="h4" align="center">
+                        <Typography variant="h5" align="center">
                             {roomName} is {RoomStatusMessage[roomStatus]}
                         </Typography>
                         <Typography variant="h6" align="center">

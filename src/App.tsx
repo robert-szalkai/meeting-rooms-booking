@@ -5,7 +5,13 @@ import { ThemeProvider } from "@mui/material/styles";
 import TabletApp from "./components/TabletApp/TabletApp";
 import MainRouter from "./router/router";
 import { SnackbarProvider } from "notistack";
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc"
+
+dayjs.extend(utc)
+
 function App() {
+
     return (
         <ThemeProvider theme={GlobalTheme}>
             <SnackbarProvider

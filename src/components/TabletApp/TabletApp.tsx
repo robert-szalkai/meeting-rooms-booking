@@ -8,18 +8,20 @@ import LeftSide from "./LeftSide/LeftSide";
 import AdvancedBook from "./RightSide/AdvancedBook/AdvancedBook";
 import MeetingInfo from "./RightSide/MeetingInfo/MeetingInfo";
 import Menu from "./RightSide/Menu/Menu";
-import CONSTANTS from "../../constants/constants";
+import CONSTANTS from "../../constants/Constants";
 import { getMeetings, getMeetingsData } from "../../api/meetings";
-import COLORS from "../../constants/customColors";
+import COLORS from "../../constants/CustomColors";
 import getRoomStatus from "../../functions/GetRoomStatus";
-import LogOutModal from "./LogOutModal";
-import { iLeftSide } from "../../interfaces/interfaces";
-
+import ChangeRoomModal from "./ChangeRoomModal";
+import {iLeftSide, Meeting} from "../../interfaces/interfaces";
+import Cookies from 'universal-cookie';
+import Logo from "../../assets/images/DoctariLogo.png"
 const TabletApp = () => {
+    const cookies = new Cookies();
     const colorStates = [COLORS.GREEN, COLORS.YELLOW, COLORS.RED];
     const [meetingsData, setMeetingsData] = useState<iLeftSide>();
+    const [meetings,setMeetings] = useState<Meeting[]>([])
 
-    const [roomName, setRoomName] = useState("Focus Room");
     const { id } = useParams();
 
     const [selectedCardId, setSelectedCardId] = useState<string>();
@@ -49,9 +51,11 @@ const TabletApp = () => {
     };
 
     const meetData = async () => {
-        const response = await getMeetingsData();
-        if (response.status === 200) {
-            setMeetingsData(response.data);
+        const responseForRoomData = await getMeetingsData(cookies.get("roomId"));
+        const responseForMeetings = await getMeetings(cookies.get("roomId"));
+        if (responseForRoomData.status === 200) {
+            setMeetingsData(responseForRoomData.data);
+            setMeetings(responseForMeetings.data);
         }
     };
     useEffect(() => {
@@ -60,8 +64,8 @@ const TabletApp = () => {
 
     useEffect(() => {
         const setRoomStatus = async () => {
-            const allMeetings = await getMeetings();
-            const roomStatus = await getRoomStatus(allMeetings);
+            const allMeetings = await getMeetings(cookies.get("roomId"));
+            const roomStatus = await getRoomStatus(allMeetings.data);
             setAvailability(roomStatus);
         };
         setRoomStatus();
@@ -71,9 +75,10 @@ const TabletApp = () => {
         }, CONSTANTS.INTERVAL_BACKGROUND_RESET);
 
         return () => clearInterval(interval);
-    }, [time, quickBookDone]);
+    }, []);
 
     return (
+
         <Grid
             sx={{
                 backgroundColor: colorStates[availability],
@@ -82,11 +87,16 @@ const TabletApp = () => {
             flexDirection="row"
             container
         >
+
             <Grid item xs={5}>
-                {meetingsData && (
+                <Box
+                    component="img"
+                    sx={{ height: "50px", position:"absolute", marginTop:"10px", marginLeft:"10px" }}
+                    src={Logo}
+                ></Box>  {meetingsData && (
                     <LeftSide
-                        meetings={meetingsData?.meetings}
-                        name={meetingsData?.name}
+                        meetings={meetings}
+                        displayName={meetingsData?.displayName}
                         availability={availability}
                         selectedCardId={selectedCardId as string}
                         onClickQuickBookGlobal={onClickQuickBookGlobal}
@@ -128,7 +138,7 @@ const TabletApp = () => {
                             >
                                 <LogoutRoundedIcon sx={{ color: "black" }} />
                             </IconButton>
-                            <LogOutModal
+                            <ChangeRoomModal
                                 openModal={logoutModalOpen}
                                 handleClose={handleClose}
                             />
@@ -139,7 +149,7 @@ const TabletApp = () => {
                                 element={
                                     <Menu
                                         roomId={id ? id : ""}
-                                        roomName={roomName}
+                                        roomName={meetingsData?.displayName ? meetingsData?.displayName : ""}
                                         roomStatus={availability}
                                         handleQuickBookDone={
                                             handleQuickBookDone

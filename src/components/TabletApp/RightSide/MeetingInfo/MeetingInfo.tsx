@@ -1,62 +1,56 @@
 import React, { useEffect, useState } from "react";
-import { Grid, Typography, Box, Avatar } from "@mui/material";
-import axios, { AxiosResponse } from "axios";
-import dayjs, { Dayjs } from "dayjs";
-import { useParams } from "react-router-dom";
+import {Grid, Typography, Box, Avatar, Skeleton} from "@mui/material";
+import axios from "axios";
+import dayjs from "dayjs";
 
-import { getParticipantsIdName } from "../../../../api/participants";
 import {
     iMeetingData,
     iMeetingInfo,
-    participantsID,
 } from "../../../../interfaces/interfaces";
-import Error from "./NotFoundPage/NotFoundPage";
-import COLORS from "../../../../constants/customColors";
+import COLORS from "../../../../constants/CustomColors";
+import Cookies from "universal-cookie";
 
 const MeetingInfo = ({ setSelectedCardId }: iMeetingInfo) => {
-    const [participantsData, setParticipantsData] = useState<participantsID>();
-    const [meetingParticipants, setMeetingParticipants] = useState<
-        string[] | undefined
-    >([]);
-
+    const cookies = new Cookies();
+    const meetid = cookies.get("meetId");
+    const roomId = cookies.get("roomId")
     const [meetingData, setMeetingData] = useState<iMeetingData>();
-    const { meetid } = useParams<string>();
-    const [meetId, setMeetId] = useState<string>();
 
     const getMeetingById = async (meetid: string): Promise<iMeetingData> => {
         const result = await axios.get(
-            `http://localhost:3003/meetingInfo/${meetid}`
+            `http://10.152.20.113:4000/msgraph/meetingroom/${roomId}/event/${meetid}`
         );
-
+        console.log(result)
         return result.data;
     };
 
-    const getParticipantsData = async () => {
-        const response = await getParticipantsIdName();
-        setParticipantsData(response);
-    };
+
 
     useEffect(() => {
-        const _getParticipants = async () => {
-            await getParticipantsData();
+
+    }, []);
+    useEffect(() => {
+        const _getMeetingData = async () => {
+            getMeetingData();
         };
 
-        _getParticipants();
-    }, []);
+        _getMeetingData();
+    }, [meetid]);
 
     useEffect(() => {
         setSelectedCardId(meetid as string);
     }, [meetid]);
 
-    const getNames = (ids: string[] | undefined) => {
-        return (
-            participantsData?.participants
-                .filter((participants) => ids?.includes(participants.id))
-                .map((value) => value.name) || []
-        );
+    const getNames = (participants: { emailAddress: { name: string; address: string } }[] | undefined) => {
+        let names: string[] = [];
+        if(participants!== undefined)
+        for(const participant of participants){
+            names.push(participant.emailAddress.name)
+        }
+        return names;
     };
 
-    const personsById = getNames(meetingData?.participants_id);
+    const personsById = getNames(meetingData?.attendees);
 
     const getMeetingData = async () => {
         if (meetid) {
@@ -65,13 +59,6 @@ const MeetingInfo = ({ setSelectedCardId }: iMeetingInfo) => {
         }
     };
 
-    useEffect(() => {
-        const _getMeetingData = async () => {
-            getMeetingData();
-        };
-
-        _getMeetingData();
-    }, [meetid]);
 
     const getInitilas = () => {
         const filteredata = personsById.map((e) => {
@@ -121,24 +108,23 @@ const MeetingInfo = ({ setSelectedCardId }: iMeetingInfo) => {
             direction={"row"}
             spacing={1}
             paddingLeft={6}
-            marginTop={3}
             overflow={"none"}
         >
             <Grid item xs={12}>
                 <Grid container direction={"row"} spacing={0}>
                     <Grid item xs={12}></Grid>
                     <Grid item xs={12}>
-                        <Typography variant="h4">{meetingData.name}</Typography>
+                        <Typography variant="h4">{meetingData.subject}</Typography>
                         <Typography variant="h6">
                             Today,{" "}
-                            {dayjs(meetingData.startTime).format("HH:MM")} -{" "}
-                            {dayjs(meetingData.endTime).format("HH:MM")}
+                            {dayjs(meetingData.start.dateTime).add(3,"h").format("HH:mm")} -{" "}
+                            {dayjs(meetingData.end.dateTime).add(3,"h").format("HH:mm")}
                         </Typography>
                     </Grid>
                 </Grid>
             </Grid>
             <Grid item xs={12}>
-                <Grid container direction={"row"} marginTop={-10}>
+                <Grid container direction={"row"} >
                     <Grid item xs={3}>
                         <Typography variant="h5">Participants</Typography>
                     </Grid>
@@ -151,7 +137,7 @@ const MeetingInfo = ({ setSelectedCardId }: iMeetingInfo) => {
                     container
                     direction={"row"}
                     spacing={2}
-                    marginTop={-20}
+                    marginTop={-5}
                     marginLeft={-2.8}
                 >
                     {mapersons()}
@@ -159,23 +145,21 @@ const MeetingInfo = ({ setSelectedCardId }: iMeetingInfo) => {
             </Grid>
             <Grid item xs={12}>
                 <Grid container direction={"row"}>
-                    <Grid item xs={3} marginTop={-10} marginLeft={1}>
+                    <Grid item xs={3}  marginLeft={1}>
                         <Typography variant="h5">Description</Typography>
                     </Grid>
                 </Grid>
             </Grid>
             <Grid item xs={12}>
-                <Grid padding={0.5} container direction={"row"} marginTop={-20}>
+                <Grid padding={0.5} container direction={"row"} marginTop={-5}>
                     <Grid item xs={12} marginLeft={1}>
-                        <Typography variant="subtitle1">
-                            {meetingData.description}
-                        </Typography>
+                        <div dangerouslySetInnerHTML={{ __html: meetingData.body.content }} />
                     </Grid>
                 </Grid>
             </Grid>
         </Grid>
     ) : (
-        <Error />
+        <Skeleton variant="rectangular" width={300} height={300} />
     );
 };
 

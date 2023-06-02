@@ -25,6 +25,7 @@ const LoginForm: FC<Login> = ({
     const getUsersAccounts = async () => {
         try {
             const result = await getUsers();
+            console.log(result)
             setUsers(result);
         } catch (error) {
             console.log(error);
@@ -50,7 +51,7 @@ const LoginForm: FC<Login> = ({
             localStorage.setItem("user_type", account.userType);
         } else {
             spawnToast({
-                title: "Coult not connect",
+                title: "Could not connect",
                 message: "Wrong username or password",
                 toastType: "error",
             });

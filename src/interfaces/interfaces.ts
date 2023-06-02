@@ -20,7 +20,7 @@ export interface iRoomCards {
     availability: 0 | 1 | 2;
     description: string | undefined;
     capacity: number | undefined;
-    id: number | undefined;
+    id: string | undefined;
 }
 
 export interface iMenu {
@@ -33,26 +33,20 @@ export interface iMenu {
 }
 
 export interface iLeftSide {
-    name: string | undefined;
-    meetings: {
-        name: string;
-        id: string;
-        start_time: string;
-        end_time: string;
-        participants_id: [];
-    }[];
+    displayName: string | undefined;
+    meetings: Meeting[];
     availability: number;
     selectedCardId: string;
     onClickQuickBookGlobal: () => void;
 }
 
 export interface iMeetingData {
-    name: string;
+    subject: string;
     id: string;
-    startTime: string;
-    endTime: string;
-    participants_id: string[] | undefined;
-    description: string;
+    start: { dateTime: string, timeZone: string };
+    end: { dateTime: string, timeZone: string };
+    attendees: { emailAddress:{name:string, address:string} }[];
+    body: {contentType:string, content:string};
 }
 
 export interface iMeetingInfo {
@@ -64,7 +58,7 @@ export interface iMeetigroomForm {
         Name: string | undefined,
         Description: string | undefined,
         Capacity: string | undefined,
-        id?: number
+        id?: string
     ) => Promise<void>;
     text: String;
     edit: boolean;
@@ -73,23 +67,23 @@ export interface iMeetigroomForm {
 }
 type editData = Pick<
     MeetingRoomsData,
-    "description" | "title" | "capacity" | "id"
+    "description" | "displayName" | "capacity" | "id"
 >;
 
 export interface iCard {
-    handleEdit: (id: number) => Promise<void>;
+    handleEdit: (id: string) => Promise<void>;
     title: string | undefined;
-    id: number | undefined;
+    id: string | undefined;
     description: string | undefined;
     lastBooked: string | undefined;
     capacity: number | undefined;
-    handleDelete: (id: number) => void;
+    handleDelete: (id: string) => void;
 }
 
 export interface iUpcomingCards {
     id: string;
-    start: string;
-    end: string;
+    startDate: string;
+    endDate: string;
     persons: (string | undefined)[];
     meetingName: string;
     selectedCardId?: string;
@@ -100,23 +94,21 @@ export interface iAdvancedBook {
 }
 
 export interface MeetingRoomsData {
-    title: string | undefined;
+    displayName: string | undefined;
     description: string | undefined;
     capacity: string | undefined;
-    id?: number | undefined;
+    id?: string;
     lastBooked?: string;
-    meetings?: {
-        startDate: string;
-        endDate: string;
-    }[];
+    meetings?: iMeetingData[];
     handleEdit?: () => Promise<void>;
     handleDelete?: () => void;
 }
 export interface Participant {
-    name: string;
-    id: number;
-    available: boolean;
-    image: string;
+    displayName: string;
+    givenName: string;
+    mail: string;
+    surname: string;
+    id: string;
 }
 
 export interface participantsID {
@@ -132,17 +124,16 @@ export interface INITIALOWNER {
 }
 
 export interface Meeting {
-    meetingName: string;
-    meetingDescription: string;
-    startDate: string;
-    endDate: string;
-    participants: number[];
-    id: number;
+    subject: string;
+    body: {contentType: string, content:string};
+    start: { dateTime: string, timeZone:string };
+    end: { dateTime: string,timeZone:string };
+    attendees: {emailAddress:{name:string,address:string}}[];
+    id: string;
 }
 
 export interface FormValidity {
     isNameValid: boolean;
-    isDateValid: boolean;
     isStartValid: boolean;
     isEndValid: boolean;
     isOwnerValid: boolean;

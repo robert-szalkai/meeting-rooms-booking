@@ -1,7 +1,7 @@
 import { Card, Grid, Typography } from "@mui/material";
 import React from "react";
 
-import COLORS from "../../../../../constants/customColors";
+import COLORS from "../../../../../constants/CustomColors";
 
 export default function Error() {
     return (
